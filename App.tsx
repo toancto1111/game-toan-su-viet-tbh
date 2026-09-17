@@ -45,7 +45,7 @@ import {
   ShoppingBag, Star, UserCheck, Plus, Minus, School, Tent, Crosshair,
   Lightbulb, Zap, Info, FastForward, Swords as SwordIcon, Users, ScrollText, Scissors, ArrowUpCircle,
   Music, Play, Pause, SkipForward, Volume2, VolumeX, Package, LogOut, Crown, Shield, Moon, Gem, Snowflake, Flag, Disc, X, Database, MountainSnow, Recycle,
-  HeartCrack, Skull, Wind, Heart, Frown, Flame, Droplets, ShieldOff, Ban, TrendingDown, Target, ShieldCheck, Syringe, RefreshCw, Link2, ShieldAlert, Hourglass, HeartPulse, User
+  HeartCrack, Skull, Wind, Heart, Frown, Flame, Droplets, ShieldOff, Ban, TrendingDown, Target, ShieldCheck, Syringe, RefreshCw, Link2, ShieldAlert, Hourglass, HeartPulse, User, Maximize, Minimize
 } from 'lucide-react';
 import { ProfileModal } from './ProfileModal';
 import { ChatbotWidget } from './ChatbotWidget';
@@ -623,6 +623,23 @@ const Header: React.FC<{ state: PlayerState, setView: any, onLogout?: () => void
   const currentAvatarHero = (state.inventory || []).find(h => h.id === state.avatarId);
   const avatarImg = state.customAvatar || (currentAvatarHero ? currentAvatarHero.image : DEFAULT_ALLY_IMG);
 
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  useEffect(() => {
+    const handleFullscreenChange = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.warn(`Lỗi Fullscreen: ${err.message}`);
+      });
+    } else {
+      if (document.exitFullscreen) document.exitFullscreen();
+    }
+  };
+
   return (
     <div className="bg-gradient-to-r from-stone-950 via-stone-900 to-stone-950 border-b border-amber-900/50 sticky top-0 z-50 shadow-[0_4px_20px_rgba(0,0,0,0.6)] overflow-hidden">
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-800/40 to-transparent pointer-events-none"/>
@@ -638,6 +655,13 @@ const Header: React.FC<{ state: PlayerState, setView: any, onLogout?: () => void
             <span className="bg-stone-800/80 px-3 py-1 rounded-full border border-green-900/40 flex items-center gap-1.5 text-green-400 text-xs font-bold">💎 {(state.jade || 0).toLocaleString()}</span>
             <span className="bg-stone-800/80 px-3 py-1 rounded-full border border-blue-900/40 flex items-center gap-1.5 text-blue-400 text-xs font-bold">🎫 {state.normalTickets || 0}</span>
           </div>
+          <button 
+            onClick={toggleFullscreen} 
+            className="text-stone-400 hover:text-white transition-colors bg-stone-900 hover:bg-stone-800 p-2 rounded-xl border border-stone-700 ml-1"
+            title="Toàn Màn Hình"
+          >
+            {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
+          </button>
         </div>
 
         {/* Khối Avatar & Thông tin học sinh góc phải */}
