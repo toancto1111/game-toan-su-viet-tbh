@@ -25,16 +25,17 @@ export const ProfileModal: React.FC<{
 
   const handleRedeem = async () => {
     if (!codeStr.trim()) return alert("Vui lòng nhập mã code");
+    if (isRedeeming) return;
     
     setIsRedeeming(true);
-    // Dùng username (tên đăng nhập) để so sánh allowedPlayers — Admin nhập tên TK không phải tên ingame
-    const identifier = player.username || player.playerName;
-    const result = await redeemCloudGiftCode(codeStr.trim(), identifier);
-    setIsRedeeming(false);
-    
-    if (!result.success || !result.code) {
-      return alert(result.message);
-    }
+    try {
+      // Dùng username (tên đăng nhập) để so sánh allowedPlayers — Admin nhập tên TK không phải tên ingame
+      const identifier = player.username || player.playerName || "unknown";
+      const result = await redeemCloudGiftCode(codeStr.trim(), identifier);
+      
+      if (!result.success || !result.code) {
+        return alert(result.message);
+      }
     
     // Apply rewards
     setPlayer(p => {
@@ -58,6 +59,12 @@ export const ProfileModal: React.FC<{
     });
     
     setCodeStr('');
+    } catch (err) {
+      console.error(err);
+      alert("Đã xảy ra lỗi không xác định khi đổi code. Vui lòng thử lại.");
+    } finally {
+      setIsRedeeming(false);
+    }
   };
 
   const handleSelectAvatar = (heroId: string) => {
@@ -297,9 +304,10 @@ export const ProfileModal: React.FC<{
                   />
                   <button 
                     onClick={handleRedeem}
-                    className="bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-black py-4 rounded-xl shadow-lg transition-transform active:scale-95 text-lg uppercase tracking-wider"
+                    disabled={isRedeeming}
+                    className={`bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white font-black py-4 rounded-xl shadow-lg transition-transform active:scale-95 text-lg uppercase tracking-wider ${isRedeeming ? 'opacity-70 cursor-not-allowed' : ''}`}
                   >
-                    Xác Nhận Đổi
+                    {isRedeeming ? 'Đang xử lý...' : 'Xác nhận đổi'}
                   </button>
                 </div>
               </div>
