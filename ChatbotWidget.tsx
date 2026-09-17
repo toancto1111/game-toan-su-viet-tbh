@@ -369,13 +369,7 @@ interface Message {
 }
 
 // ─── Gợi ý nhanh ─────────────────────────────────────────────────────────────
-const SUGGESTIONS = [
-  { label: '✍️ Viết tiếp bài dở', text: 'Thầy/cô viết tiếp các phần hoặc bài tiếp theo đang dở dang giúp em nhé!' },
-  { label: '👑 Quang Trung', text: 'Cho em biết về Quang Trung Nguyễn Huệ và chiến thắng Đống Đa' },
-  { label: '⚔️ Lý Thường Kiệt', text: 'Thông tin về Lý Thường Kiệt và bài thơ Nam quốc sơn hà' },
-  { label: '🏯 Trần Hưng Đạo', text: 'Kể về Hưng Đạo Đại Vương Trần Quốc Tuấn 3 lần phá quân Nguyên' },
-  { label: '📐 Toán THCS', text: 'Hướng dẫn em cách giải bài toán bằng cách lập hệ phương trình' },
-];
+// ─── Gợi ý nhanh (Đã bị loại bỏ theo yêu cầu để tăng diện tích) ──────────
 
 // ─── Component ───────────────────────────────────────────────────────────────
 export const ChatbotWidget: React.FC = () => {
@@ -651,9 +645,9 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
       position: absolute;
       bottom: 72px;
       right: 0;
-      width: 410px;
-      height: 620px;
-      max-height: calc(100vh - 110px);
+      width: min(700px, 95vw);
+      height: min(750px, 85vh);
+      max-height: calc(100vh - 85px);
       background: rgba(15, 23, 42, 0.96);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
@@ -849,20 +843,7 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
     .cb-dot:nth-child(1) { animation-delay: -0.32s; }
     .cb-dot:nth-child(2) { animation-delay: -0.16s; }
 
-    /* Suggestions */
-    .cb-suggestions {
-      padding: 6px 14px 10px;
-      display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0;
-      border-top: 1px solid rgba(99,102,241,0.1);
-    }
-    .cb-chip {
-      background: rgba(99,102,241,0.08);
-      border: 1px solid rgba(99,102,241,0.25);
-      padding: 4px 10px; border-radius: 12px;
-      font-size: 0.7rem; color: #a5b4fc; cursor: pointer;
-      transition: all 0.2s; white-space: nowrap;
-    }
-    .cb-chip:hover { background: rgba(99,102,241,0.2); color: #c7d2fe; }
+    /* Suggestions Removed */
 
     /* Image preview bar above input */
     .cb-image-preview-bar {
@@ -1190,14 +1171,7 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick suggestions */}
-          <div className="cb-suggestions">
-            {SUGGESTIONS.map(s => (
-              <div key={s.label} className="cb-chip" onClick={() => handleSuggestion(s.text)}>
-                {s.label}
-              </div>
-            ))}
-          </div>
+          {/* Quick suggestions removed to save space */}
 
           {/* Thanh xem trước ảnh khi học sinh tải ảnh hoặc bấm Ctrl+V */}
           {selectedImage && (
