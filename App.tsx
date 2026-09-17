@@ -1,5 +1,5 @@
 
-import React, { useState, useMemo, useEffect, Component, ErrorInfo, ReactNode } from 'react';
+import React, { useState, useMemo, useEffect, useRef, Component, ErrorInfo, ReactNode } from 'react';
 
 class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean, error: Error | null }> {
   constructor(props: { children: ReactNode }) {
@@ -1099,6 +1099,20 @@ const App: React.FC = () => {
   const [selectedMathLessonIdx, setSelectedMathLessonIdx] = useState<number>(0);
   const [combatMode, setCombatMode] = useState<'campaign' | 'hero-trial'>('campaign');
   const [activeTrialStage, setActiveTrialStage] = useState<number>(0);
+  const hubContainerRef = useRef<HTMLDivElement>(null);
+  const [hubScale, setHubScale] = useState(1);
+  useEffect(() => {
+    if (view !== 'chapter-hub') return;
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        const { width, height } = entry.contentRect;
+        setHubScale(Math.min(width / 1920, height / 1080));
+      }
+    });
+    if (hubContainerRef.current) resizeObserver.observe(hubContainerRef.current);
+    return () => resizeObserver.disconnect();
+  }, [view]);
+
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   // Toast thông báo khi click chương bị khóa
   const [lockedChapterToast, setLockedChapterToast] = useState<{ chapterNum: number; reason?: string } | null>(null);
@@ -2012,17 +2026,19 @@ const App: React.FC = () => {
           <Header state={player} setView={setView} onLogout={handleLogout} onOpenProfile={() => setIsProfileOpen(true)} syncStatus={syncStatus} />
           <div className="flex-1 relative w-full h-full overflow-hidden bg-black flex items-center justify-center">
             <div 
-              className="relative w-full aspect-[16/9] max-h-full mx-auto shadow-2xl shadow-black overflow-hidden bg-stone-950"
-              style={{ maxWidth: '177.78vh', containerType: 'size' }}
+              className="relative w-full aspect-[16/9] max-h-full mx-auto shadow-2xl shadow-black overflow-hidden bg-stone-950 flex items-center justify-center"
+              style={{ maxWidth: '177.78vh' }}
+              ref={hubContainerRef}
             >
+            <div className="relative origin-center overflow-hidden" style={{ width: 1920, height: 1080, transform: `scale(${hubScale})` }}>
               {/* Ảnh nền Isometric */}
               <div 
                 className="absolute inset-0 bg-[length:100%_100%] bg-no-repeat"
                 style={{ backgroundImage: `url('${import.meta.env.BASE_URL}hub-bg.png?v=2')` }}
               />
               {/* Lớp mờ (overlay) cho những viền ngoài để làm nổi bật */}
-            <div className="absolute inset-0 bg-black/10 pointer-events-none" />
-            <div className="absolute inset-0 origin-top-left" style={{ width: 1920, height: 1080, transform: `scale(calc(100cqw / 1920))` }}>
+              <div className="absolute inset-0 bg-black/10 pointer-events-none" />
+
 
             {/* AMBIENT ANIMATIONS (Hiệu ứng môi trường làm sống động bức tranh) */}
             <style>
