@@ -113,7 +113,7 @@ export const ProfileModal: React.FC<{
 
   return (
     <div className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in" onClick={onClose}>
-      <div className="bg-stone-900 border-2 border-amber-500 rounded-3xl p-6 md:p-8 max-w-2xl w-full relative max-h-[92vh] flex flex-col shadow-2xl" onClick={e => e.stopPropagation()}>
+      <div className="bg-stone-900 border-2 border-amber-500 rounded-3xl p-6 md:p-8 max-w-2xl w-full relative max-h-[92vh] flex flex-col shadow-2xl overflow-y-auto custom-scrollbar" onClick={e => e.stopPropagation()}>
          <button onClick={onClose} className="absolute top-4 right-4 text-amber-500 hover:text-amber-300 transition-colors p-1">
             <XCircle size={28} />
          </button>
@@ -288,7 +288,7 @@ export const ProfileModal: React.FC<{
          )}
 
          {activeTab === 'giftcode' && (
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 overflow-y-auto pr-2 custom-scrollbar">
               <div className="bg-stone-800 p-6 rounded-2xl border border-stone-700 text-center">
                 <Gift size={48} className="mx-auto text-amber-500 mb-4" />
                 <h3 className="text-xl font-bold text-white mb-2">Nhận Quà Giftcode</h3>
