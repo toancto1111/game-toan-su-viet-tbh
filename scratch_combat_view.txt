@@ -1,0 +1,2605 @@
+const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active, setActive, setView, speed, setSpeed, onWin, chapter }: any) => {
+    const [turnQueue, setTurnQueue] = useState<any[]>([]);
+    
+    const handleFlee = () => {
+        if (window.confirm("Nếu rời trận xem như phe ta đã bại. Bạn có chắc chắn muốn rời trận?")) {
+            setResult('lose');
+            setActive(false);
+        }
+    };
+    const [activeAttacker, setActiveAttacker] = useState<string | null>(null);
+    const [activeTargets, setActiveTargets] = useState<string[]>([]);
+    const [activeEffect, setActiveEffect] = useState<string | null>(null);  // null = flying, 'fire'/'ice'/... = hit landed
+    const [damagePopups, setDamagePopups] = useState<{ id: string; dmg: number; key: number; isCrit?: boolean; type?: string }[]>([]);
+    
+    // Use refs so timers are NOT cancelled by useEffect cleanup on re-render
+    const t1 = React.useRef<any>(null);
+    const t2 = React.useRef<any>(null);
+    const processingRef = React.useRef(false);
+    const triggeredPassivesRef = React.useRef<Record<string, Set<string>>>({});
+    const [roundCount, setRoundCount] = useState(0);
+
+    // Initialize Turn Queue when combat becomes active
+    useEffect(() => {
+        if (active && turnQueue.length === 0 && !result) {
+            const allAllies = units.ally.filter((u: any) => u.hp > 0).map((u: any) => ({...u, isAlly: true}));
+            const allEnemies = units.enemy.filter((u: any) => u.hp > 0).map((u: any) => ({...u, isAlly: false}));
+            
+            if (allAllies.length === 0) { setResult('lose'); setActive(false); return; }
+            if (allEnemies.length === 0) { setResult('win'); setActive(false); return; }
+
+            if (roundCount >= 20) {
+                setLogs((prev: any) => [`[Hệ thống] Đã quá 20 hiệp (hiệp ${roundCount})! Quân ta kiệt sức, phải rút lui.`, ...prev].slice(0, 5));
+                setTimeout(() => {
+                    setResult('lose');
+                    setActive(false);
+                }, 1500);
+                return;
+            }
+
+            // At the start of a new round, restore 25 morale to everyone
+            if (roundCount > 0) {
+                setUnits((prev: any) => ({
+                    ally: prev.ally.map((u: any) => u.hp > 0 ? { ...u, morale: Math.min(100, (u.morale || 0) + 25) } : u),
+                    enemy: prev.enemy.map((u: any) => u.hp > 0 ? { ...u, morale: Math.min(100, (u.morale || 0) + 25) } : u),
+                }));
+            } else {
+                // Initialize morale for first round
+                setUnits((prev: any) => ({
+                    ally: prev.ally.map((u: any) => ({ ...u, morale: Math.min(100, u.initialMorale || 25) })),
+                    enemy: prev.enemy.map((u: any) => ({ ...u, morale: Math.min(100, u.initialMorale || 25) })),
+                }));
+            }
+
+            const newQueue = [...allAllies, ...allEnemies].sort((a, b) => {
+                if (b.spd !== a.spd) return b.spd - a.spd;
+                return (a.isAlly === b.isAlly) ? 0 : (a.isAlly ? 1 : -1);
+            });
+            setTurnQueue(newQueue);
+            setRoundCount(prev => prev + 1);
+            triggeredPassivesRef.current = {};
+        }
+    }, [active, turnQueue.length, result, roundCount]);
+
+    // Lấy danh sách mục tiêu dựa trên targetScope
+    const getTargets = (actor: any, scope: string, isCharmed: boolean, allUnits: any) => {
+        const isAlly = actor.faction === 'ally';
+        let enemies;
+        if (isAlly) {
+            enemies = isCharmed ? allUnits.ally.filter((u:any) => u.hp > 0 && u.id !== actor.id) : allUnits.enemy.filter((u:any) => u.hp > 0);
+        } else {
+            enemies = isCharmed ? allUnits.enemy.filter((u:any) => u.hp > 0 && u.id !== actor.id) : allUnits.ally.filter((u:any) => u.hp > 0);
+        }
+
+        if (enemies.length === 0) return [];
+
+        const frontRow = enemies.filter((u:any) => u.gridPosition < 3);
+        const backRow = enemies.filter((u:any) => u.gridPosition >= 3);
+        const activeFrontRow = frontRow.length > 0 ? frontRow : backRow; // Rơi xuống hàng sau nếu hàng trước chết hết
+
+        switch (scope) {
+            case 'front_row':
+                return activeFrontRow;
+            case 'back_row':
+                return backRow.length > 0 ? backRow : frontRow;
+            case 'column':
+                // Chọn ngẫu nhiên 1 mục tiêu hàng trước, và đánh cả mục tiêu đứng sau nó (+3)
+                const targetCol = activeFrontRow[Math.floor(Math.random() * activeFrontRow.length)];
+                const behindTarget = enemies.find((u:any) => u.gridPosition === targetCol.gridPosition + 3);
+                return behindTarget ? [targetCol, behindTarget] : [targetCol];
+            case 'all':
+                return enemies;
+            case 'single':
+            default:
+                // Ưu tiên Tiên phong (Role) nếu có trong hàng trước
+                let tanks = activeFrontRow.filter((u:any) => u.role === 'Tiên phong');
+                let pool = tanks.length > 0 ? tanks : activeFrontRow;
+                return [pool[Math.floor(Math.random() * pool.length)]];
+        }
+    };
+
+    // Process the top of the Turn Queue
+    useEffect(() => {
+        if (!active || result || turnQueue.length === 0 || processingRef.current) return;
+
+        const actor = turnQueue[0];
+        const currentActorState = actor.isAlly 
+          ? units.ally.find((u: any) => u.id === actor.id)
+          : units.enemy.find((u: any) => u.id === actor.id);
+          
+        if (!currentActorState || currentActorState.hp <= 0) {
+            setTurnQueue(prev => prev.slice(1));
+            return;
+        }
+
+        if (currentActorState.isStunned) {
+            processingRef.current = true;
+            setLogs((prev: any) => [`[Trạng thái] ${currentActorState.name} bị CHOÁNG, mất lượt đánh!`, ...prev].slice(0, 5));
+            setUnits((prev: any) => {
+               const newUnits = { ...prev };
+               const processUnit = (u: any) => u.id === actor.id ? { ...u, isStunned: false } : u;
+               if (actor.isAlly) newUnits.ally = prev.ally.map(processUnit);
+               else newUnits.enemy = prev.enemy.map(processUnit);
+               return newUnits;
+            });
+            setTimeout(() => {
+                processingRef.current = false;
+                setTurnQueue(prev => prev.slice(1));
+            }, 1000 / speed);
+            return;
+        }
+
+        const isUltimate = currentActorState.morale >= 100;
+        const targetScope = isUltimate ? (currentActorState.targetScope || 'single') : 'single';
+        const isCharmed = currentActorState.isCharmed;
+
+        const targets = getTargets(currentActorState, targetScope, isCharmed, units);
+        if (targets.length === 0) {
+            setTurnQueue([]);
+            return;
+        }
+
+        const totalDur = Math.round(5000 / speed);
+        const hitAt    = Math.round(totalDur * 0.40);
+        const resetAt  = Math.round(totalDur * 0.75);
+
+        processingRef.current = true;
+
+        setActiveAttacker(actor.id);
+        setActiveTargets(targets.map((t:any) => t.id));
+        setActiveEffect(null);
+        setDamagePopups([]);
+
+        t1.current = setTimeout(() => {
+            const popups: any[] = [];
+            let logMsg = `[SPD ${actor.spd}] ${actor.name} ${isCharmed ? '(mê hoặc) ' : ''}`;
+            
+            if (isUltimate) {
+                logMsg += `tung tuyệt chiêu ${currentActorState.skillName || 'sấm sét'}! `;
+            } else {
+                logMsg += `đánh thường. `;
+            }
+
+            let nextUnits = { ...units };
+            
+            // Trừ nộ nếu dùng Ultimate
+            if (isUltimate) {
+                const processUnit = (u: any) => u.id === actor.id ? { ...u, morale: 0 } : u;
+                if (actor.isAlly) nextUnits.ally = nextUnits.ally.map(processUnit);
+                else nextUnits.enemy = nextUnits.enemy.map(processUnit);
+            }
+
+            targets.forEach((target: any, idx: number) => {
+                // Cân bằng lại sát thương: 
+                // Tăng sát thương cơ bản và hệ số hên xui (variance) để trong 20 lượt,
+                // người chơi yếu hơn 1 chút vẫn có cơ hội thắng nhờ may mắn (bạo kích hoặc roll sát thương cao).
+                const baseDamage = isUltimate ? (currentActorState.atk * 12) : (currentActorState.atk * 6.5);
+                const variance   = Math.floor(Math.random() * (currentActorState.atk * 2.0)); // Độ biến thiên sát thương cao (hên xui)
+                let damage     = Math.floor(baseDamage + variance);
+                
+                // Crit logic
+                let critChance = 15; // Tăng một chút tỷ lệ bạo kích cơ bản (15%)
+                let critMultiplier = 1.5;
+                const isCrit = Math.random() * 100 < critChance;
+                if (isCrit) damage = Math.floor(damage * critMultiplier);
+                
+                // Def logic
+                const dmgReduction = Math.min(0.9, target.def / (target.def + currentActorState.atk * 2 + 500));
+                damage = Math.floor(damage * (1 - dmgReduction));
+                if (damage < 1) damage = 1;
+
+                popups.push({ id: target.id, dmg: damage, key: Date.now() + idx, isCrit });
+                logMsg += `Gây ${damage} sát thương cho ${target.name}. `;
+                
+                const processTarget = (u: any) => {
+                    if (u.id === target.id) {
+                        return { ...u, hp: Math.max(0, u.hp - damage) };
+                    }
+                    return u;
+                };
+
+                const targetIsAlly = actor.isAlly ? isCharmed : !isCharmed;
+                if (targetIsAlly) nextUnits.ally = nextUnits.ally.map(processTarget);
+                else nextUnits.enemy = nextUnits.enemy.map(processTarget);
+            });
+
+            setLogs((prev: any) => [logMsg, ...prev].slice(0, 5));
+            setActiveEffect(isUltimate ? (currentActorState.role === 'Khống chế' ? 'ice' : 'fire') : 'slash');
+            setDamagePopups(popups);
+            setUnits(nextUnits);
+
+        }, hitAt);
+
+        t2.current = setTimeout(() => {
+            setActiveAttacker(null);
+            setActiveTargets([]);
+            setActiveEffect(null);
+            setDamagePopups([]);
+            processingRef.current = false;
+            setTurnQueue(prev => prev.slice(1));
+        }, resetAt);
+
+    }, [turnQueue, active, result]);
+
+    const getTargetClass = (id: string, isAlly: boolean) => {
+        if (!activeAttacker && !activeTargets.includes(id)) return '';
+        if (activeAttacker === id) {
+            return isAlly ? 'z-50 animate-attackMoveRight drop-shadow-[0_0_15px_rgba(234,179,8,0.8)]' : 'z-50 animate-attackMoveLeft drop-shadow-[0_0_15px_rgba(239,68,68,0.8)]';
+        }
+        if (activeTargets.includes(id)) {
+            if (activeEffect === 'fire') return 'animate-shake drop-shadow-[0_0_40px_rgba(239,68,68,1)]';
+            if (activeEffect === 'ice') return 'animate-shake drop-shadow-[0_0_40px_rgba(59,130,246,1)]';
+            if (activeEffect === 'slash') return 'animate-shake drop-shadow-[0_0_40px_rgba(255,255,255,1)]';
+        }
+        return 'transition-transform duration-300';
+    };
+
+    const renderGrid = (factionUnits: any[], isAlly: boolean) => {
+        // Grid 6 slots
+        const slots = [0, 1, 2, 3, 4, 5];
+        return (
+            <div className={`grid grid-cols-2 gap-2 md:gap-4 lg:gap-4 ${isAlly ? 'order-1' : 'order-2'} w-full sm:w-[40%] md:w-[35%]`}>
+                {slots.map(idx => {
+                    const unit = factionUnits.find(u => u.gridPosition === idx);
+                    if (!unit) {
+                        return <div key={idx} className="w-16 h-24 sm:w-20 sm:h-28 md:w-28 md:h-36 lg:w-28 lg:h-40 border-2 border-dashed border-white/10 rounded-xl bg-black/20" />;
+                    }
+                    
+                    const hpPercent = Math.max(0, (unit.hp / unit.maxHp) * 100);
+                    const moralePercent = Math.max(0, ((unit.morale || 0) / 100) * 100);
+                    const isDead = unit.hp <= 0;
+                    const popups = damagePopups.filter(p => p.id === unit.id);
+
+                    return (
+                        <div key={unit.id} className={`relative flex flex-col items-center justify-end ${isDead ? 'opacity-30 grayscale blur-[2px]' : ''} ${getTargetClass(unit.id, isAlly)} transition-all duration-300 w-16 h-24 sm:w-20 sm:h-28 md:w-28 md:h-36 lg:w-28 lg:h-40 mx-auto`}>
+                            {popups.map(popup => (
+                                <div key={popup.key} className={`absolute -top-6 left-1/2 -translate-x-1/2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-black ${popup.isCrit ? 'text-yellow-400 drop-shadow-[0_0_8px_rgba(234,179,8,1)] animate-critPopup' : 'text-red-500 drop-shadow-[0_0_5px_rgba(0,0,0,1)] animate-damagePopup'} z-50 whitespace-nowrap`}>
+                                    -{popup.dmg} {popup.isCrit ? 'CRIT!' : ''}
+                                </div>
+                            ))}
+                            {activeEffect && activeTargets.includes(unit.id) && (
+                                <div className="absolute inset-0 z-40 pointer-events-none flex items-center justify-center">
+                                    {activeEffect === 'fire' && <div className="w-full h-full bg-red-500/40 rounded-xl animate-pulse mix-blend-color-dodge"></div>}
+                                    {activeEffect === 'ice' && <div className="w-full h-full bg-blue-500/40 rounded-xl animate-pulse mix-blend-color-dodge"></div>}
+                                    {activeEffect === 'slash' && <div className="w-[120%] h-[10px] bg-white rotate-45 animate-slashEffect shadow-[0_0_10px_white]"></div>}
+                                </div>
+                            )}
+
+                            <div className="w-full h-full relative rounded-xl overflow-hidden border-2 border-amber-900/40 shadow-xl bg-stone-900">
+                                <img src={unit.image} className="w-full h-full object-cover" alt={unit.name} onError={(e) => { (e.target as HTMLImageElement).src = unit.faction === 'enemy' ? DEFAULT_ENEMY_IMG : DEFAULT_ALLY_IMG; }} />
+                                
+                                {unit.isStunned && (
+                                    <div className="absolute -top-3 right-0 text-xl animate-bounce drop-shadow-md z-30">😵</div>
+                                )}
+                                {unit.isCharmed && (
+                                    <div className="absolute -top-3 left-0 text-xl animate-pulse drop-shadow-md z-30">💖</div>
+                                )}
+
+                                <div className="absolute bottom-0 left-0 right-0 bg-black/80 px-1 py-1 z-20">
+                                    <div className="text-[8px] sm:text-[9px] md:text-[10px] text-amber-400 font-cinzel font-black uppercase truncate text-center mb-0.5">{unit.name}</div>
+                                    <div className="w-full h-1 sm:h-1.5 bg-red-950 rounded-full overflow-hidden mb-0.5">
+                                        <div className="h-full bg-gradient-to-r from-red-600 to-red-400 transition-all duration-300" style={{ width: `${hpPercent}%` }}></div>
+                                    </div>
+                                    <div className="w-full h-1 sm:h-1 bg-blue-950 rounded-full overflow-hidden">
+                                        <div className="h-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all duration-300" style={{ width: `${moralePercent}%` }}></div>
+                                    </div>
+                                </div>
+                                <div className="absolute top-1 left-1 bg-black/60 px-1 rounded text-[8px] text-white font-bold">{unit.role || 'Sát thủ'}</div>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    };
+
+    return (
+        <div className="fixed inset-0 z-50 bg-stone-950 flex flex-col font-sans overflow-hidden">
+            <style>{`
+                @keyframes attackMoveRight {
+                    0% { transform: translateX(0) scale(1); z-index: 100; }
+                    20% { transform: translateX(20px) scale(1.1); z-index: 100; }
+                    80% { transform: translateX(20px) scale(1.1); z-index: 100; }
+                    100% { transform: translateX(0) scale(1); z-index: 50; }
+                }
+                @keyframes attackMoveLeft {
+                    0% { transform: translateX(0) scale(1); z-index: 100; }
+                    20% { transform: translateX(-20px) scale(1.1); z-index: 100; }
+                    80% { transform: translateX(-20px) scale(1.1); z-index: 100; }
+                    100% { transform: translateX(0) scale(1); z-index: 50; }
+                }
+                @keyframes damagePopup {
+                    0% { opacity: 0; transform: translate(-50%, 0) scale(0.5); }
+                    20% { opacity: 1; transform: translate(-50%, -20px) scale(1.2); }
+                    80% { opacity: 1; transform: translate(-50%, -30px) scale(1); }
+                    100% { opacity: 0; transform: translate(-50%, -40px) scale(0.8); }
+                }
+                @keyframes critPopup {
+                    0% { opacity: 0; transform: translate(-50%, 0) scale(0.5); color: #fff; }
+                    20% { opacity: 1; transform: translate(-50%, -30px) scale(1.5) rotate(-5deg); color: #fde047; }
+                    40% { transform: translate(-50%, -30px) scale(1.3) rotate(5deg); }
+                    80% { opacity: 1; transform: translate(-50%, -40px) scale(1.1) rotate(0); }
+                    100% { opacity: 0; transform: translate(-50%, -50px) scale(0.8); }
+                }
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    25% { transform: translateX(-5px) rotate(-2deg); }
+                    75% { transform: translateX(5px) rotate(2deg); }
+                }
+                @keyframes slashEffect {
+                    0% { opacity: 0; transform: rotate(45deg) scaleX(0); }
+                    50% { opacity: 1; transform: rotate(45deg) scaleX(1); }
+                    100% { opacity: 0; transform: rotate(45deg) scaleX(1.5); }
+                }
+            `}</style>
+            
+            <div className="h-12 sm:h-14 bg-gradient-to-r from-stone-950 via-red-950/40 to-stone-950 border-b border-red-900/30 flex items-center justify-between px-2 sm:px-4 shrink-0 shadow-md">
+                <button onClick={handleFlee} className="text-stone-400 hover:text-white transition-colors flex items-center gap-1 sm:gap-2 text-xs sm:text-sm font-bold bg-stone-900 px-2 sm:px-3 py-1 rounded-md border border-stone-700">
+                    <Flag size={14} className="text-red-500" /> Rút lui
+                </button>
+                <div className="text-sm sm:text-base md:text-lg font-cinzel text-red-500 font-black tracking-widest uppercase drop-shadow-[0_0_8px_rgba(239,68,68,0.5)] flex items-center gap-2">
+                    <SwordIcon size={18} className="animate-pulse" /> Giao Tranh <SwordIcon size={18} className="animate-pulse" />
+                </div>
+                <div className="flex gap-1 sm:gap-2">
+                    <button onClick={() => setSpeed(s => s === 1 ? 2 : (s === 2 ? 4 : 1))} className="text-stone-300 font-black text-[10px] sm:text-xs bg-stone-800 px-2 sm:px-3 py-1 rounded-md border border-stone-600 hover:bg-stone-700 w-12 sm:w-16 text-center">
+                        x{speed}
+                    </button>
+                </div>
+            </div>
+
+            <div className="flex-1 relative flex flex-col md:flex-row p-2 sm:p-4 md:p-8 justify-center items-center gap-4 md:gap-16 lg:gap-24 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-stone-900 via-stone-950 to-black overflow-y-auto">
+                {renderGrid(units.ally, true)}
+                <div className="hidden md:flex order-2 flex-col items-center justify-center pointer-events-none select-none z-0 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20">
+                    <div className="text-6xl text-red-700 font-cinzel font-black">VS</div>
+                </div>
+                {renderGrid(units.enemy, false)}
+            </div>
+
+            {/* Turn Queue UI */}
+            <div className="h-16 sm:h-20 bg-stone-950 border-t border-stone-800 flex items-center px-4 overflow-x-auto custom-scrollbar gap-2 shrink-0">
+                <div className="text-[10px] font-bold text-stone-500 uppercase mr-2 whitespace-nowrap shrink-0">Lượt đánh (Hiệp {roundCount})</div>
+                {turnQueue.map((u, i) => (
+                    <div key={i} className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 overflow-hidden shrink-0 transition-all ${i === 0 ? 'border-yellow-400 scale-125 shadow-[0_0_10px_rgba(250,204,21,0.5)] z-10' : (u.isAlly ? 'border-blue-500/50 opacity-60' : 'border-red-500/50 opacity-60')}`}>
+                        <img src={u.image} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).src = !u.isAlly ? DEFAULT_ENEMY_IMG : DEFAULT_ALLY_IMG; }} />
+                    </div>
+                ))}
+            </div>
+
+            {/* Combat Logs UI */}
+            <div className="h-24 sm:h-32 bg-stone-950 border-t border-stone-900 p-2 sm:p-3 overflow-hidden shrink-0 flex flex-col-reverse text-[10px] sm:text-xs">
+                {logs.map((log: string, i: number) => (
+                    <div key={i} className={`mb-1 truncate ${i === 0 ? 'text-amber-400 font-bold' : 'text-stone-500'}`}>
+                        {log}
+                    </div>
+                ))}
+            </div>
+
+            {result && (
+                <div className="absolute inset-0 bg-black/80 flex items-center justify-center z-[100] backdrop-blur-sm animate-in fade-in duration-500 p-4">
+                    <div className="bg-gradient-to-b from-stone-900 to-stone-950 p-6 sm:p-10 rounded-[2rem] border-2 shadow-2xl text-center max-w-sm w-full animate-in zoom-in-95 duration-500 ease-out border-amber-900/50">
+                        <div className={`text-3xl sm:text-5xl font-cinzel font-black uppercase tracking-widest mb-2 sm:mb-4 drop-shadow-[0_0_15px_currentColor] ${result === 'win' ? 'text-yellow-500' : 'text-stone-500'}`}>
+                            {result === 'win' ? 'CHIẾN THẮNG' : 'THẤT BẠI'}
+                        </div>
+                        <p className="text-stone-400 text-xs sm:text-sm mb-6 sm:mb-8 italic">{result === 'win' ? 'Quân địch đã bị tiêu diệt hoàn toàn!' : 'Đội hình của bạn đã bị đập tan.'}</p>
+                        
+                        <div className="flex flex-col gap-3">
+                            {result === 'win' && onWin && (
+                                <button onClick={() => { setActive(false); onWin(); }} className="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-black uppercase py-3 sm:py-4 rounded-xl shadow-[0_0_20px_rgba(217,119,6,0.4)] transition-all active:scale-95 text-xs sm:text-sm border border-amber-500/50">
+                                    Nhận Thưởng & Đi Tiếp
+                                </button>
+                            )}
+                            <button onClick={() => { setActive(false); setView('chapter-hub'); }} className="bg-stone-800 hover:bg-stone-700 text-stone-300 font-black uppercase py-3 sm:py-4 rounded-xl shadow-lg transition-all active:scale-95 text-xs sm:text-sm border border-stone-600">
+                                Trở về Trại
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+
+const ArtifactDetailModal = ({ artifact, onClose }: any) => {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
+  // Split description to separate stats and lore
+  const descParts = (artifact.description || '').split('. ');
+  const hasAttributesInDesc = descParts.length > 1;
+  const attributesStr = hasAttributesInDesc ? descParts[0] : '';
+  const loreStr = hasAttributesInDesc ? descParts.slice(1).join('. ') : artifact.description;
+
+  let exclusiveHeroNames = '';
+  if (artifact.exclusiveTo && artifact.exclusiveTo.length > 0) {
+      const heroes = artifact.exclusiveTo.map((id: string) => INITIAL_HEROES.find(h => h.id === id) || ENEMY_HEROES.find(h => h.id === id)).filter(Boolean);
+      exclusiveHeroNames = heroes.map((h: any) => h.name).join(' và ');
+  }
+
+  return (
+    <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-6 backdrop-blur-sm animate-in fade-in duration-300" onClick={onClose}>
+      <div className="bg-gradient-to-b from-stone-900 to-stone-950 max-w-sm w-full p-8 rounded-[3rem] shadow-[0_0_50px_rgba(245,158,11,0.2)] border-2 border-amber-600/50 text-center relative max-h-[90vh] overflow-y-auto custom-scrollbar" onClick={e => e.stopPropagation()}>
+        <button onClick={onClose} className="absolute top-4 right-4 text-stone-400 hover:text-white transition-colors text-2xl font-black leading-none">✕</button>
+        <h3 className="text-2xl font-cinzel font-black uppercase mb-2 text-amber-500 drop-shadow-md">{artifact.name || 'Thần Khí'}</h3>
+        <p className="text-stone-300 text-sm mb-4 font-bold italic">{loreStr}</p>
+        
+        {exclusiveHeroNames && (
+          <div className="bg-amber-900/20 text-amber-500 text-xs p-3 rounded-xl border border-amber-500/30 mb-6 text-left">
+             <span className="font-bold">Thần khí bản mệnh của {exclusiveHeroNames}</span>
+             <p className="mt-1 opacity-80 text-[10px]">(chỉ có tác dụng khi {exclusiveHeroNames} lên trận và người chơi sở hữu thần khí này)</p>
+          </div>
+        )}
+
+        <div className="w-32 h-32 mx-auto bg-stone-800 rounded-full flex items-center justify-center border-4 border-amber-700 shadow-[0_0_30px_rgba(245,158,11,0.4)] mb-6 overflow-hidden">
+           <img src={artifact.image || './items/artifact_ticket.png'} className="w-full h-full object-cover scale-110" alt={artifact.name} />
+        </div>
+        
+        {attributesStr && (
+          <div className="bg-black/40 rounded-2xl p-4 border border-stone-700/50 mb-3 text-left">
+              <h4 className="text-stone-400 text-xs font-black uppercase tracking-wider mb-2">Thuộc tính</h4>
+              <p className="text-white text-sm font-bold">{attributesStr}</p>
+          </div>
+        )}
+
+        <div className="bg-black/40 rounded-2xl p-4 border border-stone-700/50 mb-2 text-left">
+            <h4 className="text-stone-400 text-xs font-black uppercase tracking-wider mb-2">Hiệu ứng đặc biệt</h4>
+            <p className="text-green-400 text-sm font-bold">{artifact.effectDesc || 'Tăng cường sức mạnh cho tướng sở hữu'}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () => void, actions?: React.ReactNode }) => {
+  const [showRoadmapModal, setShowRoadmapModal] = useState(false);
+  const [activeTooltip, setActiveTooltip] = useState<{name: string, desc: string, x: number, y: number} | null>(null);
+
+  // Nhấn Esc để đóng modal
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [onClose]);
+
+  const rarityColor: Record<string, string> = {
+    'UR':  'from-yellow-900/95 to-stone-950 border-yellow-500 shadow-[0_0_40px_rgba(234,179,8,0.5)]',
+    'SSR': 'from-red-900/95 to-stone-950 border-red-600 shadow-[0_0_35px_rgba(220,38,38,0.5)]',
+    'SR':  'from-purple-900/95 to-stone-950 border-purple-500 shadow-[0_0_30px_rgba(168,85,247,0.4)]',
+    'R':   'from-blue-900/95 to-stone-950 border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.3)]',
+    'C':   'from-green-900/95 to-stone-950 border-green-600 shadow-[0_0_15px_rgba(22,163,74,0.4)]',
+  };
+  const rarityTextColor: Record<string, string> = {
+    'UR': 'text-yellow-400', 'SSR': 'text-red-400', 'SR': 'text-purple-400',
+    'R': 'text-blue-400', 'C': 'text-green-400',
+  };
+  const rarityGlow: Record<string, string> = {
+    'UR': 'drop-shadow-[0_0_20px_rgba(234,179,8,0.8)]',
+    'SSR': 'drop-shadow-[0_0_16px_rgba(220,38,38,0.7)]',
+    'SR':  'drop-shadow-[0_0_12px_rgba(168,85,247,0.6)]',
+    'R':   'drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]',
+    'C':   'drop-shadow-[0_0_8px_rgba(22,163,74,0.5)]',
+  };
+  const cardGradient = rarityColor[hero.rarity] || rarityColor['C'];
+  const textColor    = rarityTextColor[hero.rarity] || 'text-amber-400';
+  const glowClass    = rarityGlow[hero.rarity] || '';
+
+  let equippedArtifact = hero.artifactId ? ARTIFACTS.find(a => a.id === hero.artifactId) : null;
+  let isSignature = false;
+
+  if (!equippedArtifact) {
+    const signatureArt = ARTIFACTS.find(a => a.exclusiveTo?.includes(hero.id) || a.exclusiveTo?.some(id => hero.id.startsWith(id + '_')));
+    if (signatureArt) {
+       equippedArtifact = signatureArt;
+       isSignature = true;
+    }
+  }
+
+  // Only apply bonus stats if the artifact is actually equipped (not just a signature preview) AND it belongs to this hero
+  const isCorrectHero = equippedArtifact && (equippedArtifact.exclusiveTo?.includes(hero.id) || equippedArtifact.exclusiveTo?.some(id => hero.id.startsWith(id + '_')));
+  const shouldApplyStats = equippedArtifact && (!isSignature) && isCorrectHero;
+
+  const bonusAtk = shouldApplyStats ? (equippedArtifact.bonusAtk || 0) + Math.floor(hero.atk * ((equippedArtifact.bonusAtkPc || 0) / 100)) : 0;
+  const bonusDef = shouldApplyStats ? (equippedArtifact.bonusDef || 0) + Math.floor(hero.def * ((equippedArtifact.bonusDefPc || 0) / 100)) : 0;
+  const bonusSpd = shouldApplyStats ? (equippedArtifact.bonusSpd || 0) + Math.floor(hero.spd * ((equippedArtifact.bonusSpdPc || 0) / 100)) : 0;
+  const bonusHp = shouldApplyStats ? (equippedArtifact.bonusHp || 0) + Math.floor(hero.maxHp * ((equippedArtifact.bonusHpPc || 0) / 100)) : 0;
+
+  return (
+    <div
+      className="fixed inset-0 z-[200] bg-black/85 backdrop-blur-md flex items-center justify-center p-3 animate-in fade-in duration-200"
+      onClick={onClose}
+    >
+      <div
+        className={`relative w-full max-w-3xl max-h-[92vh] bg-gradient-to-br ${cardGradient} border-2 rounded-[2rem] overflow-hidden animate-in zoom-in-90 duration-300 flex flex-col`}
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Nút đóng */}
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-black/70 flex items-center justify-center text-stone-400 hover:text-white hover:bg-red-900/80 transition-all border border-white/10"
+        >
+          <XCircle size={20}/>
+        </button>
+
+        {/* Layout: ảnh trái + info phải (desktop) / ảnh trên + info dưới (mobile) */}
+        <div className="flex flex-col md:flex-row flex-1 min-h-0">
+          {/* ===== CỘT ẢNH ===== */}
+          <div className="md:w-64 flex-shrink-0 relative bg-black/40 flex flex-col items-center justify-center p-3" style={{minHeight: '280px'}}>
+             <div className={`relative w-full h-64 md:h-full max-h-[380px] rounded-xl ${getStarBorderClass(hero.star)}`}>
+               <img
+                 src={hero.image}
+                 className={`w-full h-full object-contain object-center ${glowClass} relative z-10`}
+                 onError={(e) => { (e.target as HTMLImageElement).src = hero.faction === 'enemy' ? DEFAULT_ENEMY_IMG : DEFAULT_ALLY_IMG; }}
+                 alt={hero.name}
+               />
+             </div>
+             {/* Nút bấm Xem 30 Cảnh Giới ngay dưới ảnh tướng */}
+             <button
+               onClick={() => setShowRoadmapModal(true)}
+               className="w-full mt-3 py-2.5 px-2 bg-gradient-to-r from-amber-950 via-stone-900 to-amber-950 hover:from-amber-900 hover:to-stone-800 text-amber-300 border border-amber-500/60 rounded-xl font-cinzel font-black text-[11px] uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-lg transition-all active:scale-95 z-20 cursor-pointer"
+             >
+                <ScrollText size={16} className="text-amber-400 shrink-0" />
+                <span>Cảnh Giới Thiên Phú (1-30)</span>
+             </button>
+            {/* Gradient dưới ảnh (desktop) */}
+            <div className="hidden md:block absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"/>
+            {/* Badge phẩm */}
+            <div className={`absolute top-2 left-2 text-[9px] font-black px-2 py-0.5 rounded-full bg-black/85 border border-white/10 ${textColor} tracking-widest uppercase`}>
+              {hero.rarity}
+            </div>
+          </div>
+
+          {/* ===== CỘT THÔNG TIN ===== */}
+          <div className="flex-1 p-5 flex flex-col gap-3 overflow-y-auto min-h-0" style={{maxHeight: '92vh'}}>
+            {/* Tên & danh hiệu */}
+            <div>
+              <h2 className={`text-2xl font-cinzel font-black uppercase tracking-wide ${textColor} leading-tight`}>{hero.name}</h2>
+              <HeroStars starCount={hero.star} size={12} className="mt-1.5" />
+              <p className="text-stone-400 text-[11px] font-bold uppercase tracking-widest mt-0.5">✦ {hero.title} ✦</p>
+            </div>
+
+            {/* Chỉ số chiến đấu */}
+            <div className="bg-black/40 rounded-2xl p-3.5 border border-white/5">
+              <p className="text-[9px] font-black uppercase text-stone-500 tracking-widest mb-2.5">Chỉ Số Chiến Đấu</p>
+              <div className="grid grid-cols-2 gap-2.5">
+                <StatBar label="⚔ Tấn Công" value={hero.atk} bonus={bonusAtk} max={100} color="bg-red-500" />
+                <StatBar label="🛡 Phòng Thủ" value={hero.def} bonus={bonusDef} max={100} color="bg-blue-500" />
+                <StatBar label="⚡ Tốc Độ" value={hero.spd - 100} bonus={bonusSpd} max={40} color="bg-yellow-400" />
+                <StatBar label="💖 Máu" value={hero.maxHp} bonus={bonusHp} max={10000} color="bg-emerald-500" isHp />
+              </div>
+              <div className="mt-2.5 flex justify-between items-center border-t border-white/5 pt-2.5">
+                <span className="text-[9px] text-stone-500 font-bold uppercase tracking-widest">Lực chiến tổng</span>
+                <span className={`text-lg font-black ${textColor}`}>{hero.overall}</span>
+              </div>
+            </div>
+
+            {/* Kỹ năng đánh thường */}
+            <div className="bg-black/40 rounded-2xl p-3.5 border border-white/5">
+              <p className="text-[9px] font-black uppercase text-stone-500 tracking-widest mb-1.5">🗡 Kỹ Năng Đánh Thường</p>
+              <p className={`font-black text-sm ${textColor} mb-1`}>Công Kích Cơ Bản</p>
+              <p className="text-stone-400 text-[11px] leading-relaxed">Gây sát thương bằng 100% Tấn công lên 1 mục tiêu địch.</p>
+            </div>
+
+            {/* Kỹ năng nộ khí */}
+            <div className="bg-black/40 rounded-2xl p-3.5 border border-white/5 border-l-4 border-l-amber-500/80">
+              <p className="text-[9px] font-black uppercase text-amber-500/80 tracking-widest mb-1.5">⚡ Kỹ Năng Nộ Khí</p>
+              <p className={`font-black text-sm ${textColor} mb-1`}>{hero.skillName}</p>
+              <p className="text-stone-400 text-[11px] leading-relaxed">{hero.skillDesc}</p>
+            </div>
+
+            {/* Thần Khí */}
+            {equippedArtifact && (
+              <div className={`bg-black/40 rounded-2xl p-3.5 border flex gap-3 items-center relative overflow-hidden ${isSignature ? 'border-stone-700/50 opacity-60 grayscale-[0.8]' : 'border-amber-500/50 shadow-[0_0_15px_rgba(245,158,11,0.2)]'}`}>
+                 <div className={`absolute inset-0 bg-gradient-to-r to-transparent pointer-events-none ${isSignature ? 'from-stone-900/30' : 'from-amber-900/20'}`}/>
+                 <img src={equippedArtifact.image} alt={equippedArtifact.name} className={`w-12 h-12 object-cover rounded-lg border z-10 ${isSignature ? 'border-stone-600' : 'border-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.5)]'}`} />
+                 <div className="z-10 flex-1">
+                    <p className={`text-[9px] font-black uppercase tracking-widest mb-0.5 ${isSignature ? 'text-stone-400' : 'text-amber-500'}`}>
+                       ✨ Thần Khí Bản Mệnh {isSignature ? '(Chưa Trang Bị)' : '(Đã Kích Hoạt)'}
+                    </p>
+                    <p className={`font-bold text-sm ${isSignature ? 'text-stone-400' : 'text-amber-200'}`}>{equippedArtifact.name}</p>
+                    <p className={`text-[10px] leading-relaxed mt-0.5 ${isSignature ? 'text-stone-500' : 'text-amber-100/70'}`}>{equippedArtifact.description}</p>
+                    {(!isCorrectHero && !isSignature) && (
+                       <p className="text-red-400 text-[8px] font-black uppercase mt-1 bg-red-900/20 px-1 py-0.5 rounded inline-block">
+                          ⚠️ Lắp sai chủ nhân - Không có tác dụng
+                       </p>
+                    )}
+                 </div>
+              </div>
+            )}
+
+            {/* Mô tả lịch sử */}
+            <div className="bg-black/40 rounded-2xl p-3.5 border border-white/5">
+              <p className="text-[9px] font-black uppercase text-stone-500 tracking-widest mb-1.5">📜 Lịch Sử</p>
+              <p className="text-stone-300 text-[11px] leading-relaxed">{hero.description}</p>
+            </div>
+
+            {/* Duyên Phận */}
+            {SYNERGIES.filter(s => s.heroIds.some(reqId => hero.id === reqId || hero.id.startsWith(reqId + '_'))).length > 0 && (
+              <div className="bg-black/40 rounded-2xl p-3.5 border border-amber-500/20">
+                <p className="text-[9px] font-black uppercase text-amber-500 tracking-widest mb-2 flex items-center gap-1">🤝 Duyên Phận</p>
+                <div className="flex flex-col gap-2.5">
+                  {SYNERGIES.filter(s => s.heroIds.some(reqId => hero.id === reqId || hero.id.startsWith(reqId + '_'))).map(syn => (
+                     <div key={syn.id} className="border-l-2 border-amber-500/50 pl-2.5">
+                        <p className={`font-bold text-[11px] ${textColor}`}>{syn.name}</p>
+                        <p className="text-stone-300 text-[10px] leading-relaxed mt-0.5">{syn.description}</p>
+                     </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Phe & Chương */}
+            <div className="flex gap-2">
+              <div className="flex-1 bg-black/40 rounded-xl p-2.5 border border-white/5 text-center">
+                <p className="text-[8px] text-stone-600 font-bold uppercase tracking-widest mb-0.5">Phe</p>
+                <p className={`font-black text-xs ${hero.faction === 'ally' ? 'text-emerald-400' : 'text-red-400'}`}>
+                  {hero.faction === 'ally' ? '🟢 Ta' : '🔴 Địch'}
+                </p>
+              </div>
+              <div className="flex-1 bg-black/40 rounded-xl p-2.5 border border-white/5 text-center">
+                <p className="text-[8px] text-stone-600 font-bold uppercase tracking-widest mb-0.5">Chương</p>
+                <p className="font-black text-xs text-amber-400">{hero.chapter}</p>
+              </div>
+              {hero.initialMorale > 0 && (
+                <div className="flex-1 bg-black/40 rounded-xl p-2.5 border border-white/5 text-center">
+                  <p className="text-[8px] text-stone-600 font-bold uppercase tracking-widest mb-0.5">Nhuệ Đầu</p>
+                  <p className="font-black text-xs text-purple-400">+{hero.initialMorale}</p>
+                </div>
+              )}
+            </div>
+             {actions}
+          </div>
+        </div>
+      </div>
+
+      {/* Modal Popup Con Đường 30 Cảnh Giới */}
+      {showRoadmapModal && (
+        <div className="fixed inset-0 z-[300] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in" onClick={() => setShowRoadmapModal(false)}>
+          <div className="bg-stone-950 border-2 border-amber-500 rounded-3xl p-6 max-w-xl w-full relative max-h-[85vh] flex flex-col shadow-2xl" onClick={e => e.stopPropagation()}>
+             <button onClick={() => setShowRoadmapModal(false)} className="absolute top-4 right-4 text-stone-400 hover:text-white transition-colors">
+                <XCircle size={24} />
+             </button>
+             <h3 className="text-xl font-cinzel font-black text-amber-400 text-center mb-1">📜 Cảnh Giới Thiên Phú Tối Thượng</h3>
+             <p className="text-center text-xs text-stone-400 font-bold mb-4">{hero.name} · Cấp Cảnh Giới Hiện Tại: <span className="text-amber-400 font-black">{Math.min(RARITY_MAX_STARS[hero.rarity] || 30, hero.star)}/{RARITY_MAX_STARS[hero.rarity] || 30}</span></p>
+
+             <div className="mb-4 bg-black/40 rounded-2xl p-3 border border-white/5 shrink-0">
+               <p className="text-[10px] font-black uppercase text-amber-500 tracking-widest mb-2 text-center">🌟 {RARITY_MAX_PASSIVES[hero.rarity] || 0} Thiên Phú Bẩm Sinh (Thức tỉnh theo mốc Sao)</p>
+               <div className="grid grid-cols-2 gap-2">
+                 {getHeroPassives(hero as any).length > 0 ? getHeroPassives(hero as any).map((passive, index) => {
+                    const unlockStar = 6 + index * 5;
+                    const isUnlocked = hero.star >= unlockStar;
+                    const tierColors = ['text-red-400', 'text-purple-400', 'text-white', 'text-amber-400'];
+                    const color = tierColors[index];
+                    return (
+                       <div key={passive.id} className={`flex flex-col p-2.5 rounded-xl border ${!isUnlocked ? 'bg-black/30 border-white/5 opacity-50 grayscale' : 'bg-amber-950/20 border-amber-500/30 shadow-[0_0_10px_rgba(245,158,11,0.1)]'}`}>
+                          <div className="flex justify-between items-center mb-1.5">
+                             <span 
+                               className={`font-black text-xs ${color} uppercase drop-shadow-md flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity border-b border-dashed`}
+                               title={passive.desc}
+                               onClick={(e) => { e.stopPropagation(); setActiveTooltip({ name: '✦ ' + passive.name, desc: passive.desc, x: e.clientX, y: e.clientY }); }}
+                             >
+                                ✦ {passive.name}
+                             </span>
+                             {isUnlocked ? (
+                               <span className="text-[8px] text-emerald-400 font-black bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-500/30">ĐÃ KÍCH HOẠT</span>
+                             ) : (
+                               <span className="text-[8px] text-stone-500 font-bold bg-stone-900 px-1.5 py-0.5 rounded border border-white/5">MỐC {unlockStar} SAO</span>
+                             )}
+                          </div>
+                          <span className="text-[10px] text-stone-300 leading-relaxed">{passive.desc}</span>
+                       </div>
+                    );
+                 }) : (
+                    <div className="col-span-2 text-center py-4 text-xs font-bold text-stone-500">
+                       Tướng phẩm chất {hero.rarity} không sở hữu Thiên Phú bẩm sinh.
+                    </div>
+                 )}
+               </div>
+             </div>
+
+             <p className="text-[10px] font-black uppercase text-stone-500 tracking-widest mb-2 flex-shrink-0">📜 Trình tự nâng cấp {RARITY_MAX_STARS[hero.rarity] || 30} Cảnh Giới</p>
+             <div className="flex-1 overflow-y-auto space-y-2 pr-1 custom-scrollbar">
+                {getStarRoadmap(hero).map(item => (
+                  <div key={item.star} className={`p-3 rounded-xl border text-xs flex flex-col gap-1 ${item.isUnlocked ? 'bg-amber-950/40 border-amber-500/40 text-stone-200' : 'bg-black/30 border-white/5 opacity-45 text-stone-500'}`}>
+                    <div className="flex items-center justify-between font-bold">
+                       <span className="flex items-center gap-2">
+                          <span>{item.iconName}</span>
+                          <span className={item.isUnlocked ? item.tierColor : 'text-stone-500'}>{item.title}</span>
+                       </span>
+                       {item.isUnlocked ? (
+                          <span className="text-[9px] font-black text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-500/30">✓ ĐÃ ĐẠT</span>
+                       ) : (
+                          <span className="text-[9px] font-bold text-stone-600">CHƯA ĐẠT</span>
+                       )}
+                    </div>
+                    <p className="text-[11px] text-stone-300 leading-relaxed mt-0.5">
+                       {item.passiveName ? (
+                         <>
+                           {item.effect.split(`[${item.passiveName}]`)[0]}
+                           <span 
+                             className={`${item.passiveColor} font-black cursor-pointer border-b border-dashed hover:opacity-80 transition-opacity`}
+                             title={item.passiveDesc}
+                             onClick={(e) => { e.stopPropagation(); setActiveTooltip({ name: '✦ ' + item.passiveName, desc: item.passiveDesc || '', x: e.clientX, y: e.clientY }); }}
+                           >
+                             [{item.passiveName}]
+                           </span>
+                           {item.effect.split(`[${item.passiveName}]`)[1]}
+                         </>
+                       ) : (
+                         item.effect
+                       )}
+                    </p>
+                  </div>
+                ))}
+             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Giao diện Tooltip Khám Phá */}
+      {activeTooltip && (
+         <div className="fixed inset-0 z-[600]" onClick={(e) => { e.stopPropagation(); setActiveTooltip(null); }}>
+            <div 
+              className={`absolute bg-stone-900 border-2 border-amber-500 rounded-xl p-3 shadow-[0_0_20px_rgba(245,158,11,0.4)] w-64 pointer-events-none transform -translate-x-1/2 ${activeTooltip.y < 150 ? 'translate-y-4' : '-translate-y-full -mt-2'}`}
+              style={{ left: activeTooltip.x, top: activeTooltip.y }}
+            >
+               <div className="text-amber-400 font-black uppercase text-sm mb-1 flex items-center gap-1.5">
+                 <Lightbulb size={14} className="text-amber-400 fill-amber-400" /> {activeTooltip.name}
+               </div>
+               <div className="text-stone-300 text-xs leading-relaxed font-bold">
+                 {activeTooltip.desc}
+               </div>
+            </div>
+         </div>
+      )}
+    </div>
+  );
+};
+
+/** Thanh chỉ số mini */
+const StatBar = ({ label, value, max, color, isHp, bonus = 0 }: { label: string, value: number, max: number, color: string, isHp?: boolean, bonus?: number }) => {
+  const pct = Math.min(100, Math.round(((value + bonus) / max) * 100));
+  return (
+    <div>
+      <div className="flex justify-between items-center mb-1">
+        <span className="text-[9px] text-stone-500 font-bold uppercase tracking-widest">{label}</span>
+        <span className="text-[10px] text-white font-black flex gap-1">
+          {isHp ? value.toLocaleString() : value}
+          {bonus > 0 && <span className="text-emerald-400">+{isHp ? bonus.toLocaleString() : bonus}</span>}
+          {bonus < 0 && <span className="text-red-400">{isHp ? bonus.toLocaleString() : bonus}</span>}
+        </span>
+      </div>
+      <div className="w-full h-1.5 bg-stone-800 rounded-full overflow-hidden">
+        <div className={`h-full ${color} rounded-full transition-all duration-700`} style={{ width: `${pct}%` }}/>
+      </div>
+    </div>
+  );
+};
+
+const HeroGalleryCard = ({ hero, isEnemy, onClick }: { key?: React.Key, hero: Hero, isEnemy?: boolean, onClick?: () => void }) => {
+  const rarityBorder: Record<string, string> = {
+    'UR':  'border-yellow-500 shadow-[0_0_16px_rgba(234,179,8,0.45)]',
+    'SSR': 'border-red-600 shadow-[0_0_12px_rgba(220,38,38,0.4)]',
+    'SR':  'border-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.35)]',
+    'R':   'border-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.3)]',
+    'C':   'border-green-600 shadow-[0_0_8px_rgba(22,163,74,0.3)]',
+  };
+  const rarityText: Record<string, string> = {
+    'UR': 'text-yellow-400', 'SSR': 'text-red-400', 'SR': 'text-purple-400',
+    'R': 'text-blue-400', 'C': 'text-green-500',
+  };
+  const borderClass = rarityBorder[hero.rarity] || (isEnemy ? 'border-red-900' : 'border-amber-900');
+  const equippedArtifact = hero.artifactId ? ARTIFACTS.find(a => a.id === hero.artifactId) : null;
+  const bonusAtk = equippedArtifact ? (equippedArtifact.bonusAtk || 0) + Math.floor(hero.atk * ((equippedArtifact.bonusAtkPc || 0) / 100)) : 0;
+  const bonusSpd = equippedArtifact ? (equippedArtifact.bonusSpd || 0) + Math.floor(hero.spd * ((equippedArtifact.bonusSpdPc || 0) / 100)) : 0;
+
+  return (
+    <div
+      onClick={onClick}
+      className={`bg-gradient-to-b from-stone-900 to-stone-950 p-3 rounded-2xl border-2 transition-all hover:scale-105 shadow-xl cursor-pointer hover:brightness-110 active:scale-95 ${borderClass}`}
+    >
+       <div className={`relative rounded-xl mb-3 ${getStarBorderClass(hero.star)}`}>
+         <div className="relative overflow-hidden rounded-xl h-full w-full z-10 bg-[#1c1917]">
+           <img src={hero.image} className="w-full aspect-[2/3] object-cover contrast-110 border border-white/5 relative z-10" onError={(e) => { (e.target as HTMLImageElement).src = hero.faction === 'enemy' ? DEFAULT_ENEMY_IMG : DEFAULT_ALLY_IMG; }} />
+           <div className={`absolute top-1 right-1 text-[8px] font-black px-1.5 py-0.5 rounded-full bg-black/75 z-20 ${rarityText[hero.rarity] || 'text-amber-500'}`}>{hero.rarity}</div>
+           <div className="absolute top-1 right-1 flex flex-col items-end gap-1 z-20">
+            <HeroStars starCount={hero.star} size={8} className="justify-center mt-1" />
+           </div>
+           {equippedArtifact && (
+             <div className="absolute bottom-1 right-1 bg-black/80 rounded border border-purple-500/50 p-0.5 flex flex-col items-center z-20">
+               <img src={equippedArtifact.image} className="w-4 h-4 object-cover rounded-sm mb-0.5" alt={equippedArtifact.name} />
+             </div>
+           )}
+         </div>
+       </div>
+       <div className="text-center">
+          <div className="text-[10px] font-cinzel text-amber-400 font-black uppercase truncate">{hero.name}</div>
+          <div className="text-[8px] text-stone-500 font-bold mt-1 uppercase flex justify-center gap-1">
+            <span>⚔️{hero.atk}{bonusAtk > 0 && <span className="text-emerald-400">+{bonusAtk}</span>}</span>
+            <span>·</span>
+            <span>⚡{hero.spd}{bonusSpd > 0 && <span className="text-emerald-400">+{bonusSpd}</span>}</span>
+          </div>
+       </div>
+    </div>
+  );
+};
+
+const MainMenuItem = ({ icon, title, subtitle, onClick, color }: any) => (
+  <button onClick={onClick} className={`p-7 rounded-[2rem] border-2 flex flex-col items-center gap-3 transition-all hover:scale-105 shadow-2xl group relative overflow-hidden ${color}`} style={{boxShadow:'0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)'}}>
+    <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"/>
+    <div className="group-hover:scale-110 transition-transform duration-300 group-hover:drop-shadow-[0_0_8px_currentColor]">{icon}</div>
+    <div>
+      <div className="font-cinzel font-black uppercase text-[11px] tracking-[0.2em] text-center">{title}</div>
+      {subtitle && <div className="text-[9px] uppercase tracking-widest opacity-45 mt-0.5 text-center font-bold">{subtitle}</div>}
+    </div>
+  </button>
+);
+
+const GradeView = ({ setGrade, setView }: any) => (
+  <div 
+    className="min-h-screen flex flex-col items-center justify-end pb-[10vh] p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
+    style={{ backgroundImage: "url('./ancient_exam_bg.jpg')" }}
+  >
+     <div className="absolute inset-0 bg-black/40 pointer-events-none z-0" />
+     <style>
+        {`
+          @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+        `}
+     </style>
+     
+     {/* Tiêu đề Kinh Luân Tu Luyện nằm ngay dưới chữ Quốc Tử Giám */}
+     <div className="absolute top-[26%] xl:top-[28%] left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+        <div className="bg-transparent border-[3px] border-[#FFD700] px-8 md:px-12 py-3 rounded-md shadow-[0_0_20px_rgba(255,215,0,0.5),inset_0_0_15px_rgba(255,215,0,0.3)]">
+           <h2 className="text-3xl md:text-5xl xl:text-6xl font-cinzel font-black text-[#FFD700] uppercase tracking-wider text-center leading-none whitespace-nowrap" style={{ textShadow: '0 0 15px rgba(255,215,0,1), 0 0 30px rgba(255,215,0,0.8), 2px 2px 4px rgba(0,0,0,1)' }}>
+             Kinh Luân Tu Luyện
+           </h2>
+        </div>
+     </div>
+     {/* 2 Câu thơ bên trái */}
+     <div className="hidden lg:flex absolute left-[2%] top-0 bottom-0 flex-row items-center justify-center gap-6 xl:gap-10 pointer-events-none opacity-100 py-10 z-10">
+       <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
+         {["Nam", "Quốc", "Sơn", "Hà", "Nam", "Đế", "Cư"].map((word, i) => (
+           <div key={`l1-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+             {word}
+           </div>
+         ))}
+       </div>
+       <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
+         {["Tiệt", "Nhiên", "Định", "Phận", "Tại", "Thiên", "Thư"].map((word, i) => (
+           <div key={`l2-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+             {word}
+           </div>
+         ))}
+       </div>
+     </div>
+
+     {/* 2 Câu thơ bên phải */}
+     <div className="hidden lg:flex absolute right-[2%] top-0 bottom-0 flex-row items-center justify-center gap-6 xl:gap-10 pointer-events-none opacity-100 py-10 z-10">
+       <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
+         {["Như", "Hà", "Nghịch", "Lỗ", "Lai", "Xâm", "Phạm"].map((word, i) => (
+           <div key={`r1-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+             {word}
+           </div>
+         ))}
+       </div>
+       <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
+         {["Nhữ", "Đẳng", "Hành", "Khan", "Thủ", "Bại", "Hư"].map((word, i) => (
+           <div key={`r2-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+             {word}
+           </div>
+         ))}
+       </div>
+     </div>
+
+     <div className="w-full max-w-4xl text-center relative z-20 flex flex-col items-center">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full px-4">
+           {[6, 7, 8, 9].map(g => (
+             <button key={g} onClick={() => { setGrade(g); setView('kinh-luan-topic'); }} className="bg-stone-900/80 backdrop-blur-md text-[#FFD700] border-2 border-[#FFD700] py-8 rounded-2xl font-cinzel font-black text-3xl hover:bg-stone-800 hover:scale-105 shadow-[0_0_20px_rgba(255,215,0,0.3)] active:scale-95 transition-all">LỚP {g}</button>
+           ))}
+        </div>
+        <button onClick={() => setView('chapter-hub')} className="mt-12 text-[#c2a265] font-cinzel font-bold text-xl uppercase tracking-widest border-b-2 border-[#c2a265] hover:text-amber-400 hover:border-amber-400 transition-colors drop-shadow-md">
+           Quay lại HUB
+        </button>
+     </div>
+  </div>
+);
+
+const TopicView = ({ grade, setChapterIdx, setView }: any) => (
+  <div 
+    className="min-h-screen flex items-center justify-center p-8 overflow-y-auto bg-cover bg-center bg-no-repeat relative"
+    style={{ backgroundImage: "url('./ancient_exam_bg.jpg')" }}
+  >
+     <div className="absolute inset-0 bg-black/60 pointer-events-none z-0" />
+     <div className="max-w-3xl w-full scroll-bg p-10 rounded-[3rem] text-center shadow-2xl border-blue-900 my-10 relative z-10">
+        <h2 className="text-2xl font-cinzel font-black text-blue-950 uppercase mb-8">LỚP {grade} - Chọn Chương</h2>
+        <div className="grid grid-cols-1 gap-4 text-left">
+           {MATH_DATA[grade] && MATH_DATA[grade].map((ch: any, idx: number) => (
+             <button key={idx} onClick={() => { setChapterIdx(idx); setView('kinh-luan-lesson'); }} className="bg-white border-2 border-blue-900 p-6 rounded-2xl flex items-center gap-4 group hover:bg-blue-50 transition-all">
+                <div className="bg-blue-900 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold group-hover:scale-110 transition-transform">{idx + 1}</div>
+                <span className="font-bold text-blue-900 text-lg">{ch.title}</span>
+             </button>
+           ))}
+        </div>
+        <button onClick={() => setView('kinh-luan-grade')} className="mt-8 text-blue-900 font-bold uppercase">Quay lại</button>
+     </div>
+  </div>
+);
+
+const LessonListView = ({ grade, chapterIdx, setLessonIdx, setView, progress }: any) => {
+  const chapter = MATH_DATA[grade] && MATH_DATA[grade][chapterIdx];
+  const unlockedCount = progress[`g${grade}-c${chapterIdx}`] || 0;
+  if (!chapter) return null;
+  return (
+    <div 
+      className="min-h-screen flex items-center justify-center p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('./ancient_exam_bg.jpg')" }}
+    >
+       <div className="absolute inset-0 bg-black/60 pointer-events-none z-0" />
+       
+       {/* Trái - Nguyễn Ánh */}
+       <div className="hidden lg:flex absolute left-[2%] top-0 bottom-0 flex-row items-center justify-center gap-4 xl:gap-8 pointer-events-none opacity-100 py-4 z-10">
+         <div className="flex flex-col justify-center gap-2 xl:gap-4 h-full">
+           {["Ta", "Và", "Nguyễn", "Huệ", "Ai", "Hơn?"].map((word, i) => (
+             <div key={`l1-${i}`} className="text-[1.8rem] xl:text-[2.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+               {word}
+             </div>
+           ))}
+           <div className="text-[1.2rem] xl:text-[1.5rem] font-bold text-[#c2a265] text-center mt-6 leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Nguyễn</div>
+           <div className="text-[1.2rem] xl:text-[1.5rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Ánh</div>
+         </div>
+       </div>
+
+       {/* Phải - Bùi Thị Xuân */}
+       <div className="hidden lg:flex absolute right-[2%] top-0 bottom-0 flex-row items-center justify-center gap-4 xl:gap-6 pointer-events-none opacity-100 py-4 z-10">
+         <div className="flex flex-col justify-center gap-1 xl:gap-2 h-full">
+           {["Chúa", "Công", "Ta", "Tay", "Kiếm", "Tay", "Cờ", "Mà", "Làm", "Nên", "Sự", "Nghiệp"].map((word, i) => (
+             <div key={`r1-${i}`} className="text-[1rem] xl:text-[1.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+               {word}
+             </div>
+           ))}
+         </div>
+         <div className="flex flex-col justify-center gap-1 xl:gap-2 h-full">
+           {["Trong", "Khi", "Nhà", "Ngươi", "Đi", "Cầu", "Viện", "Ngoại", "Bang", "Làm", "Tan", "Nát", "Cả", "Sơn", "Hà"].map((word, i) => (
+             <div key={`r2-${i}`} className="text-[1rem] xl:text-[1.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+               {word}
+             </div>
+           ))}
+         </div>
+         <div className="flex flex-col justify-center gap-1 xl:gap-2 h-full">
+           {["Đem", "So", "Với", "Chúa", "Công", "Ta", "Ngươi", "Chỉ", "Là", "Nước", "Vũng", "So", "Với", "Ao", "Trời"].map((word, i) => (
+             <div key={`r3-${i}`} className="text-[1rem] xl:text-[1.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+               {word}
+             </div>
+           ))}
+           <div className="text-[0.9rem] xl:text-[1.1rem] font-bold text-[#c2a265] text-center mt-2 leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Bùi</div>
+           <div className="text-[0.9rem] xl:text-[1.1rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Thị</div>
+           <div className="text-[0.9rem] xl:text-[1.1rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Xuân</div>
+         </div>
+       </div>
+
+       <div className="max-w-3xl w-full scroll-bg p-10 rounded-[3rem] text-center shadow-2xl border-blue-900 my-10 relative z-20">
+          <h2 className="text-xl font-cinzel font-black text-blue-950 mb-6 uppercase">Bài học (Tuần tự)</h2>
+          <div className="grid grid-cols-1 gap-3">
+             {chapter.lessons.map((lesson: any, idx: number) => {
+               // UNLOCK ALL FOR TESTING: originally `idx <= unlockedCount`
+               const isUnlocked = true;
+               return (
+                 <button key={idx} disabled={!isUnlocked} onClick={() => { setLessonIdx(idx); setView('lesson-summary'); }} className={`p-5 rounded-xl border-2 flex justify-between items-center transition-all ${isUnlocked ? 'border-blue-100 bg-white text-left font-bold hover:border-blue-900' : 'bg-stone-200 text-stone-400 border-stone-300 opacity-60'}`}>
+                    <span>{lesson.title}</span>
+                    {!isUnlocked ? <Lock size={16}/> : (idx < unlockedCount ? <CheckCircle size={16} className="text-green-600"/> : <SwordIcon size={16} className="text-blue-500 animate-bounce"/>)}
+                 </button>
+               );
+             })}
+          </div>
+          <button onClick={() => setView('kinh-luan-topic')} className="mt-8 text-blue-900 font-bold uppercase">Quay lại</button>
+       </div>
+    </div>
+  );
+};
+
+const MathJaxText = React.memo(({ html, className, tag: Tag = 'div', id }: { html: string, className?: string, tag?: any, id?: string }) => {
+  const containerRef = React.useRef<HTMLElement>(null);
+  React.useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.innerHTML = html;
+      const renderMath = () => {
+        const mj = (window as any).MathJax;
+        if (mj && mj.typesetPromise) {
+          setTimeout(() => {
+            try {
+              if (containerRef.current) {
+                mj.typesetClear([containerRef.current]);
+                mj.typesetPromise([containerRef.current]).catch((err: any) => console.log('MathJax error: ', err));
+              }
+            } catch(e) {}
+          }, 50);
+        } else {
+          setTimeout(renderMath, 100);
+        }
+      };
+      renderMath();
+    }
+  }, [html]);
+  return <Tag id={id} ref={containerRef} className={className} />;
+});
+
+const LessonSummaryView = ({ grade, chapterIdx, lessonIdx, setView }: any) => {
+  const chapter = MATH_DATA[grade] && MATH_DATA[grade][chapterIdx];
+  const lesson = chapter && chapter.lessons[lessonIdx];
+  
+  if (!lesson) return null;
+
+  // Basic markdown parser
+  const renderMarkdown = (text: string) => {
+    let html = text
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      // Headers (Kiến thức trọng tâm)
+      .replace(/### (.*)/g, '<h3 class="text-xl font-black mt-8 mb-4 bg-amber-100/80 p-3 rounded-xl border-l-4 border-amber-600 text-amber-950 shadow-sm uppercase tracking-wide">✨ $1</h3>')
+      // Blockquotes (Notes)
+      .replace(/&gt; \[\!NOTE\][\s\S]*?&gt; \*\*(.*?)\*\*([\s\S]*)/g, '<div class="bg-gradient-to-br from-red-50 to-orange-50 border-l-[8px] border-red-600 p-6 md:p-8 my-10 rounded-r-3xl shadow-xl relative overflow-hidden ring-1 ring-red-900/10"><strong class="text-red-700 block mb-4 text-xl md:text-2xl font-black uppercase flex items-center gap-3 tracking-wide drop-shadow-sm">⚠️ $1</strong><div class="text-red-950/90 font-medium leading-relaxed text-lg z-10 relative">$2</div><div class="absolute -bottom-10 -right-10 text-9xl opacity-5">⚠️</div></div>')
+      // Bold
+      .replace(/\*\*(.*?)\*\*/g, '<strong class="text-amber-900 font-bold">$1</strong>')
+      // Images
+      .replace(/!\[(.*?)\]\((.*?)\)/g, '<div class="flex justify-center my-6"><img src="$2" alt="$1" class="h-40 object-contain drop-shadow-md rounded-lg bg-white/50 p-2 border border-amber-200"/></div>')
+      .replace(/^&gt; (.*)/gm, '<div class="pl-2 mb-2">$1</div>')
+      // Lists
+      .replace(/^- (.*)/gm, '<li class="ml-6 mb-2 list-disc pl-2">$1</li>')
+      // Sub-lists
+      .replace(/^  - (.*)/gm, '<li class="ml-10 mb-1 list-[circle] text-sm text-gray-800">$1</li>')
+      // Inline Code / Math placeholders
+      .replace(/`(.*?)`/g, '<code class="bg-amber-100 text-amber-900 px-1 rounded">$1</code>')
+      // Newlines
+      .replace(/\n/g, '<br/>')
+      // Clean up empty br tags next to li/div
+      .replace(/<br\/>(<li|<div)/g, '$1')
+      .replace(/(<\/li>|<\/div>)<br\/>/g, '$1');
+      
+    return { __html: html };
+  };
+
+  return (
+    <div 
+      className="min-h-screen flex items-center justify-center p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('./ancient_exam_bg.jpg')" }}
+    >
+       <div className="absolute inset-0 bg-black/60 pointer-events-none z-0" />
+       
+       {/* 2 Câu thơ bên trái - Bình Ngô Đại Cáo */}
+       <div className="hidden lg:flex absolute left-[2%] top-0 bottom-0 flex-row items-center justify-center gap-6 xl:gap-10 pointer-events-none opacity-100 py-10 z-10">
+         <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
+           {["Việc", "Nhân", "Nghĩa", "Cốt", "Ở", "Yên", "Dân"].map((word, i) => (
+             <div key={`l1-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+               {word}
+             </div>
+           ))}
+         </div>
+         <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
+           {["Quân", "Điếu", "Phạt", "Trước", "Lo", "Trừ", "Bạo"].map((word, i) => (
+             <div key={`l2-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+               {word}
+             </div>
+           ))}
+         </div>
+       </div>
+
+       {/* 2 Câu thơ bên phải */}
+       <div className="hidden lg:flex absolute right-[2%] top-0 bottom-0 flex-row items-center justify-center gap-6 xl:gap-10 pointer-events-none opacity-100 py-10 z-10">
+         <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
+           {["Như", "Nước", "Đại", "Việt", "Ta", "Từ", "Trước"].map((word, i) => (
+             <div key={`r1-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+               {word}
+             </div>
+           ))}
+         </div>
+         <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
+           {["Vốn", "Xưng", "Nền", "Văn", "Hiến", "Đã", "Lâu"].map((word, i) => (
+             <div key={`r2-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+               {word}
+             </div>
+           ))}
+         </div>
+       </div>
+
+       <div className="max-w-4xl w-full scroll-bg p-12 rounded-[3rem] shadow-2xl flex flex-col max-h-[90vh] relative z-20">
+         <h2 className="text-3xl font-cinzel font-black mb-6 text-amber-950 flex items-center gap-3"><BookOpen size={36}/> Kiến Thức Trọng Tâm</h2>
+         <MathJaxText id="lesson-summary-content" className="flex-1 overflow-y-auto custom-scrollbar text-left prose prose-amber" html={renderMarkdown(lesson.summary).__html} tag="div" />
+        <button onClick={() => setView('quiz-setup')} className="mt-8 bg-amber-950 text-white py-5 rounded-2xl font-black uppercase text-xl shadow-lg active:scale-95 transition-all">Vào Tu Luyện</button>
+      </div>
+    </div>
+  );
+};
+
+const QuizSetupView = ({ startQuiz, setView }: any) => (
+  <div 
+    className="min-h-screen flex items-center justify-center p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
+    style={{ backgroundImage: "url('./ancient_exam_bg.jpg')" }}
+  >
+     <div className="absolute inset-0 bg-black/60 pointer-events-none z-0" />
+     
+     {/* 3 Câu thơ bên trái */}
+     <div className="hidden lg:flex absolute left-[2%] top-0 bottom-0 flex-row items-center justify-center gap-4 xl:gap-8 pointer-events-none opacity-100 py-4 z-10">
+       <div className="flex flex-col justify-center gap-2 xl:gap-4 h-full">
+         {["Đánh", "Cho", "Sử", "Tri", "Nam", "Quốc", "Anh", "Hùng", "Chi", "Hữu", "Chủ"].map((word, i) => (
+           <div key={`l1-${i}`} className="text-[1.6rem] xl:text-[2rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+             {word}
+           </div>
+         ))}
+         <div className="text-[1.2rem] xl:text-[1.5rem] font-bold text-[#c2a265] text-center mt-2 leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Nguyễn</div>
+         <div className="text-[1.2rem] xl:text-[1.5rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Huệ</div>
+       </div>
+       <div className="flex flex-col justify-center gap-2 xl:gap-4 h-full">
+         {["Đánh", "Cho", "Họ", "Phiến", "Giáp", "Bất", "Hoàn"].map((word, i) => (
+           <div key={`l2-${i}`} className="text-[1.8rem] xl:text-[2.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+             {word}
+           </div>
+         ))}
+       </div>
+       <div className="flex flex-col justify-center gap-2 xl:gap-4 h-full">
+         {["Đánh", "Cho", "Họ", "Chích", "Luân", "Bất", "Phản"].map((word, i) => (
+           <div key={`l3-${i}`} className="text-[1.8rem] xl:text-[2.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+             {word}
+           </div>
+         ))}
+       </div>
+     </div>
+
+     {/* 2 Câu thơ bên phải */}
+     <div className="hidden lg:flex absolute right-[2%] top-0 bottom-0 flex-row items-center justify-center gap-4 xl:gap-8 pointer-events-none opacity-100 py-4 z-10">
+       <div className="flex flex-col justify-center gap-2 xl:gap-4 h-full">
+         {["Đánh", "Cho", "Để", "Đen", "Răng"].map((word, i) => (
+           <div key={`r1-${i}`} className="text-[1.8rem] xl:text-[2.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+             {word}
+           </div>
+         ))}
+       </div>
+       <div className="flex flex-col justify-center gap-2 xl:gap-4 h-full">
+         {["Đánh", "Cho", "Để", "Dài", "Tóc"].map((word, i) => (
+           <div key={`r2-${i}`} className="text-[1.8rem] xl:text-[2.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+             {word}
+           </div>
+         ))}
+       </div>
+     </div>
+
+     <div className="max-w-2xl w-full scroll-bg p-12 rounded-[3rem] text-center shadow-2xl border-amber-900 relative z-20">
+        <Trophy className="mx-auto mb-4 text-amber-600" size={64}/>
+        <h2 className="text-2xl font-cinzel font-black text-blue-950 uppercase mb-8">Thiết Lập Tu Luyện</h2>
+        <div className="grid grid-cols-1 gap-3">
+           {[10, 15, 20, 60].map(cnt => (
+             <button key={cnt} onClick={() => startQuiz(cnt)} className="bg-blue-900 text-white py-5 rounded-xl font-black uppercase text-lg hover:bg-blue-800 shadow-md active:scale-95 transition-all">Gói {cnt} Câu Hỏi</button>
+           ))}
+        </div>
+        <button onClick={() => setView('kinh-luan-lesson')} className="mt-8 text-blue-900 font-bold uppercase border-b border-blue-900 hover:text-blue-700 transition-colors">Xem lại bài</button>
+     </div>
+  </div>
+);
+
+const QuizResultView = ({ correct, total, rewards, setView, player }: any) => {
+  const handleExportExcel = () => {
+    if (!player || !player.trialHistory || player.trialHistory.length === 0) {
+      alert("Không có dữ liệu để xuất!");
+      return;
+    }
+    const lastRecord = player.trialHistory[player.trialHistory.length - 1];
+    
+    const rows = lastRecord.questions.map((q: any, index: number) => ({
+      "Tên người chơi": lastRecord.username,
+      "Gói câu hỏi": lastRecord.packageSize,
+      "Lớp": lastRecord.grade,
+      "Câu số": index + 1,
+      "Nội dung câu hỏi": q.questionText,
+      "Đáp án của người chơi": q.options && q.options.length > 0 && typeof q.userAnswer === 'number' ? q.options[q.userAnswer] : (q.userAnswer !== null ? q.userAnswer : "Chưa trả lời"),
+      "Đáp án đúng": q.options && q.options.length > 0 && typeof q.correctAnswer === 'number' ? q.options[q.correctAnswer] : q.correctAnswer,
+      "Kết quả": q.isCorrect ? "Đúng" : "Sai",
+      "Thời gian trả lời (giây)": q.timeTakenSeconds
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(rows);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "KetQuaThiLuyen");
+    XLSX.writeFile(workbook, `KetQuaThiLuyen_${lastRecord.timestamp}.xlsx`);
+  };
+
+  return (
+  <div className="min-h-screen ancient-bg flex items-center justify-center p-8">
+     <div className="max-w-3xl w-full scroll-bg p-12 rounded-[3rem] text-center shadow-2xl border-amber-900">
+        <Trophy className="mx-auto text-amber-500 mb-6" size={100}/>
+        <h2 className="text-3xl font-cinzel font-black uppercase mb-2 text-amber-950">Tổng Kết Tu Luyện</h2>
+        <div className="text-6xl font-black mb-2 text-stone-700">{correct} <span className="text-2xl text-stone-400">/ {total}</span></div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 mt-10 text-center">
+           <div className="group relative bg-stone-900 p-4 rounded-2xl border border-amber-500/20 shadow-lg flex flex-col items-center justify-center cursor-pointer">
+              <img src="/items/gold.png" alt="Vàng" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2 drop-shadow-md group-hover:scale-110 transition-transform" />
+              <div className="text-yellow-500 font-black text-2xl">+{rewards.gold.toLocaleString()}</div>
+              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-xl border border-amber-500/30">Vàng</div>
+           </div>
+           <div className="group relative bg-stone-900 p-4 rounded-2xl border border-blue-500/20 shadow-lg flex flex-col items-center justify-center cursor-pointer">
+              <img src="/items/normal_ticket.png" alt="Lệnh bài" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2 drop-shadow-md group-hover:scale-110 transition-transform" />
+              <div className="text-blue-400 font-black text-2xl">+{rewards.normal}</div>
+              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-xl border border-blue-500/30">Lệnh Bài</div>
+           </div>
+           <div className="group relative bg-stone-900 p-4 rounded-2xl border border-purple-500/20 shadow-lg flex flex-col items-center justify-center cursor-pointer">
+              <img src="/items/premium_ticket.png" alt="Danh tướng" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2 drop-shadow-md group-hover:scale-110 transition-transform" />
+              <div className="text-purple-400 font-black text-2xl">+{rewards.premium}</div>
+              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-xl border border-purple-500/30">Lệnh Bài Danh Tướng</div>
+           </div>
+           <div className="group relative bg-stone-900 p-4 rounded-2xl border border-amber-500/40 shadow-lg flex flex-col items-center justify-center cursor-pointer">
+              <img src="/items/artifact_ticket.png" alt="Thần Khí" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2 drop-shadow-md group-hover:scale-110 transition-transform" />
+              <div className="text-amber-400 font-black text-2xl">+{rewards.artifact || 0}</div>
+              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-xl border border-amber-500/50">Mảnh Thần Khí</div>
+           </div>
+        </div>
+        <div className="flex flex-col gap-4">
+           <button onClick={handleExportExcel} className="bg-green-700 hover:bg-green-600 text-white px-20 py-5 rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 transition-all">Xuất Kết Quả Excel</button>
+           <button onClick={() => setView('chapter-hub')} className="bg-stone-900 text-amber-500 px-20 py-5 rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 hover:bg-stone-800 transition-all">Về Doanh Trại</button>
+        </div>
+     </div>
+  </div>
+  );
+};
+
+const QuizPlayView = ({ question, idx, total, showFeedback, userAnswers, setUserAnswers, onAnswer, lastReward, onNext, setView }: any) => {
+  if (!question) {
+     return (
+       <div className="min-h-screen ancient-bg flex items-center justify-center p-8">
+         <div className="max-w-2xl w-full scroll-bg p-12 rounded-[3rem] text-center shadow-2xl border-amber-900">
+           <h2 className="text-2xl font-cinzel font-black text-amber-950 uppercase mb-4">Không tìm thấy câu hỏi</h2>
+           <p className="text-amber-900/70 mb-8 font-bold">Chưa có dữ liệu bài tập cho phần này hoặc dữ liệu đang cập nhật. Xin vui lòng thử lại sau.</p>
+           <button onClick={() => setView && setView('kinh-luan-lesson')} className="bg-amber-950 text-white py-4 px-8 rounded-xl font-black uppercase shadow-lg transition-all active:scale-95">Quay Lại</button>
+         </div>
+       </div>
+     );
+  }
+  const uAns = userAnswers[idx];
+  
+  return (
+    <div className="min-h-screen ancient-bg flex items-center justify-center p-4">
+      <div id="quiz-container-inner" className="max-w-5xl w-[95vw] scroll-bg p-10 md:p-16 rounded-[3rem] shadow-2xl min-h-[85vh] flex flex-col relative">
+        <div className="flex justify-between items-center mb-6 text-xs font-black uppercase text-amber-900/40">
+          <div className="flex gap-4 items-center">
+             <button onClick={() => {
+                if (window.confirm('Bạn có chắc chắn muốn thoát? Toàn bộ kết quả thi luyện hiện tại sẽ bị hủy bỏ!')) {
+                   setView('chapter-hub');
+                }
+             }} className="bg-red-900/10 text-red-700 px-4 py-2 rounded-xl hover:bg-red-900/20 active:scale-95 transition-all">THOÁT</button>
+             <span>Câu {idx + 1} / {total}</span>
+          </div>
+          <span className="bg-amber-900/10 px-3 py-1 rounded-full border border-amber-900/20">Cấp độ: {question.level}</span>
+        </div>
+        <MathJaxText className="text-3xl md:text-4xl font-bold mb-12 text-center text-amber-950 leading-relaxed quiz-content" html={question.question.replace(/\\,/g, '.').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\*\*(.*?)\*\*/g, '<strong class="text-amber-900 bg-amber-200/50 px-2 py-1 rounded shadow-sm">$1</strong>')} tag="div" />
+        {question.imageUrl && (
+          <div className="flex justify-center mb-12">
+            <img src={question.imageUrl} alt="Hình ảnh bài toán" className="max-w-full h-auto max-h-96 rounded-xl border-4 border-amber-900/20 shadow-lg object-contain bg-white" />
+          </div>
+        )}
+        <div className="flex-1">
+          {question.type === 'short_answer' ? (
+            <div className="space-y-4">
+              <input type="text" className="w-full p-6 border-4 border-amber-900/50 rounded-2xl text-center text-3xl font-black outline-none bg-white text-black shadow-xl" placeholder="Đáp số..." value={uAns || ''} onChange={(e) => setUserAnswers((p: any) => ({...p, [idx]: e.target.value}))} disabled={showFeedback} />
+              {!showFeedback && <button onClick={() => onAnswer(uAns)} className="w-full bg-amber-950 text-white py-5 rounded-2xl font-black uppercase text-xl shadow-lg transition-all active:scale-95">Xác Nhận</button>}
+            </div>
+          ) : (
+            <div className={`grid grid-cols-1 ${question.options?.some((opt: any) => opt.length > 40) ? 'md:grid-cols-1' : 'md:grid-cols-2'} gap-4 md:gap-6`}>
+              {question.options.map((opt: any, i: number) => (
+                <button key={i} onClick={() => onAnswer(i)} disabled={showFeedback} className={`p-6 rounded-2xl border-2 font-bold text-left transition-all text-xl md:text-2xl flex items-center ${showFeedback ? (i === question.correctAnswer ? 'bg-green-600 text-white border-green-800 scale-105 z-10' : (uAns === i ? 'bg-red-600 text-white border-red-800' : 'bg-stone-200 opacity-40')) : 'bg-white/90 border-amber-900/20 hover:border-amber-900 hover:bg-white hover:shadow-md'}`}>
+                  <span className="inline-block bg-amber-950/10 w-10 h-10 text-center leading-10 rounded-lg mr-4 text-amber-900 font-black">{String.fromCharCode(65 + i)}</span>
+                  <MathJaxText html={opt.replace(/^[A-Z]\.\s*/, '').replace(/\\,/g, '.').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')} tag="span" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        {showFeedback && (
+          <div className="mt-8 p-6 bg-white rounded-3xl border-2 border-amber-900/20 shadow-xl animate-in slide-in-from-bottom-4">
+             {lastReward && <div className="flex items-center justify-center gap-4 mb-4 bg-green-900/10 py-3 rounded-2xl border border-green-900/20 text-green-800 font-black uppercase text-sm font-bold"><Sparkles className="text-yellow-500" size={20}/><span>+ {lastReward.gold.toLocaleString()} 💰 {lastReward.ticket ? ` & 1 ${lastReward.ticket === 'premium' ? '💎' : '🎫'}` : ""}</span></div>}
+             <MathJaxText className="bg-amber-50 p-6 md:p-8 rounded-xl border border-amber-900/10 text-lg md:text-xl italic font-bold text-amber-950 leading-relaxed" html={question.explanation.replace(/\\,/g, '.').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\*\*(.*?)\*\*/g, '<strong class="text-amber-900">$1</strong>')} tag="div" />
+             {question.explanationImageUrl && (
+               <div className="flex justify-center mt-4">
+                 <img src={question.explanationImageUrl} alt="Giải thích" className="max-w-full h-auto max-h-64 rounded-xl border-4 border-amber-900/20 shadow-sm object-contain bg-white" />
+               </div>
+             )}
+             <button onClick={onNext} className="mt-6 w-full bg-stone-900 text-amber-500 py-4 rounded-xl font-black uppercase tracking-widest shadow-lg active:scale-95">Tiếp Tục</button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+const SummonView = ({ player, summon, results, setView, clearResults, chapter }: any) => {
+  const [animState, setAnimState] = useState<'idle' | 'rolling' | 'revealing' | 'done'>('idle');
+  const [revealIndices, setRevealIndices] = useState<number[]>([]);
+  const [flash, setFlash] = useState(false);
+    const [selectedHero, setSelectedHero] = useState<any>(null);
+
+  useEffect(() => {
+    if (results.length > 0 && animState === 'idle') {
+      setAnimState('rolling');
+      setRevealIndices([]);
+      setFlash(false);
+      // Wait for rolling animation
+      setTimeout(() => {
+        setAnimState('revealing');
+      }, 2500); // 2.5s of mystery shaking
+    } else if (results.length === 0) {
+      setAnimState('idle');
+    }
+  }, [results, animState]);
+
+  useEffect(() => {
+    if (animState === 'revealing') {
+       let i = 0;
+       const interval = setInterval(() => {
+          const currentIndex = i;
+          setRevealIndices(prev => [...prev, currentIndex]);
+          
+          // Check for SSR/UR flash
+          if (results[currentIndex] && (results[currentIndex].rarity === 'SSR' || results[currentIndex].rarity === 'UR')) {
+             setFlash(true);
+             setTimeout(() => setFlash(false), 1500);
+          }
+
+          i++;
+          if (i >= results.length) {
+            clearInterval(interval);
+            setTimeout(() => setAnimState('done'), 1000);
+          }
+       }, 500); // reveal one by one every 500ms
+       return () => clearInterval(interval);
+    }
+  }, [animState, results]);
+
+  return (
+    <div className="min-h-screen viet-bg flex flex-col items-center justify-start pt-12 pb-24 p-6 relative overflow-y-auto custom-scrollbar">
+      {flash && <div className="ssr-flash-overlay" />}
+      {/* Sao lấp lánh nền huyền bí */}
+      {[...Array(18)].map((_, i) => (
+        <div key={i} className="absolute w-1 h-1 bg-amber-400/25 rounded-full pointer-events-none" style={{
+          left: `${(Math.sin(i * 1.5) * 45 + 50)}%`,
+          top: `${(Math.cos(i * 2.3) * 45 + 50)}%`,
+          animation: `starTwinkle ${2 + i % 3}s ease-in-out infinite`,
+          animationDelay: `${i * 0.3}s`,
+        }}/>
+      ))}
+      <div className="absolute inset-0 pointer-events-none" style={{background:'radial-gradient(ellipse at 50% 30%, rgba(124,58,237,0.07) 0%, transparent 60%)'}}/>
+      <button onClick={() => { setView('chapter-hub'); clearResults(); }} className="absolute top-6 left-6 text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors z-10"><ChevronLeft/> Trở về</button>
+      <h2 className="text-4xl font-cinzel text-amber-400 mb-3 tracking-widest uppercase drop-shadow-[0_0_15px_rgba(201,148,26,0.45)] relative z-10">✦ Tiên Hiền Trận ✦</h2>
+      <p className="text-amber-800/55 font-black uppercase text-[10px] mb-10 tracking-widest italic border-b border-amber-900/20 pb-2 relative z-10">Hào kiệt Chương {chapter}: {CHAPTER_NAMES[chapter]}</p>
+      
+      {results.length > 0 ? (
+        <div className="flex flex-col items-center justify-start w-full max-w-[1080px] px-2 relative z-10 mt-4 mb-auto">
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+            {results.map((res: any, idx: number) => {
+              const raritySummonClass: Record<string, string> = {
+                'UR':  'border-yellow-500 summon-card-ur',
+                'SSR': 'border-red-500 summon-card-ssr',
+                'SR':  'border-purple-400 summon-card-sr',
+                'R':   'border-blue-500',
+                'C':   'border-green-600',
+              };
+              const rarityLabelColor: Record<string, string> = {
+                'UR': 'text-yellow-400', 'SSR': 'text-red-400', 'SR': 'text-purple-400',
+                'R': 'text-blue-400', 'C': 'text-green-500',
+              };
+              const rClass = raritySummonClass[res.rarity] || 'border-amber-500';
+              const rarityColor = rarityLabelColor[res.rarity] || 'text-amber-400';
+              const isRevealed = revealIndices.includes(idx);
+              const isRolling = animState === 'rolling';
+
+              return (
+                <div key={idx} className={`w-[120px] md:w-[180px] h-[180px] md:h-[270px] gacha-card-container relative`}>
+                  <div className={`gacha-card ${isRevealed ? 'flipped' : ''} ${isRolling ? 'animate-gacha-spin' : ''}`}>
+                    
+                    {/* MẶT TRƯỚC (Bí ẩn - Lưng thẻ 3D) */}
+                    {!isRevealed && (
+<div className="gacha-face gacha-front flex flex-col items-center justify-center relative overflow-hidden">
+                        <div className="absolute inset-2 border-2 border-amber-700/40 rounded-xl"></div>
+                        <div className="w-14 h-14 md:w-20 md:h-20 rounded-full border-[3px] border-amber-600/60 flex items-center justify-center bg-black/60 mb-3 shadow-[0_0_20px_rgba(201,148,26,0.5)] z-10">
+                           <span className="text-4xl text-amber-500 font-cinzel font-black drop-shadow-md">✦</span>
+                        </div>
+                        <div className="text-lg md:text-xl font-black uppercase text-amber-500 tracking-[0.1em] font-cinzel text-center leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] z-10">Sử Việt<br/>Anh Hùng</div>
+                        <div className="absolute inset-0 bg-[url('./images/vietnam_map.png')] bg-cover bg-center opacity-50 pointer-events-none mix-blend-screen"></div>
+                          <div className="absolute inset-0 bg-[url('./images/texture_noise.png')] opacity-10 pointer-events-none mix-blend-overlay"></div>
+                    </div>
+)}
+
+                    {/* MẶT SAU (Kết quả) */}
+                    <div className={`gacha-face gacha-back bg-gradient-to-b from-stone-900 to-stone-950 p-2 md:p-4 rounded-[2rem] border-2 ${rClass} shadow-[-4px_4px_0_#1a0f07,-6px_6px_20px_rgba(0,0,0,0.9)] flex flex-col items-center cursor-pointer`} onClick={() => isRevealed && setSelectedHero(res)}>
+                        <div className={`relative w-full overflow-hidden rounded-xl mb-2 md:mb-3 ${getStarBorderClass(res.star)}`}>
+                          <img src={res.image} className="w-full aspect-[2/3] object-cover contrast-125 shadow-xl border border-white/5" onError={(e) => { (e.target as HTMLImageElement).src = res.faction === 'enemy' ? DEFAULT_ENEMY_IMG : DEFAULT_ALLY_IMG; }} />
+                          <div className={`absolute top-1 right-1 text-[8px] font-black px-1.5 py-0.5 rounded-full bg-black/80 ${rarityColor}`}>{res.rarity}</div>
+                        </div>
+                       <div className="mt-2 text-center">
+                          <div className={`font-black uppercase tracking-widest text-[10px] md:text-sm drop-shadow-md ${rarityColor}`}>{res.name}</div>
+                          <HeroStars starCount={res.star} size={9} className="justify-center pt-0.5 md:pt-1" />
+                       </div>
+                    </div>
+
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {animState === 'done' && (
+            <button onClick={clearResults} className="mt-12 gold-shimmer-btn px-20 py-5 rounded-2xl font-black uppercase text-xl shadow-xl transition-all active:scale-95 border border-amber-600/30 animate-in slide-in-from-bottom-4">Thu Quân!</button>
+          )}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center w-full z-10 h-full flex-1">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8 w-full max-w-[1400px] px-4 text-center relative z-10 h-full items-center pb-8">
+            <SummonBox type="normal" title="Chiêu Mộ Anh Hào" desc="Tỉ lệ cao C, R, SR" ticketCount={player.normalTickets} onSummon={(cnt: number) => summon('normal', cnt)} color="border-blue-500/80" glow="shadow-[0_0_70px_rgba(59,130,246,0.5)]" icon={<Ticket className="text-blue-300 drop-shadow-[0_0_20px_rgba(59,130,246,1)] mb-4" size={56}/>} titleColor="text-blue-100 drop-shadow-[0_0_12px_rgba(59,130,246,1)]" btnColor="bg-blue-900/80 hover:bg-blue-800 border-blue-400/50 text-blue-100 hover:text-white" bgImage="./images/black_tortoise_pillar.png" bgClass="brightness-[0.85]" />
+            
+            <SummonBox type="premium" title="Chiêu Mộ Danh Tướng" desc="Tỉ lệ cao SR, SSR, UR" ticketCount={player.premiumTickets} onSummon={(cnt: number) => summon('premium', cnt)} color="border-purple-500/80" glow="shadow-[0_0_70px_rgba(168,85,247,0.4)]" icon={<Ticket className="text-purple-300 drop-shadow-[0_0_20px_rgba(168,85,247,0.9)] mb-4" size={56}/>} titleColor="text-purple-100 drop-shadow-[0_0_10px_rgba(168,85,247,0.8)]" btnColor="bg-purple-900/80 hover:bg-purple-800 border-purple-400/50 text-purple-100 hover:text-white" bgImage="./images/vermilion_bird_pillar.png" />
+            
+            <SummonBox type="artifact" title="Chiêu Mộ Thần Khí" desc="Rơi Thần Khí Bản Mệnh" ticketCount={player.artifactTickets || 0} onSummon={(cnt: number) => summon('artifact', cnt)} color="border-amber-500/80" glow="shadow-[0_0_70px_rgba(245,158,11,0.5)]" icon={<ScrollText className="text-amber-300 drop-shadow-[0_0_20px_rgba(245,158,11,1)] mb-4" size={56}/>} titleColor="text-amber-100 drop-shadow-[0_0_12px_rgba(245,158,11,1)]" btnColor="bg-amber-900/80 hover:bg-amber-800 border-amber-400/50 text-amber-100 hover:text-white" bgImage="./images/white_tiger_pillar.png" bgClass="brightness-[0.85]" />
+            
+            <SummonBox type="legion" title="Chiêu Mộ Quân Đoàn" desc="Anh Hào & Thần Khí Toàn Cõi" ticketCount={player.legionTickets || 0} onSummon={(cnt: number) => summon('legion', cnt)} color="border-emerald-500/80" glow="shadow-[0_0_70px_rgba(16,185,129,0.4)]" icon={<Ticket className="text-emerald-300 drop-shadow-[0_0_20px_rgba(16,185,129,0.9)] mb-4" size={56}/>} titleColor="text-emerald-100 drop-shadow-[0_0_10px_rgba(16,185,129,0.8)]" btnColor="bg-emerald-900/80 hover:bg-emerald-800 border-emerald-400/50 text-emerald-100 hover:text-white" bgImage="./images/azure_dragon_pillar.png" />
+          </div>
+        </div>
+        )}
+        {selectedHero && !selectedHero.isArtifact && <HeroDetailModal hero={selectedHero} onClose={() => setSelectedHero(null)} />}
+        {selectedHero && selectedHero.isArtifact && <ArtifactDetailModal artifact={selectedHero} onClose={() => setSelectedHero(null)} />}
+      </div>
+    );
+  };
+
+const SummonBox = ({ type, title, desc, ticketCount, onSummon, color, glow, icon, titleColor, btnColor, isCenter, bgImage, bgClass }: any) => {
+  const titleParts = title.split(' ');
+  const titleLine1 = titleParts.slice(0, 2).join(' ');
+  const titleLine2 = titleParts.slice(2).join(' ');
+
+  return (
+  <div className={`relative w-full h-[550px] ${isCenter ? 'h-[600px]' : ''} rounded-[3rem] border-4 ${color} ${glow} overflow-hidden group hover:scale-[1.03] transition-all duration-500`}>
+    {/* Background Image Pillar */}
+    <img src={bgImage || "./images/dragon_pillar.png"} className={`absolute inset-0 w-full h-full object-cover ${bgClass || 'brightness-[0.7]'} group-hover:brightness-[0.9] group-hover:scale-110 transition-all duration-700`} alt="Pillar" />
+    
+    {/* Gradient Overlay for text readability (Top and Bottom only) */}
+    <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/90 pointer-events-none"></div>
+    
+    {/* Content */}
+    <div className="absolute inset-0 px-6 pb-6 pt-2 md:px-8 md:pb-8 md:pt-4 flex flex-col justify-between text-center z-10">
+      
+      {/* TOP: Title Block */}
+      <div className="flex flex-col items-center">
+        <h3 className={`text-2xl md:text-3xl ${isCenter ? 'md:text-4xl' : ''} font-cinzel font-black uppercase tracking-widest leading-tight ${titleColor} mb-1 drop-shadow-[0_2px_8px_rgba(0,0,0,1)]`}>
+           <div className="text-xl md:text-2xl opacity-90">{titleLine1}</div>
+           <div>{titleLine2}</div>
+        </h3>
+        <p className={`font-bold italic text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-stone-200 drop-shadow-[0_1px_4px_rgba(0,0,0,1)]`}>{desc}</p>
+      </div>
+      
+      {/* BOTTOM: Actions */}
+      <div className="flex flex-col w-full">
+        <div className="bg-black/60 backdrop-blur-md py-4 rounded-3xl border border-white/20 flex flex-col items-center justify-center gap-1 mb-6 shadow-inner">
+           <span className="text-stone-300 text-[10px] font-black uppercase tracking-widest">Đang sở hữu</span>
+           <div className="flex items-center gap-2">
+              <span className="text-amber-400 font-black text-3xl drop-shadow-[0_0_10px_rgba(251,191,36,0.8)]">{ticketCount}</span>
+              <span className="text-amber-500/90 text-xs font-bold uppercase">Lệnh bài</span>
+           </div>
+        </div>
+        
+        <div className="grid grid-cols-3 gap-3">
+            {[1, 5, 10].map(cnt => (
+               <button key={cnt} onClick={() => onSummon(cnt)} className={`${btnColor} py-4 md:py-5 rounded-2xl font-black uppercase text-sm border-2 shadow-[0_0_15px_rgba(0,0,0,0.5)] active:scale-95 transition-all hover:shadow-[0_0_20px_inherit] backdrop-blur-sm`}>
+                  x{cnt}
+               </button>
+            ))}
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  );
+};
+
+const AdminPanel = ({ player, setPlayer, onClose }: any) => {
+  const [activeTab, setActiveTab] = useState<'claim' | 'images'>('claim');
+  const [selectedType, setSelectedType] = useState('gold');
+  const [selectedItem, setSelectedItem] = useState('');
+  const [amount, setAmount] = useState(1);
+
+  // Custom image links
+  const [customImages, setCustomImages] = useState<Record<string, string>>(() => {
+    return player.customItemImages || {};
+  });
+
+  const handleClaim = () => {
+     if (selectedType === 'gold') {
+        setPlayer({ ...player, gold: player.gold + amount });
+     } else if (selectedType === 'jade') {
+        setPlayer({ ...player, jade: player.jade + amount });
+     } else if (selectedType === 'normalTickets') {
+          setPlayer({ ...player, normalTickets: (player.normalTickets || 0) + amount });
+       } else if (selectedType === 'premiumTickets') {
+          setPlayer({ ...player, premiumTickets: (player.premiumTickets || 0) + amount });
+       } else if (selectedType === 'artifactTickets') {
+          setPlayer({ ...player, artifactTickets: (player.artifactTickets || 0) + amount });
+       } else if (selectedType === 'legionTickets') {
+          setPlayer({ ...player, legionTickets: (player.legionTickets || 0) + amount });
+     } else if (selectedType === 'pills') {
+        if (!selectedItem) return alert("Chưa chọn Đột Phá Đan");
+        setPlayer({
+          ...player,
+          pills: {
+            ...(player.pills || {}),
+            [selectedItem]: ((player.pills && player.pills[selectedItem]) || 0) + amount
+          }
+        });
+     } else if (selectedType === 'hero') {
+        if (!selectedItem) return alert("Chưa chọn tướng");
+        let heroData = INITIAL_HEROES.find(h => h.id === selectedItem);
+        if (!heroData) heroData = ENEMY_HEROES.find(h => h.id === selectedItem);
+        if (!heroData) return alert("Không tìm thấy tướng");
+        
+        const newInventory = [...player.inventory];
+        for(let i = 0; i < amount; i++) {
+            newInventory.push({ ...heroData, id: `${heroData.id}_${Date.now()}_${i}`, isPermanent: true });
+        }
+        setPlayer({ ...player, inventory: newInventory });
+     } else if (selectedType === 'fragment') {
+        if (!selectedItem) return alert("Chưa chọn tướng");
+        let heroData = INITIAL_HEROES.find(h => h.id === selectedItem);
+        if (!heroData) heroData = ENEMY_HEROES.find(h => h.id === selectedItem);
+        if (!heroData) return alert("Không tìm thấy tướng");
+
+        const newInventory = [...player.inventory];
+        const existingHeroes = newInventory.filter(h => h.name === heroData!.name && h.isPermanent);
+        if (existingHeroes.length > 0) {
+            existingHeroes.forEach(h => { h.fragments = (h.fragments || 0) + amount; });
+            setPlayer({ ...player, inventory: newInventory });
+        } else {
+            return alert("Chúa công phải sở hữu tướng này trong Quân Đoàn trước mới có chỗ chứa mảnh!");
+        }
+     } else if (selectedType === 'artifact') {
+        if (!selectedItem) return alert("Chưa chọn thần khí");
+        const artData = ARTIFACTS.find(a => a.id === selectedItem);
+        if (!artData) return alert("Không tìm thấy thần khí");
+        const newArtifacts = [...(player.artifacts || [])];
+        for(let i = 0; i < amount; i++) newArtifacts.push(artData.id);
+        setPlayer({ ...player, artifacts: newArtifacts });
+     }
+     alert("Chúa công đã nhận vật phẩm thành công!");
+  };
+
+  const handleFileUpload = (itemId: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (uploadEvent) => {
+        const result = uploadEvent.target?.result as string;
+        setCustomImages(prev => ({ ...prev, [itemId]: result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const saveCustomImages = () => {
+    setPlayer((prev: any) => ({
+      ...prev,
+      customItemImages: customImages
+    }));
+    alert("Đã lưu bộ ảnh vật phẩm mới thành công!");
+  };
+
+  const resetCustomImages = () => {
+    setCustomImages({});
+    setPlayer((prev: any) => ({
+      ...prev,
+      customItemImages: {}
+    }));
+    alert("Đã đặt lại bộ ảnh vật phẩm về mặc định!");
+  };
+
+  const ITEM_LIST = [
+    { id: 'normal', name: 'Lệnh Bài Thường', defaultImg: './items/normal_ticket.png', icon: '🎫' },
+    { id: 'premium', name: 'Lệnh Bài Danh Tướng', defaultImg: './items/premium_ticket.png', icon: '📜' },
+    { id: 'artifact', name: 'Tầm Bảo Thần Khí', defaultImg: './items/artifact_ticket.png', icon: '🔮' },
+    { id: 'jade', name: 'Ngọc Bích', defaultImg: './items/jade.png', icon: '💎' },
+    { id: 'pill1', name: 'Sơ Cấp Đột Phá Đan (6-10★)', defaultImg: './items/pill1.png', icon: '💊' },
+    { id: 'pill2', name: 'Trung Cấp Phá Cảnh Đan (11-15★)', defaultImg: './items/pill2.png', icon: '🔮' },
+    { id: 'pill3', name: 'Cao Cấp Thông Thiên Đan (16-20★)', defaultImg: './items/pill3.png', icon: '⚡' },
+    { id: 'pill4', name: 'Thần Cấp Hóa Thần Đan (21-25★)', defaultImg: './items/pill4.png', icon: '🌌' },
+    { id: 'pill5', name: 'Tối Thượng Thái Sơ Đan (26-30★)', defaultImg: './items/pill5.png', icon: '🚩' },
+  ];
+
+  return (
+     <div className="fixed inset-0 z-[999] bg-black/80 flex items-center justify-center p-4 md:p-6 animate-in fade-in" onClick={onClose}>
+        <div className="bg-stone-900 border-2 border-amber-500 rounded-3xl p-6 md:p-8 max-w-2xl w-full relative max-h-[90vh] flex flex-col shadow-2xl" onClick={e => e.stopPropagation()}>
+           <button onClick={onClose} className="absolute top-4 right-4 text-amber-500 hover:text-amber-300 transition-colors">
+              <XCircle size={28} />
+           </button>
+           
+           <h2 className="text-xl md:text-2xl font-cinzel font-black text-amber-400 text-center mb-4">Lệnh Bài Chúa Công (Admin)</h2>
+           
+           {/* Navigation Tabs */}
+           <div className="flex border-b border-amber-900/50 mb-6 gap-2">
+              <button onClick={() => setActiveTab('claim')} className={`flex-1 py-2.5 rounded-t-xl font-bold text-xs md:text-sm uppercase tracking-wider transition-all ${activeTab === 'claim' ? 'bg-amber-700/40 text-amber-300 border-t-2 border-x-2 border-amber-500' : 'text-stone-400 hover:text-white'}`}>
+                 🎁 Nhận Vật Phẩm
+              </button>
+              <button onClick={() => setActiveTab('images')} className={`flex-1 py-2.5 rounded-t-xl font-bold text-xs md:text-sm uppercase tracking-wider transition-all ${activeTab === 'images' ? 'bg-amber-700/40 text-amber-300 border-t-2 border-x-2 border-amber-500' : 'text-stone-400 hover:text-white'}`}>
+                 🖼️ Tự Thay Ảnh Vật Phẩm
+              </button>
+           </div>
+
+           {activeTab === 'claim' ? (
+              <div className="flex flex-col gap-4 overflow-y-auto pr-1">
+                 <select className="bg-black border border-amber-900 p-3 rounded-xl text-amber-200 outline-none" value={selectedType} onChange={e => {setSelectedType(e.target.value); setSelectedItem('');}}>
+                    <option value="gold">Ngân Lượng</option>
+                    <option value="jade">Ngọc Bích</option>
+                    <option value="pills">Các Loại Đột Phá Đan</option>
+                    <option value="normalTickets">Vé Anh Hào</option>
+                      <option value="premiumTickets">Vé Danh Tướng</option>
+                      <option value="artifactTickets">Vé Thần Khí</option>
+                      <option value="legionTickets">Vé Quân Đoàn</option>
+                    <option value="hero">Tướng</option>
+                    <option value="fragment">Mảnh Tướng</option>
+                    <option value="artifact">Thần Khí</option>
+                 </select>
+
+                 {selectedType === 'pills' && (
+                    <select className="bg-black border border-amber-900 p-3 rounded-xl text-amber-200 outline-none" value={selectedItem} onChange={e => setSelectedItem(e.target.value)}>
+                       <option value="">-- Chọn Đột Phá Đan --</option>
+                       {BREAKTHROUGH_PILLS.map(p => <option key={p.id} value={p.id}>{p.icon} {p.name} ({p.desc})</option>)}
+                    </select>
+                 )}
+
+                 {(selectedType === 'hero' || selectedType === 'fragment') && (
+                    <select className="bg-black border border-amber-900 p-3 rounded-xl text-amber-200 outline-none" value={selectedItem} onChange={e => setSelectedItem(e.target.value)}>
+                       <option value="">-- Chọn Tướng --</option>
+                       <optgroup label="Ta">
+                         {INITIAL_HEROES.map(h => <option key={h.id} value={h.id}>{h.name}</option>)}
+                       </optgroup>
+                       <optgroup label="Địch">
+                         {ENEMY_HEROES.map(h => <option key={h.id} value={h.id}>{h.name}</option>)}
+                       </optgroup>
+                    </select>
+                 )}
+                 {selectedType === 'artifact' && (
+                    <select className="bg-black border border-amber-900 p-3 rounded-xl text-amber-200 outline-none" value={selectedItem} onChange={e => setSelectedItem(e.target.value)}>
+                       <option value="">-- Chọn Thần Khí --</option>
+                       {ARTIFACTS.map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
+                    </select>
+                 )}
+
+                 <input type="number" min="1" className="bg-black border border-amber-900 p-3 rounded-xl text-amber-200 outline-none" value={amount} onChange={e => setAmount(Number(e.target.value))} placeholder="Số lượng" />
+                 
+                 <button onClick={handleClaim} className="bg-amber-600 text-white font-black py-3.5 rounded-xl hover:bg-amber-500 mt-2 tracking-widest uppercase">
+                    NHẬN VẬT PHẨM
+                 </button>
+              </div>
+           ) : (
+              <div className="flex flex-col gap-4 overflow-y-auto custom-scrollbar pr-2 flex-1">
+                 <div className="bg-amber-950/40 p-3 rounded-xl border border-amber-800/40 text-xs text-amber-200 leading-relaxed">
+                    💡 <b>Tự thêm ảnh của Chúa công:</b> Chọn file ảnh từ máy tính hoặc dán URL ảnh trực tiếp bên dưới. Ảnh sẽ lập tức thay thế hiển thị trong Kỳ Trân Các và Nâng Sao!
+                 </div>
+
+                 <div className="flex flex-col gap-3">
+                    {ITEM_LIST.map((item) => {
+                       const currentVal = customImages[item.id] || '';
+                       return (
+                          <div key={item.id} className="bg-black/60 p-3 rounded-xl border border-white/10 flex flex-col md:flex-row items-center gap-3">
+                             <div className="w-14 h-14 rounded-lg bg-stone-950 border border-amber-600/30 overflow-hidden flex items-center justify-center shrink-0">
+                                {currentVal ? (
+                                   <img src={currentVal} alt={item.name} className="w-full h-full object-cover" />
+                                ) : (
+                                   <span className="text-2xl">{item.icon}</span>
+                                )}
+                             </div>
+
+                             <div className="flex-1 w-full flex flex-col gap-1">
+                                <span className="text-xs font-bold text-amber-300">{item.name}</span>
+                                <input
+                                   type="text"
+                                   placeholder="Dán URL link ảnh tại đây..."
+                                   value={currentVal}
+                                   onChange={e => setCustomImages(prev => ({ ...prev, [item.id]: e.target.value }))}
+                                   className="bg-stone-950 border border-stone-800 text-xs p-2 rounded-lg text-stone-200 outline-none focus:border-amber-500 w-full"
+                                />
+                             </div>
+
+                             <label className="bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs px-3 py-2 rounded-lg cursor-pointer font-bold border border-white/10 shrink-0 text-center">
+                                📁 Chọn ảnh từ máy
+                                <input
+                                   type="file"
+                                   accept="image/*"
+                                   className="hidden"
+                                   onChange={e => handleFileUpload(item.id, e)}
+                                />
+                             </label>
+                          </div>
+                       );
+                    })}
+                 </div>
+
+                 <div className="flex gap-2 mt-4 pt-2 border-t border-white/10">
+                    <button onClick={saveCustomImages} className="flex-1 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-white font-black py-3 rounded-xl text-xs uppercase tracking-wider shadow-lg">
+                       💾 Lưu Bộ Ảnh Custom
+                    </button>
+                    <button onClick={resetCustomImages} className="bg-stone-800 hover:bg-stone-700 text-stone-300 font-bold px-4 py-3 rounded-xl text-xs uppercase">
+                       🔄 Đặt Lại Mặc Định
+                    </button>
+                 </div>
+              </div>
+           )}
+        </div>
+     </div>
+  );
+};
+
+const ShopView = ({ player, setPlayer, setView }: any) => {
+  const [quantities, setQuantities] = useState<Record<string, number>>({
+    normal: 1, premium: 1, jade: 1, artifact: 1,
+    pill1: 1, pill2: 1, pill3: 1, pill4: 1, pill5: 1
+  });
+
+  const buy = (type: string, price: number, name: string) => {
+    const qty = quantities[type] || 1;
+    const totalCost = price * qty;
+    if (player.gold < totalCost) {
+       return alert(`Ngân lượng không đủ! Cần ${totalCost.toLocaleString()} Vàng.`);
+    }
+
+    setPlayer((prev: any) => {
+       if (type.startsWith('pill')) {
+          const newPills = { ...(prev.pills || {}) };
+          newPills[type] = (newPills[type] || 0) + qty;
+          return { ...prev, gold: prev.gold - totalCost, pills: newPills };
+       }
+       const key = type === 'normal' ? 'normalTickets' : (type === 'premium' ? 'premiumTickets' : (type === 'artifact' ? 'artifactTickets' : 'jade'));
+       return { ...prev, gold: prev.gold - totalCost, [key]: (prev[key] || 0) + qty };
+    });
+    alert(`Đã mua thành công ${qty}x ${name}!`);
+  };
+
+  return (
+    <div className="min-h-screen ancient-bg flex flex-col">
+       <div className="p-4 md:p-6 flex justify-between items-center bg-stone-900/95 border-b border-amber-900/50 shadow-xl z-10 backdrop-blur-md">
+         <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors bg-stone-800 px-4 py-2 rounded-xl border border-amber-900/30"><ChevronLeft/> Trở về</button>
+         <div className="text-amber-400 font-black font-cinzel text-xl md:text-2xl tracking-widest uppercase drop-shadow-[0_0_10px_rgba(251,191,36,0.3)]">✦ Kỳ Trân Các ✦</div>
+         <div className="bg-stone-950 px-4 py-2 rounded-2xl border-2 border-yellow-700/50 flex items-center gap-2 shadow-inner">
+           <span className="text-yellow-500 text-lg">🪙</span>
+           <span className="text-yellow-400 font-bold text-base md:text-lg">{player.gold.toLocaleString()}</span>
+         </div>
+       </div>
+
+       <div className="flex-1 p-6 md:p-10 max-w-7xl mx-auto w-full overflow-y-auto pb-20 custom-scrollbar flex flex-col gap-10">
+          {/* Mục 1: Lệnh bài & Vật phẩm */}
+          <div>
+            <h2 className="text-amber-400 font-cinzel font-black text-lg md:text-xl uppercase tracking-widest mb-4 flex items-center gap-2 border-b border-amber-900/30 pb-2">
+               📜 Lệnh Bài & Nguyên Liệu
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+               <ShopItem itemId="normal" player={player} title="Lệnh Bài Thường" price={2000} qty={quantities.normal} setQty={(q: number) => setQuantities(p => ({...p, normal: q}))} onBuy={() => buy('normal', 2000, 'Lệnh Bài Thường')} img="./items/normal_ticket.png" color="blue" />
+               <ShopItem itemId="premium" player={player} title="Lệnh Bài Danh Tướng" price={10000} qty={quantities.premium} setQty={(q: number) => setQuantities(p => ({...p, premium: q}))} onBuy={() => buy('premium', 10000, 'Lệnh Bài Danh Tướng')} img="./items/premium_ticket.png" color="purple" />
+               <ShopItem itemId="artifact" player={player} title="Tầm Bảo Thần Khí" price={20000} qty={quantities.artifact} setQty={(q: number) => setQuantities(p => ({...p, artifact: q}))} onBuy={() => buy('artifact', 20000, 'Tầm Bảo Thần Khí')} img="./items/artifact_ticket.png" color="amber" />
+               <ShopItem itemId="jade" player={player} title="Ngọc Bích" price={5000} qty={quantities.jade} setQty={(q: number) => setQuantities(p => ({...p, jade: q}))} onBuy={() => buy('jade', 5000, 'Ngọc Bích')} img="./items/jade.png" color="green" />
+            </div>
+          </div>
+
+          {/* Mục 2: Đột Phá Đan Thần Dược (Giá Cắt Cổ!) */}
+          <div>
+            <div className="flex items-center justify-between border-b border-rose-900/40 pb-2 mb-4">
+               <h2 className="text-rose-400 font-cinzel font-black text-lg md:text-xl uppercase tracking-widest flex items-center gap-2">
+                  💊 Đột Phá Đan Thần Dược (Giá Cắt Cổ!)
+               </h2>
+               <span className="text-xs bg-rose-950 text-rose-300 px-3 py-1 rounded-full border border-rose-800/50 font-bold">Hàng Độc Quyền Quý Hiếm</span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+               <ShopItem itemId="pill1" player={player} title="Sơ Cấp Đột Phá Đan" price={50000} desc="Mốc 6-10★" qty={quantities.pill1} setQty={(q: number) => setQuantities(p => ({...p, pill1: q}))} onBuy={() => buy('pill1', 50000, 'Sơ Cấp Đột Phá Đan')} img="./items/pill1.png" icon="💊" color="red" />
+               <ShopItem itemId="pill2" player={player} title="Trung Cấp Phá Cảnh Đan" price={150000} desc="Mốc 11-15★" qty={quantities.pill2} setQty={(q: number) => setQuantities(p => ({...p, pill2: q}))} onBuy={() => buy('pill2', 150000, 'Trung Cấp Phá Cảnh Đan')} img="./items/pill2.png" icon="🔮" color="purple" />
+               <ShopItem itemId="pill3" player={player} title="Cao Cấp Thông Thiên Đan" price={500000} desc="Mốc 16-20★" qty={quantities.pill3} setQty={(q: number) => setQuantities(p => ({...p, pill3: q}))} onBuy={() => buy('pill3', 500000, 'Cao Cấp Thông Thiên Đan')} img="./items/pill3.png" icon="⚡" color="sky" />
+               <ShopItem itemId="pill4" player={player} title="Thần Cấp Hóa Thần Đan" price={1500000} desc="Mốc 21-25★" qty={quantities.pill4} setQty={(q: number) => setQuantities(p => ({...p, pill4: q}))} onBuy={() => buy('pill4', 1500000, 'Thần Cấp Hóa Thần Đan')} img="./items/pill4.png" icon="🌌" color="amber" />
+               <ShopItem itemId="pill5" player={player} title="Tối Thượng Thái Sơ Đan" price={5000000} desc="Mốc 26-30★" qty={quantities.pill5} setQty={(q: number) => setQuantities(p => ({...p, pill5: q}))} onBuy={() => buy('pill5', 5000000, 'Tối Thượng Thái Sơ Đan')} img="./items/pill5.png" icon="🚩" color="rose" />
+            </div>
+          </div>
+       </div>
+    </div>
+  );
+};
+
+const ShopItem = ({ title, price, qty, setQty, onBuy, img, icon, color, desc, itemId, player }: any) => {
+  const colorMap: any = {
+    blue: { border: 'border-blue-500/40', bg: 'from-stone-900 to-blue-950/30', text: 'text-blue-300', glow: 'shadow-[0_0_30px_rgba(59,130,246,0.2)]' },
+    purple: { border: 'border-purple-500/40', bg: 'from-stone-900 to-purple-950/40', text: 'text-purple-300', glow: 'shadow-[0_0_40px_rgba(168,85,247,0.25)]' },
+    amber: { border: 'border-amber-500/40', bg: 'from-stone-900 to-amber-950/40', text: 'text-amber-300', glow: 'shadow-[0_0_40px_rgba(245,158,11,0.25)]' },
+    green: { border: 'border-green-500/40', bg: 'from-stone-900 to-green-950/30', text: 'text-green-300', glow: 'shadow-[0_0_30px_rgba(34,197,94,0.2)]' },
+    red: { border: 'border-red-500/40', bg: 'from-stone-900 to-red-950/40', text: 'text-red-300', glow: 'shadow-[0_0_30px_rgba(239,68,68,0.25)]' },
+    sky: { border: 'border-sky-500/40', bg: 'from-stone-900 to-sky-950/40', text: 'text-sky-300', glow: 'shadow-[0_0_30px_rgba(56,189,248,0.25)]' },
+    rose: { border: 'border-rose-500/50', bg: 'from-stone-900 to-rose-950/50', text: 'text-rose-300 font-bold', glow: 'shadow-[0_0_40px_rgba(244,63,94,0.35)]' }
+  };
+  const theme = colorMap[color] || colorMap.amber;
+  const customImg = player?.customItemImages && player.customItemImages[itemId];
+  const displaySrc = customImg || img;
+
+  return (
+    <div className={`bg-gradient-to-b ${theme.bg} p-5 md:p-6 rounded-3xl border-2 ${theme.border} flex flex-col items-center gap-3.5 ${theme.glow} transition-all hover:scale-[1.03] hover:-translate-y-1 duration-300 relative`}>
+      {desc && (
+        <span className="absolute top-3 right-3 text-[10px] bg-black/60 text-stone-300 px-2 py-0.5 rounded-md border border-white/10 font-mono">
+          {desc}
+        </span>
+      )}
+      <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-2xl overflow-hidden border-2 border-white/10 shadow-2xl flex items-center justify-center bg-black/50 mt-2">
+        {img ? (
+          <img src={img} alt={title} className="w-full h-full object-cover scale-110" />
+        ) : (
+          <span className="text-5xl md:text-6xl drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] animate-pulse">{icon}</span>
+        )}
+      </div>
+      <h3 className={`font-black uppercase text-center text-sm md:text-base tracking-wide ${theme.text} min-h-[2.5rem] flex items-center leading-tight`}>{title}</h3>
+      
+      <div className="flex items-center gap-1.5 bg-stone-950/70 px-4 py-1.5 rounded-xl border border-white/5">
+        <span className="text-yellow-500 text-base">🪙</span>
+        <span className="text-yellow-400 font-black text-sm md:text-base">{price.toLocaleString()}</span>
+      </div>
+      
+      <div className="flex items-center gap-4 bg-stone-950/80 px-4 py-2 rounded-xl border border-amber-900/30 w-full justify-between shadow-inner">
+        <button onClick={() => setQty(Math.max(1, qty-1))} className="text-amber-500 hover:text-white transition-colors p-1"><Minus size={16}/></button>
+        <input type="number" className="bg-transparent text-center w-10 font-black outline-none text-white text-base" value={qty} readOnly />
+        <button onClick={() => setQty(qty+1)} className="text-amber-500 hover:text-white transition-colors p-1"><Plus size={16}/></button>
+      </div>
+      
+      <button onClick={onBuy} className="w-full bg-gradient-to-r from-amber-800 to-amber-900 hover:from-amber-700 hover:to-amber-800 py-3 rounded-xl font-black uppercase text-xs text-amber-100 transition-all shadow-[0_4px_15px_rgba(0,0,0,0.5)] active:scale-95 border border-amber-700/50 tracking-widest">
+        Mua {qty} Cái
+      </button>
+    </div>
+  );
+};
+
+const MOCK_LEGIONS = [
+  "Đại Việt Hùng Binh", "Giao Chỉ Thiết Kỵ", "Vạn Xuân Bất Diệt", "Lĩnh Nam Uy Vũ", "Lam Sơn Tụ Nghĩa", 
+  "Tây Sơn Thần Tốc", "Mê Linh Khởi Nghĩa", "Hoa Lư Vạn Thắng", "Bình Ngô Đại Quân", "Sát Thát Dũng Sĩ"
+].map((name, index) => {
+  const pLineup = [];
+  let pPower = 0;
+  for(let j=0; j<6; j++) {
+     const baseHero = INITIAL_HEROES[(index + j) % INITIAL_HEROES.length];
+     const star = (j === 0) ? Math.min(30, 6 + (index * 2)) : Math.floor(Math.random() * 5) + 1;
+     const botHero = calculateHeroStatsWithStar(baseHero, star);
+     pLineup.push({ ...botHero });
+     pPower += botHero.overall;
+  }
+  return { legionName: name, power: pPower, lineup: pLineup, isPlayer: false, leaderStar: pLineup[0].star };
+});
+
+const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any) => {
+  const [activeTab, setActiveTab] = useState<'heroes' | 'items'>('heroes');
+  const [selectedHeroId, setSelectedHeroId] = useState<string | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [showDecomposeModal, setShowDecomposeModal] = useState(false);
+  const [showEquipModal, setShowEquipModal] = useState(false);
+  const [showAdminPanel, setShowAdminPanel] = useState(false);
+
+  useEffect(() => {
+     if (player && player.inventory) {
+        const synced = syncHeroInventoryStats(player.inventory);
+        let changed = false;
+        for (let i = 0; i < synced.length; i++) {
+           if (synced[i].overall !== player.inventory[i]?.overall || synced[i].skillDesc !== player.inventory[i]?.skillDesc) {
+              changed = true;
+              break;
+           }
+        }
+        if (changed) {
+           setPlayer((p: any) => ({ ...p, inventory: synced }));
+        }
+     }
+  }, []);
+
+  const selectedHero = player.inventory.filter((h: Hero) => h.isPermanent).find((h: Hero) => h.id === selectedHeroId);
+  const currentLineupHeroes = player.permLineup.map((id: string) => player.inventory.find((h: Hero) => h.id === id)).filter(Boolean).map((h: Hero) => calculateHeroStatsWithStar(h, h.star));
+  const combatPower = currentLineupHeroes.reduce((acc: number, h: Hero) => acc + h.overall, 0);
+
+  const moveHero = (heroId: string, slotIdx: number) => {
+    const newLineup = [...player.permLineup];
+    const oldIdx = newLineup.indexOf(heroId);
+    if (oldIdx !== -1) newLineup[oldIdx] = null;
+    newLineup[slotIdx] = heroId;
+    setPlayer((p: any) => ({ ...p, permLineup: newLineup }));
+    setSelectedSlot(null);
+    setSelectedHeroId(null);
+  };
+
+  const removeHeroFromLineup = (slotIdx: number) => {
+    const newLineup = [...player.permLineup];
+    newLineup[slotIdx] = null;
+    setPlayer((p: any) => ({ ...p, permLineup: newLineup }));
+  };
+
+  const decompose = (rewardType: 'fragments' | 'jade' | 'gold') => {
+    if (!selectedHero) return;
+    if (player.permLineup.includes(selectedHero.id)) return alert("Anh hùng đang tham trận, không thể giải ngũ!");
+    
+    let jadeGain = 0;
+    let goldGain = 0;
+    let fragGain = 0;
+
+    if (rewardType === 'fragments') fragGain = 50;
+    else if (rewardType === 'jade') {
+      const jadeTable: Record<string, number> = { UR: 30, SSR: 15, SR: 10, R: 5, C: 2 };
+      jadeGain = jadeTable[selectedHero.rarity] || 0;
+    } else {
+      const goldTable: Record<string, number> = { UR: 15000, SSR: 7500, SR: 5000, R: 2000, C: 1000 };
+      goldGain = goldTable[selectedHero.rarity] || 0;
+    }
+
+    setPlayer((p: any) => {
+      const newInv = p.inventory.filter((h: Hero) => h.id !== selectedHero.id);
+      if (rewardType === 'fragments') {
+         newInv.forEach((h: Hero) => { if (h.name === selectedHero.name) h.fragments += 50; });
+      }
+      return { 
+        ...p, 
+        inventory: newInv, 
+        jade: p.jade + jadeGain, 
+        gold: p.gold + goldGain 
+      };
+    });
+    setSelectedHeroId(null);
+    setShowDecomposeModal(false);
+  };
+
+  const upgradeStar = () => {
+    if (!selectedHero) return;
+    if (selectedHero.star >= 30) return alert("Hào kiệt đã đạt tới giới hạn tối thượng 30 Sao!");
+    if (selectedHero.rarity === Rarity.R || selectedHero.rarity === Rarity.C) return alert("Binh sĩ hạng R và C không thể nâng sao.");
+
+    const req = getStarUpgradeReq(selectedHero.star);
+    if (selectedHero.fragments < req.fragReq) return alert(`Thiếu mảnh tướng! (Cần ${req.fragReq}, hiện có ${selectedHero.fragments})`);
+    if (player.jade < req.jadeReq) return alert(`Thiếu Ngọc Bích! (Cần ${req.jadeReq}, hiện có ${player.jade})`);
+
+    if (req.requiredPill) {
+       const hasCount = (player.pills && player.pills[req.requiredPill.id]) || 0;
+       if (hasCount < 1) return alert(`Đột phá mốc ${req.nextStar} Sao cần 1 ${req.requiredPill.name}! (Hiện có ${hasCount}). Hãy dùng Lệnh Bài Chúa Công để lấy đan!`);
+    }
+
+    const statBonus = selectedHero.star === 1 ? 2 : 3;
+
+    setPlayer((p: any) => {
+      const newPills = { ...(p.pills || {}) };
+      if (req.requiredPill) {
+         newPills[req.requiredPill.id] = Math.max(0, (newPills[req.requiredPill.id] || 1) - 1);
+      }
+      return {
+        ...p,
+        jade: p.jade - req.jadeReq,
+        pills: newPills,
+        inventory: p.inventory.map((h: Hero) => {
+          if (h.id === selectedHero.id) {
+             const updated = calculateHeroStatsWithStar(h, h.star + 1);
+             return { ...updated, fragments: h.fragments - req.fragReq };
+          }
+          return h;
+        })
+      };
+    });
+    setShowUpgradeModal(false);
+  };
+
+  return (
+    <div className="min-h-screen viet-bg flex flex-col h-screen overflow-hidden">
+       <div className="p-4 flex justify-between items-center bg-gradient-to-r from-stone-950 via-stone-900 to-stone-950 border-b border-amber-900/50 shadow-[0_4px_20px_rgba(0,0,0,0.5)] z-30">
+          <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors"><ChevronLeft/> Trở về</button>
+          <div className="flex flex-col items-center">
+             <h2 className="text-xl font-cinzel text-amber-400 font-black uppercase tracking-widest drop-shadow-[0_0_8px_rgba(201,148,26,0.3)]">⚔ Quân Đoàn ⚔</h2>
+             <div className="text-[10px] md:text-xs font-bold text-amber-500/80 uppercase tracking-widest mt-0.5 bg-black/40 px-3 py-0.5 rounded-full border border-amber-900/30">Lực chiến Quân Đoàn: <span className="text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.8)]">{combatPower.toLocaleString()}</span></div>
+          </div>
+          <div className="flex gap-3">
+             <button onClick={quickLineup} className="bg-amber-900/80 text-amber-200 px-5 py-2 rounded-xl font-black uppercase text-xs flex items-center gap-2 hover:bg-amber-800 shadow-lg transition-all border border-amber-800/40"><Zap size={16}/> Bày trận nhanh</button>
+             <button onClick={onCombat} className="bg-gradient-to-r from-red-800 to-red-700 text-white px-8 py-2 rounded-xl font-black uppercase text-xs flex items-center gap-2 hover:from-red-700 hover:to-red-600 shadow-[0_0_20px_rgba(239,68,68,0.4)] animate-pulse transition-all border border-red-600/30"><SwordIcon size={18}/> XUẤT QUÂN</button>
+          </div>
+       </div>
+
+       <div className="flex-1 flex overflow-hidden">
+          <div className="w-1/3 bg-stone-950/80 border-r-2 border-amber-900/50 p-6 overflow-y-auto custom-scrollbar shadow-2xl z-10 flex flex-col">
+             
+             {/* Tabs */}
+             <div className="flex gap-2 mb-6 border-b border-amber-900/30 pb-4">
+                <button 
+                   onClick={() => setActiveTab('heroes')} 
+                   className={`flex-1 py-3 rounded-xl font-black uppercase text-sm transition-all border ${activeTab === 'heroes' ? 'bg-amber-900/80 text-amber-200 border-amber-500 shadow-[0_0_15px_rgba(251,191,36,0.2)]' : 'bg-stone-900 text-stone-500 border-stone-800 hover:bg-stone-800'}`}
+                >
+                   <Tent size={18} className="inline-block mb-1 mr-1" /> Anh Hào ({player.inventory.filter(h => h.isPermanent).length})
+                </button>
+                <button 
+                   onClick={() => setActiveTab('items')} 
+                   className={`flex-1 py-3 rounded-xl font-black uppercase text-sm transition-all border ${activeTab === 'items' ? 'bg-amber-900/80 text-amber-200 border-amber-500 shadow-[0_0_15px_rgba(251,191,36,0.2)]' : 'bg-stone-900 text-stone-500 border-stone-800 hover:bg-stone-800'}`}
+                >
+                   <Package size={18} className="inline-block mb-1 mr-1" /> Vật Phẩm
+                </button>
+             </div>
+             
+             {activeTab === 'heroes' && (
+               <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-10">
+                  {[...player.inventory.filter(h => h.isPermanent)].sort((a: Hero, b: Hero) => {
+                    const rarityOrder: Record<string, number> = { 'UR': 0, 'SSR': 1, 'SR': 2, 'R': 3, 'C': 4 };
+                    return rarityOrder[a.rarity] - rarityOrder[b.rarity];
+                  }).map((h: Hero) => {
+                    const isInLineup = player.permLineup.includes(h.id);
+                    return (
+                      <div key={h.id} className="relative group">
+                        <HeroGalleryCard hero={h} onClick={() => { 
+                          if (selectedSlot !== null) moveHero(h.id, selectedSlot);
+                          else setSelectedHeroId(h.id);
+                        }} />
+                        {isInLineup && <div className="absolute top-1 right-1 bg-amber-900 p-0.5 rounded-full shadow-lg z-10"><CheckCircle size={14} className="text-amber-500"/></div>}
+                        {isInLineup && selectedSlot !== null && <div className="absolute inset-0 bg-black/60 rounded-2xl pointer-events-none z-10" />}
+                      </div>
+                    );
+                  })}
+               </div>
+             )}
+
+             {activeTab === 'items' && (
+               <div className="space-y-4">
+                  {player.playerName === 'admin' && (
+                     <div className="bg-red-900/40 p-4 rounded-2xl border-2 border-red-500/50 flex items-center gap-4 cursor-pointer hover:bg-red-900/60 transition-colors" onClick={() => setShowAdminPanel(true)}>
+                        <div className="w-12 h-12 bg-red-900/80 rounded-xl flex items-center justify-center border border-yellow-500/80 overflow-hidden relative shadow-[0_0_15px_rgba(239,68,68,0.5)]">
+                           <Crown size={28} className="text-yellow-300 drop-shadow-md" />
+                        </div>
+                        <div className="flex-1">
+                           <div className="text-yellow-400 font-black text-sm uppercase tracking-widest drop-shadow-md">Lệnh Bài Chúa Công</div>
+                           <div className="text-red-200 text-xs mt-1">Đặc quyền tối cao - Lấy mọi vật phẩm trong thiên hạ</div>
+                        </div>
+                        <div className="text-sm font-black text-yellow-500 px-3 py-1 bg-black/40 rounded-full border border-yellow-500/30">Vĩnh viễn</div>
+                     </div>
+                  )}
+
+                  <div className="bg-stone-900/80 p-4 rounded-2xl border border-stone-700 flex items-center gap-4">
+                     <div className="w-12 h-12 bg-blue-900/30 rounded-xl flex items-center justify-center border border-blue-500/30 overflow-hidden relative">
+                        <img src="./items/normal_ticket.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Lệnh Bài Thường"/>
+                     </div>
+                     <div className="flex-1">
+                        <div className="text-white font-bold text-sm uppercase">Lệnh Bài Thường</div>
+                        <div className="text-stone-400 text-xs">Dùng để chiêu mộ Hào Kiệt</div>
+                     </div>
+                     <div className="text-2xl font-black text-blue-400">{player.normalTickets}</div>
+                  </div>
+
+                  <div className="bg-stone-900/80 p-4 rounded-2xl border border-stone-700 flex items-center gap-4">
+                     <div className="w-12 h-12 bg-purple-900/30 rounded-xl flex items-center justify-center border border-purple-500/30 overflow-hidden relative">
+                        <img src="./items/premium_ticket.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Lệnh Bài Danh Tướng"/>
+                     </div>
+                     <div className="flex-1">
+                        <div className="text-white font-bold text-sm uppercase">Lệnh Bài Danh Tướng</div>
+                        <div className="text-stone-400 text-xs">Dùng để chiêu mộ Danh Tướng SSR/UR</div>
+                     </div>
+                     <div className="text-2xl font-black text-purple-400">{player.premiumTickets}</div>
+                  </div>
+
+                  <div className="bg-stone-900/80 p-4 rounded-2xl border border-stone-700 flex items-center gap-4">
+                     <div className="w-12 h-12 bg-amber-900/30 rounded-xl flex items-center justify-center border border-amber-500/30 overflow-hidden relative">
+                        <img src="./items/artifact_ticket.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Lệnh Bài Tầm Bảo Thần Khí" onError={(e) => { (e.target as HTMLImageElement).src = './items/premium_ticket.png'; }} />
+                     </div>
+                     <div className="flex-1">
+                        <div className="text-white font-bold text-sm uppercase">Tầm Bảo Thần Khí</div>
+                        <div className="text-stone-400 text-xs">Dùng để tìm kiếm Thần Khí Bản Mệnh</div>
+                     </div>
+                     <div className="text-2xl font-black text-amber-500">{player.artifactTickets || 0}</div>
+                  </div>
+
+                  <div className="bg-stone-900/80 p-4 rounded-2xl border border-stone-700 flex items-center gap-4">
+                     <div className="w-12 h-12 bg-green-900/30 rounded-xl flex items-center justify-center border border-green-500/30 overflow-hidden relative">
+                        <img src="./items/jade.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Ngọc Bích"/>
+                     </div>
+                     <div className="flex-1">
+                        <div className="text-white font-bold text-sm uppercase">Ngọc Bích</div>
+                        <div className="text-stone-400 text-xs">Dùng để Đột Phá cảnh giới (Nâng sao)</div>
+                     </div>
+                     <div className="text-2xl font-black text-green-400">{player.jade}</div>
+                  </div>
+
+                  <div className="bg-stone-900/80 p-4 rounded-2xl border border-stone-700 flex items-center gap-4">
+                     <div className="w-12 h-12 bg-yellow-900/30 rounded-xl flex items-center justify-center border border-yellow-500/30 overflow-hidden relative">
+                        <img src="./items/gold.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Ngân Lượng"/>
+                     </div>
+                     <div className="flex-1">
+                        <div className="text-white font-bold text-sm uppercase">Ngân Lượng</div>
+                        <div className="text-stone-400 text-xs">Vàng dùng để mua sắm trong Kỳ Trân Các</div>
+                     </div>
+                     <div className="text-xl font-black text-yellow-500">{player.gold.toLocaleString()}</div>
+                  </div>
+               </div>
+              )}
+           </div>
+
+           <div className="flex-1 p-10 flex flex-col items-center justify-center relative bg-stone-900/30">
+             <div className="absolute top-10 text-amber-900/10 font-cinzel font-black uppercase tracking-[0.5em] text-4xl pointer-events-none select-none">TRẬN ĐỒ QUÂN TA</div>
+             <div className="grid grid-cols-3 gap-8 p-12 bg-black/40 rounded-[4rem] border-4 border-dashed border-amber-900/20 shadow-inner relative">
+                {[0, 1, 2, 3, 4, 5].map(idx => {
+                   const hId = player.permLineup[idx];
+                   const hero = player.inventory.filter(h => h.isPermanent).find(h => h.id === hId);
+                   const isSelected = selectedSlot === idx;
+                   return (
+                     <div key={idx} className="relative group">
+                        <button onClick={() => setSelectedSlot(isSelected ? null : idx)} className={`w-36 h-52 rounded-2xl border-4 transition-all flex flex-col items-center justify-center overflow-hidden shadow-2xl relative ${isSelected ? 'border-amber-500 bg-amber-500/20 scale-110 z-20' : 'border-amber-900/30 bg-stone-900 hover:bg-stone-800 hover:border-amber-900/50'}`}>
+                           {hero ? (
+                             <>
+                                <div className={`w-full h-full relative flex flex-col items-center justify-between p-1 ${getStarBorderClass(hero.star)}`}>
+                                   <div className="relative overflow-hidden rounded-xl w-full h-full z-10 bg-[#1c1917]">
+                                      <img src={hero.image} className="w-full h-full object-cover contrast-110" onError={(e) => { (e.target as HTMLImageElement).src = hero.faction === 'enemy' ? DEFAULT_ENEMY_IMG : DEFAULT_ALLY_IMG; }} />
+
+                                       {/* Sao & Cảnh giới */}
+                                       <div className="absolute top-1.5 left-1/2 -translate-x-1/2 z-20 bg-black/80 px-2 py-0.5 rounded-full border border-white/10 shadow-md">
+                                          <HeroStars starCount={hero.star} size={8} />
+                                       </div>
+
+                                       {/* Tên & Lực chiến */}
+                                       <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/90 to-transparent py-1.5 px-1 text-center z-20">
+                                          <div className="text-[10px] text-amber-300 font-cinzel font-black uppercase truncate">{hero.name}</div>
+                                          <div className="text-[8px] text-amber-500 font-bold">CL: {hero.overall ? hero.overall.toLocaleString() : ''}</div>
+                                       </div>
+
+                                       {/* Nút Xóa khỏi trận */}
+                                       <button onClick={(e) => { e.stopPropagation(); removeHeroFromLineup(idx); }} className="absolute -top-1 -right-1 bg-red-900 text-white p-1 rounded-full shadow-lg hover:bg-red-700 transition-colors z-30 opacity-0 group-hover:opacity-100">
+                                          <XCircle size={16}/>
+                                       </button>
+                                    </div>
+                                 </div>
+                             </>
+                           ) : (
+                             <div className="text-center space-y-2 opacity-30 group-hover:opacity-100 transition-opacity">
+                                <Plus size={32} className="text-amber-900 mx-auto" />
+                                <div className="text-[8px] text-amber-900 font-black uppercase">Vị trí {idx+1}</div>
+                             </div>
+                           )}
+                        </button>
+                        {isSelected && !hero && <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-[10px] text-amber-500 font-black whitespace-nowrap animate-bounce">CHỌN TƯỚNG BÊN TRÁI</div>}
+                     </div>
+                   );
+                })}
+             </div>
+          </div>
+       </div>
+
+       {showUpgradeModal && selectedHero && (() => {
+          const req = getStarUpgradeReq(selectedHero.star);
+          const hasPills = req.requiredPill ? ((player.pills && player.pills[req.requiredPill.id]) || 0) : 0;
+          return (
+           <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-6 backdrop-blur-sm animate-in fade-in duration-300">
+              <div className="scroll-bg max-w-lg w-full p-10 rounded-[3rem] shadow-2xl border-amber-900 text-center">
+                 <h3 className="text-2xl font-cinzel font-black uppercase mb-6">Đột Phá Cảnh Giới</h3>
+                 <div className="flex justify-center gap-10 items-center mb-10">
+                    <div className="text-center">
+                       <HeroStars starCount={selectedHero.star} size={14} className="justify-center mb-2" />
+                       <div className="text-xs font-bold uppercase text-stone-600">Hiện tại</div>
+                    </div>
+                    <ArrowRight size={32} className="text-amber-900" />
+                    <div className="text-center">
+                       <HeroStars starCount={selectedHero.star + 1} size={14} className="justify-center mb-2 animate-pulse" />
+                       <div className="text-xs font-bold uppercase text-amber-900">Sao mới</div>
+                    </div>
+                 </div>
+                 <div className="bg-white/40 p-6 rounded-2xl mb-8 border border-amber-900/10 space-y-3 text-left">
+                    <div className="flex justify-between items-center font-bold">
+                       <span className="text-xs uppercase">Mảnh tướng {selectedHero.name}:</span>
+                       <span className={selectedHero.fragments >= req.fragReq ? 'text-green-700 font-black' : 'text-red-700 font-black'}>{selectedHero.fragments} / {req.fragReq}</span>
+                    </div>
+                    <div className="flex justify-between items-center font-bold">
+                       <span className="text-xs uppercase">Ngọc bích cần thiết:</span>
+                       <span className={player.jade >= req.jadeReq ? 'text-green-700 font-black' : 'text-red-700 font-black'}>
+                          {player.jade} / {req.jadeReq}
+                       </span>
+                    </div>
+                    {req.requiredPill && (
+                       <div className="flex justify-between items-center font-bold pt-2 border-t border-amber-900/10">
+                          <span className="text-xs uppercase text-red-900 flex items-center gap-1">
+                             <span>{req.requiredPill.icon}</span> {req.requiredPill.name}:
+                          </span>
+                          <span className={hasPills >= 1 ? 'text-green-700 font-black' : 'text-red-700 font-black'}>
+                             {hasPills} / 1
+                          </span>
+                       </div>
+                    )}
+                    <div className="pt-3 border-t border-amber-900/10 text-xs italic text-amber-900/70 text-center">Tăng điểm tiềm năng, lực chiến và mở khóa cảnh giới mới.</div>
+                 </div>
+                 <div className="flex gap-4">
+                    <button onClick={() => setShowUpgradeModal(false)} className="flex-1 bg-stone-800 hover:bg-stone-700 py-3 rounded-xl font-bold uppercase transition-colors text-white">Hủy</button>
+                    <button onClick={upgradeStar} className="flex-1 py-4 font-black uppercase text-xs bg-amber-950 text-white rounded-xl shadow-lg transition-all active:scale-95">Xác nhận nâng sao</button>
+                 </div>
+              </div>
+           </div>
+          );
+       })()}
+
+       {showDecomposeModal && selectedHero && (
+          <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-6 backdrop-blur-sm animate-in fade-in duration-300">
+             <div className="scroll-bg max-w-lg w-full p-10 rounded-[3rem] shadow-2xl border-red-900 text-center">
+                <h3 className="text-2xl font-cinzel font-black uppercase mb-6 text-red-900">Giải Ngũ Hào Kiệt</h3>
+                <p className="text-sm italic mb-8 text-stone-700 font-bold">Lệnh bài giải ngũ sẽ thu hồi anh hùng, Chúa công muốn nhận bồi hoàn gì?</p>
+                <div className="grid grid-cols-1 gap-4 mb-10">
+                   <button onClick={() => decompose('fragments')} className="bg-white/60 p-5 rounded-2xl border-2 border-amber-900/20 hover:border-amber-900 transition-all flex justify-between items-center font-black">
+                      <span className="text-xs uppercase">50 Mảnh tướng {selectedHero.name}</span>
+                      <UserCheck className="text-amber-900" />
+                   </button>
+                   <button onClick={() => decompose('jade')} className="bg-white/60 p-5 rounded-2xl border-2 border-amber-900/20 hover:border-amber-900 transition-all flex justify-between items-center font-black">
+                      <span className="text-xs uppercase">Ngọc Bích ({selectedHero.rarity === 'UR' ? 30 : 15})</span>
+                      <Star className="text-green-700" />
+                   </button>
+                   <button onClick={() => decompose('gold')} className="bg-white/60 p-5 rounded-2xl border-2 border-amber-900/20 hover:border-amber-900 transition-all flex justify-between items-center font-black">
+                      <span className="text-xs uppercase">Vàng ({selectedHero.rarity === 'UR' ? 15000 : 7500})</span>
+                      <Coins className="text-yellow-600" />
+                   </button>
+                </div>
+                <button onClick={() => setShowDecomposeModal(false)} className="w-full py-4 text-xs font-black uppercase text-stone-500 underline">Quay lại</button>
+             </div>
+          </div>
+       )}
+
+       {showEquipModal && selectedHero && (
+          <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-6 backdrop-blur-sm animate-in fade-in duration-300">
+             <div className="scroll-bg max-w-2xl w-full p-8 rounded-[3rem] shadow-2xl border-purple-900 text-center max-h-[80vh] flex flex-col">
+                <h3 className="text-2xl font-cinzel font-black uppercase mb-2 text-purple-400">Trang Bị Thần Khí</h3>
+                <p className="text-sm italic mb-6 text-stone-400 font-bold">Chọn thần khí phù hợp cho {selectedHero.name}</p>
+                <div className="flex-1 overflow-y-auto min-h-[300px] grid grid-cols-2 md:grid-cols-3 gap-4 mb-6 pr-2">
+                   <button onClick={() => {
+                      setPlayer((p: any) => ({
+                          ...p, 
+                          inventory: p.inventory.map((h: any) => h.id === selectedHero.id ? { ...h, artifactId: undefined } : h)
+                      }));
+                      setShowEquipModal(false);
+                   }} className="bg-red-900/20 p-4 rounded-xl border border-red-500/30 hover:bg-red-900/40 hover:border-red-400 transition-all font-black text-[10px] uppercase text-red-300 flex flex-col items-center justify-center gap-2">
+                      <div className="w-12 h-12 rounded-full border-2 border-red-500/50 flex items-center justify-center bg-red-950/50 text-xl">✖</div>
+                      Tháo Trang Bị
+                   </button>
+                   {player.artifacts && player.artifacts.filter((artId: string) => {
+                          const art = ARTIFACTS.find(a => a.id === artId);
+                          return art && (art.exclusiveTo?.includes(selectedHero.id) || art.exclusiveTo?.some(id => selectedHero.id.startsWith(id + '_')));
+                       }).length > 0 ? (
+                       player.artifacts.filter((artId: string) => {
+                          const art = ARTIFACTS.find(a => a.id === artId);
+                          return art && (art.exclusiveTo?.includes(selectedHero.id) || art.exclusiveTo?.some(id => selectedHero.id.startsWith(id + '_')));
+                       }).map((artId: string, i: number) => {
+                          const art = ARTIFACTS.find(a => a.id === artId);
+                          if (!art) return null;
+                          const isEquipped = selectedHero.artifactId === art.id;
+                          return (
+                             <button key={i} onClick={() => {
+                                setPlayer((p: any) => ({
+                                    ...p, 
+                                    inventory: p.inventory.map((h: any) => h.id === selectedHero.id ? { ...h, artifactId: art.id } : h)
+                                }));
+                                setShowEquipModal(false);
+                             }} className={`bg-purple-900/20 p-3 rounded-xl border ${isEquipped ? 'border-purple-400 bg-purple-900/40 shadow-[0_0_15px_rgba(168,85,247,0.4)]' : 'border-purple-500/30'} hover:border-purple-400 transition-all flex flex-col items-center gap-2 relative`}>
+                                <img src={art.image} className="w-12 h-12 rounded border border-purple-500/50 object-cover" />
+                                <div className="font-bold text-purple-200 text-[10px] uppercase truncate w-full">{art.name}</div>
+                                {isEquipped && <div className="absolute top-1 right-1 bg-purple-500 text-white text-[8px] px-1 rounded uppercase font-bold">Đang dùng</div>}
+                             </button>
+                          );
+                       })
+                   ) : (
+                       <div className="col-span-2 text-stone-500 text-xs italic mt-10">Chúa công chưa có Thần Khí bản mệnh nào phù hợp cho hào kiệt này. Hãy vào Chiêu Hiền Đài để tìm kiếm!</div>
+                   )}
+                </div>
+                <button onClick={() => setShowEquipModal(false)} className="w-full py-4 text-xs font-black uppercase text-stone-500 underline mt-auto">Đóng</button>
+             </div>
+          </div>
+       )}
+
+       {selectedHeroId && !selectedSlot && selectedHero && !showUpgradeModal && !showDecomposeModal && !showEquipModal && (
+          <HeroDetailModal 
+            hero={selectedHero} 
+            onClose={() => setSelectedHeroId(null)}
+            actions={
+               <div className="flex gap-2 mt-4 w-full">
+                  <button onClick={() => setShowUpgradeModal(true)} className="flex-1 bg-gradient-to-r from-green-800 to-green-700 hover:from-green-700 hover:to-green-600 text-white py-3 rounded-xl text-[10px] font-black uppercase flex flex-col items-center justify-center gap-1 shadow-md transition-all border border-green-600/30"><ArrowUpCircle size={14}/> Nâng Sao</button>
+                  <button onClick={() => setShowEquipModal(true)} className="flex-1 bg-gradient-to-r from-purple-900 to-purple-800 hover:from-purple-800 hover:to-purple-700 text-white py-3 rounded-xl text-[10px] font-black uppercase flex flex-col items-center justify-center gap-1 shadow-md transition-all border border-purple-500/30"><ScrollText size={14}/> Thần Khí</button>
+                  <button onClick={() => setShowDecomposeModal(true)} className="flex-1 bg-gradient-to-r from-red-900 to-red-800 hover:from-red-800 hover:to-red-700 text-white py-3 rounded-xl text-[10px] font-black uppercase flex flex-col items-center justify-center gap-1 shadow-md transition-all border border-red-700/30"><Scissors size={14}/> Tách</button>
+               </div>
+            }
+          />
+       )}
+
+       {showAdminPanel && <AdminPanel player={player} setPlayer={setPlayer} onClose={() => setShowAdminPanel(false)} />}
+    </div>
+  );
+};
+
+// Helper to determine skill effect based on text
+
+const DanhVongDaiView = ({ player, setView }: any) => {
+  const [viewLineupTarget, setViewLineupTarget] = useState<any>(null);
+  const [selectedHero, setSelectedHero] = useState<Hero | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (!selectedHero) {
+          setViewLineupTarget(null);
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedHero]);
+
+  const permHeroes = player.inventory.filter((h: Hero) => h.isPermanent).map((h: Hero) => calculateHeroStatsWithStar(h, h.star)).sort((a: Hero, b: Hero) => b.overall - a.overall);
+  const top6 = permHeroes.slice(0, 6);
+  const combatPower = top6.reduce((acc: number, h: Hero) => acc + h.overall, 0);
+
+  const leaderboard = [...MOCK_LEGIONS, {
+       legionName: player.legionName || player.playerName || "Quân Đoàn Của Bạn", 
+       power: combatPower, 
+       lineup: top6, 
+       isPlayer: true,
+       leaderImg: top6.length > 0 ? top6[0].image : null,
+       leaderStar: top6.length > 0 ? (top6[0].star || 0) : 0
+  }].map((lb: any) => {
+       const leader = lb.lineup && lb.lineup.length > 0 ? lb.lineup[0] : null;
+       return { 
+         ...lb, 
+         leaderImg: lb.leaderImg || leader?.image || null,
+         leaderStar: lb.leaderStar !== undefined ? lb.leaderStar : (leader?.star || 0)
+       };
+  }).sort((a, b) => b.power - a.power);
+
+  const top8 = leaderboard.slice(0, 8);
+  const remaining = leaderboard.slice(8);
+
+  return (
+    <div className="min-h-screen viet-bg flex flex-col h-screen overflow-hidden">
+       <div className="p-4 flex justify-between items-center bg-gradient-to-r from-stone-950 via-stone-900 to-stone-950 border-b border-amber-900/50 shadow-[0_4px_20px_rgba(0,0,0,0.5)] z-30 shrink-0">
+          <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors"><ChevronLeft/> Trở về</button>
+          <div className="flex flex-col items-center">
+             <h2 className="text-xl font-cinzel text-amber-400 font-black uppercase tracking-widest drop-shadow-[0_0_8px_rgba(201,148,26,0.3)]">🏆 Danh Vọng Đài 🏆</h2>
+          </div>
+          <div className="w-20"></div>
+       </div>
+
+       <div className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar">
+          <div className="max-w-4xl mx-auto flex justify-center items-end gap-4 md:gap-10 pt-10 pb-16 relative">
+             {/* Hạng 2 */}
+             {top8[1] && (
+                <div onClick={() => setViewLineupTarget(top8[1])} className="flex flex-col items-center hover:scale-105 transition-transform z-20 pb-10 cursor-pointer">
+                   <div className="bg-gradient-to-r from-gray-300 via-gray-100 to-gray-400 px-4 py-1.5 rounded-t-lg font-black text-black shadow-md uppercase text-xs border-2 border-white">
+                      🥈 Quốc Sư [Hạng 2]
+                   </div>
+                   <div className="bg-black/80 px-3 py-1 text-[10px] text-gray-300 font-bold border-b border-x border-gray-400/50 rounded-b-md mb-2">{top8[1].legionName} - {top8[1].power.toLocaleString()}</div>
+                   <div className={`relative w-32 h-44 md:w-40 md:h-52 z-10 drop-shadow-[0_0_20px_rgba(156,163,175,0.5)] ${getStarBorderClass(top8[1].leaderStar)}`}>
+                      <div className="relative overflow-hidden rounded-xl w-full h-full z-10 bg-[#1c1917]">
+                         <img src={top8[1].leaderImg || DEFAULT_ALLY_IMG} onError={(e) => { (e.target as HTMLImageElement).src = DEFAULT_ALLY_IMG; }} className="w-full h-full object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)] relative z-10" alt="Quốc Sư" />
+                      </div>
+                      <div className="absolute bottom-[-15px] left-1/2 -translate-x-1/2 w-36 md:w-48 h-12 md:h-16 bg-gradient-to-b from-gray-200 to-gray-500 rounded-[100%] shadow-[0_10px_30px_rgba(156,163,175,0.6)] border-2 border-white/50 z-0"></div>
+                   </div>
+                </div>
+             )}
+
+             {/* Hạng 1 */}
+             {top8[0] && (
+                <div onClick={() => setViewLineupTarget(top8[0])} className="flex flex-col items-center hover:scale-105 transition-transform z-30 pb-20 cursor-pointer">
+                   <div className="bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600 px-6 py-2 rounded-t-xl font-black text-black shadow-lg uppercase text-sm border-2 border-yellow-200">
+                      🥇 Cửu Ngũ Chí Tôn [Hạng 1]
+                   </div>
+                   <div className="bg-black/80 px-4 py-1 text-[10px] text-yellow-500 font-bold border-b border-x border-yellow-600/50 rounded-b-lg mb-2">{top8[0].legionName} - {top8[0].power.toLocaleString()}</div>
+                   <div className={`relative w-40 h-56 md:w-48 md:h-64 z-10 drop-shadow-[0_0_30px_rgba(234,179,8,0.5)] ${getStarBorderClass(top8[0].leaderStar)}`}>
+                      <div className="relative overflow-hidden rounded-xl w-full h-full z-10 bg-[#1c1917]">
+                         <img src={top8[0].leaderImg || DEFAULT_ALLY_IMG} onError={(e) => { (e.target as HTMLImageElement).src = DEFAULT_ALLY_IMG; }} className="w-full h-full object-contain drop-shadow-[0_15px_15px_rgba(0,0,0,0.8)] relative z-10" alt="Chí Tôn" />
+                      </div>
+                      <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2 w-48 md:w-64 h-16 md:h-24 bg-gradient-to-b from-yellow-300 to-yellow-700 rounded-[100%] shadow-[0_20px_50px_rgba(202,138,4,0.6)] border-4 border-yellow-100/50 z-0"></div>
+                   </div>
+                </div>
+             )}
+
+             {/* Hạng 3 */}
+             {top8[2] && (
+                <div onClick={() => setViewLineupTarget(top8[2])} className="flex flex-col items-center hover:scale-105 transition-transform z-20 pb-10 cursor-pointer">
+                   <div className="bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 px-4 py-1.5 rounded-t-lg font-black text-white shadow-md uppercase text-xs border-2 border-amber-400">
+                      🥉 Thừa Tướng [Hạng 3]
+                   </div>
+                   <div className="bg-black/80 px-3 py-1 text-[10px] text-amber-500 font-bold border-b border-x border-amber-700/50 rounded-b-md mb-2">{top8[2].legionName} - {top8[2].power.toLocaleString()}</div>
+                   <div className={`relative w-32 h-44 md:w-40 md:h-52 z-10 drop-shadow-[0_0_20px_rgba(217,119,6,0.5)] ${getStarBorderClass(top8[2].leaderStar)}`}>
+                      <div className="relative overflow-hidden rounded-xl w-full h-full z-10 bg-[#1c1917]">
+                         <img src={top8[2].leaderImg || DEFAULT_ALLY_IMG} onError={(e) => { (e.target as HTMLImageElement).src = DEFAULT_ALLY_IMG; }} className="w-full h-full object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)] relative z-10" alt="Thừa Tướng" />
+                      </div>
+                      <div className="absolute bottom-[-15px] left-1/2 -translate-x-1/2 w-36 md:w-44 h-12 md:h-14 bg-gradient-to-b from-amber-500 to-amber-800 rounded-[100%] shadow-[0_10px_30px_rgba(180,83,9,0.6)] border-2 border-amber-300/50 z-0"></div>
+                   </div>
+                </div>
+             )}
+          </div>
+
+          {/* TOP 4-8 CARDS */}
+          <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-4 mt-8">
+             {[
+               { title: "Tả Tướng Quân", data: top8[3], rank: 4, color: "from-cyan-700 to-cyan-900", border: "border-cyan-500" },
+               { title: "Hữu Tướng Quân", data: top8[4], rank: 5, color: "from-blue-700 to-blue-900", border: "border-blue-500" },
+               { title: "Phó Tướng", data: top8[5], rank: 6, color: "from-purple-700 to-purple-900", border: "border-purple-500" },
+               { title: "Thống Lĩnh", data: top8[6], rank: 7, color: "from-pink-700 to-pink-900", border: "border-pink-500" },
+               { title: "Hiệu Úy", data: top8[7], rank: 8, color: "from-red-700 to-red-900", border: "border-red-500" },
+             ].map((item, idx) => item.data && (
+                <div key={idx} onClick={() => setViewLineupTarget(item.data)} className={`bg-stone-900 rounded-2xl border-2 overflow-hidden shadow-2xl flex flex-col items-center relative group hover:-translate-y-2 transition-transform cursor-pointer ${item.border} ${getStarBorderClass(item.data.leaderStar)}`}>
+                   <div className={`absolute top-0 w-full bg-gradient-to-r ${item.color} py-1 text-center font-black text-white text-[10px] uppercase z-20 shadow-md`}>
+                      {item.title} [Hạng {item.rank}]
+                   </div>
+                   <div className="w-full aspect-[3/4] relative mt-6 border-b-2 border-stone-800 bg-stone-950">
+                      <img src={item.data.leaderImg || DEFAULT_ALLY_IMG} onError={(e) => { (e.target as HTMLImageElement).src = DEFAULT_ALLY_IMG; }} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-90 group-hover:opacity-100" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+                   </div>
+                   <div className="absolute bottom-0 w-full p-2 text-center bg-black/60 backdrop-blur-sm z-30">
+                      <div className={`font-black text-[10px] uppercase truncate px-1 ${item.data.isPlayer ? 'text-amber-400' : 'text-stone-200'}`}>{item.data.legionName}</div>
+                      <div className="text-[10px] text-amber-500 font-bold">CL: {item.data.power.toLocaleString()}</div>
+                   </div>
+                </div>
+             ))}
+          </div>
+
+          {remaining.length > 0 && (
+             <div className="max-w-5xl mx-auto mt-16 bg-stone-900/80 rounded-2xl border border-amber-700/50 overflow-hidden shadow-2xl mb-10">
+                <table className="w-full text-left border-collapse">
+                   <thead>
+                      <tr className="bg-gradient-to-r from-amber-900/80 to-amber-950/80 text-amber-200 uppercase tracking-widest text-sm border-b border-amber-700/50">
+                         <th className="p-4 text-center w-24">Hạng</th>
+                         <th className="p-4">Tên Quân Đoàn</th>
+                         <th className="p-4 text-center">Chiến Lực</th>
+                      </tr>
+                   </thead>
+                   <tbody>
+                      {remaining.map((lb, idx) => (
+                         <tr key={idx} onClick={() => setViewLineupTarget(lb)} className={`cursor-pointer border-b border-amber-900/30 hover:bg-amber-900/20 transition-colors ${lb.isPlayer ? 'bg-amber-900/40' : ''}`}>
+                            <td className="p-4 text-center font-bold text-stone-500">{idx + 9}</td>
+                            <td className={`p-4 font-bold text-base ${lb.isPlayer ? 'text-amber-400' : 'text-stone-200'}`}>
+                               {lb.legionName}
+                               {lb.isPlayer && <span className="ml-2 text-[10px] bg-amber-600 text-white px-2 py-0.5 rounded-full uppercase tracking-widest align-middle">Bạn</span>}
+                            </td>
+                            <td className="p-4 text-center font-black text-amber-500 tracking-wider">
+                               {lb.power.toLocaleString()}
+                            </td>
+                         </tr>
+                      ))}
+                   </tbody>
+                </table>
+             </div>
+          )}
+        </div>
+
+       {viewLineupTarget && (
+          <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-4 md:p-6 backdrop-blur-sm animate-in fade-in duration-300" onClick={(e) => { if(e.target === e.currentTarget) setViewLineupTarget(null); }}>
+             <div className="scroll-bg max-w-2xl w-full p-4 md:p-6 rounded-[2rem] shadow-2xl border-amber-900 relative max-h-screen flex flex-col">
+                <button onClick={() => setViewLineupTarget(null)} className="absolute top-4 right-4 text-amber-500 hover:text-amber-300 z-50">
+                   <XCircle size={28} />
+                </button>
+                <div className="text-center mb-4 shrink-0 mt-4 md:mt-0">
+                   <h3 className="text-xl md:text-3xl font-cinzel font-black uppercase text-amber-400 drop-shadow-[0_0_10px_rgba(201,148,26,0.5)]">{viewLineupTarget.legionName}</h3>
+                   <div className="text-amber-100 text-xs md:text-sm font-bold uppercase tracking-widest mt-1">Chiến Lực: <span className="text-amber-500 text-base md:text-lg">{viewLineupTarget.power.toLocaleString()}</span></div>
+                </div>
+                
+                <div className="bg-stone-900/50 p-4 rounded-2xl border-2 border-dashed border-amber-900/30 overflow-y-auto custom-scrollbar">
+                   <div className="grid grid-cols-3 gap-3 md:gap-4">
+                      {[0, 1, 2, 3, 4, 5].map(idx => {
+                         const hero = viewLineupTarget.lineup && viewLineupTarget.lineup[idx];
+                         return (
+                           <div key={idx} className="relative group">
+                              <div className={`w-full aspect-[3/4] rounded-2xl transition-all flex flex-col items-center justify-center overflow-hidden shadow-xl relative ${hero ? getStarBorderClass(hero.star || 0) : 'border-2 border-stone-700 bg-stone-800'}`}>
+                                 {hero ? (
+                                   <div className="relative overflow-hidden rounded-xl w-full h-full z-10 bg-[#1c1917] cursor-pointer hover:scale-105 transition-transform p-0.5" onClick={() => setSelectedHero(hero)}>
+                                      <img src={hero.image} className="w-full h-full object-cover opacity-90 contrast-110" onError={(e) => { (e.target as HTMLImageElement).src = hero.faction === 'enemy' ? DEFAULT_ENEMY_IMG : DEFAULT_ALLY_IMG; }} />
+                                      <div className="absolute top-1 left-1 z-20 pointer-events-none">
+                                         <HeroStars starCount={hero.star || 0} size={10} className="flex-col gap-1" />
+                                      </div>
+                                      <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/90 to-transparent py-2 text-[10px] text-amber-300 font-cinzel font-black uppercase text-center flex flex-col items-center pointer-events-none z-20">
+                                         <span>{hero.name}</span>
+                                         <span className="text-[8px] text-amber-500 font-bold">CL: {hero.overall ? hero.overall.toLocaleString() : ''}</span>
+                                      </div>
+                                   </div>
+                                 ) : (
+                                   <div className="text-center opacity-20">
+                                      <div className="text-[10px] text-white font-black uppercase tracking-widest">Trống</div>
+                                   </div>
+                                 )}
+                              </div>
+                           </div>
+                         );
+                      })}
+                   </div>
+                </div>
+             </div>
+          </div>
+       )}
+       {selectedHero && (
+         <HeroDetailModal hero={selectedHero} onClose={() => setSelectedHero(null)} />
+       )}
+    </div>
+  );
+};
+
+
+const QuocTuGiamView = ({ setView }: any) => {
+  const [viewChapter, setViewChapter] = useState(1);
+  const [selectedHero, setSelectedHero] = useState<Hero | null>(null);
+  const [activeTab, setActiveTab] = useState<'allies' | 'enemies' | 'artifacts'>('allies');
+
+  const allies = INITIAL_HEROES.filter(h => h.chapter === viewChapter);
+  const enemies = ENEMY_HEROES.filter(h => h.chapter === viewChapter);
+  const artifacts = ARTIFACTS.filter(a => {
+    if (!a.exclusiveTo || a.exclusiveTo.length === 0) return false;
+    const firstHeroId = a.exclusiveTo[0];
+    const hero = INITIAL_HEROES.find(h => h.id === firstHeroId) || ENEMY_HEROES.find(h => h.id === firstHeroId);
+    return hero ? hero.chapter === viewChapter : false;
+  }).map(a => ({
+    ...a,
+    rarity: 'SSR',
+    star: 5,
+    overall: 'Thần Khí',
+    isArtifact: true,
+    baseId: a.id
+  }));
+
+  return (
+    <div className="min-h-screen ancient-bg flex flex-col h-screen overflow-hidden">
+       <div className="p-6 flex justify-between items-center bg-stone-900 border-b border-amber-900 shadow-xl z-20">
+          <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors"><ChevronLeft/> Trở về</button>
+          <div className="flex items-center gap-4 bg-stone-800 px-4 py-2 rounded-2xl border border-amber-900/40 shadow-inner">
+            <span className="text-amber-900 font-black uppercase text-[10px] tracking-widest">Tra cứu:</span>
+            <select 
+              value={viewChapter} 
+              onChange={(e) => setViewChapter(Number(e.target.value))}
+              className="bg-transparent text-amber-500 border-none outline-none font-bold text-sm cursor-pointer"
+            >
+              {[1,2,3,4,5,6,7,8,9,10].map(c => <option key={c} value={c} className="bg-stone-900">Chương {c}</option>)}
+            </select>
+          </div>
+          <h2 className="text-xl font-cinzel text-amber-500 font-black uppercase tracking-widest">Quốc Tử Giám</h2>
+       </div>
+
+       <div className="flex-1 overflow-y-auto p-8 custom-scrollbar pb-24">
+          <div className="text-center max-w-2xl mx-auto mb-8">
+             <h3 className="text-3xl font-cinzel text-amber-950 font-black uppercase mb-2 animate-in slide-in-from-top duration-500">{CHAPTER_NAMES[viewChapter]}</h3>
+             <p className="text-stone-600 italic text-sm font-bold uppercase tracking-wider opacity-60">Sử thi anh hào & nghịch tặc</p>
+          </div>
+
+          <div className="flex justify-center gap-4 mb-12 animate-in slide-in-from-bottom duration-500">
+            <button 
+              onClick={() => setActiveTab('allies')}
+              className={`px-6 py-2.5 rounded-xl font-cinzel font-bold text-sm transition-all flex items-center gap-2 ${activeTab === 'allies' ? 'bg-green-900/20 text-green-500 border-2 border-green-700/50 shadow-[0_0_15px_rgba(34,197,94,0.2)]' : 'bg-stone-900/50 text-stone-500 border border-stone-800 hover:bg-stone-800 hover:text-green-600'}`}
+            >
+              <Users size={16} /> Hào Kiệt Phe Ta
+            </button>
+            <button 
+              onClick={() => setActiveTab('enemies')}
+              className={`px-6 py-2.5 rounded-xl font-cinzel font-bold text-sm transition-all flex items-center gap-2 ${activeTab === 'enemies' ? 'bg-red-900/20 text-red-500 border-2 border-red-700/50 shadow-[0_0_15px_rgba(239,68,68,0.2)]' : 'bg-stone-900/50 text-stone-500 border border-stone-800 hover:bg-stone-800 hover:text-red-600'}`}
+            >
+              <SwordIcon size={16} /> Nghịch Tặc Phe Địch
+            </button>
+            <button 
+              onClick={() => setActiveTab('artifacts')}
+              className={`px-6 py-2.5 rounded-xl font-cinzel font-bold text-sm transition-all flex items-center gap-2 ${activeTab === 'artifacts' ? 'bg-purple-900/20 text-purple-500 border-2 border-purple-700/50 shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'bg-stone-900/50 text-stone-500 border border-stone-800 hover:bg-stone-800 hover:text-purple-600'}`}
+            >
+              <Sparkles size={16} /> Thần Khí
+            </button>
+          </div>
+
+          {activeTab === 'allies' && (
+             <section className="animate-in fade-in duration-500">
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                   {allies.map(h => <HeroGalleryCard key={h.id} hero={h} onClick={() => setSelectedHero(h)} />)}
+                </div>
+             </section>
+          )}
+
+          {activeTab === 'enemies' && (
+             <section className="animate-in fade-in duration-500">
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                   {enemies.map(h => <HeroGalleryCard key={h.id} hero={h} isEnemy onClick={() => setSelectedHero(h)} />)}
+                </div>
+             </section>
+          )}
+
+          {activeTab === 'artifacts' && (
+             <section className="animate-in fade-in duration-500">
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                   {artifacts.map(a => <HeroGalleryCard key={a.id} hero={a as any} onClick={() => setSelectedHero(a as any)} />)}
+                </div>
+             </section>
+          )}
+       </div>
+       {selectedHero && !selectedHero.isArtifact && <HeroDetailModal hero={selectedHero} onClose={() => setSelectedHero(null)} />}
+        {selectedHero && selectedHero.isArtifact && <ArtifactDetailModal artifact={selectedHero as any} onClose={() => setSelectedHero(null)} />}
+    </div>
+  );
+};
+
+export default App;

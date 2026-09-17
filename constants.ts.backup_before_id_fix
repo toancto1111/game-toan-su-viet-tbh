@@ -1,0 +1,1037 @@
+
+import { Rarity, Hero, Artifact, Synergy } from './types';
+
+// ============================================================
+// CẤU HÌNH ẢNH TƯỚNG LOCAL
+// Đặt ảnh vào thư mục: public/heroes/allies/ hoặc public/heroes/enemies/
+// Tên file: <id>.png hoặc <id>.jpg  (ví dụ: h1_1.png, e1_1.jpg)
+// Nếu file chưa có → tự động dùng ảnh mặc định (default_ally / default_enemy)
+// ============================================================
+
+/** Trả về đường dẫn ảnh local cho hero. Nếu không có → dùng ảnh mặc định. */
+const getHeroImage = (id: string, faction: 'ally' | 'enemy'): string => {
+  const folder = faction === 'ally' ? 'allies' : 'enemies';
+  // Thử các định dạng phổ biến: .png, .jpg, .jpeg, .webp
+  // Vite/browser sẽ load file đúng nếu tồn tại
+  // Trả về đường dẫn .png trước; nếu muốn dùng .jpg thì đổi tên file tương ứng
+  return `./heroes/${folder}/${id}.png`;
+};
+
+/** Ảnh mặc định khi ảnh riêng chưa có */
+export const DEFAULT_ALLY_IMG  = './heroes/default_ally.png';
+export const DEFAULT_ENEMY_IMG = './heroes/default_enemy.png';
+
+const getRarityByStat = (stat: number): Rarity => {
+  if (stat >= 90) return Rarity.UR;
+  if (stat >= 80) return Rarity.SSR;
+  if (stat >= 70) return Rarity.SR;
+  if (stat >= 60) return Rarity.R;
+  return Rarity.C;
+};
+
+const determineRoleAndScope = (title: string, skillDesc: string): { role: 'Tiên phong' | 'Sát thủ' | 'Hỗ trợ' | 'Khống chế' | 'Chiến tướng', targetScope: 'single' | 'front_row' | 'back_row' | 'column' | 'all' } => {
+  const lowerDesc = skillDesc.toLowerCase();
+  const lowerTitle = title.toLowerCase();
+  
+  let role: 'Tiên phong' | 'Sát thủ' | 'Hỗ trợ' | 'Khống chế' | 'Chiến tướng' = 'Sát thủ';
+  let targetScope: 'single' | 'front_row' | 'back_row' | 'column' | 'all' = 'single';
+  
+  if (lowerDesc.includes('hồi máu') || lowerDesc.includes('hồi phục') || lowerTitle.includes('tiên mẫu') || lowerTitle.includes('quốc mẫu') || lowerDesc.includes('tăng phòng thủ toàn đội')) {
+    role = 'Hỗ trợ';
+  } else if (lowerDesc.includes('giáp') || lowerDesc.includes('phòng thủ') || lowerTitle.includes('tiên phong') || lowerDesc.includes('kiên cố') || lowerDesc.includes('chịu đòn')) {
+    role = 'Tiên phong';
+  } else if (lowerDesc.includes('choáng') || lowerDesc.includes('làm chậm') || lowerDesc.includes('giảm tốc') || lowerDesc.includes('đóng băng') || lowerDesc.includes('phá trận')) {
+    role = 'Khống chế';
+  } else if (lowerTitle.includes('chủ tướng') || lowerTitle.includes('vua') || lowerTitle.includes('vương') || lowerTitle.includes('đế')) {
+    role = 'Chiến tướng';
+  }
+  
+  if (lowerDesc.includes('diện rộng') || lowerDesc.includes('toàn bộ') || lowerDesc.includes('tất cả')) {
+    targetScope = 'all';
+  } else if (lowerDesc.includes('xuyên') || lowerDesc.includes('cột') || lowerDesc.includes('dọc')) {
+    targetScope = 'column';
+  } else if (lowerDesc.includes('hàng') || lowerDesc.includes('ngang')) {
+    targetScope = 'front_row'; 
+  }
+  
+  return { role, targetScope };
+};
+
+
+const toSlug = (str: string): string => {
+  return str.toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/[^a-z0-9 ]/g, '')
+    .replace(/\s+/g, '_');
+};
+
+const createHero = (id: string, name: string, stat: number, chapter: number, faction: 'ally' | 'enemy', title: string = 'Hào kiệt'): Hero => {
+  const inferredTitle = stat >= 90 ? 'Chủ tướng' : (stat >= 80 ? 'Danh tướng' : title);
+  const skillDesc = 'Gây sát thương dựa trên chỉ số cơ bản.';
+  const { role, targetScope } = determineRoleAndScope(inferredTitle, skillDesc);
+  return {
+    id, name, title: inferredTitle, rarity: getRarityByStat(stat),
+    overall: stat, atk: stat, def: stat - 5, spd: 100 + (stat % 20),
+    hp: stat * 60, maxHp: stat * 60,
+    morale: 0, initialMorale: stat >= 90 ? 50 : 25,
+    star: 1, fragments: 0, description: `Nhân vật lịch sử thuộc chương ${chapter}.`,
+    skillName: 'Chiến thuật quân sự', skillDesc,
+    role, targetScope,
+    skillVideoUrl: `/videos/${toSlug(name)}.mp4`,
+    image: getHeroImage(id, faction), faction, chapter
+  };
+};
+
+// --- DỮ LIỆU TỪ PDF ---
+
+// Hàm tạo hero với mô tả chi tiết
+const createHero2 = (
+  id: string, name: string, stat: number, chapter: number, faction: 'ally' | 'enemy',
+  title = 'Hào kiệt', description = '', skillName = '', skillDesc = ''
+): Hero => {
+  const inferredTitle = stat >= 90 ? 'Chủ tướng' : (stat >= 80 ? 'Danh tướng' : title);
+  const finalSkillDesc = skillDesc || 'Gây sát thương dựa trên chỉ số cơ bản.';
+  const { role, targetScope } = determineRoleAndScope(inferredTitle, finalSkillDesc);
+  return {
+    id, name, title: inferredTitle, rarity: getRarityByStat(stat),
+    overall: stat, atk: stat, def: stat - 5, spd: 100 + (stat % 20),
+    hp: stat * 60, maxHp: stat * 60,
+    morale: 0, initialMorale: stat >= 90 ? 50 : 25,
+    star: 1, fragments: 0, description: description || `Nhân vật lịch sử thuộc chương ${chapter}.`,
+    skillName: skillName || 'Chiến thuật quân sự', skillDesc: finalSkillDesc,
+    role, targetScope,
+    skillVideoUrl: `/videos/${toSlug(name)}.mp4`,
+    image: getHeroImage(id, faction), faction, chapter
+  };
+};
+
+const ALL_HEROES: Hero[] = [
+  // ═══════════════════════════════════════ CHƯƠNG 1 ═══════════════════════════════════════
+  createHero2('h1_1','Kinh Dương Vương',94,1,'ally','Thủy tổ',
+    'Kinh Dương Vương, tên húy là Lộc Tục, là vị vua đầu tiên của nước Xích Quỷ theo truyền thuyết Việt Nam. Ông được coi là thủy tổ của người Việt, cha của Lạc Long Quân và là ông ngoại của Hùng Vương đời đầu. Truyền thuyết kể ông cai quản vùng đất rộng lớn và lấy Long Nữ, con gái Thần Long.',
+    'Long Mạch Khai Quốc','Triệu hồi sức mạnh thủy tổ cho toàn đội (+20% Tấn công, +25% Phòng thủ).'),
+  createHero2('h1_2','Thần Long Nữ',81,1,'ally','Tiên nữ',
+    'Thần Long Nữ là con gái của Động Đình Quân (Long Vương hồ Động Đình) theo truyền thuyết Việt Nam. Bà kết hôn với Kinh Dương Vương và sinh ra Lạc Long Quân — người cha của dân tộc Việt. Bà tượng trưng cho nguồn gốc thần linh của tộc Lạc Việt.',
+    'Thủy Long Ấn','Phun tia nước thần, gây sát thương (162% Tấn công) và khống chế (tỷ lệ 50%) lên 1 mục tiêu địch.'),
+  createHero2('h1_3','Lạc Long Quân',89,1,'ally','Long Vương',
+    'Lạc Long Quân (Sùng Lãm) là con của Kinh Dương Vương, thuộc dòng dõi Rồng. Ông kết hôn với Âu Cơ và sinh ra bọc trăm trứng, nở thành một trăm người con — thủy tổ của người Lạc Việt. Ông được thờ như Quốc Tổ của dân tộc Việt Nam.',
+    'Trăm Trứng Khai Sinh','Triệu hồi sức mạnh trăm con cho toàn đội (+20% Tấn công).'),
+  createHero2('h1_4','Âu Cơ',80,1,'ally','Tiên mẫu',
+    'Âu Cơ là Quốc Mẫu của dân tộc Việt Nam. Bà là tiên nữ thuộc dòng họ Thần Nông, kết hôn với Lạc Long Quân. Bà sinh ra bọc trăm trứng, nở thành một trăm người con trai. Sau khi chia tay Lạc Long Quân, bà dẫn năm mươi con lên núi, lập nên các bộ tộc người Việt vùng cao.',
+    'Tiên Kết','hồi phục máu (Hồi 16% Máu tối đa) toàn đội và tăng tinh thần chiến đấu (+30 Nhuệ khí). cho toàn đội (Hồi 16% Máu tối đa). Đồng thời: +30 Nhuệ khí.'),
+  createHero2('h1_5','Hùng Vương',77,1,'ally','Quốc Vương',
+    'Hùng Vương là danh hiệu chung của các vua trị vì nhà nước Văn Lang — nhà nước đầu tiên trong lịch sử Việt Nam (khoảng 2879–258 TCN). Có tổng cộng 18 đời Hùng Vương. Giỗ Tổ Hùng Vương (10/3 âm lịch) là ngày Quốc Tổ được tôn kính đến nay.',
+    'Quốc Uy','tăng sức mạnh (+10% Tấn công) toàn đội cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h1_6','Sơn Tinh',78,1,'ally','Thần núi',
+    'Sơn Tinh (Tản Viên Sơn Thần) là vị thần núi Ba Vì, một trong Tứ bất tử của tín ngưỡng Việt Nam. Ông cưới được Mị Nương nhờ tài dâng lễ vật sớm hơn Thủy Tinh. Cuộc tranh đấu giữa Sơn Tinh và Thủy Tinh giải thích hiện tượng lũ lụt hàng năm ở Việt Nam.',
+    'Núi Dời Đất Chuyển','Tạo địa chấn gây sát thương (156% Tấn công) diện rộng và làm choáng (tỷ lệ 30%) toàn bộ địch, gây sát thương (101% Tấn công) lên toàn bộ địch. Gây choáng (tỷ lệ 30%).'),
+  createHero2('h1_7','Mị Nương',55,1,'ally','Công chúa',
+    'Mị Nương là con gái của Hùng Vương đời thứ 18, nổi tiếng vì vẻ đẹp tuyệt trần. Nàng là đối tượng tranh giành giữa Sơn Tinh và Thủy Tinh, dẫn đến truyền thuyết về lũ lụt hàng năm. Hôn nhân của Mị Nương và Sơn Tinh là biểu tượng của sự hòa hợp giữa con người và thiên nhiên.',
+    'Mỹ Nhân Kế','Làm giảm sức chiến đấu của 1 mục tiêu địch bằng vẻ đẹp cuốn hút, gây sát thương (110% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h1_8','Thánh Gióng',91,1,'ally','Thiên Vương',
+    'Thánh Gióng, hiệu là Phù Đổng Thiên Vương, là một trong Tứ bất tử trong tín ngưỡng dân gian Việt Nam. Ông là biểu tượng của tinh thần chống ngoại xâm và sức mạnh tuổi trẻ. Theo truyền thuyết, ông lớn nhanh như thổi sau khi ăn cơm, mặc áo giáp sắt, cưỡi ngựa sắt đánh đuổi giặc Ân rồi bay về trời.',
+    'Thiết Mã Xung Thiên','Cưỡi ngựa sắt xung phong, gây sát thương (118% Tấn công) lên toàn bộ địch..'),
+  createHero2('h1_9','Lang Liêu',59,1,'ally','Hoàng tử',
+    'Lang Liêu là hoàng tử thứ 18 của Hùng Vương, nổi tiếng với câu chuyện làm bánh chưng bánh giầy. Nhờ được thần mách bảo trong giấc mơ, ông đã làm ra hai loại bánh tượng trưng cho đất và trời, giành được ngôi vua. Bánh chưng bánh giầy từ đó trở thành biểu tượng văn hóa Tết Nguyên Đán của người Việt.',
+    'Bánh Thiêng','hồi phục sức lực (Hồi 11% Máu tối đa) toàn đội bằng phép màu của lúa gạo. cho toàn đội (Hồi 12% Máu tối đa).'),
+  createHero2('h1_10','Tiên Dung',54,1,'ally','Công chúa',
+    'Tiên Dung là công chúa của Hùng Vương, nổi tiếng vì câu chuyện tình yêu với Chử Đồng Tử — chàng trai nghèo sống bên bờ sông Hồng. Bà chủ động kết duyên cùng chàng dù trái lệnh vua cha. Đây là câu chuyện tình yêu đẹp đẽ vượt qua rào cản giai cấp trong truyền thuyết Việt Nam.',
+    'Duyên Trời Định','Tăng cường liên kết toàn đội cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h1_11','Chử Đồng Tử',82,1,'ally','Thánh nhân',
+    'Chử Đồng Tử là một trong Tứ bất tử của tín ngưỡng Việt Nam. Ông xuất thân từ nhà nghèo, kết hôn với công chúa Tiên Dung rồi học được phép thuật từ nhà sư Phật Quang. Ông trở thành vị thánh của nghề buôn bán và sự giàu có, được thờ phụng rộng rãi khắp vùng đồng bằng sông Hồng.',
+    'Thiên Trượng Khai Sơn','Dùng gậy thần khai mở đại lộ, tăng tốc độ (+15%) và sức tấn công.'),
+  createHero2('h1_12','Thục Phán',76,1,'ally','Vua nước Âu Lạc',
+    'Thục Phán (An Dương Vương) là vua nước Âu Lạc (257–179 TCN), lập kinh đô Cổ Loa. Ông xây thành Cổ Loa hình trôn ốc kiên cố và được thần Kim Quy tặng móng vuốt làm nỏ thần. Ông thất bại trước Triệu Đà do bị phản bội bởi con gái Mị Châu trong mối tình với Trọng Thủy.',
+    'Nỏ Thần Kim Quy','Bắn tên thần, gây sát thương (129% Tấn công) lên 1 hàng dọc địch.'),
+  createHero2('h1_13','Mị Châu',51,1,'ally','Công chúa',
+    'Mị Châu là con gái của An Dương Vương, vợ của Trọng Thủy (con trai Triệu Đà). Nàng vô tình tiết lộ bí mật nỏ thần cho chồng, dẫn đến sự sụp đổ của Âu Lạc. Câu chuyện của Mị Châu là bài học lịch sử về lòng cảnh giác trong tình yêu và trách nhiệm quốc gia.',
+    'Áo Lông Ngỗng','Để lại dấu vết giúp toàn đội truy theo cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h1_14','Cao Lỗ',75,1,'ally','Thần cung',
+    'Cao Lỗ (Cao Thông) là tướng tài của An Dương Vương, người chế tạo nỏ thần Liên Châu — loại nỏ bắn được nhiều mũi tên một lần. Ông bị thất sủng và phải rời triều đình, dẫn đến việc bí mật nỏ thần bị lộ. Nhiều địa danh ở vùng Bắc Ninh còn gắn liền với tên ông.',
+    'Liên Châu Nỏ','Bắn loạt tên liên tiếp, gây sát thương (150% Tấn công) nhiều 1 mục tiêu địch cùng lúc.'),
+  createHero2('h1_15','Mai An Tiêm',59,1,'ally','Hoàng thân',
+    'Mai An Tiêm là con nuôi của Hùng Vương, bị đày ra đảo hoang vì kiêu ngạo. Trên đảo, ông nhặt được hạt dưa hấu từ chim lạ mang đến, trồng thành công và dùng để đổi lấy thức ăn với thuyền buôn, cuối cùng được đón về triều. Sự tích dưa hấu của Việt Nam gắn liền với câu chuyện của ông.',
+    'Dưa Hấu Thần','hồi phục máu (Hồi 11% Máu tối đa) toàn đội bằng trái cây thần kỳ của đảo hoang. cho toàn đội (Hồi 12% Máu tối đa).'),
+  createHero2('h1_16','Hùng Lãng Công',58,1,'ally','Tướng quân',
+    'Hùng Lãng Công là một vị tướng trong thời đại Hùng Vương, có công bảo vệ bờ cõi đất nước. Ông là đại diện cho lực lượng quân sự trung thành phục vụ nhà Hùng Vương qua nhiều thế hệ.',
+    'Trung Nghĩa Kỳ','Tập hợp quân sĩ cho toàn đội (+20 Nhuệ khí).'),
+  createHero2('h1_17','Ông Lý Tiến',52,1,'ally','Hào kiệt',
+    'Ông Lý Tiến là một nhân vật hào kiệt trong thời kỳ Hùng Vương, có đóng góp cho công cuộc mở mang bờ cõi và xây dựng đất nước Văn Lang.',
+    'Khai Hoang Lập Địa','Mở rộng phạm vi chiến đấu cho toàn đội (+10% Tấn công).'),
+  createHero2('h1_18','Cung binh',50,1,'ally','Binh chủng','Đội cung binh thiện xạ của quân đội Văn Lang, được trang bị cung tên và chuyên bắn từ xa.','Bắn Xa','Tấn công 1 mục tiêu địch từ khoảng cách an toàn, gây sát thương (100% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h1_19','Thủy binh',50,1,'ally','Binh chủng','Đội thủy binh tinh nhuệ chuyên chiến đấu trên sông nước, sử dụng thuyền độc mộc và vũ khí phù hợp.','Thủy Chiến','tăng sức mạnh (+10% Tấn công) khi chiến đấu trên địa hình sông nước cho toàn đội (+10% Tấn công).'),
+  createHero2('h1_20','Bộ binh',50,1,'ally','Binh chủng','Đội bộ binh thiện chiến của quân đội Văn Lang, trang bị giáo mác và khiên đồng.','Xung Phong','Đột kích thẳng vào toàn bộ địch, gây sát thương (65% Tấn công) lên toàn bộ địch..'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 2 ═══════════════════════════════════════
+  createHero2('h2_1','Trưng Trắc',85,2,'ally','Nữ Vương',
+    'Trưng Trắc là nữ anh hùng dân tộc đầu tiên của Việt Nam, cùng em gái Trưng Nhị lãnh đạo cuộc khởi nghĩa chống ách đô hộ của nhà Hán (40–43 CN). Bà lên ngôi xưng vương, đặt kinh đô ở Mê Linh, giải phóng 65 thành trì. Sau khi thất bại trước Mã Viện, bà gieo mình xuống sông Hát Giang để bảo toàn khí tiết.',
+    'Thiên Hạ Quy Phục','Hiệu triệu anh hùng bốn phương cho toàn đội (+20% Tấn công).'),
+  createHero2('h2_2','Trưng Nhị',79,2,'ally','Nữ tướng',
+    'Trưng Nhị là em gái và người đồng lãnh đạo cuộc khởi nghĩa Hai Bà Trưng. Bà nổi tiếng là chiến binh dũng cảm, từng đánh tan nhiều cuộc phản công của quân Hán. Cùng chị, bà đã trở thành biểu tượng bất khuất của phụ nữ Việt Nam.',
+    'Song Kiếm Trùng Thiên','Tung đòn song kiếm, gây sát thương (158% Tấn công) kép lên 1 mục tiêu địch.'),
+  createHero2('h2_3','Thi Sách',69,2,'ally','Tướng quân',
+    'Thi Sách là chồng của Trưng Trắc, tướng quân có công khơi mào cuộc khởi nghĩa chống nhà Hán. Ông bị Thái thú Tô Định giết hại, chính cái chết của ông đã thôi thúc Trưng Trắc phát động cuộc nổi dậy năm 40 CN.',
+    'Huyết Thù Bất Cộng Đái Thiên','Đòn tấn công mạnh mẽ mang theo hận thù gia tộc, gây sát thương (138% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h2_4','Phùng Thị Chính',61,2,'ally','Nữ tướng',
+    'Phùng Thị Chính là một nữ tướng trong khởi nghĩa Hai Bà Trưng. Tương truyền bà đang mang thai vẫn ra trận, sinh con xong liền tiếp tục chiến đấu. Bà được thờ phụng tại nhiều địa phương vùng Hà Nội, Phú Thọ.',
+    'Mẫu Tử Đồng Tâm','Chiến đấu không mệt mỏi cho toàn đội (+15% Phòng thủ).'),
+  createHero2('h2_5','Bát Nàn',62,2,'ally','Nữ tướng',
+    'Bát Nàn (Vũ Thị Thục) là nữ tướng trong khởi nghĩa Hai Bà Trưng, được mệnh danh là "Đề Nương" vì chồng bị giặc Hán giết. Bà chiêu mộ nghĩa quân ở vùng Tiên La (Thái Bình), lập nhiều chiến công. Bà được dân gian thờ như một vị thần bảo hộ.',
+    'Bát Quái Kiếm Pháp','Vung kiếm theo tám hướng, gây sát thương (81% Tấn công) lên toàn bộ địch..'),
+  createHero2('h2_6','Triệu Thị Trinh',81,2,'ally','Nữ tướng',
+    'Bà Triệu (Triệu Thị Trinh) là nữ anh hùng thế kỷ 3 CN, lãnh đạo cuộc khởi nghĩa chống quân Ngô năm 248. Bà có câu nói bất hủ: "Tôi muốn cưỡi cơn gió mạnh, đạp làn sóng dữ, chém cá kình ở biển Đông, đánh đuổi quân Ngô, giành lại giang sơn, cởi ách nô lệ, chứ không chịu khom lưng làm tì thiếp người ta."',
+    'Cưỡi Voi Phá Trận','Cưỡi voi xung phong, gây sát thương (105% Tấn công) lên toàn bộ địch..'),
+  createHero2('h2_7','Triệu Quốc Đạt',68,2,'ally','Tướng quân',
+    'Triệu Quốc Đạt là anh trai của Bà Triệu, cùng em gái lãnh đạo cuộc khởi nghĩa chống nhà Ngô. Ông qua đời sớm nên Bà Triệu tiếp tục dẫn dắt nghĩa quân. Ông được nhân dân vùng Thanh Hóa ghi nhớ công lao.',
+    'Hào Khí Đông A','Truyền tinh thần chiến đấu cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h2_8','Lý Ông Trọng',80,2,'ally','Đại tướng',
+    'Lý Ông Trọng (Lý Thân) là danh tướng thời Hùng Vương — An Dương Vương, tương truyền cao lớn phi thường. Ông được cử sang Tần làm tướng và lập nhiều chiến công. Sau khi mất, nhà Tần đúc tượng đồng theo hình ông để uy hiếp phương Bắc.',
+    'Thân Cao Khí Mạnh','Sức mạnh vô song, mỗi đòn đánh đều giáng xuống như núi. (+20% Tấn công).'),
+  createHero2('h2_9','Lê Chân',75,2,'ally','Nữ tướng',
+    'Lê Chân là nữ tướng trong khởi nghĩa Hai Bà Trưng, người sáng lập vùng đất An Biên (Hải Phòng ngày nay). Bà chiêu mộ nghĩa quân, lập trại An Biên và trở thành tướng thân cận của Trưng Trắc. Hải Phòng hiện có đền thờ Nữ tướng Lê Chân và đặt tên nhiều đường phố, quận theo tên bà.',
+    'An Biên Lập Trại','Xây dựng phòng tuyến vững chắc cho toàn đội (+15% Phòng thủ).'),
+  createHero2('h2_10','Thánh Thiên',60,2,'ally','Nữ tướng',
+    'Thánh Thiên là nữ tướng trong khởi nghĩa Hai Bà Trưng, quê ở vùng Bắc Giang. Bà nổi tiếng với tài thao lược và tinh thần dũng cảm. Sau khi khởi nghĩa thất bại, bà không đầu hàng mà gieo mình xuống sông tuẫn tiết.',
+    'Thiên Nữ Tán Hoa','Tung hoa đao từ trên cao, gây sát thương (78% Tấn công) lên toàn bộ địch..'),
+  createHero2('h2_11','Thiều Hoa',62,2,'ally','Tiên phong Hữu tướng',
+    'Thiều Hoa công chúa (3–41) quê ở động Lăng Sương (Thanh Thủy, Phú Thọ) là một nữ tướng tài ba thời Hai Bà Trưng. Bà gia nhập nghĩa quân, lập nhiều chiến công và được Trưng Nữ Vương phong làm Tiên phong Hữu tướng, sau thăng tước Đông Cung Công chúa.',
+    'Đông Cung Tiên Phong','Dẫn đầu đội tiên phong xung trận cho toàn đội (+20 Nhuệ khí).'),
+  createHero2('h2_12','Man Thiện',65,2,'ally','Thánh Mẫu',
+    'Man Thiện (? - 43), tên thật là Trần Thị Đoan, cháu ngoại Vua Hùng, là vợ Lạc tướng Hùng Định và là mẹ của Hai Bà Trưng. Bà là người nuôi dạy hai con tài thao lược và cũng là người tổ chức khởi nghĩa từ buổi ban đầu trước khi giao quyền lãnh đạo lại cho Thi Sách và hai con gái.',
+    'Sinh Sinh Bất Diệt','Tình mẫu tử thiêng liêng cho toàn đội (Hồi 13% Máu tối đa).'),
+  createHero2('h2_13','Vĩnh Huy',51,2,'ally','Tướng quân','Tướng quân dũng cảm trong khởi nghĩa Hai Bà Trưng, từng dẫn đầu nhiều trận xung phong phá vây cho nghĩa quân.','Hổ Chiến','Tấn công mãnh liệt như hổ, gây sát thương (102% Tấn công) và khống chế (tỷ lệ 30%) lên 1 mục tiêu địch.'),
+  createHero2('h2_14','Đô Dương',51,2,'ally','Tướng quân','Tướng quân trung thành trong khởi nghĩa Hai Bà Trưng, phụ trách phòng thủ vùng nam sông Hồng.','Kiên Thành Bất Phá','Lập hàng rào phòng thủ (+15%) kiên cố, gây sát thương (82% Tấn công) lên hàng trước địch.'),
+  createHero2('h2_15','Hồ Đề',51,2,'ally','Nữ tướng','Nữ tướng trong đội quân Hai Bà Trưng, chuyên quân sự và hậu cần cho nghĩa quân vùng đồng bằng.','Vận Lương','Đảm bảo hậu cần cho toàn đội (Hồi 10% Máu tối đa).'),
+  createHero2('h2_16','Nguyễn Tam Trinh',52,2,'ally','Tướng quân','Tướng quân trong khởi nghĩa Hai Bà Trưng, có công trong các trận đánh giải phóng vùng đất Hà Nam.','Tam Chiến','Ba lần xung phong liên tiếp, gây sát thương (104% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h2_17','Phạm Thị Nương',53,2,'ally','Nữ tướng','Nữ tướng thân tín của Trưng Trắc, dũng cảm và tận tụy trong cuộc kháng chiến chống ách đô hộ của nhà Hán.','Trung Liệt','Bảo vệ chủ tướng cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h2_18','Hà Thị Bàn',51,2,'ally','Nữ tướng','Nữ tướng trong khởi nghĩa Hai Bà Trưng, quê vùng Hà Tây, chuyên trị thủy chiến trên sông Đáy.','Hà Khẩu Thủy Trận','Lập trận thủy chiến cho toàn đội (+10% Tấn công).'),
+  createHero2('h2_19','Lê Ngọc',52,2,'ally','Nữ tướng','Nữ tướng xinh đẹp nhưng dũng cảm trong khởi nghĩa Hai Bà Trưng, nổi tiếng với tài đấu kiếm điêu luyện.','Ngọc Nữ Kiếm','Kiếm pháp uyển chuyển nhưng sắc bén, gây sát thương (104% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h2_20','Tượng binh',50,2,'ally','Binh chủng','Đội tượng binh hùng mạnh của nghĩa quân Hai Bà Trưng, cưỡi voi chiến xung phong phá trận.','Tượng Trận','Cưỡi voi phá toàn bộ địch, gây sát thương (65% Tấn công) lên toàn bộ địch. Gây choáng (tỷ lệ 30%).'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 3 ═══════════════════════════════════════
+  createHero2('h3_1','Lý Bí',80,3,'ally','Vua nước Vạn Xuân',
+    'Lý Bí (Lý Nam Đế) là người khởi xướng cuộc khởi nghĩa đánh đuổi nhà Lương năm 544, lập ra nhà nước Vạn Xuân — nhà nước độc lập đầu tiên sau hơn 500 năm Bắc thuộc. Ông xưng Đế, đặt niên hiệu Thiên Đức, mở ra thời kỳ lịch sử mới cho dân tộc.',
+    'Vạn Xuân Khai Quốc','Tuyên bố độc lập cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h3_2','Triệu Quang Phục',82,3,'ally','Dạ Trạch Vương',
+    'Triệu Quang Phục là danh tướng tiếp nối sự nghiệp của Lý Bí sau khi ông bị nhà Lương đánh bại. Ông ẩn náu trong đầm Dạ Trạch, dùng chiến thuật du kích chống giặc suốt nhiều năm, cuối cùng đánh đuổi quân Lương, lên ngôi vua, được dân gọi là Triệu Việt Vương.',
+    'Dạ Trạch Tàng Hình','Ẩn mình trong đầm lầy, gây sát thương (164% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h3_4','Mai Thúc Loan',80,3,'ally','Vua Mai Hắc Đế',
+    'Mai Thúc Loan (Mai Hắc Đế) lãnh đạo cuộc khởi nghĩa chống nhà Đường năm 722, xưng đế ở Hoan Châu (Nghệ An). Ông là một trong những người Việt đầu tiên dám xưng Đế đối chọi với thiên tử phương Bắc. Tuy thất bại nhưng khởi nghĩa của ông để lại dấu ấn sâu đậm trong lịch sử chống Bắc thuộc.',
+    'Hắc Đế Xuất Thế','Khí thế hắc long cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h3_5','Phùng Hưng',81,3,'ally','Bố Cái Đại Vương',
+    'Phùng Hưng (Bố Cái Đại Vương) lãnh đạo cuộc khởi nghĩa chống nhà Đường (791–802), tự xưng là Đô Quân, sau được dân phong là Bố Cái Đại Vương. Ông được nhân dân kính trọng như cha mẹ — "bố" nghĩa là cha, "cái" nghĩa là mẹ.',
+    'Bố Cái Uy Linh','Tỏa uy lực người cha dân tộc cho 1 đồng minh (Hồi 16% Máu tối đa). Đồng thời: +25% Phòng thủ.'),
+  createHero2('h3_6','Phùng An',60,3,'ally','Tướng quân',
+    'Phùng An là con trai của Phùng Hưng, kế thừa sự nghiệp của cha sau khi ông qua đời. Tuy nhiên ông không đủ tài năng để duy trì độc lập lâu dài và cuối cùng thần phục nhà Đường.',
+    'Phụ Tử Nghĩa Tình','Chiến đấu vì di nguyện cha cho toàn đội (+20 Nhuệ khí).'),
+  createHero2('h3_7','Khúc Thừa Dụ',80,3,'ally','Tiết Độ Sứ',
+    'Khúc Thừa Dụ là người khởi đầu thời kỳ tự chủ của Việt Nam (905–938). Ông nhân nhà Đường suy yếu, chiếm lấy phủ thành Tống Bình, tự xưng Tiết Độ Sứ, thoát khỏi sự cai trị trực tiếp của phương Bắc và thiết lập nền hành chính riêng.',
+    'Tự Trị Khai Đạo','Mở đường độc lập, gây sát thương (154% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h3_8','Khúc Hạo',61,3,'ally','Tiết Độ Sứ',
+    'Khúc Hạo là con trai Khúc Thừa Dụ, tiếp tục sự nghiệp xây dựng nền tự chủ. Ông thực hiện nhiều cải cách tiến bộ: giảm thuế, bãi bỏ lao dịch, cải tổ hành chính địa phương, được sử sách đánh giá là người "khoan hòa, thuần hậu".',
+    'Khoan Dân Chính Sách','Nâng cao lòng dân cho 1 đồng minh (Hồi 12% Máu tối đa). Đồng thời: +15% Phòng thủ.'),
+  createHero2('h3_9','Dương Đình Nghệ',74,3,'ally','Tiết Độ Sứ',
+    'Dương Đình Nghệ là vị tướng đánh đuổi quân Nam Hán năm 931, giành lại quyền tự chủ sau khi họ Khúc mất. Ông là cha vợ của Ngô Quyền. Ông bị tên phản thần Kiều Công Tiễn giết chết năm 937, chính điều này khiến Ngô Quyền nổi dậy đánh trận Bạch Đằng lịch sử.',
+    'Phục Quốc Chinh Đông','Tập hợp nghĩa sĩ, phá tan phòng tuyến của quân xâm lược. (+15% Phòng thủ).'),
+  createHero2('h3_10','Tinh Thiều',70,3,'ally','Mưu sĩ',
+    'Tinh Thiều là học giả, mưu sĩ tài năng trong thời Lý Nam Đế, từng đề xuất nhiều kế sách quan trọng trong cuộc kháng chiến chống nhà Lương.',
+    'Thần Cơ Diệu Toán','Tính toán thần sầu, hạ thấp phòng thủ (+15%) của địch.'),
+  createHero2('h3_11','Phạm Tu',72,3,'ally','Tướng quân',
+    'Phạm Tu là danh tướng thời Lý Nam Đế, người đánh tan giặc Lâm Ấp từ phương nam. Ông được coi là thuỷ tổ của nghề võ Việt Nam, được thờ tại làng Thanh Liệt (Hà Nội).',
+    'Nam Chinh Phá Địch','Chủ động tấn công, gây sát thương (144% Tấn công) lớn cho quân xâm lược. (Mục tiêu: 1 mục tiêu địch).'),
+  createHero2('h3_12','Đinh Hùng Lực',51,3,'ally','Tướng quân','Dũng tướng thời chống Bắc thuộc, chuyên tấn công cận chiến mãnh liệt.','Hùng Lực Phá Thành','Phá tường thành bằng sức mạnh thuần túy. (+10% Tấn công).'),
+  createHero2('h3_13','Phùng Hải',54,3,'ally','Tướng quân','Tướng quân trong cuộc khởi nghĩa của Phùng Hưng, chiến đấu dũng cảm bảo vệ vùng đất Đường Lâm.','Hải Phong Đao','Tấn công nhanh như gió biển, gây sát thương (108% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h3_14','Phùng Hiển',54,3,'ally','Tướng quân','Tướng quân thân tộc của Phùng Hưng, cùng dòng họ Phùng lãnh đạo cuộc kháng chiến giải phóng vùng Đường Lâm.','Tộc Binh','Chiến đấu bên cạnh người thân cho toàn đội (+10% Tấn công).'),
+  createHero2('h3_15','Bạch Hạo',51,3,'ally','Tướng quân','Tướng quân trong thời kỳ tự chủ họ Khúc, bảo vệ vùng biên cương phía bắc.','Bạch Y Thần Binh','Tinh thần bất khuất của người lính áo trắng cho toàn đội (+15% Phòng thủ, +20 Nhuệ khí).'),
+  createHero2('h3_16','Nguyễn Phụng',50,3,'ally','Tướng quân','Tướng quân thời Bắc thuộc lần 3, tham gia nhiều cuộc khởi nghĩa chống lại sự cai trị của nhà Đường.','Dân Binh Chống Giặc','Lãnh đạo dân binh, gây sát thương (100% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h3_18','Lý Thiện Bảo',61,3,'ally','Tướng quân','Dũng tướng thời kỳ kháng chiến chống Đường, có tài thao lược trong các trận địa chiến.','Địa Lôi','Đặt bẫy mìn, gây sát thương (122% Tấn công) bất ngờ lên 1 mục tiêu địch.'),
+  createHero2('h3_19','Dương Thanh',50,3,'ally','Hào kiệt','Hào kiệt vùng Ái Châu (Thanh Hóa), từng tham gia các cuộc khởi nghĩa trong thời kỳ chống Bắc thuộc lần 3.','Kiêu Binh','Dùng tinh nhuệ binh sĩ, tăng sát thương tập trung. (Gây 100% sát thương Tấn công). (Mục tiêu: 1 mục tiêu địch).'),
+  createHero2('h3_20','Đỗ Anh Hàn',65,3,'ally','Thủ lĩnh',
+    'Đỗ Anh Hàn (thế kỷ VIII) là một thủ lĩnh người Việt thời Bắc thuộc, sống tại Đường Lâm. Ông là nhân vật đặc biệt: sử Việt coi ông là người hiến kế cho Phùng Hưng khởi nghĩa chống nhà Đường, còn sử Trung Quốc lại ghi nhận ông là thủ lĩnh thật sự của cuộc khởi nghĩa này.',
+    'Lưỡng Diện Sử Ký','Đưa ra kế sách vẹn toàn cho toàn đội (+10% Tấn công, +15% Phòng thủ).'),
+  createHero2('h3_21','Phạm Thị Uyển',49,3,'ally','Hoàng hậu / Nữ tướng',
+    'Phạm Thị Uyển là hoàng hậu duy nhất trong lịch sử Việt Nam trực tiếp cầm quân ra trận. Bà là vợ của Mai Hắc Đế (Mai Thúc Loan), vị vua lãnh đạo cuộc khởi nghĩa chống lại ách đô hộ của nhà Đường vào thế kỷ thứ VIII.',
+    'Hoàng Hậu Xuất Trận','Đích thân cầm quân xông pha trận mạc cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 4 ═══════════════════════════════════════
+  createHero2('h4_0','Đinh Bộ Lĩnh',95,4,'ally','Vạn Thắng Vương',
+    'Đinh Bộ Lĩnh (Đinh Tiên Hoàng) là vị hoàng đế khai sáng nhà Đinh, người có công dẹp loạn 12 sứ quân, thống nhất đất nước, xưng hoàng đế và đặt tên nước là Đại Cồ Việt (968). Ông mở ra thời kỳ độc lập, tự chủ hoàn toàn cho dân tộc Việt Nam.',
+    'Vạn Thắng Cờ Sậy','Hiệu triệu toàn bộ nghĩa quân Hoa Lư, gây sát thương (124% Tấn công) lên toàn bộ địch. Gây choáng (tỷ lệ 50%).'),
+  createHero2('h4_1','Ngô Quyền',90,4,'ally','Ngô Vương',
+    'Ngô Quyền là vị anh hùng dân tộc, người chấm dứt 1000 năm Bắc thuộc bằng trận Bạch Đằng lịch sử năm 938. Ông dùng mưu kế đóng cọc gỗ bọc sắt dưới sông Bạch Đằng, nhử thủy quân Nam Hán vào bẫy lúc triều xuống, đánh tan tác địch. Ông lên ngôi vương, mở ra kỷ nguyên độc lập lâu dài cho dân tộc.',
+    'Bạch Đằng Cọc Sắt','Đặt bẫy địa hình, gây sát thương (180% Tấn công) cực lớn khi địch lọt vào.'),
+  createHero2('h4_2','Lê Hoàn',91,4,'ally','Lê Đại Hành',
+    'Lê Hoàn (Lê Đại Hành) là vị vua khai sáng nhà Tiền Lê. Ông đánh bại quân Tống xâm lược năm 981, bảo vệ nền độc lập vừa mới được xác lập. Ông cũng chỉ huy đại quân chinh phạt Chiêm Thành để bảo vệ bờ cõi phía nam. Được đánh giá là một trong những vị hoàng đế tài năng nhất lịch sử Việt Nam.',
+    'Thiên Tử Chinh Phạt','Thân chinh dẫn đầu quân đội, gây sát thương (182% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h4_3','Nguyễn Bặc',81,4,'ally','Khai quốc công thần',
+    'Nguyễn Bặc là một trong những công thần khai quốc của nhà Đinh, giúp Đinh Bộ Lĩnh thống nhất 12 sứ quân. Ông giữ chức Định Quốc Công, là một trụ cột của triều đình nhà Đinh.',
+    'Đinh Quốc Tâm','Trung thành tuyệt đối với chủ tướng cho toàn đội (+25% Phòng thủ).'),
+  createHero2('h4_4','Đinh Điền',80,4,'ally','Khai quốc công thần',
+    'Đinh Điền là công thần khai quốc nhà Đinh, cùng Nguyễn Bặc và Lê Hoàn giúp Đinh Bộ Lĩnh dẹp 12 sứ quân, thống nhất đất nước sau loạn 12 sứ quân.',
+    'Thập Nhị Sứ Quân Phá','Kinh nghiệm dẹp giặc loạn, gây sát thương (160% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h4_5','Lưu Cơ',82,4,'ally','Tướng quân',
+    'Lưu Cơ là đại tướng tài ba thời Đinh-Tiền Lê, từng cầm quân đánh thắng nhiều trận, bảo vệ kinh đô Hoa Lư.',
+    'Hoa Lư Thủ Vệ','Bảo vệ kinh thành tuyệt đối, tăng mạnh phòng thủ (+25%) khu vực.'),
+  createHero2('h4_6','Dương Vân Nga',55,4,'ally','Thái hậu',
+    'Dương Vân Nga là hoàng hậu nhà Đinh, sau trao hoàng bào cho Lê Hoàn lên ngôi để dẹp giặc Tống. Hành động của bà còn gây tranh cãi trong lịch sử — có người gọi là phản bội, nhưng nhiều nhà sử học hiện đại coi đây là quyết định hy sinh cá nhân vì lợi ích quốc gia.',
+    'Nhường Triều','Hy sinh bản thân vì đại nghĩa cho toàn đội (+10% Tấn công).'),
+  createHero2('h4_7','Đinh Toàn',51,4,'ally','Thiếu đế','Đinh Toàn là hoàng đế nhỏ tuổi của nhà Đinh, lên ngôi khi chưa đầy 6 tuổi sau khi vua cha Đinh Tiên Hoàng bị ám sát. Triều đình rối loạn, dẫn đến việc Dương Vân Nga trao quyền cho Lê Hoàn.','Ấu Chúa','Cần sự bảo hộ cho toàn đội (+15% Phòng thủ).'),
+  createHero2('h4_8','Ngô Xương Xí',51,4,'ally','Sứ quân','Ngô Xương Xí là con trai Ngô Xương Văn, một trong 12 sứ quân thời loạn. Ông cát cứ vùng Bình Kiều cho đến khi bị Đinh Bộ Lĩnh dẹp yên.','Cát Cứ','phòng thủ (+15%) lãnh thổ cho toàn đội (+10% Tấn công, +15% Phòng thủ).'),
+  createHero2('h4_9','Nguyễn Siêu',60,4,'ally','Sứ quân','Nguyễn Siêu là một trong 12 sứ quân thời loạn, chiếm cứ vùng Tây Phù Liệt. Ông là một trong những người đầu tiên khuất phục trước sức mạnh của Đinh Bộ Lĩnh.','Phù Liệt Trận','Chiến thuật phòng ngự linh hoạt, gây sát thương (120% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h4_10','Trần Lãm',61,4,'ally','Sứ quân','Trần Lãm là sứ quân cát cứ vùng Bố Hải Khẩu (Thái Bình), người đầu tiên ủng hộ Đinh Bộ Lĩnh lên ngôi, tạo nền tảng để thống nhất đất nước.','Bố Hải Thủy Binh','Chỉ huy thủy binh vùng cửa sông, gây sát thương (122% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h4_11','Nguyễn Thủ Tiệp',54,4,'ally','Sứ quân','Nguyễn Thủ Tiệp là một trong 12 sứ quân, chiếm cứ vùng Tiên Du (Bắc Ninh), cuối cùng thần phục Đinh Bộ Lĩnh và được giữ lại làm tướng.','Quy Phụ','Sau khi thần phục, gây sát thương (108% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h4_12','Kiều Công Hãn',73,4,'ally','Sứ quân','Kiều Công Hãn là sứ quân chiếm cứ vùng Phong Châu (Phú Thọ), dòng dõi Kiều Công Tiễn — kẻ giết Dương Đình Nghệ. Ông sau đó quy phục nhà Đinh và có công dẹp loạn.','Phong Châu Kỵ Binh','Chỉ huy kỵ binh vùng trung du, tốc độ và sức mạnh vượt trội. (+10% Tấn công). (+10% Tốc độ).'),
+  createHero2('h4_13','Ngô Xương Văn',51,4,'ally','Thiên Sách Vương','Ngô Xương Văn là con trai Ngô Quyền, từng là vua nhà Ngô sau khi giết phản thần Dương Tam Kha, nhưng sau đó chia sẻ quyền lực với anh Ngô Xương Ngập, gây ra loạn 12 sứ quân.','Huynh Đệ Chi Tranh','Chiến đấu trong nội chiến, gây sát thương (102% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h4_14','Phạm Bạch Hổ',62,4,'ally','Sứ quân','Phạm Bạch Hổ (Phạm Phòng Át) là sứ quân chiếm cứ vùng Đằng Châu (Hưng Yên), nổi tiếng dũng cảm như hổ trắng. Ông quy phục Đinh Bộ Lĩnh và được phong tước.','Bạch Hổ Xuất Sơn','Sức mạnh hổ trắng, tấn công bất ngờ từ ẩn náu. (+10% Tấn công).'),
+  createHero2('h4_18','Phạm Cự Lạng',71,4,'ally','Đại tướng','Phạm Cự Lạng là đại tướng thời Đinh-Tiền Lê, người đề xuất Dương Vân Nga trao hoàng bào cho Lê Hoàn khi giặc Tống tấn công. Ông có công lớn trong việc bảo vệ nền độc lập.','Trận Địa Quyết Sách','Đưa ra quyết định chiến lược, gây sát thương (142% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h4_20','Đinh Liễn',66,4,'ally','Hoàng tử',
+    'Đinh Liễn là con trai trưởng của Đinh Tiên Hoàng, từng bị cha bắt giam làm con tin khi còn nhỏ. Sau lớn lên ông trở thành tướng giỏi, giúp vua cha thống nhất đất nước. Tuy nhiên ông cũng bị ám sát cùng với vua cha năm 979.',
+    'Hoàng Tử Phục Thù','Chiến đấu vì danh dự gia tộc, tăng sát thương khi bị dồn vào góc tường. (Gây 132% sát thương Tấn công). (Mục tiêu: 1 mục tiêu địch).'),
+  createHero2('h4_21','Trịnh Tú',74,4,'ally','Khai quốc công thần',
+    'Trịnh Tú (924 - 979) là một khai quốc công thần nhà Đinh, thuộc "Tứ trụ triều Đinh" (Bặc, Điền, Cơ, Tú). Ông có công giúp Đinh Bộ Lĩnh dẹp loạn 12 sứ quân, thống nhất đất nước. Ông từng cùng Đinh Liễn đi giao bang với nhà Tống. Về sau, vì tận trung bảo vệ cơ nghiệp nhà Đinh nên ông bị hại.',
+    'Tứ Trụ Triều Đinh','Phối hợp cùng các trụ cột khác tạo thế phòng thủ (+15%) vững chắc, gây sát thương (126% Tấn công) lên 1 hàng dọc địch.'),
+  createHero2('h4_22','Lê Long Việt',61,4,'ally','Hoàng đế',
+    'Tiền Lê Trung Tông (983–1005), tên thật Lê Long Việt, là hoàng đế thứ hai nhà Tiền Lê. Dù vâng di chiếu nối ngôi cha nhưng ông phải dẹp loạn anh em tranh giành suốt 8 tháng. Bi kịch thay, chỉ sau 3 ngày chính thức lên ngôi, ông bị em trai Lê Long Đĩnh sát hại, trở thành một trong những vị vua trị vì ngắn nhất lịch sử Việt Nam.',
+    'Đế Vương Tam Nhật','Bùng cháy rực rỡ trong thời gian ngắn, tăng mạnh sát thương và tốc độ cho toàn đội trong 3 lượt đầu tiên. (Gây 122% sát thương Tấn công). (+10% Tốc độ). (Mục tiêu: 1 mục tiêu địch).'),
+  createHero2('h4_23','Đinh Triều Quốc Mẫu',49,4,'ally','Quốc mẫu',
+    'Đinh Triều Quốc Mẫu (dã sử gọi là Đàm Thị Thiềm) là mẹ của Vua Đinh Tiên Hoàng. Sau khi chồng là Đinh Công Trứ mất, bà đưa con nhỏ Đinh Bộ Lĩnh về quê nuôi dưỡng, hun đúc chí lớn giúp con dẹp loạn 12 sứ quân, lập ra triều Đinh và nhà nước Đại Cồ Việt. Bà được hậu thế tôn kính và lập đền thờ ở nhiều nơi.',
+    'Dưỡng Dục Đế Vương','Công lao dưỡng dục bậc đế vương, gây sát thương (98% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h4_24','Ngô Xương Ngập',49,4,'ally','Thiên Sách Vương',
+    'Ngô Xương Ngập (? - 954) là con trưởng của Ngô Quyền và là một vị vua nhà Ngô. Ông trị vì từ năm 951 đến 954 cùng với em trai là Ngô Xương Văn. Sử gọi chung thời kỳ hai anh em cùng trị vì là thời Hậu Ngô Vương.',
+    'Hậu Ngô Đồng Trị','Kinh nghiệm cùng nhiếp chính, tăng cường sức mạnh và phòng thủ (+15%) khi có anh em hoặc đồng minh hoàng tộc cùng ra trận. (+10% Tấn công).'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 5 ═══════════════════════════════════════
+  createHero2('h5_1','Lý Công Uẩn',82,5,'ally','Lý Thái Tổ',
+    'Lý Công Uẩn (Lý Thái Tổ) là người sáng lập triều đại nhà Lý, dời đô từ Hoa Lư về Thăng Long năm 1010 — sự kiện lịch sử vĩ đại đặt nền móng cho Hà Nội ngàn năm. Chiếu dời đô của ông là kiệt tác văn học và tầm nhìn chính trị.',
+    'Thăng Long Dời Đô','Chuyển dời trung tâm, gây sát thương (164% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h5_2','Lý Thường Kiệt',91,5,'ally','Thái úy',
+    'Lý Thường Kiệt là danh tướng kiệt xuất nhà Lý, người chủ trương "tiên phát chế nhân" — chủ động đánh sang đất Tống để phá kế hoạch xâm lược. Ông đọc bài thơ thần bên sông Như Nguyệt để khích lệ quân sĩ, đánh tan quân Tống trong trận sông Cầu lịch sử. Tác giả bài thơ "Nam quốc sơn hà".',
+    'Nam Quốc Sơn Hà','Đọc thơ thần khích lệ quân sĩ cho toàn đội (+20% Tấn công, +30 Nhuệ khí).'),
+  createHero2('h5_3','Lý Thánh Tông',75,5,'ally','Hoàng đế',
+    'Lý Thánh Tông là vị hoàng đế thứ ba nhà Lý, trị vì 1054–1072. Ông đổi tên nước từ Đại Cồ Việt thành Đại Việt — tên gọi tồn tại 400 năm. Ông thân chinh đánh Chiêm Thành năm 1069, mở rộng lãnh thổ về phía nam.',
+    'Đại Việt Khai Quốc','Đổi tên nước cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h5_4','Tông Đản',73,5,'ally','Dân tộc tướng',
+    'Tông Đản là tướng lĩnh người dân tộc thiểu số trong quân đội nhà Lý, có công trong các cuộc chiến chống Tống. Ông được Lý Thường Kiệt tin dùng trong chiến dịch đánh sang đất Tống năm 1075.',
+    'Sơn Dân Chiến Pháp','Dùng chiến thuật vùng núi, gây sát thương (146% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h5_5','Lý Nhân Tông',74,5,'ally','Hoàng đế',
+    'Lý Nhân Tông là hoàng đế thứ tư nhà Lý, trị vì 1072–1128 — thời kỳ dài nhất trong lịch sử nhà Lý. Dưới triều ông, nhà Lý đẩy lui thành công cuộc xâm lược của nhà Tống năm 1076–1077. Ông còn cho xây Văn Miếu Quốc Tử Giám.',
+    'Văn Trị Võ Công','Kết hợp văn trị và võ công, gây sát thương (148% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h5_6','Lý Thái Tông',76,5,'ally','Hoàng đế',
+    'Lý Thái Tông là hoàng đế thứ hai nhà Lý, con trai Lý Công Uẩn. Ông nổi tiếng về văn trị, ban hành bộ Luật Hình Thư đầu tiên của Việt Nam năm 1042, mở Khoa thi Thái học sinh.',
+    'Hình Thư Trị Quốc','Dùng pháp luật điều phối quân đội cho toàn đội (+15% Phòng thủ).'),
+  createHero2('h5_7','Mạc Hiển Tích',58,5,'ally','Trạng nguyên',
+    'Mạc Hiển Tích là Trạng nguyên đầu tiên trong lịch sử Việt Nam, đỗ đầu khoa thi năm 1075 do Lý Nhân Tông tổ chức. Ông là người khai mở nền giáo dục khoa cử của Đại Việt.',
+    'Văn Chiến Kế','Dùng mưu kế thông minh thay sức mạnh bạo lực, làm rối trận địch. (+10% Tấn công).'),
+  createHero2('h5_8','Đào Cam Mộc',57,5,'ally','Khai quốc công thần',
+    'Đào Cam Mộc là công thần khai quốc nhà Lý, người vận động cho Lý Công Uẩn lên ngôi sau khi Lê Long Đĩnh qua đời. Ông có công lớn trong việc chuyển giao triều đại từ Tiền Lê sang nhà Lý.',
+    'Lập Đế Đại Nghĩa','Chọn minh chủ, gây sát thương (114% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h5_10','Sư Vạn Hạnh',81,5,'ally','Thiền sư',
+    'Thiền sư Vạn Hạnh là nhà sư, chính khách và tiên tri tài ba thời Tiền Lê - Lý. Ông là thầy học và người nuôi dưỡng Lý Công Uẩn, tiên đoán và hậu thuẫn cho Lý Công Uẩn lên ngôi vua. Được xem là một trong những cố vấn vĩ đại nhất lịch sử Việt Nam.',
+    'Thiền Ngữ Tiên Tri','Tiên đoán trận thế, gây sát thương (162% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h5_11','Khuông Việt',72,5,'ally','Quốc sư',
+    'Khuông Việt (Ngô Chân Lưu) là Quốc sư của vua Đinh Tiên Hoàng và Tiền Lê, nhà sư kiêm chính khách nổi tiếng. Ông soạn bài biểu ngoại giao trả lời nhà Tống, bảo vệ thể diện quốc gia.',
+    'Ngoại Giao Bút Kiếm','Dùng ngoại giao làm vũ khí, gây sát thương (144% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h5_12','Pháp Thuận',61,5,'ally','Thiền sư','Thiền sư Pháp Thuận là cố vấn tâm linh và chính trị cho các vua thời Đinh-Tiền Lê, nổi tiếng với bài thơ "Quốc tộ" tiên đoán sự thịnh vượng của đất nước.','Tâm Linh Lực','Sức mạnh tâm linh cho 1 đồng minh (Hồi 12% Máu tối đa). Đồng thời: +20 Nhuệ khí, +10% Tấn công.'),
+  createHero2('h5_14','Lý Đạo Thành',74,5,'ally','Thái phó',
+    'Lý Đạo Thành là đại thần tài ba triều Lý, giữ chức Thái phó phụ chính cho Lý Nhân Tông. Ông có công lớn trong việc xây dựng hệ thống hành chính và giáo dục của Đại Việt.',
+    'Phụ Chính Đại Thần','Phụ trợ chủ tướng cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h5_15','Nguyên Phi Ỷ Lan',70,5,'ally','Nhiếp chính',
+    'Nguyên Phi Ỷ Lan (Lê Thị Yến) là phi tần tài ba của Lý Thánh Tông, xuất thân bình dân. Bà từng nhiếp chính thành công trong khi vua đi chinh phạt Chiêm Thành, điều hành đất nước tài tình. Được xem là một trong những phụ nữ quyền lực nhất lịch sử Việt Nam.',
+    'Chăm Tằm Dệt Cửi','Kiên nhẫn xây dựng thế trận vững chắc cho toàn đội (+15% Phòng thủ).'),
+  createHero2('h5_21','Tô Hiến Thành',85,5,'ally','Thái úy / Tể tướng',
+    'Tô Hiến Thành là đại thần phụ chính tài năng và đức độ cuối cùng của nhà Lý. Ông cùng Lý Anh Tông dẹp loạn, mở mang bờ cõi Tây bắc, chống quân Khmer và Chiêm Thành. Sự nghiệp quan văn của ông hiển hách không kém với công lao khai hoang lấn biển ven biển Vịnh Bắc Bộ.',
+    'Chính Mưu Lấn Biển','Tăng mạnh phòng thủ (+25%) và hồi máu (Hồi 17% Máu tối đa) cho toàn quân cho toàn đội (Hồi 17% Máu tối đa). Đồng thời: +25% Phòng thủ.'),
+  createHero2('h5_22','Lê Văn Thịnh',65,5,'ally','Thái sư',
+    'Lê Văn Thịnh (1038–1096) là người đỗ đầu khoa thi đầu tiên của Nho học Việt Nam. Bằng tài ngoại giao xuất chúng năm 1084, ông buộc nhà Tống trả lại 6 huyện 3 động thuộc châu Quảng Nguyên. Cuộc đời ông kết thúc bi thảm sau "Vụ án hồ Dâm Đàm" oan khuất.',
+    'Ngoại Giao Đòi Đất','Tài biện luận sắc bén, gây sát thương (130% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h5_23','Lê Phụng Hiểu',68,5,'ally','Đô thống',
+    'Lê Phụng Hiểu (982? - 1059?) là võ quan cao cấp, giữ chức Đô thống chỉ huy quân đội, phụng sự 3 triều vua đầu nhà Lý. Nổi tiếng với sức khỏe muôn địch và nghệ danh Đô Bưng, ông có công rất lớn dẹp loạn Tam vương, phò Thái tử Lý Phật Mã lên ngôi (Lý Thái Tông).',
+    'Đô Bưng Đỉnh Lực','Phát huy sức mạnh cơ bắp phi thường, giáng đòn chí mạng phá vỡ phòng tuyến của địch. (+15% Phòng thủ). (+10% Tấn công).'),
+  createHero2('h5_24','Lý Quốc Sư',78,5,'ally','Quốc sư',
+    'Lý Quốc Sư (1065–1141) hiệu Nguyễn Minh Không, là vị Quốc sư đứng đầu Phật giáo triều Lý. Ông sáng lập nhiều chùa nhất Việt Nam, được tôn vinh là tổ nghề đúc đồng và Đông y. Nhờ công lớn chữa bệnh cho vua và nhân dân, ông được hậu thế tôn sùng là Đức Thánh Nguyễn.',
+    'Dược Sư Phổ Độ','Sử dụng y thuật cái thế cho toàn đội (Hồi 16% Máu tối đa).'),
+  createHero2('h5_25','Lý Huệ Tông',62,5,'ally','Hoàng đế',
+    'Lý Huệ Tông (1194–1226) tên thật là Lý Sảm, vị hoàng đế thứ tám của nhà Lý. Ông lên ngôi khi vương triều đã suy yếu, quyền lực dần rơi vào tay họ Trần. Sau khi nhường ngôi cho con gái Lý Chiêu Hoàng và xuất gia, ông bị Trần Thủ Độ ép phải tự vẫn, khép lại hơn 200 năm trị vì của nhà Lý.',
+    'Lý Triều Suy Vong','Bi kịch mất ngôi, gây sát thương (124% Tấn công) lên 1 mục tiêu địch..'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 6 ═══════════════════════════════════════
+  createHero2('h6_1','Trần Thái Tông',77,6,'ally','Hoàng đế',
+    'Trần Thái Tông là vị hoàng đế sáng lập triều Trần, người đã lãnh đạo cuộc kháng chiến chống Mông-Nguyên lần thứ nhất năm 1258. Ông là ông nội của Trần Nhân Tông, nổi tiếng với đời sống tu hành và tác phẩm thiền học.',
+    'Thiền Vương Kháng Địch','Tâm trí tĩnh lặng trong lửa đạn cho 1 đồng minh (Hồi 15% Máu tối đa). Đồng thời: +15% Phòng thủ.'),
+  createHero2('h6_2','Trần Thánh Tông',78,6,'ally','Hoàng đế',
+    'Trần Thánh Tông là hoàng đế thứ hai nhà Trần, lãnh đạo kháng chiến chống Mông-Nguyên lần hai năm 1285. Ông nổi tiếng về nhân từ, thương yêu dân, và thường nhường ngôi để cùng con chiến đấu bảo vệ đất nước.',
+    'Hội Nghị Bình Than','Triệu tập hội nghị, gây sát thương (156% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h6_3','Trần Nhân Tông',76,6,'ally','Hoàng đế',
+    'Trần Nhân Tông là vị hoàng đế anh minh nhất nhà Trần, lãnh đạo thắng lợi cả kháng chiến chống Mông-Nguyên lần 2 và lần 3. Sau khi nhường ngôi, ông xuất gia thành lập Thiền phái Trúc Lâm Yên Tử — dòng thiền thuần Việt đầu tiên.',
+    'Trúc Lâm Thiền Pháp','Đạt cảnh giới cao nhất của thiền định, gây sát thương (152% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h6_4','Trần Anh Tông',70,6,'ally','Hoàng đế',
+    'Trần Anh Tông là hoàng đế thứ tư nhà Trần, trị vì sau khi cha là Trần Nhân Tông xuất gia. Ông cũng cầm quân đánh Chiêm Thành và duy trì nền thịnh trị của triều Trần.',
+    'Chinh Nam Phục Bắc','Kinh nghiệm chiến đấu đa phương, gây sát thương (140% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h6_5','Trần Thủ Độ',89,6,'ally','Quốc thượng phụ',
+    'Trần Thủ Độ là người quyền lực nhất đứng sau cuộc chuyển giao từ nhà Lý sang nhà Trần. Ông là người dựng nên triều Trần, điều hành đất nước trong nhiều thập kỷ. Khi quân Mông Cổ lần đầu xâm lược, ông có câu nói bất hủ: "Đầu tôi chưa rơi thì bệ hạ chưa phải lo."',
+    'Đầu Chưa Rơi','Ý chí bất khuất cho toàn đội (+30 Nhuệ khí).'),
+  createHero2('h6_6','Trần Quốc Khang',65,6,'ally','Thân vương','Trần Quốc Khang là hoàng thân nhà Trần, có công trong các trận chiến chống Mông-Nguyên. Ông được phong tước Thân vương và là một trong những tướng lĩnh quan trọng của triều đình.','Thân Vương Xung Trận','Cầm đầu xung phong, gây sát thương (130% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h6_7','Trần Quốc Tuấn',93,6,'ally','Hưng Đạo Đại Vương',
+    'Hưng Đạo Đại Vương Trần Quốc Tuấn là vị danh tướng huyền thoại, thiên tài quân sự vĩ đại nhất lịch sử Việt Nam. Ông ba lần đánh bại đội quân Mông-Nguyên bách chiến bách thắng — điều chưa từng ai làm được trước đó. Tác giả "Hịch tướng sĩ" hùng hồn và "Binh thư yếu lược". Sau khi mất được người Việt thờ như Đức Thánh Trần.',
+    'Hịch Tướng Sĩ','Đọc hịch truyền lửa cho toàn đội (+20% Tấn công, +30 Nhuệ khí).'),
+  createHero2('h6_8','Trần Quang Khải',80,6,'ally','Thượng tướng thái sư',
+    'Trần Quang Khải là Thượng tướng thái sư nhà Trần, có công chỉ huy trận Chương Dương — Hàm Tử đánh tan quân Mông-Nguyên. Ông cũng là nhà thơ nổi tiếng với bài "Tụng giá hoàn kinh sư".',
+    'Chương Dương Đại Thắng','Tập kích bất ngờ, gây sát thương (160% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h6_9','Trần Khánh Dư',81,6,'ally','Phó đô tướng',
+    'Trần Khánh Dư là danh tướng nhà Trần, người đánh chặn đoàn thuyền lương của Mông-Nguyên tại Vân Đồn, cắt đứt nguồn tiếp tế đóng vai trò quyết định trong chiến thắng Bạch Đằng 1288.',
+    'Vân Đồn Phục Kích','Phục kích tuyến hậu cần địch, gây sát thương (162% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h6_10','Trần Quốc Toản',70,6,'ally','Hoài Văn Hầu',
+    'Trần Quốc Toản là thiếu niên anh hùng nhà Trần, được cha mẹ không đồng ý tham dự hội nghị Bình Than vì còn nhỏ. Tức giận, ông bóp nát quả cam trong tay. Sau đó tự mình chiêu binh lập đội quân cờ "Phá cường địch báo hoàng ân", lập nhiều chiến công.',
+    'Phá Cường Địch','Sức mạnh thiếu niên vô hạn, đòn tấn công bất ngờ vượt kỳ vọng. (+10% Tấn công).'),
+  createHero2('h6_11','Trần Bình Trọng',72,6,'ally','Tướng quân',
+    'Trần Bình Trọng là dũng tướng nhà Trần, hy sinh anh dũng trong kháng chiến chống Mông-Nguyên. Khi bị địch bắt, được hỏi có muốn làm vương đất Bắc không, ông đáp: "Ta thà làm quỷ nước Nam còn hơn làm vương đất Bắc!"',
+    'Quỷ Nam Hơn Vương Bắc','Ý chí sắt đá, gây sát thương (144% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h6_12','Phạm Ngũ Lão',78,6,'ally','Điện Súy',
+    'Phạm Ngũ Lão là đại tướng nhà Trần, xuất thân từ nông dân nhưng trở thành tướng giỏi nhờ tài năng và được Trần Quốc Tuấn tiến cử. Ông nổi tiếng với hình ảnh ngồi đan rổ suy nghĩ về binh pháp đến mức bị giáo đâm vào đùi mà không hay biết. Tác giả bài thơ "Thuật hoài".',
+    'Thuật Hoài Chí Khí','Tinh thần thượng tướng dân gian cho toàn đội (+20 Nhuệ khí).'),
+  createHero2('h6_13','Trần Nhật Duật',80,6,'ally','Chiêu Văn Vương',
+    'Trần Nhật Duật là hoàng thân đa tài của nhà Trần, được biết đến như người thông minh nhất thời đại — tinh thông nhiều thứ tiếng, am hiểu văn hóa các dân tộc. Ông vừa là tướng tài vừa là nhà ngoại giao xuất sắc.',
+    'Đa Ngữ Thần Giao','Hiểu địch như hiểu bạn, tăng hiệu quả phòng thủ (+25%) và tấn công.'),
+  createHero2('h6_14','Chu Văn An',77,6,'ally','Quốc tử giám tư nghiệp',
+    'Chu Văn An là nhà giáo vĩ đại nhất lịch sử Việt Nam, được xưng tụng là "Vạn thế sư biểu" (Người thầy muôn đời). Ông là tư nghiệp Quốc Tử Giám, dâng Thất trảm sớ đòi chém 7 tên quan gian nịnh. Không được chấp thuận, ông từ quan về ẩn dật.',
+    'Thất Trảm Sớ','Vạch trần tội ác 1 mục tiêu địch, giảm mạnh phòng thủ (+15%) của chúng.'),
+  createHero2('h6_15','Phạm Sư Mạnh',61,6,'ally','Văn thần','Học trò xuất sắc của Chu Văn An, làm quan to dưới triều Trần, nổi tiếng về văn chương và trị quốc.','Văn Khí Vũ Trận','Lời văn như gươm, gây sát thương (122% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h6_18','Lê Phụ Trần',72,6,'ally','Tướng quân','Lê Phụ Trần là dũng tướng nhà Trần, nổi tiếng trong kháng chiến chống Mông-Nguyên lần thứ nhất, từng cứu vua Trần Thái Tông khỏi vòng vây của địch.','Cứu Giá','Bảo vệ chủ tướng khỏi nguy hiểm, gây sát thương (144% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h6_19','Mạc Đĩnh Chi',70,6,'ally','Trạng nguyên',
+    'Mạc Đĩnh Chi là Trạng nguyên triều Trần, nổi tiếng với trí tuệ sắc bén và văn tài xuất chúng. Khi đi sứ nhà Nguyên, ông làm thơ ứng đối nhanh nhẹn, khiến vua Nguyên phải thán phục.',
+    'Đối Đáp Thần Cơ','Phản đòn thần tốc, chuyển hóa sát thương của địch thành sức mạnh của ta. (Gây 140% sát thương Tấn công). (+10% Tấn công).'),
+  createHero2('h6_20','Đoàn Nhữ Hài',71,6,'ally','Văn thần','Đoàn Nhữ Hài là quan văn tài ba, người soạn tờ biểu xin lỗi cho hoàng tử Trần Anh Tông khéo léo đến mức được vua Trần tha tội và trọng dụng.','Văn Chương Vũ Khí','Dùng tài văn chương gây bối rối, làm giảm tinh thần địch. (+20 Nhuệ khí).'),
+  createHero2('h6_21','Trương Hán Siêu',66,6,'ally','Văn thần','Trương Hán Siêu là nhà thơ-quan văn nổi tiếng triều Trần, tác giả bài Phú sông Bạch Đằng bất hủ ca ngợi chiến thắng chống Mông-Nguyên.','Bạch Đằng Phú','Truyền cảm hứng từ lịch sử cho toàn đội (+20 Nhuệ khí).'),
+  createHero2('h6_22','Nguyễn Địa Lô',70,6,'ally','Thần tiễn',
+    'Nguyễn Địa Lô là một trong năm gia tướng tài ba của Trần Hưng Đạo. Nổi tiếng với tài bắn cung bách phát bách trúng, ông được mệnh danh là thần tiễn đương thời. Năm 1285, ông đã tham gia phục kích ở biên giới và tự tay bắn chết tên phản quốc Trần Kiện đang trên đường theo quân Nguyên trốn sang Yên Kinh.',
+    'Thần Tiễn Xuyên Tâm','Mũi tên bách phát bách trúng, gây sát thương (119% Tấn công) lên 1 hàng dọc địch.'),
+  createHero2('h6_24','Huyền Trân',53,6,'ally','Công chúa',
+    'Huyền Trân Công chúa là con gái Trần Nhân Tông, người được gả cho vua Chiêm Thành Chế Mân để đổi lấy hai châu Ô Lý (Huế ngày nay). Sự hi sinh của bà mở rộng lãnh thổ Đại Việt về phía nam, là câu chuyện lịch sử đầy cảm động về lòng yêu nước.',
+    'Châu Ô Châu Lý','Hy sinh cá nhân vì lợi ích dân tộc cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h6_25','Thiên Thành Công chúa',49,6,'ally','Nguyên Từ Quốc mẫu',
+    'Thiên Thành Công chúa (1235–1288), còn được tôn phong là Nguyên Từ Quốc mẫu, là con gái trưởng của vua Trần Thái Tông và là phu nhân chính thất của Hưng Đạo Đại vương Trần Quốc Tuấn. Bà nổi tiếng với phẩm hạnh cao quý, là hậu phương vững chắc giúp chồng gánh vác việc nước.',
+    'Hậu Phương Quốc Mẫu','Hỗ trợ vững chắc từ hậu phương, gây sát thương (98% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h6_26','Trần Thị Dung',72,6,'ally','Hoàng hậu','Trần Thị Dung là hoàng hậu, người vợ quan trọng của Trần Thủ Độ, có đóng góp lớn trong việc thiết lập và củng cố triều Trần.','Nội Trị Hậu Cần','Quản lý hậu cần xuất sắc cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h6_27','Nguyễn Khoái',64,6,'ally','Tướng quân','Nguyễn Khoái là dũng tướng trong kháng chiến chống Mông-Nguyên lần thứ ba, có công lớn trong trận Hàm Tử.','Hàm Tử Xung Kích','Xung phong từ phía sau, gây sát thương (128% Tấn công) bất ngờ cho địch.'),
+  createHero2('h6_28','Dã Tượng',70,6,'ally','Gia thần',
+    'Dã Tượng là gia thần tuyệt đối trung thành của Trần Quốc Tuấn. Truyền thuyết kể rằng khi Trần Quốc Tuấn bị vây, Dã Tượng đã liều mình lái thuyền vào vùng nguy hiểm để cứu chủ tướng.',
+    'Trung Thần Liều Thân','Hy sinh để bảo vệ toàn đội cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h6_29','Yết Kiêu',70,6,'ally','Gia thần',
+    'Yết Kiêu là gia thần của Trần Quốc Tuấn, nổi tiếng với tài bơi lội và chiến đấu dưới nước như cá. Ông chuyên nhiệm vụ phá hoại và đánh chìm thuyền địch.',
+    'Thủy Hạ Kình Ngư','Lặn xuống nước phá thuyền địch, gây sát thương (140% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h6_30','Trần Tự Khánh',73,6,'ally','Thân vương','Trần Tự Khánh là anh trai Trần Thủ Độ, có công trong cuộc cướp ngôi từ nhà Lý, đặt nền móng cho nhà Trần.','Kiến Trần Đại Nghiệp','Đặt nền móng cho triều đại mới cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h6_31','Nguyễn Hiền',67,6,'ally','Trạng nguyên',
+    'Nguyễn Hiền là trạng nguyên nhỏ tuổi nhất lịch sử Việt Nam, đỗ đầu năm 13 tuổi dưới triều Trần. Ông là biểu tượng của sự thông minh xuất chúng từ nhỏ.',
+    'Thần Đồng Kỳ Tài','Tài năng vượt tuổi tác, gây sát thương (134% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h6_32','Trần Quốc Tảng',57,6,'ally','Thân vương','Trần Quốc Tảng là con trai Trần Quốc Tuấn, có đóng góp trong kháng chiến chống Mông-Nguyên, dù không nổi bật như cha.','Hổ Tướng Chi Tử','Con trai của danh tướng, gây sát thương (114% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h6_33','Lý Chiêu Hoàng',45,6,'ally','Nữ hoàng',
+    'Lý Chiêu Hoàng (1218 - 1278) là Nữ hoàng duy nhất trong lịch sử Đại Việt và là vị vua cuối cùng triều Lý. Dưới sự sắp đặt của Trần Thủ Độ, bà nhường ngôi cho Trần Thái Tông, khép lại 200 năm nhà Lý. Cuộc đời bà trải qua nhiều bi kịch trước khi tái giá và sống bình yên với danh tướng Lê Phụ Trần ở tuổi xế chiều.',
+    'Nhượng Vị','Chấp nhận lùi bước vì đại cuộc, chuyển hóa sức mạnh bản thân để tăng cường toàn bộ chỉ số cho phe ta. (+10% Tấn công).'),
+  createHero2('h6_34','An Tư Công Chúa',63,6,'ally','Hòa thân công chúa',
+    'An Tư công chúa là một trong hai vị công chúa nổi tiếng nhất lịch sử nhà Trần. Năm 1285, bà được gả cho Trấn Nam vương Thoát Hoan làm kế hoãn binh, giúp đại quân nhà Trần rút lui an toàn. Sự hy sinh thầm lặng và kết cục bí ẩn của bà mãi là niềm xót xa trong lịch sử.',
+    'Hòa Thân Hoãn Binh','Hy sinh bản thân, gây sát thương (82% Tấn công) và khống chế (tỷ lệ 30%) lên toàn bộ địch.'),
+  createHero2('h6_35','Trần Thái Tổ',68,6,'ally','Thái thượng hoàng',
+    'Trần Thái Tổ (1184 – 1234), tên húy Trần Thừa, là Thái thượng hoàng đầu tiên của nhà Trần. Khi con là Trần Thái Tông lên ngôi lúc còn nhỏ, ông cùng Thái sư Trần Thủ Độ nhiếp chính điều hành đất nước. Ông là một trong hai Thái thượng hoàng hiếm hoi chưa từng làm Hoàng đế trong lịch sử Việt Nam.',
+    'Nhiếp Chính Hoàng Đình','Nhiếp chính ổn định triều đình cho toàn đội (+15% Phòng thủ).'),
+  createHero2('h6_36','Lê Văn Hưu',65,6,'ally','Sử gia',
+    'Lê Văn Hưu (1230–1322) là nhà sử học lỗi lạc đời nhà Trần, tác giả bộ "Đại Việt sử ký" — bộ quốc sử đầu tiên của Việt Nam (nền tảng cho bộ Đại Việt sử ký toàn thư sau này). Ông là Bảng nhãn đầu tiên của Đại Việt, đỗ khi 17 tuổi cùng khoa thi với Trạng nguyên Nguyễn Hiền.',
+    'Đại Việt Sử Ký','Ghi chép và đúc kết kinh nghiệm qua từng hiệp đấu cho toàn đội (+10% Tấn công).'),
+  createHero2('h6_37','Tuệ Tĩnh',78,6,'ally','Tiên thánh thuốc Nam',
+    'Tuệ Tĩnh Thiền sư (1330 - 1400) là một danh y và thiền sư lỗi lạc sống vào cuối thời Trần. Với triết lý nổi tiếng "Nam dược trị Nam nhân" (thuốc Nam chữa bệnh cho người Nam), ông đã xây dựng nền tảng vững chắc cho y học cổ truyền dân tộc và được hậu thế suy tôn là tiên thánh của ngành thuốc Nam.',
+    'Nam Dược Trị Nam Nhân','Sử dụng y thuật cổ truyền cho toàn đội (Hồi 16% Máu tối đa).'),
+  createHero2('h6_38','Nguyễn Chế Nghĩa',49,6,'ally','Danh tướng',
+    'Nguyễn Chế Nghĩa (1265–1341) là một danh tướng thời nhà Trần, nổi tiếng thông thạo thập bát ban võ nghệ. Ông là con rể vua Trần Anh Tông, làm quan trải qua 4 đời vua và có nhiều công lao to lớn với triều đình lẫn nhân dân. Sau khi ông mất, dân làng Kiêu Kỵ quê ông đã lập đền thờ tôn kính.',
+    'Thập Bát Võ Nghệ','Sử dụng đa dạng binh khí, gây sát thương (98% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h6_39','Lý Đạo Tái',68,6,'ally','Thiền sư',
+    'Lý Đạo Tái (1254-1334), đạo hiệu Huyền Quang, là thiền sư và nhà lãnh đạo Phật giáo Đại thừa thời Trần. Ông đỗ Trạng nguyên năm 1272, làm việc trong Viện Nội Hàn triều đình nổi tiếng thơ văn. Sau ông từ chức đi tu theo Trần Nhân Tông và trở thành Tổ thứ ba của Thiền phái Trúc Lâm Yên Tử.',
+    'Trúc Lâm Tam Tổ','Kế thừa pháp môn Trúc Lâm cho toàn đội (Hồi 14% Máu tối đa).'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 7 ═══════════════════════════════════════
+  createHero2('h7_1','Hồ Quý Ly',77,7,'ally','Thái sư',
+    'Hồ Quý Ly là thái sư quyền lực cuối triều Trần, người soán ngôi lập nhà Hồ năm 1400. Ông tiến hành nhiều cải cách tiến bộ như in tiền giấy, hạn điền, cải cách hành chính. Nhưng cuối cùng thất bại trước cuộc xâm lược của nhà Minh do thiếu lòng dân.',
+    'Cải Cách Khai Minh','Cải cách táo bạo, gây sát thương (154% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h7_2','Hồ Hán Thương',62,7,'ally','Hoàng đế','Hồ Hán Thương là con trai Hồ Quý Ly, hoàng đế thứ hai nhà Hồ, cùng cha chống lại quân Minh xâm lược nhưng thất bại, bị bắt đưa sang Trung Quốc.','Hồ Triều Thủ Vệ','Bảo vệ thành trì, gây sát thương (124% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h7_3','Hồ Nguyên Trừng',79,7,'ally','Tướng quân',
+    'Hồ Nguyên Trừng là con trai Hồ Quý Ly, nhà chế tạo vũ khí thiên tài, người phát minh ra súng thần công và các loại vũ khí hiện đại cho quân đội nhà Hồ. Sau khi bị bắt sang Trung Quốc, ông phục vụ nhà Minh với tư cách kỹ sư vũ khí.',
+    'Thần Công Bắc Lôi','Phóng đạn thần công, gây sát thương (158% Tấn công) cực lớn từ xa. (Mục tiêu: 1 mục tiêu địch).'),
+  createHero2('h7_4','Trần Khát Chân',78,7,'ally','Tướng quân',
+    'Trần Khát Chân là dũng tướng tài ba cuối nhà Trần, người đã đánh bại và giết chết vua Chế Bồng Nga của Chiêm Thành năm 1390 — kết thúc giai đoạn Chiêm Thành là mối đe dọa lớn nhất của Đại Việt. Ông sau đó mưu đồ chống Hồ Quý Ly và bị xử tử.',
+    'Bãi Trúc Phục Kích','Phục kích trong bụi rậm, đòn tấn công bất ngờ gây sát thương (156% Tấn công) cao. (Mục tiêu: 1 mục tiêu địch).'),
+  createHero2('h7_5','Trần Nguyên Hãn',80,7,'ally','Tướng quân',
+    'Trần Nguyên Hãn là dũng tướng nhà hậu Trần, sau theo phò Lê Lợi trong khởi nghĩa Lam Sơn và lập nhiều chiến công. Ông chỉ huy trận Chi Lăng tiêu diệt Liễu Thăng. Tuy nhiên sau khi đất nước thống nhất, ông bị Lê Lợi nghi ngờ và giết hại.',
+    'Chi Lăng Hùng Phong','Chiến thuật địa hình sắc bén, gây sát thương (160% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h7_6','Trần Ngỗi',66,7,'ally','Hậu Trần','Trần Ngỗi (Giản Định Đế) là vua của hậu Trần, lãnh đạo cuộc kháng chiến chống quân Minh xâm lược nhưng thiếu quyết đoán và thất bại.','Hậu Trần Khởi Phục','Tập hợp lực lượng tàn dư, gây sát thương (132% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h7_7','Trần Quý Khoáng',65,7,'ally','Hậu Trần','Trần Quý Khoáng (Trùng Quang Đế) là vua thứ hai của hậu Trần, tiếp tục kháng chiến chống Minh sau Giản Định Đế nhưng cũng thất bại.','Phục Quốc Chi Chí','Kiên trì kháng chiến dù gian khổ, gây sát thương (130% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h7_8','Đặng Dung',72,7,'ally','Tướng quân',
+    'Đặng Dung là dũng tướng hậu Trần, từng suýt bắt được tướng giặc Trương Phụ nhà Minh nhưng không thành công. Ông là tác giả bài thơ "Cảm hoài" nổi tiếng: "Thù nước chưa xong đầu đã bạc, Dưới trăng mài kiếm mỗi đêm thu."',
+    'Dưới Trăng Mài Kiếm','Kiên nhẫn rèn luyện trong đêm tối, tăng dần sức mạnh theo thời gian. (+10% Tấn công).'),
+  createHero2('h7_9','Nguyễn Cảnh Chân',80,7,'ally','Tướng quân','Nguyễn Cảnh Chân là đại tướng dũng cảm của hậu Trần, chỉ huy nhiều trận đánh chống quân Minh. Ông hy sinh trong trận chiến bảo vệ hậu Trần.','Hậu Trần Trụ Đỡ','Bảo vệ toàn đội cho toàn đội (+20% Tấn công, +30 Nhuệ khí).'),
+  createHero2('h7_10','Nguyễn Suý',67,7,'ally','Tướng quân','Tướng quân thời hậu Trần, có công trong các trận đánh chống quân Minh chiếm đóng.','Kỳ Binh Kỳ Trận','Dùng chiến thuật bất ngờ, gây sát thương (134% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h7_11','Nguyễn Phi Khanh',70,7,'ally','Nhà thơ yêu nước',
+    'Nguyễn Phi Khanh là cha của Nguyễn Trãi, nhà thơ yêu nước cuối thời Trần. Khi bị quân Minh bắt đưa về Bắc, ông khuyên con trai Nguyễn Trãi hãy lo phục quốc thay vì theo cha sang Trung Quốc.',
+    'Di Ngôn Phụ Tử','Lời di nguyện truyền cho thế hệ sau cho toàn đội (+20 Nhuệ khí).'),
+  createHero2('h7_12','Đặng Tất',71,7,'ally','Tướng quân','Đặng Tất là tướng tài của hậu Trần, cha của Đặng Dung. Ông lập nhiều chiến công nhưng bị giết oan bởi sự nghi ngờ của vua Giản Định Đế.','Trung Liệt Tướng Thần','Dù bị oan ức vẫn chiến đấu vì đại nghĩa, gây sát thương (142% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h7_13','Nguyễn Cảnh Dị',72,7,'ally','Tướng quân','Nguyễn Cảnh Dị là tướng tài cuối thời Trần, con của Nguyễn Cảnh Chân. Anh em họ Nguyễn Cảnh đều là trụ cột của hậu Trần trong kháng chiến chống Minh.','Nghĩa Phụ Tử Binh','Cha truyền con nối tinh thần chiến đấu cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h7_14','Hồ Tông Thốc',59,7,'ally','Văn thần','Học giả cuối triều Trần, từng phản đối việc soán ngôi của Hồ Quý Ly. Ông đại diện cho tiếng nói trung thực trong triều đình.','Sử Trực Bút','Ghi chép sự thật, gây sát thương (118% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h7_15','Lê Cảnh Kỳ',55,7,'ally','Tướng quân','Tướng quân thời hậu Trần, tham gia nhiều trận đánh chống quân Minh xâm lược.','Du Kích Chiến','Chiến thuật du kích linh hoạt, gây sát thương (110% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h7_16','Nguyễn Bằng',51,7,'ally','Hào kiệt','Hào kiệt yêu nước thời chống Minh thuộc, tham gia nhiều cuộc nổi dậy nhỏ lẻ.','Dân Binh Chiêu Mộ','Chiêu mộ dân binh yêu nước, gây sát thương (102% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h7_17','Vũ Công Khanh',52,7,'ally','Tướng quân','Tướng quân thời chống Minh, có tài chỉ huy quân sự và chiến thuật.','Khinh Binh Đột Phá','Dùng khinh binh nhanh nhẹn phá vỡ hàng phòng thủ (+15%).'),
+  createHero2('h7_18','Bùi Quý Hưu',53,7,'ally','Hào kiệt','Hào kiệt thời Minh thuộc, chiến đấu bảo vệ dân làng khỏi sự tàn bạo của quân xâm lược.','Thôn Làng Thủ Vệ','Bảo vệ thường dân cho toàn đội (+15% Phòng thủ).'),
+  createHero2('h7_19','Phạm Lục',51,7,'ally','Hào kiệt','Hào kiệt thời kháng Minh, tham gia chiến đấu chống lại ách cai trị tàn bạo.','Tự Do Chiến Đấu','Đánh vì tự do, tinh thần không bị bó buộc. (+20 Nhuệ khí).'),
+  createHero2('h7_20','Nguyễn Nhữ Cái',55,7,'ally','Tướng quân','Tướng quân tham gia kháng chiến chống Minh trong những năm đầu Minh thuộc.','Hậu Cần Dũng','Bảo vệ tuyến hậu cần, gây sát thương (110% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h7_21','Hồ Nhan',50,7,'ally','Hào kiệt','Hào kiệt thời Minh thuộc, dũng cảm chống lại sự bóc lột của quan lại phương Bắc.','Phản Kháng','Vùng lên bất ngờ, gây sát thương (100% Tấn công) lớn cho kẻ thống trị. (Mục tiêu: 1 mục tiêu địch).'),
+  createHero2('h7_22','Trần Nguyên Đán',71,7,'ally','Quý tộc học giả',
+    'Trần Nguyên Đán là quý tộc học giả cuối triều Trần, ông ngoại của Nguyễn Trãi. Ông nổi tiếng về thiên văn học và thơ văn, tiên đoán sự suy vong của nhà Trần.',
+    'Thiên Tượng Tiên Tri','Xem thiên tượng đoán thế cục, gây sát thương (142% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h7_23','Nguyễn An',66,7,'ally','Kiến trúc sư',
+    'Nguyễn An (?-1453), còn gọi là A Lưu, là kiến trúc sư người Việt kiệt xuất. Bị đưa sang Trung Quốc thời Minh thuộc, ông không khởi thảo nhưng đã trực tiếp chỉ đạo xây dựng thêm 9 tòa tháp tại 9 cổng và tu sửa nhiều cung điện quan trọng của Tử Cấm Thành (Bắc Kinh). Ông cũng tham gia trị thủy hệ thống sông Hoàng Hà.',
+    'Kiến Trúc Tử Cấm','Xây dựng hệ thống phòng thủ (+15%) kiên cố bảo vệ toàn đội cho toàn đội (+15% Phòng thủ).'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 8 ═══════════════════════════════════════
+  createHero2('h8_1','Lê Lợi',90,8,'ally','Bình Định Vương',
+    'Lê Lợi (Lê Thái Tổ) là vị anh hùng dân tộc, lãnh đạo cuộc khởi nghĩa Lam Sơn (1418–1427) đánh đuổi quân Minh, khôi phục độc lập dân tộc sau 20 năm Minh thuộc. Ông lập ra triều Hậu Lê — triều đại tồn tại lâu nhất lịch sử Việt Nam (1428–1788). Gắn với truyền thuyết Hồ Gươm và thần Rùa vàng.',
+    'Lam Sơn Khởi Nghĩa','Hiệu triệu nghĩa sĩ bốn phương cho toàn đội (+20% Tấn công, +30 Nhuệ khí).'),
+  createHero2('h8_2','Nguyễn Trãi',88,8,'ally','Anh hùng dân tộc',
+    'Nguyễn Trãi là nhà chiến lược thiên tài, nhà văn hóa vĩ đại — được UNESCO vinh danh là Danh nhân văn hóa thế giới. Ông soạn "Bình Ngô đại cáo" — bản tuyên ngôn độc lập thứ hai của Việt Nam, tác giả "Quốc âm thi tập" đặt nền móng cho văn học chữ Nôm. Sau khi đất nước thống nhất bị giết oan và tru di tam tộc trong vụ Lệ Chi Viên.',
+    'Bình Ngô Đại Cáo','Dùng văn chương như gươm, gây sát thương (176% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h8_3','Lê Lai',75,8,'ally','Trung thần',
+    'Lê Lai là vị tướng nghĩa trung nhất lịch sử Việt Nam. Khi Lê Lợi bị quân Minh vây, ông tình nguyện giả làm Bình Định Vương, mặc áo bào và cưỡi ngựa vẫy ra ngoài để thu hút địch, nhờ đó Lê Lợi thoát chết. Câu nói "Trước giỗ Lê Lai, sau giỗ Lê Lợi" thể hiện lòng biết ơn sâu sắc.',
+    'Thế Thân Cứu Chúa','Hy sinh bản thân bảo vệ chủ tướng, gây sát thương (150% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h8_4','Trần Nguyên Hãn',80,8,'ally','Tướng quân','Trần Nguyên Hãn là tướng tài của Lê Lợi, chỉ huy trận Chi Lăng nổi tiếng giết tướng địch Liễu Thăng. Sau khi đất nước thống nhất, ông bị Lê Lợi nghi ngờ và ép đến chết.','Chi Lăng Đại Thắng','Chiến thuật địa hình Chi Lăng, gây sát thương (160% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h8_5','Lê Sát',76,8,'ally','Khai quốc công thần','Lê Sát là khai quốc công thần nhà Hậu Lê, một trong những tướng tài nhất của Lê Lợi. Sau khi đất nước thống nhất, ông nắm quyền và bị xử tử vì lộng quyền.','Chiến Trận Lão Tướng','Kinh nghiệm trận mạc dày dạn, gây sát thương (152% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h8_6','Lê Ngân',75,8,'ally','Khai quốc công thần','Lê Ngân là khai quốc công thần nhà Hậu Lê, tướng tài trong khởi nghĩa Lam Sơn. Ông sau đó bị xử tử vì dính líu đến các âm mưu cung đình.','Lam Sơn Tiên Phong','Đi đầu trong mọi trận đánh, gây sát thương (120% Tấn công) lên hàng trước địch.'),
+  createHero2('h8_7','Phạm Văn Xảo',71,8,'ally','Tướng quân','Phạm Văn Xảo là tướng tài của Lê Lợi, có công trong chiến dịch đánh đuổi quân Minh ra khỏi đất nước. Ông bị oan và xử tử sau khi lập quốc.','Linh Đông','Linh hoạt trong mọi tình huống, gây sát thương (142% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h8_8','Đinh Lễ',81,8,'ally','Đại tướng','Đinh Lễ là đại tướng kiệt xuất của Lê Lợi, người chỉ huy trận Tốt Động - Chúc Động đại thắng năm 1426, tiêu diệt 5 vạn quân Minh. Ông hy sinh anh dũng trong trận Bồ Đề.','Tốt Động Đại Phá','Đòn tổng lực từ nhiều hướng, gây sát thương (162% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h8_9','Nguyễn Xí',80,8,'ally','Khai quốc công thần',
+    'Nguyễn Xí là khai quốc công thần nhà Hậu Lê, tướng lĩnh từng theo Lê Lợi từ thuở đầu khởi nghĩa. Ông có vai trò quan trọng trong việc phế lập vua, bảo vệ triều đình qua nhiều biến động.',
+    'Phế Lập Đại Sự','Quyết định chiến lược tối cao, gây sát thương (160% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h8_10','Lưu Nhân Chú',66,8,'ally','Tướng quân','Lưu Nhân Chú là tướng có công trong khởi nghĩa Lam Sơn, cầm quân mặt trận phía bắc. Sau lập quốc bị xử tử vì dính líu âm mưu.','Bắc Thổ Chiến Binh','Chiến đấu quen thuộc với địa hình phía bắc cho toàn đội (+10% Tấn công).'),
+  createHero2('h8_11','Lê Thánh Tông',71,8,'ally','Hoàng đế',
+    'Lê Thánh Tông là vị hoàng đế anh minh nhất triều Hậu Lê, trị vì 1460–1497. Ông mở rộng lãnh thổ xuống phía nam (chinh phạt Chiêm Thành 1471), tiến hành nhiều cải cách và hoàn thiện Bộ luật Hồng Đức tiến bộ.',
+    'Hồng Đức Đại Trị','Hệ thống pháp luật hoàn hảo cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h8_12','Ngô Sĩ Liên',55,8,'ally','Sử quan',
+    'Ngô Sĩ Liên là sử quan nổi tiếng triều Hậu Lê, soạn bộ "Đại Việt sử ký toàn thư" — bộ chính sử quan trọng nhất của Việt Nam.',
+    'Sử Ký Toàn Thư','Ghi chép chiến trận đầy đủ, học hỏi kinh nghiệm tăng dần sức mạnh. (+10% Tấn công).'),
+  createHero2('h8_13','Lương Thế Vinh',62,8,'ally','Trạng nguyên toán học',
+    'Lương Thế Vinh là Trạng nguyên và nhà toán học nổi tiếng triều Lê, người viết sách "Đại thành toán pháp" — giáo trình toán học đầu tiên của Việt Nam.',
+    'Toán Thuật Thần Kỳ','Tính toán chính xác từng đòn đánh, tăng sát thương chuẩn xác. (Gây 124% sát thương Tấn công). (Mục tiêu: 1 mục tiêu địch).'),
+  createHero2('h8_14','Nguyễn Thị Lộ',60,8,'ally','Nữ học giả',
+    'Nguyễn Thị Lộ là vợ lẽ tài năng của Nguyễn Trãi, được xem là phụ nữ có học vấn nhất thời đại. Bà bị oan khiên trong vụ Lệ Chi Viên, bị tru di tam tộc cùng Nguyễn Trãi — bi kịch lớn nhất lịch sử văn học Việt Nam.',
+    'Lệ Chi Bi Oan','Chiến đấu với bóng tối oan ức cho toàn đội (+10% Tấn công).'),
+  createHero2('h8_15','Thân Nhân Trung',70,8,'ally','Văn thần','Thân Nhân Trung là học giả uyên bác triều Lê Thánh Tông, người nổi tiếng với câu: "Hiền tài là nguyên khí của quốc gia" — khắc trên văn bia Văn Miếu.','Hiền Tài Nguyên Khí','Tụ hội nhân tài cho toàn đội (+10% Tấn công).'),
+  createHero2('h8_16','Nguyễn Chích',76,8,'ally','Đệ nhất mưu sĩ',
+    'Nguyễn Chích (1382–1448) (tức Lê Chích) là công thần khai quốc nhà Lê sơ quê ở Đông Sơn, Thanh Hóa. Ông là đệ nhất mưu sĩ của Bình Định Vương Lê Lợi. Chiến lược chuyển hướng tấn công vào Nghệ An của ông đã thay đổi toàn bộ cục diện khởi nghĩa Lam Sơn, tạo bước ngoặt quyết định đánh đuổi quân Minh.',
+    'Tuyệt Thế Mưu Lược','Đưa ra mưu kế đột phá, gây sát thương (152% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h8_17','Vũ Hữu',57,8,'ally','Văn thần','Vũ Hữu là học giả và quan văn triều Lê, có đóng góp trong công tác xây dựng pháp luật và hành chính.','Văn Thần Trị Quốc','Quản lý chiến trường bằng quy tắc, gây sát thương (114% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h8_18','Nguyễn Trực',55,8,'ally','Trạng nguyên','Nguyễn Trực là trạng nguyên triều Lê, đi sứ nhà Minh và làm rạng danh đất Việt bằng tài học vấn.','Ngoại Giao Học Vấn','Vũ khí tri thức, gây sát thương (110% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h8_19','Đinh Công Chước',51,8,'ally','Tướng quân','Tướng quân trung thành trong khởi nghĩa Lam Sơn, có công trong nhiều trận đánh nhỏ lẻ nhưng quan trọng.','Du Kích Lam Sơn','Chiến thuật du kích rừng núi, gây sát thương (102% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h8_20','Lý Triện',76,8,'ally','Đại tướng',
+    'Lý Triện (?-1427) (tức Lê Triện) là công thần khai quốc nhà Lê sơ. Ông tham gia nghĩa quân Lam Sơn từ đầu. Trận Tốt Động - Chúc Động, ông cùng Đinh Lễ, Nguyễn Xí phá tan đại quân Minh của Vương Thông. Sử gia Ngô Sĩ Liên ca ngợi ông là một trong những vị tướng giỏi nhất của nghĩa quân.',
+    'Tốt Động Kỳ Binh','Phục kích chớp nhoáng, gây sát thương (152% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h8_21','Bùi Quốc Hưng',67,8,'ally','Tướng quân','Bùi Quốc Hưng là tướng quân trong khởi nghĩa Lam Sơn, có đóng góp trong các chiến dịch giải phóng đất nước.','Quốc Thổ Giải Phóng','Chiến đấu vì độc lập cho toàn đội (+10% Tấn công).'),
+  createHero2('h8_22','Lê Thụ',51,8,'ally','Tướng quân','Lê Thụ là tướng quân trung thành trong khởi nghĩa Lam Sơn, chuyên phòng thủ căn cứ địa.','Căn Cứ Địa Vững Chắc','Bảo vệ căn cứ, gây sát thương (102% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h8_23','Trịnh Khả',57,8,'ally','Tướng quân','Trịnh Khả là tướng quân trong khởi nghĩa Lam Sơn, có công trong việc chiêu mộ nghĩa quân vùng Thanh Hóa.','Chiêu Mộ Nghĩa Sĩ','Mở rộng hàng ngũ, tăng số lượng và sức mạnh đội quân. (+10% Tấn công).'),
+  createHero2('h8_24','Đinh Liệt',65,8,'ally','Khai quốc công thần',
+    'Đinh Liệt (1400–1471) hay Lê Liệt, là công thần khai quốc nhà Lê sơ quê ở huyện Ngọc Lặc, Thanh Hóa. Ông cùng anh ruột Đinh Lễ là cháu gọi Lê Thái Tổ bằng cậu. Từ khi còn trẻ, ông đã theo làm cận vệ cho Lê Lợi và lập nhiều chiến công hiển hách trong khởi nghĩa Lam Sơn.',
+    'Cận Vệ Tiên Phong','Xung phong đi đầu bảo vệ chủ tướng, gây sát thương (104% Tấn công) lên hàng trước địch.'),
+  createHero2('h8_25','Lê Khôi',73,8,'ally','Tướng quân',
+    'Lê Khôi là công thần khai quốc nhà Lê sơ, cháu ruột của Lê Lợi. Trong khởi nghĩa Lam Sơn, ông lập nhiều công lao, được phong Kì Lân Hổ Vệ tướng quân, hàm Nhập nội thiếu úy, tước Đình Thượng hầu. Đóng vai trò quan trọng trấn thủ Hóa châu và nhiều lần đánh lui Chiêm Thành.',
+    'Kì Lân Hổ Vệ','phòng thủ (+15%) vững vàng như kỳ lân hổ vệ, bảo vệ toàn đội khỏi sát thương chí mạng. (Gây 146% sát thương Tấn công). (Mục tiêu: 1 mục tiêu địch).'),
+  createHero2('h8_26','Lê Thái Tông',74,8,'ally','Hoàng đế',
+    'Lê Thái Tông (1423–1442) tên húy Lê Nguyên Long, là hoàng đế thứ hai của triều Hậu Lê. Lên ngôi lúc mới 11 tuổi nhưng là vị vua thông minh, ông cùng các đại thần (Lê Sát, Lê Ngân, Trịnh Khả...) giữ vững và phát triển thời kỳ thịnh trị. Ông nghiêm trị tham ô, hoàn thiện nghi thức triều đình, chấn hưng giáo dục và đặt lệ thi cử 3 năm một lần để chọn Nho sĩ tài ba.',
+    'Thịnh Trị Khai Khoa','Chấn hưng kỷ cương cho toàn đội (+10% Tấn công).'),
+  createHero2('h8_27','Phạm Vấn',77,8,'ally','Khai quốc công thần',
+    'Phạm Vấn (?-1436) là công thần khai quốc nhà Lê sơ quê ở Thọ Xuân, Thanh Hóa. Là người tham gia khởi nghĩa Lam Sơn từ buổi ban đầu, ông luôn kề vai sát cánh và hết sức giúp rập Bình Định Vương Lê Lợi vượt qua những thời kỳ gian khổ nhất.',
+    'Tận Trung Giúp Rập','Luôn kề vai sát cánh bên chủ tướng, gánh vác sát thương và tăng cường sinh lực cho toàn đội trong gian khó. (Gây 154% sát thương Tấn công). (Mục tiêu: 1 mục tiêu địch).'),
+  createHero2('h8_28','Đỗ Bí',64,8,'ally','Tướng quân',
+    'Đỗ Bí (Lê Bí) là tướng tham gia khởi nghĩa Lam Sơn từ ngày đầu. Khi nghĩa quân bị đánh úp, gia quyến Lê Lợi bị bắt, lòng quân chán nản bỏ trốn, ông là một trong số ít tướng sĩ vẫn kiên trung theo chủ tướng. Cố thủ trong núi Chí Linh bị tuyệt lương suốt 3 tháng, ông vẫn kiên cường phòng thủ cho tới khi quân Minh phải rút đi.',
+    'Chí Linh Tuyệt Lương','phòng thủ (+15%) kiên cường trong nghịch cảnh cho toàn đội (+15% Phòng thủ).'),
+  createHero2('h8_29','Lê Văn Linh',63,8,'ally','Khai quốc công thần',
+    'Lê Văn Linh (1376–1448) là công thần khai quốc nhà Lê sơ quê ở Thọ Xuân, Thanh Hóa. Ông có học vấn uyên thâm, tham gia nghĩa quân Lam Sơn từ sớm và làm quan trải qua ba đời vua (Lê Thái Tổ, Lê Thái Tông, Lê Nhân Tông). Công lao to lớn của ông đã giúp triều Lê sơ xây dựng, củng cố và ổn định vững chắc nền móng quốc gia.',
+    'Tam Triều Lão Thần','Kinh nghiệm phục vụ qua nhiều triều đại cho toàn đội (+15% Phòng thủ).'),
+  createHero2('h8_30','Vũ Như Tô',48,8,'ally','Kiến trúc sư',
+    'Vũ Như Tô (? - 1517) là người thợ xây dựng tài ba triều Lê sơ. Ông là tác giả phác thảo kiến trúc của Cửu Trùng đài và cung điện trăm nóc trong Hoàng Thành Thăng Long — công trình vĩ đại được mô tả là "tuy chưa hoàn thành mà bóng rợp nửa hồ Tây". Do xây dựng quá tốn kém khiến nhân dân lầm than, ông đã bị phiến quân giết hại.',
+    'Cửu Trùng Đài','Xây dựng hệ thống công sự đồ sộ cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h8_31','Lê Tư Tề',48,8,'ally','Hoàng tử',
+    'Lê Tư Tề (1401–?) là con trai trưởng của Lê Lợi. Ông từng tham gia khởi nghĩa Lam Sơn và phải vào thành Đông Đô làm con tin cho quân Minh. Ông không chỉ mang thân phận hoàng tử mà còn là người đã cùng cha và các tướng lĩnh đóng góp máu xương đem lại nền độc lập cho Đại Việt.',
+    'Đại Cục Nhẫn Nhục','Chấp nhận hiểm nguy vì đại cục, thu hút hỏa lực của 1 mục tiêu địch về phía bản thân và nhận ít sát thương hơn khi sinh lực thấp. (Gây 96% sát thương Tấn công).'),
+  createHero2('h8_32','Nguyễn Thị Bành',49,8,'ally','Nữ tướng giả trai',
+    'Nguyễn Thị Bành là nữ tướng duy nhất trong lịch sử Việt Nam từng giả trai để tham gia nghĩa quân. Bà là vợ của danh tướng Nguyễn Chích, một khai quốc công thần trong cuộc khởi nghĩa Lam Sơn chống quân Minh vào thế kỷ XV.',
+    'Giả Trai Xuất Trận','Cải trang xông pha trận mạc, gây sát thương (98% Tấn công) lên 1 mục tiêu địch..'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 9 ═══════════════════════════════════════
+  createHero2('h9_1','Mạc Cửu',73,9,'ally','Khai trấn',
+    'Mạc Cửu là người Hoa gốc Quảng Đông, người khai phá và xây dựng vùng đất Hà Tiên (Kiên Giang ngày nay) và thần phục chúa Nguyễn, đặt nền móng mở rộng lãnh thổ Việt Nam xuống phía nam đồng bằng sông Cửu Long.',
+    'Hà Tiên Khai Thác','Khai phá vùng đất mới, gây sát thương (146% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h9_2','Nguyễn Phúc Nguyên',66,9,'ally','Chúa Nguyễn',
+    'Nguyễn Phúc Nguyên (Chúa Sãi) là chúa Nguyễn thứ hai, người mở rộng giao thương quốc tế qua cảng Hội An và xây dựng lực lượng thủy quân hùng mạnh bảo vệ bờ biển phía nam.',
+    'Hội An Thương Cảng','Phát triển thương mại và ngoại giao cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h9_3','Nguyễn Hữu Dật',72,9,'ally','Đại tướng',
+    'Nguyễn Hữu Dật là đại tướng tài ba của các chúa Nguyễn, nhiều lần đánh lui quân Trịnh trong cuộc chiến tranh Trịnh-Nguyễn. Ông được xem là một trong những tướng giỏi nhất thế kỷ 17.',
+    'Trịnh-Nguyễn Phân Tranh','Nắm rõ điểm yếu của đối phương sau nhiều lần giao tranh, gây sát thương (144% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h9_4','Nguyễn Bỉnh Khiêm',87,9,'ally','Trạng Trình',
+    'Nguyễn Bỉnh Khiêm (Trạng Trình) là nhà thơ, triết học và tiên tri vĩ đại thế kỷ 16. Những lời sấm của ông (Sấm Trạng Trình) được xem là tiên đoán chính xác nhiều sự kiện lịch sử Việt Nam hàng trăm năm sau. Ông từ bỏ quan trường vì bất mãn với đời nhiễu nhương.',
+    'Sấm Trạng Tiên Đoán','Tiên tri chính xác, gây sát thương (174% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h9_5','Nguyễn Kim',80,9,'ally','Thái sư',
+    'Nguyễn Kim là đại thần nhà Hậu Lê, người khôi phục nhà Lê sau khi bị Mạc Đăng Dung chiếm ngôi. Ông là thủy tổ của dòng họ chúa Nguyễn và chúa Trịnh, cha của Nguyễn Hoàng và nhạc phụ của Trịnh Kiểm.',
+    'Trung Hưng Hậu Lê','Khôi phục triều đại cũ, gây sát thương (160% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h9_6','Nguyễn Hoàng',80,9,'ally','Chúa Nguyễn',
+    'Nguyễn Hoàng là chúa Nguyễn đầu tiên, người xin vào trấn thủ vùng Thuận Hóa để thoát khỏi sự kiểm soát của chúa Trịnh. Ông xây dựng vùng Đàng Trong thịnh vượng và đặt nền móng cho sự nghiệp của các chúa Nguyễn về sau.',
+    'Đàng Trong Lập Nghiệp','Xây dựng căn cứ vững chắc ở vùng đất mới cho toàn đội (+25% Phòng thủ).'),
+  createHero2('h9_7','Đào Duy Từ',81,9,'ally','Quân sư',
+    'Đào Duy Từ là quân sư kiệt xuất của chúa Nguyễn, người thiết kế và xây dựng hệ thống lũy Thầy (Quảng Bình) — công trình phòng thủ vĩ đại giúp Đàng Trong chống lại quân Trịnh trong suốt 60 năm.',
+    'Lũy Thầy Bất Khả Phá','Xây dựng công sự kiên cố không thể phá vỡ, tăng mạnh phòng thủ (+25%).'),
+  createHero2('h9_8','Nguyễn Hữu Cảnh',80,9,'ally','Lễ Thành Hầu',
+    'Nguyễn Hữu Cảnh là đại tướng và nhà kinh lược vĩ đại của chúa Nguyễn, người chính thức sáp nhập vùng đất Nam Bộ vào lãnh thổ Việt Nam năm 1698 — sự kiện đặt nền móng cho thành phố Hồ Chí Minh ngày nay.',
+    'Nam Bộ Kinh Lược','Mở rộng lãnh địa, gây sát thương (160% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h9_9','Lê Quý Đôn',66,9,'ally','Bác học',
+    'Lê Quý Đôn là nhà bác học vĩ đại nhất Việt Nam thế kỷ 18, người được mệnh danh là "thiên tài bách khoa". Ông soạn hàng chục công trình về lịch sử, địa lý, văn học, khoa học tự nhiên.',
+    'Bách Khoa Toàn Thư','Kiến thức toàn diện, gây sát thương (132% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h9_10','Phùng Khắc Khoan',68,9,'ally','Trạng Bùng',
+    'Phùng Khắc Khoan (Trạng Bùng) là nhà ngoại giao và học giả triều Lê Trung Hưng. Ông nổi tiếng với sứ thần nhà Minh, mang về giống ngô và hạt mía cho đất Việt.',
+    'Ngoại Giao Kỳ Tài','Dùng ngoại giao đạt được thứ không thể giành bằng vũ lực, gây sát thương (136% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h9_11','Nguyễn Phúc Kỳ',55,9,'ally','Hoàng tử','Nguyễn Phúc Kỳ là con trai chúa Nguyễn Phúc Nguyên, có công trong chiến tranh chống Trịnh, bảo vệ Đàng Trong.','Nam Thổ Phòng Vệ','Bảo vệ lãnh thổ phương nam cho toàn đội (+15% Phòng thủ).'),
+  createHero2('h9_12','Phạm Văn Điển',51,9,'ally','Tướng quân','Tướng quân trung thành của các chúa Nguyễn, chuyên phòng thủ vùng biên cương.','Biên Giới Thủ','Chốt giữ biên giới vững chắc, gây sát thương (102% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h9_13','Nguyễn Văn Giai',53,9,'ally','Đại thần','Đại thần triều Lê Trung Hưng, có đóng góp trong việc ổn định triều chính qua nhiều biến động.','Triều Chính An Định','Duy trì trật tự và kỷ luật, gây sát thương (106% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h9_14','Nguyễn Hữu Dũng',52,9,'ally','Tướng quân','Tướng quân trung thành trong cuộc chiến tranh Trịnh-Nguyễn, có nhiều kinh nghiệm chiến đấu biên giới.','Dũng Tướng Xung Phong','Dũng cảm xung phong, gây sát thương (104% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h9_15','Nguyễn Cư Kiêm',51,9,'ally','Hào kiệt','Hào kiệt vùng Đàng Trong, có công bảo vệ dân chúng trước các cuộc tấn công từ phía bắc.','Cư Dân An Cư','Bảo vệ dân cư, tăng ổn định và phòng thủ (+15%).'),
+  createHero2('h9_16','Lục quân',50,9,'ally','Binh chủng','Đội bộ binh tinh nhuệ của các chúa Nguyễn, được trang bị vũ khí hiện đại bao gồm súng hỏa mai.','Hỏa Mai','Bắn súng hỏa mai, gây sát thương (100% Tấn công) từ xa. (Mục tiêu: 1 mục tiêu địch).'),
+  createHero2('h9_17','Thủy quân',50,9,'ally','Binh chủng','Đội thủy quân hùng mạnh bảo vệ bờ biển Đàng Trong và sông Cửu Long, điều hành thương thuyền và chiến hạm.','Thủy Chiến','Thống trị mặt nước, gây sát thương (100% Tấn công) lớn khi chiến đấu trên sông biển. (Mục tiêu: 1 mục tiêu địch).'),
+  createHero2('h9_18','Kỵ binh',50,9,'ally','Binh chủng','Đội kỵ binh cơ động cao của các chúa Nguyễn, chuyên trinh sát và tấn công nhanh.','Kỵ Mã Xung Kích','Tốc độ cao, đánh xong rút nhanh khó đuổi theo. (+10% Tốc độ).'),
+  createHero2('h9_19','Pháo binh',50,9,'ally','Binh chủng','Đội pháo binh sử dụng thần công và súng thần cơ, vũ khí hạng nặng của Đàng Trong.','Thần Công Công Thành','Bắn phá công sự của địch từ khoảng cách xa, gây sát thương (100% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h9_20','Dân binh',50,9,'ally','Binh chủng','Dân binh tình nguyện của các chúa Nguyễn, người dân cầm vũ khí bảo vệ quê hương.','Đoàn Kết Toàn Dân','Sức mạnh đoàn kết, tăng theo số lượng quân. (+10% Tấn công).'),
+  createHero2('h9_21','Hải Thượng Lãn Ông',84,9,'ally','Đại danh y',
+    'Lê Hữu Trác (1724 – 1791), nghệ danh Hải Thượng Lãn Ông, là một đại danh y, danh nhân văn hóa thế giới, được coi là ông tổ của ngành y học cổ truyền Việt Nam. Ông để lại bộ "Hải Thượng y tông tâm lĩnh" vô giá.',
+    'Y Tông Tâm Lĩnh','Sử dụng y thuật cái thế cho toàn đội (Hồi 17% Máu tối đa).'),
+  createHero2('h9_22','Mạc Đăng Dung',83,9,'ally','Vua Mạc',
+    'Mạc Đăng Dung (1483–1541) là người lập ra nhà Mạc năm 1527. Xuất thân từ một người lính đánh cá dũng mãnh, đỗ Đô lực sĩ, ông đã vươn lên tột đỉnh quyền lực trong bối cảnh nhà Lê sơ suy tàn, mở ra thời kỳ Nam - Bắc triều.',
+    'Vô Lại Lên Ngôi','Bộc phát sức mạnh dũng mãnh của Đô lực sĩ, gây sát thương (166% Tấn công) và khống chế (tỷ lệ 50%) lên 1 mục tiêu địch.'),
+  createHero2('h9_23','Nguyễn Thị Duệ',48,9,'ally','Nữ Trạng nguyên',
+    'Nguyễn Thị Duệ (1574-1654), hiệu Diệu Huyền, là nữ danh sĩ xuất chúng vào cuối thế kỷ XVI đầu thế kỷ XVII. Bà nổi tiếng với giai thoại giả trai đi thi và đỗ Trạng nguyên, trở thành vị nữ Trạng nguyên duy nhất trong lịch sử khoa cử phong kiến Việt Nam.',
+    'Nữ Trạng Khoa Cử','Dùng học vấn uyên thâm để vạch trần sơ hở của địch cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 10 ═══════════════════════════════════════
+  createHero2('h10_1','Nguyễn Huệ',92,10,'ally','Quang Trung Hoàng Đế',
+    'Nguyễn Huệ (Quang Trung) là thiên tài quân sự vĩ đại, một trong những vị vua kiệt xuất nhất lịch sử Việt Nam. Ông đánh tan 29 vạn quân Thanh xâm lược chỉ trong 5 ngày (Tết Kỷ Dậu 1789) — chiến thắng nhanh chóng nhất lịch sử thế giới. Ông cũng đánh bại quân Xiêm ở Rạch Gầm-Xoài Mút.',
+    'Đống Đa Đại Phá','Xuất kỳ bất ý tấn công toàn lực, gây sát thương (184% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h10_2','Nguyễn Nhạc',75,10,'ally','Tây Sơn Vương',
+    'Nguyễn Nhạc là anh cả và người sáng lập phong trào Tây Sơn, lên ngôi Trung Ương Hoàng Đế. Ông chiếm được Gia Định và diệt nhà Nguyễn năm 1777, sau đó nhường quyền lực cho em Nguyễn Huệ.',
+    'Tây Sơn Khởi Nghĩa','Khởi đầu cuộc nổi dậy vĩ đại cho toàn đội (+20 Nhuệ khí).'),
+  createHero2('h10_3','Nguyễn Lữ',73,10,'ally','Đông Định Vương',
+    'Nguyễn Lữ là em út trong ba anh em nhà Tây Sơn, được phong Đông Định Vương trấn thủ Gia Định. Ông bị quân Nguyễn Ánh đánh bại và phải bỏ chạy, là người yếu nhất trong ba anh em.',
+    'Tây Sơn Ngũ Phụng','Chiến đấu trong hàng ngũ gia đình cho toàn đội (+10% Tấn công).'),
+  createHero2('h10_4','Ngô Thì Nhậm',78,10,'ally','Quân sư',
+    'Ngô Thì Nhậm là quân sư tài ba của Quang Trung, người thiết kế chiến lược "vừa đánh vừa đàm" để ổn định quan hệ với nhà Thanh sau chiến thắng Đống Đa. Là nhà văn, nhà ngoại giao xuất sắc.',
+    'Vừa Đánh Vừa Đàm','Kết hợp sức mạnh và ngoại giao, kiểm soát cục diện toàn trận. (+10% Tấn công).'),
+  createHero2('h10_5','Trần Quang Diệu',80,10,'ally','Đại tướng',
+    'Trần Quang Diệu là đại tướng kiệt xuất của Tây Sơn, người bao vây thành Quy Nhơn suốt 3 năm. Ông và vợ là Bùi Thị Xuân — hai danh tướng vợ chồng nổi tiếng nhất lịch sử Việt Nam.',
+    'Tam Niên Bao Vây','Kiên nhẫn vây hãm địch, gây sát thương (160% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h10_6','Bùi Thị Xuân',80,10,'ally','Nữ đại tướng',
+    'Bùi Thị Xuân là nữ đại tướng của Tây Sơn, vợ Trần Quang Diệu. Bà nổi tiếng với tài cưỡi voi và võ nghệ tuyệt luân. Sau khi Tây Sơn thất bại, bà bị xử tử dã man nhưng vẫn hiên ngang không khuất phục.',
+    'Tượng Binh Nữ Tướng','Cưỡi voi xung phong dẫn đầu, gây sát thương (160% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h10_7','Vũ Văn Dũng',68,10,'ally','Thủy tướng',
+    'Vũ Văn Dũng là đô đốc thủy quân xuất sắc của Tây Sơn, người chỉ huy trận Rạch Gầm-Xoài Mút tiêu diệt 5 vạn quân Xiêm năm 1785.',
+    'Rạch Gầm Hỏa Công','Hỏa công trên sông, gây sát thương (136% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h10_8','Phan Văn Lân',68,10,'ally','Đại tướng','Phan Văn Lân là đại tướng của Tây Sơn, có công lớn trong nhiều chiến dịch của Quang Trung, đặc biệt trong trận đánh quân Thanh ở Thăng Long.','Thần Tốc Tiến Quân','Tiến quân thần tốc không kịp phòng bị, gây sát thương (136% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h10_9','Ngô Văn Sở',69,10,'ally','Đại tướng',
+    'Ngô Văn Sở là đại tướng của Tây Sơn, người trấn thủ Bắc Hà khi Quang Trung vắng mặt. Ông chỉ huy rút quân chiến lược khi quân Thanh xâm lược để bảo toàn lực lượng cho cuộc phản công.',
+    'Chiến Lược Lui Quân','Lui quân có chiến lược, gây sát thương (138% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h10_10','Nguyễn Thiếp',81,10,'ally','La Sơn Phu Tử',
+    'Nguyễn Thiếp (La Sơn Phu Tử) là nhà khoa học và học giả vĩ đại, cố vấn được Quang Trung trọng dụng. Ông đề xuất chiến lược đánh quân Thanh vào dịp Tết và cải cách giáo dục quốc gia bằng chữ Nôm.',
+    'Thiên Cơ Đoán Định','Phân tích thiên cơ chính xác, gây sát thương (162% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h10_11','Lê Văn Hưng',55,10,'ally','Tướng quân','Tướng quân trung thành của Tây Sơn, có công trong nhiều trận đánh bảo vệ vùng đất phía nam.','Nam Thổ Bảo Vệ','Bảo vệ vùng đất phía nam cho toàn đội (+15% Phòng thủ).'),
+  createHero2('h10_12','Lý Văn Bửu',51,10,'ally','Tướng quân','Tướng quân trong phong trào Tây Sơn, chuyên về thủy quân và chiến đấu ven biển.','Hải Quân Chiến','Thống trị vùng ven biển cho toàn đội (+10% Tấn công).'),
+  createHero2('h10_13','Nguyễn Văn Tuyết',53,10,'ally','Tướng quân','Tướng quân Tây Sơn nổi tiếng với lòng dũng cảm trong các trận đánh thần tốc.','Thần Tốc Hành Quân','Hành quân cực nhanh, gây sát thương (106% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h10_14','Nguyễn Văn Lộc',52,10,'ally','Tướng quân','Tướng quân Tây Sơn có tài chiến đấu cận chiến, chuyên phá trận địa của địch.','Xáp Lá Cà','Chiến đấu cận chiến dữ dội, gây sát thương (104% Tấn công) cao nhưng nhận sát thương tăng. (Mục tiêu: 1 mục tiêu địch).'),
+  createHero2('h10_15','Hồ Văn Huệ',54,10,'ally','Tướng quân','Tướng quân Tây Sơn, đại diện cho tinh thần bất khuất của nghĩa quân vùng Bình Định.','Tây Sơn Hổ Tướng','Sức mạnh và tinh thần của hổ Tây Sơn cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h10_16','Phan Huy Ích',70,10,'ally','Văn thần','Phan Huy Ích là học giả và nhà ngoại giao Tây Sơn, người soạn các văn bản ngoại giao với nhà Thanh sau chiến thắng Đống Đa.','Ngoại Giao Hòa Bình','Đàm phán sau chiến thắng, gây sát thương (140% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h10_17','Bùi Dương Lịch',52,10,'ally','Văn thần','Bùi Dương Lịch là học giả triều Tây Sơn, có đóng góp về văn hóa và giáo dục trong thời kỳ ngắn ngủi của vương triều này.','Văn Hóa Khai Sáng','Nâng cao trí tuệ toàn đội cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h10_18','Lê Duy Kỳ',53,10,'ally','Hoàng đế Lê triều','Lê Duy Kỳ (Lê Chiêu Thống) là vị vua cuối của nhà Hậu Lê, người cầu viện quân Thanh và dẫn đến sự kiện Quang Trung đánh đuổi 29 vạn quân Thanh. Ông bị xem là kẻ phản quốc trong lịch sử.','Sự Tuyệt Vọng','Chiến đấu trong tuyệt vọng cho toàn đội (+10% Tấn công).'),
+  createHero2('h10_19','Trương Văn Đa',51,10,'ally','Tướng quân','Tướng quân Tây Sơn, tham gia chiến dịch Đống Đa lịch sử.','Đống Đa Chi Chiến','Tinh thần chiến đấu từ chiến thắng Đống Đa cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h10_20','Ngô Thì Chí',54,10,'ally','Văn thần','Em của Ngô Thì Nhậm, cũng là học giả có đóng góp về văn học và tư tưởng thời Tây Sơn.','Huynh Đệ Văn Tài','Cùng huynh đệ tài năng chiến đấu cho toàn đội (+10% Tấn công).'),
+  createHero2('h10_21','Huỳnh Thị Cúc',48,10,'ally','Nữ tướng',
+    'Huỳnh Thị Cúc (? - 1802) là một nữ tướng của triều Tây Sơn, thuộc "Tây Sơn ngũ phụng thư". Quê ở Quảng Ngãi, là em ruột Đô đốc Huỳnh Văn Thuận. Dù vóc dáng mảnh mai, tính nết dịu dàng, bà lại có tài kiếm thuật siêu phàm, từng cùng Nguyễn Thị Dung thọ giáo nữ tướng Bùi Thị Xuân.',
+    'Nhu Cốt Kiếm Thuật','Kiếm thuật sắc bén, gây sát thương (96% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('h10_22','Bùi Thị Nhạn',62,10,'ally','Hoàng hậu / Nữ tướng',
+    'Bùi Thị Nhạn (? - 1802) là Chính cung Hoàng hậu của vua Quang Trung. Quê ở Bình Định, bà giỏi võ nghệ, tính nết nhu hòa, được dân gian liệt vào "Tây Sơn ngũ phụng thư". Bà vừa là cô ruột vừa là thầy dạy võ cho nữ tướng Bùi Thị Xuân. Sau khi xuất giá, bà lùi về làm hậu phương vững chắc cho Quang Trung.',
+    'Hậu Phương Vững Chắc','Chăm lo hậu phương cho toàn đội (Hồi 12% Máu tối đa). Đồng thời: +20 Nhuệ khí.'),
+  createHero2('h10_23','Nguyễn Thị Dung',47,10,'ally','Nữ tướng',
+    'Nguyễn Thị Dung (? - 1802) là một nữ tướng kiệt xuất của triều Tây Sơn và là một trong "Tây Sơn ngũ phụng thư". Cùng quê Quảng Ngãi với Huỳnh Thị Cúc, bà đã lặn lội lên Xuân Hòa thọ giáo võ nghệ từ nữ đại tướng Bùi Thị Xuân, cống hiến trọn đời cho sự nghiệp Tây Sơn.',
+    'Song Kiếm Phụng Thư','Phối hợp tác chiến tuyệt hảo, gia tăng sát thương và sự dẻo dai khi chiến đấu cùng các nữ tướng Tây Sơn khác. (Gây 94% sát thương Tấn công). (Mục tiêu: 1 mục tiêu địch).'),
+  createHero2('h10_24','Trần Thị Lan',49,10,'ally','Nữ tướng',
+    'Trần Thị Lan (? - 1802) là nữ tướng xuất sắc triều Tây Sơn, đồng thời là tùy tướng thân tín của Bùi Thị Xuân. Nằm trong "Tây Sơn ngũ phụng thư", bà không chỉ dũng cảm trên chiến trường mà sau này còn trở nên giàu có, là hậu phương vững chắc và là phu nhân của danh tướng Nguyễn Văn Tuyết.',
+    'Phụng Thư Hậu Thuẫn','Cung cấp tài lực và yểm trợ chiến thuật cho toàn đội (+10% Tấn công).'),
+  createHero2('h10_25','Lê Ngọc Hân',49,10,'ally','Bắc cung Hoàng hậu',
+    'Lê Ngọc Hân (1770 – 1799), còn gọi là Công chúa Ngọc Hân, là công chúa triều Hậu Lê và sau trở thành Bắc cung Hoàng hậu của Quang Trung hoàng đế (Nguyễn Huệ). Bà nổi danh với tài văn thơ xuất chúng, tiêu biểu là kiệt tác "Ai tư vãn" vô cùng xúc động khóc thương vua Quang Trung băng hà.',
+    'Ai Tư Vãn','Lời thơ bi ai nhưng khơi dậy tinh thần chiến đấu mãnh liệt cho toàn đội (+10% Tấn công, +20 Nhuệ khí).'),
+  createHero2('h10_26','Phạm Thị Liên',49,10,'ally','Chính cung Hoàng hậu',
+    'Phạm Thị Liên (1758–1791) là Chính cung Hoàng hậu triều Tây Sơn, người vợ tào khang gắn bó với Hoàng đế Quang Trung (Nguyễn Huệ) từ thuở hàn vi. Bà sinh tại Bình Định, kết hôn năm 16 tuổi và là người phụ nữ được vua Quang Trung vô cùng sủng ái. Việc bà qua đời năm 1791 đã để lại nỗi đau xót lớn cho nhà vua.',
+    'Tào Khang Trọng Tình','Tình phu thê sâu nặng cho toàn đội (Hồi 10% Máu tối đa). Đồng thời: +20 Nhuệ khí.'),
+  createHero2('h10_27','Nguyễn Quang Toản',49,10,'ally','Hoàng đế Cảnh Thịnh',
+    'Nguyễn Quang Toản (1783 – 1802) là vị hoàng đế thứ ba và cuối cùng của triều Tây Sơn. Lên ngôi lúc mới 10 tuổi sau khi vua cha Quang Trung qua đời, do quá nhỏ nên triều chính bị Thái sư Bùi Đắc Tuyên thâu tóm khiến nội bộ lục đục, suy yếu. Năm 1802, triều đại Tây Sơn chính thức sụp đổ, ông bị Nguyễn Ánh bắt và chịu kết cục bi thảm.',
+    'Cảnh Thịnh Suy Vong','Triều chính rối loạn làm giảm sức tấn công, nhưng nhận được lớp khiên bảo vệ kiên cố khi sinh lực xuống thấp nhất. (+15% Phòng thủ).'),
+  createHero2('h10_28','Nguyễn Hữu Chỉnh',65,10,'ally','Đại tư đồ',
+    'Nguyễn Hữu Chỉnh (1741 - 1788), biệt hiệu Quận Bằng, là nhà quân sự, chính trị có ảnh hưởng lớn. Ông là người hiến kế cho Tây Sơn tiến quân ra Bắc tiêu diệt chúa Trịnh. Từng được vua Lê phong Đại tư đồ, nắm thực quyền cai quản Bắc Hà, nhưng sau vì ý đồ chống lại Tây Sơn nên bị đánh bại và giết chết.',
+    'Bắc Hà Quyền Lực','Kiến tạo mưu lược, tăng mạnh sát thương chiến thuật nhưng có nguy cơ làm giảm sút sĩ khí của quân ta. (Gây 130% sát thương Tấn công). (+20 Nhuệ khí). (Mục tiêu: 1 mục tiêu địch).'),
+];
+
+const ENEMY_HEROES_LIST: Hero[] = [
+  // ═══════════════════════════════════════ CHƯƠNG 1 (địch) ═══════════════════════════════════════
+  createHero2('e1_1','Ân Vương',90,1,'enemy','Thiên tử',
+    'Ân Vương là vua của nhà Ân (Thương) ở Trung Hoa, người sai sứ sang xâm lấn nước Văn Lang thời Hùng Vương. Cuộc xâm lược của ông đã thúc đẩy sự ra đời của truyền thuyết Thánh Gióng.',
+    'Thiên Tử Uy Quyền','Uy quyền của thiên tử, gây sát thương (180% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e1_2','Triệu Đà',92,1,'enemy','Nam Việt Vương',
+    'Triệu Đà là tướng nhà Tần, sau lập nước Nam Việt độc lập. Ông dùng kế sách cho con trai Trọng Thủy lấy Mị Châu, đánh lừa lấy bí mật nỏ thần và chiếm nước Âu Lạc năm 179 TCN.',
+    'Gián Điệp Chiến','Cài gián điệp vào toàn bộ địch, gây sát thương (120% Tấn công) lên toàn bộ địch..'),
+  createHero2('e1_3','Trọng Thủy',81,1,'enemy','Gián điệp',
+    'Trọng Thủy là con trai Triệu Đà, được cử sang làm rể An Dương Vương để tình báo. Ông đánh cắp nỏ thần và tiết lộ bí mật, trực tiếp gây ra sự sụp đổ của nước Âu Lạc.',
+    'Phản Gián','Lợi dụng lòng tin, gây sát thương (105% Tấn công) lên toàn bộ địch..'),
+  createHero2('e1_4','Thủy Tinh',76,1,'enemy','Thủy thần',
+    'Thủy Tinh là thủy thần hung ác trong truyền thuyết Việt Nam, thua cuộc tranh giành Mị Nương với Sơn Tinh. Hàng năm ông dâng nước lũ tấn công Sơn Tinh để trả thù — giải thích hiện tượng lũ lụt.',
+    'Lũ Lụt','Dâng nước ngập chiến trường, gây sát thương (99% Tấn công) lên toàn bộ địch..'),
+  createHero2('e1_5','Ngư Tinh',75,1,'enemy','Yêu tinh biển',
+    'Ngư Tinh là con cá tinh hàng nghìn năm tuổi, tác oai tác quái ở vùng biển Đông, nuốt người và thuyền. Lạc Long Quân đã diệt trừ Ngư Tinh, giải phóng dân lành.',
+    'Vực Sâu Nuốt Chửng','Nuốt chửng 1 mục tiêu địch, gây sát thương (150% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e1_6','Hồ Tinh',80,1,'enemy','Yêu tinh núi',
+    'Hồ Tinh là con cáo trắng chín đuôi tu luyện nghìn năm, biến thành người gây hại. Lạc Long Quân đã giết Hồ Tinh, chỗ hang của nó sau trở thành Hồ Tây (Hà Nội).',
+    'Cửu Vĩ Mê Hoặc','Sử dụng phép mê hoặc (tỷ lệ 50%), gây sát thương (160% Tấn công) và khống chế (tỷ lệ 50%) lên 1 mục tiêu địch.'),
+  createHero2('e1_7','Mộc Tinh',71,1,'enemy','Yêu tinh rừng',
+    'Mộc Tinh là con cây chiên đàn nghìn năm thành tinh, ở vùng rừng núi gây tai họa cho dân lành. Lạc Long Quân diệt Mộc Tinh, giải phóng vùng đất.',
+    'Rừng Xanh Bẫy Độc','Đặt bẫy trong rừng, gây độc và sát thương theo thời gian. (Gây 142% sát thương Tấn công). (Mục tiêu: 1 mục tiêu địch).'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 2 (địch) ═══════════════════════════════════════
+  createHero2('e2_1','Tô Định',80,2,'enemy','Thái thú tàn ác',
+    'Tô Định là Thái thú Giao Chỉ hung tàn của nhà Hán, người giết chồng Trưng Trắc là Thi Sách, gây ra cuộc khởi nghĩa Hai Bà Trưng. Ông nổi tiếng tham lam và bạo ngược. Sau khi bị Hai Bà Trưng đánh, phải cắt tóc giả dạng trốn thoát.',
+    'Hán Quyền Bóc Lột','Bóc lột tối đa nguồn lực địch, gây sát thương (160% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e2_2','Mã Viện',81,2,'enemy','Phục Ba Tướng Quân',
+    'Mã Viện là đại tướng nhà Hán, người dẹp được khởi nghĩa Hai Bà Trưng năm 43 CN. Ông nổi tiếng với câu: "Đại trượng phu nên chết ở chiến trường." Ông cho đúc đồng trụ "Đồng trụ chiết, Giao Chỉ diệt" để cắm ở biên giới.',
+    'Phục Ba Đại Trận','Dàn trận tiêu diệt hoàn toàn, gây sát thương (162% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e2_3','Lục Giản',73,2,'enemy','Thái thú','Lục Giản là thái thú của nhà Ngô cai trị Giao Chỉ, đại diện cho ách đô hộ tàn nhẫn của phương Bắc.','Áp Bức Hà Khắc','Bóp nghẹt tinh thần kẻ yếu, gây sát thương (146% Tấn công) và khống chế (tỷ lệ 30%) lên 1 mục tiêu địch.'),
+  createHero2('e2_4','Lục Dận',83,2,'enemy','Đô đốc',
+    'Lục Dận là tướng nhà Ngô, đô đốc cai quản Giao Chỉ, người đối phó với cuộc khởi nghĩa của Bà Triệu năm 248.',
+    'Ngô Binh Tinh Nhuệ','Quân tinh nhuệ nhà Ngô, tấn công nhanh và phòng thủ (+25%) vững.'),
+  createHero2('e2_5','Trương Bá',65,2,'enemy','Thái thú','Quan cai trị nhà Hán ở Giao Chỉ, đại diện cho sự đô hộ và áp bức của phong kiến phương Bắc.','Quan Quân Truy Đuổi','Truy đuổi không ngừng, gây sát thương (130% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e2_6','Sĩ Nhiếp',59,2,'enemy','Thái thú',
+    'Sĩ Nhiếp là thái thú Giao Châu thời Đông Hán, trị vì hòa bình hơn 40 năm và thúc đẩy giáo dục Hán học ở Việt Nam. Tuy nhiên, ông đại diện cho sự đồng hóa văn hóa của phương Bắc.',
+    'Hán Hóa Mưu Kế','Dần dần làm suy yếu ý chí kháng cự bằng văn hóa và tư tưởng, gây sát thương (118% Tấn công) lên 1 mục tiêu địch..'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 3 (địch) ═══════════════════════════════════════
+  createHero2('e3_1','Tiêu Tư',78,3,'enemy','Thứ sử',
+    'Tiêu Tư là thứ sử Giao Châu nhà Lương, người tàn bạo và tham nhũng, khiến dân tình khổ sở. Hành động của ông trực tiếp dẫn đến cuộc khởi nghĩa của Lý Bí năm 542.',
+    'Tham Quan Ô Lại','Bóc lột không giới hạn, gây sát thương (156% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e3_2','Trần Bá Tiên',82,3,'enemy','Đại tướng Lương',
+    'Trần Bá Tiên là đại tướng nhà Lương, người chinh phạt và đánh bại nước Vạn Xuân của Lý Bí. Ông sau đó lập ra nhà Trần ở Trung Quốc. Được xem là một trong những tướng tài nhất thời Lưỡng Triều.',
+    'Tiên Phát Chế Nhân','Tấn công trước khi địch kịp phòng thủ (+25%), gây thiệt hại tối đa.'),
+  createHero2('e3_3','Dương Tùy',72,3,'enemy','Quan Tùy','Quan cai trị nhà Tùy ở Giao Châu, đại diện cho chính sách đồng hóa và khai thác tài nguyên của phương Bắc.','Tùy Quân Tiến Công','Tiến công có tổ chức, khó phòng thủ (+15%).'),
+  createHero2('e3_4','Lý Phật Tử',74,3,'enemy','Tiếm vị vương',
+    'Lý Phật Tử là người cháu Lý Bí, người chiếm ngôi của Triệu Quang Phục bằng kế hôn nhân và sau đó xưng vương. Ông bị quân Tùy đánh bại và bị bắt đưa về Trung Quốc.',
+    'Phản Bội Liên Hoàn','Sử dụng phản bội và lừa đảo, gây sát thương (96% Tấn công) lên toàn bộ địch..'),
+  createHero2('e3_5','Dương Trừng',71,3,'enemy','Thứ sử Đường','Thứ sử nhà Đường cai trị Giao Châu, đại diện cho ách đô hộ khắc nghiệt của phong kiến Đường ở nước ta.','Thuế Nặng Nhân Công','Suy yếu sức chiến đấu của đối thủ bằng áp lực kinh tế, gây sát thương (142% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e3_6','Lý Tiến',60,3,'enemy','Quan Đường','Quan cai trị người Việt gốc Hoa thời Đường, đại diện cho tầng lớp thống trị đồng hóa.','Đồng Hóa Sách Lược','Làm yếu ý chí dân tộc cho toàn đội (+20 Nhuệ khí).'),
+  createHero2('e3_7','Trương Châu',62,3,'enemy','Thứ sử','Thứ sử Giao Châu nhà Đường, đối phó với phong trào tự trị họ Khúc.','Đường Triều Quân Chính','Kỷ luật nghiêm ngặt của quân Đường cho toàn đội (+15% Phòng thủ).'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 4 (địch) ═══════════════════════════════════════
+  createHero2('e4_1','Dương Tam Kha',73,4,'enemy','Phản thần',
+    'Dương Tam Kha là cậu của Ngô Xương Ngập, chiếm ngôi nhà Ngô sau khi Ngô Quyền mất, làm loạn cơ đồ họ Ngô. Ông là một trong những nhân tố gây ra thời loạn 12 sứ quân.',
+    'Cướp Ngôi','Chiếm lấy vị trí chủ đạo của đối thủ, gây sát thương (146% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e4_2','Kiều Công Tiễn',77,4,'enemy','Phản thần',
+    'Kiều Công Tiễn là kẻ giết Dương Đình Nghệ để đoạt chức Tiết Độ Sứ. Hành động phản bội của ông chính là nguyên nhân trực tiếp dẫn đến trận Bạch Đằng lịch sử năm 938.',
+    'Phản Thần Đoạt Vị','Đâm sau lưng, gây sát thương (154% Tấn công) cực lớn cho mục tiêu không đề phòng.'),
+  createHero2('e4_3','Lưu Hoằng Thao',80,4,'enemy','Đại tướng Nam Hán',
+    'Lưu Hoằng Thao là con trai vua Nam Hán, chỉ huy đạo quân thủy xâm lược nước ta năm 938. Ông bị Ngô Quyền bày trận cọc sắt trên sông Bạch Đằng, thất bại hoàn toàn và tử trận.',
+    'Thủy Quân Nam Hán','Chỉ huy thủy chiến, gây sát thương (160% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e4_4','Lưu Cung',78,4,'enemy','Vua Nam Hán','Lưu Cung là vua Nam Hán, kẻ sai con trai Lưu Hoằng Thao sang xâm lược nước ta và phải chứng kiến con tử trận trong trận Bạch Đằng.','Thiên Triều Uy Quyền','Sức mạnh của vương quốc phương nam, tăng chỉ số toàn bộ quân Nam Hán. (+10% Tấn công).'),
+  createHero2('e4_5','Đỗ Cảnh Thạc',70,4,'enemy','Sứ quân','Đỗ Cảnh Thạc là một trong 12 sứ quân thời loạn, chiếm cứ vùng Đỗ Động Giang (Hà Tây). Ông là sứ quân cuối cùng bị Đinh Bộ Lĩnh dẹp yên.','Cứ Địa Chiến','Chiến đấu cực mạnh trong lãnh thổ của mình, gây sát thương (140% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e4_6','Lã Đường',66,4,'enemy','Sứ quân','Lã Đường là sứ quân cát cứ vùng Tế Giang (Hưng Yên), một trong 12 sứ quân thời loạn 12 sứ quân.','Hỗn Chiến','Chiến đấu trong hỗn loạn, gây sát thương (132% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e4_7','Ngô Nhật Khánh',68,4,'enemy','Sứ quân','Ngô Nhật Khánh là cháu Ngô Quyền, sứ quân cát cứ vùng Đường Lâm, từng liên minh với Chiêm Thành chống Đinh Bộ Lĩnh.','Phản Nghịch Liên Hoàn','Liên minh phản trắc, gây sát thương (136% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e4_8','Đỗ Thích',72,4,'enemy','Phản thần',
+    'Đỗ Thích là một quan viên thời nhà Đinh. Lịch sử ghi nhận ông là kẻ đã ám sát vua Đinh Tiên Hoàng và Nam Việt vương Đinh Liễn năm 979, dẫn đến sự sụp đổ của nhà Đinh và mượn cớ cho quân Tống định xâm lược.',
+    'Ám Sát Quân Vương','Tung đòn bất ngờ chí mạng, gây sát thương (144% Tấn công) lên 1 mục tiêu địch..'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 5 (địch) ═══════════════════════════════════════
+  createHero2('e5_1','Quách Quỳ',80,5,'enemy','Đại tướng Tống',
+    'Quách Quỳ là đại tướng nhà Tống chỉ huy cuộc xâm lược Đại Việt năm 1076–1077. Ông bị Lý Thường Kiệt chặn đứng ở sông Cầu (sông Như Nguyệt) suốt nhiều tháng và buộc phải rút quân.',
+    'Thập Vạn Tống Quân','Huy động đại quân áp đảo, gây sát thương (160% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e5_2','Triệu Tiết',77,5,'enemy','Phó tướng Tống',
+    'Triệu Tiết là phó tướng của Quách Quỳ trong cuộc xâm lược Đại Việt năm 1076, bị đánh bại ở sông Như Nguyệt.',
+    'Tống Quân Phó Soái','Phối hợp chặt chẽ với chủ soái cho toàn đội (+10% Tấn công).'),
+  createHero2('e5_3','Hầu Nhân Bảo',81,5,'enemy','Tướng Tống',
+    'Hầu Nhân Bảo là tướng nhà Tống trong cuộc xâm lược Đại Việt năm 981, bị Lê Hoàn đánh bại. Ông tử trận tại sông Bạch Đằng, thất bại hoàn toàn.',
+    'Lưỡng Lộ Tiến Công','Tấn công từ hai hướng, khiến địch không kịp phòng thủ (+25%).'),
+  createHero2('e5_4','Tôn Toàn Hưng',73,5,'enemy','Tướng Tống','Tôn Toàn Hưng là tướng Tống cùng Hầu Nhân Bảo xâm lược Đại Việt năm 981, bị đánh bại bởi Lê Đại Hành.','Thủy Lộ Tấn Công','Kết hợp tấn công đường sông và đường bộ, gây sát thương (146% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e5_5','Lê Long Đĩnh',72,5,'enemy','Ngọa Triều',
+    'Lê Long Đĩnh (Ngọa Triều) là vị vua cuối cùng nhà Tiền Lê, nổi tiếng tàn bạo và sa đọa. Ông giết anh em để lên ngôi, tra tấn tù nhân để giải trí. Sau khi ông mất, Lý Công Uẩn được triều thần tôn lên thay.',
+    'Bạo Quân Ngọa Triều','Sức mạnh bạo ngược, gây sát thương (144% Tấn công) cao nhưng suy yếu dần theo thời gian. (+10% Tấn công). (Mục tiêu: 1 mục tiêu địch).'),
+  createHero2('e5_6','Lý Kế Nguyên',66,5,'enemy','Tướng Tống','Lý Kế Nguyên là tướng nhà Tống cai quản vùng biên giới, thường xuyên quấy nhiễu Đại Việt.','Biên Cương Quấy Phá','Quấy phá liên tục, gây sát thương (132% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e5_7','Ngô Nhật Khánh',65,5,'enemy','Phản thần',
+    'Ngô Nhật Khánh liên kết với Chiêm Thành xâm lược Đại Việt, là ví dụ điển hình của kẻ phản bội cầu viện nước ngoài.',
+    'Ngoại Bang Cầu Viện','Dựa vào nước ngoài cho toàn đội (+10% Tấn công).'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 6 (địch) ═══════════════════════════════════════
+  createHero2('e6_1','Trần Ích Tắc',70,6,'enemy','Phản thần',
+    'Trần Ích Tắc là em trai vua Trần, người duy nhất trong hoàng tộc đầu hàng quân Mông-Nguyên. Ông được Hốt Tất Liệt phong làm "An Nam quốc vương" nhưng không bao giờ về được nước, bị sử sách Việt Nam ghi nhớ mãi là kẻ phản quốc.',
+    'Hàng Giặc Thần','Tiết lộ bí mật toàn đội cho toàn đội (+15% Phòng thủ).'),
+  createHero2('e6_2','Hốt Tất Liệt',78,6,'enemy','Đại hãn Mông Cổ',
+    'Hốt Tất Liệt là Đại hãn của Đế quốc Mông Cổ, ba lần sai quân xâm lược Đại Việt (1257, 1285, 1288) nhưng đều thất bại. Ông xây dựng đế quốc Nguyên rộng lớn nhất lịch sử nhân loại.',
+    'Đại Hãn Thiết Kỵ','Kỵ binh Mông Cổ bách chiến bách thắng, gây sát thương (156% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e6_3','Ngột Lương Hợp Thai',84,6,'enemy','Đại tướng Mông Cổ',
+    'Ngột Lương Hợp Thai là đại tướng Mông Cổ chỉ huy cuộc xâm lược Đại Việt lần thứ nhất năm 1257. Ông là danh tướng bách chiến bách thắng nhưng phải rút quân khỏi Đại Việt vì chiến thuật "vườn không nhà trống".',
+    'Tiêu Thổ Chiến Thuật','Tận dụng lợi thế quân đông, gây sát thương (168% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e6_4','Toa Đô',81,6,'enemy','Đại tướng Mông Cổ',
+    'Toa Đô là đại tướng Mông Cổ tham gia cuộc xâm lược Đại Việt lần hai và ba. Ông bị Trần Quốc Tuấn và Trần Quang Khải đánh bại và tử trận tại Tây Kết năm 1285.',
+    'Nam Bắc Giáp Công','Kẹp địch từ hai phía bắc-nam, gây sát thương (162% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e6_5','Thoát Hoan',80,6,'enemy','Thái tử Mông Cổ',
+    'Thoát Hoan là con trai Hốt Tất Liệt, chỉ huy cuộc xâm lược lần hai năm 1285. Ông phải trốn trong ống đồng thoát chạy về Trung Quốc — hình ảnh nhục nhã được ghi vào sử sách Việt Nam.',
+    'Thiết Quản Bại Tẩu','Dù mạnh vẫn có thể bị đánh bại, tăng sát thương khi bị dồn vào góc. (Gây 160% sát thương Tấn công). (Mục tiêu: 1 mục tiêu địch).'),
+  createHero2('e6_6','Ô Mã Nhi',80,6,'enemy','Đô đốc Mông Cổ',
+    'Ô Mã Nhi là đô đốc thủy quân Mông Cổ, chỉ huy nhiều trận thủy chiến trong cuộc xâm lược Đại Việt. Ông bị Trần Quốc Tuấn dụ vào bẫy cọc sắt trên sông Bạch Đằng năm 1288 và bị bắt sống.',
+    'Mông Cổ Thủy Quân','Thủy quân Mông Cổ thiện chiến, gây sát thương (160% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e6_7','Phàn Tiếp',66,6,'enemy','Tướng Mông Cổ','Phàn Tiếp là tướng Mông Cổ tham gia xâm lược Đại Việt, bị tiêu diệt trong các trận đánh phản công của quân Trần.','Thiết Kỵ Đột Kích','Kỵ binh Mông Cổ đột kích, phá vỡ hàng phòng thủ (+15%).'),
+  createHero2('e6_8','Chế Bồng Nga',72,6,'enemy','Vua Chiêm Thành',
+    'Chế Bồng Nga là vị vua hùng mạnh nhất của Chiêm Thành, nhiều lần đánh phá kinh đô Thăng Long của Đại Việt trong thế kỷ 14. Ông bị tướng Trần Khát Chân giết chết năm 1390.',
+    'Chiêm Thành Đột Kích','Tấn công bất ngờ từ phương nam, gây sát thương (144% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e6_9','Trần Kiện',55,6,'enemy','Phản thần','Trần Kiện là hoàng thân nhà Trần đầu hàng Mông-Nguyên trong cuộc xâm lược lần hai, bị lịch sử ghi nhớ là kẻ phản bội.','Phản Bội Gia Tộc','Tiết lộ điểm yếu của đội mình, gây sát thương (110% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e6_10','Trần Lộng',59,6,'enemy','Phản thần','Trần Lộng là hoàng thân nhà Trần đầu hàng Mông-Nguyên, cùng Trần Kiện là những kẻ phản quốc trong cuộc kháng chiến chống Mông-Nguyên.','Nội Gián Phá Thành','Từ bên trong phá hoại phòng thủ (+15%), làm suy yếu cả đội.'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 7 (địch) ═══════════════════════════════════════
+  createHero2('e7_1','Trương Phụ',80,7,'enemy','Đại tướng Minh',
+    'Trương Phụ là đại tướng nhà Minh, người chỉ huy cuộc xâm lược Đại Việt năm 1406–1407. Ông nổi tiếng tàn bạo, thực hiện các chính sách đồng hóa và khủng bố khắc nghiệt trong thời kỳ Minh thuộc.',
+    'Minh Quân Thiết Quyền','Quân Minh thiện chiến, gây sát thương (160% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e7_2','Mộc Thạnh',80,7,'enemy','Đại tướng Minh',
+    'Mộc Thạnh là đại tướng nhà Minh, cùng Trương Phụ xâm lược Đại Việt. Ông cũng tham gia chiến tranh chống lại khởi nghĩa Lam Sơn trong giai đoạn sau.',
+    'Thiết Giáp Bộ Binh','Bộ binh bọc thép thiện chiến, phòng thủ (+25%) cực cao.'),
+  createHero2('e7_3','Hoàng Phúc',75,7,'enemy','Thái giám Minh',
+    'Hoàng Phúc là quan thái giám nhà Minh cai trị Giao Chỉ trong thời Minh thuộc, thực thi các chính sách đồng hóa văn hóa tàn khốc.',
+    'Văn Hóa Đồng Hóa','Suy yếu tinh thần dân tộc của đối phương từ bên trong cho toàn đội (+20 Nhuệ khí).'),
+  createHero2('e7_4','Trần Húc',66,7,'enemy','Phản thần','Trần Húc là quan lại người Việt phục vụ nhà Minh, giúp đỡ công cuộc cai trị và đồng hóa của phương Bắc.','Nội Gián Đồng Hóa','Hoạt động từ bên trong, gây sát thương (132% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e7_5','Lý Bân',67,7,'enemy','Tướng Minh','Lý Bân là tướng nhà Minh tham gia cai trị Giao Chỉ, thi hành các chính sách cứng rắn.','Minh Triều Pháp Lệnh','Kỷ luật nghiêm khắc, tăng hiệu quả phòng thủ (+15%) tập thể.'),
+  createHero2('e7_6','Minh Thành Tổ',75,7,'enemy','Hoàng đế Minh',
+    'Minh Thành Tổ (Chu Đệ) là hoàng đế nhà Minh ra lệnh xâm lược Đại Việt năm 1406. Ông là kẻ chịu trách nhiệm cho 20 năm Minh thuộc tàn khốc.',
+    'Thiên Tử Hạ Chiếu','Sức mạnh của thiên tử ban xuống, tăng mạnh toàn bộ quân Minh. (+10% Tấn công).'),
+  createHero2('e7_7','Mã Kỳ',60,7,'enemy','Tướng Minh','Mã Kỳ là tướng nhà Minh tham gia xâm lược và cai trị Giao Chỉ.','Đàn Áp Khởi Nghĩa','Dập tắt mọi phản kháng cho toàn đội (+20 Nhuệ khí).'),
+  createHero2('e7_8','Trần Sĩ Kỳ',58,7,'enemy','Phản thần','Trần Sĩ Kỳ là người Việt phục vụ cho nhà Minh, giúp đỡ công cuộc đô hộ.','Chỉ Điểm','Chỉ điểm điểm yếu của đồng loại, gây sát thương (116% Tấn công) lên 1 mục tiêu địch..'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 8 (địch) ═══════════════════════════════════════
+  createHero2('e8_1','Trương Phụ',86,8,'enemy','Lão tướng Minh',
+    'Trương Phụ trở lại trong cuộc kháng chiến Lam Sơn ở giai đoạn sau, kinh nghiệm hơn nhưng cuối cùng vẫn không thể đè bẹp được khởi nghĩa Lam Sơn.',
+    'Lão Tướng Kinh Nghiệm','Kinh nghiệm phong phú, gây sát thương (172% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e8_2','Vương Thông',85,8,'enemy','Đại tướng Minh',
+    'Vương Thông là tổng chỉ huy quân Minh ở Đại Việt giai đoạn cuối. Ông bị vây hãm trong thành Đông Quan (Hà Nội), buộc phải ký hòa ước đầu hàng Lê Lợi năm 1427.',
+    'Đông Quan Thủ Vệ','Cố thủ trong thành kiên cố, sức phòng thủ (+25%) cực cao.'),
+  createHero2('e8_3','Trần Trí',69,8,'enemy','Tướng Minh','Trần Trí là tướng nhà Minh tham gia đàn áp khởi nghĩa Lam Sơn trong giai đoạn đầu.','Truy Quét Nghĩa Quân','Truy đuổi và tiêu diệt từng nhóm nghĩa quân nhỏ, gây sát thương (90% Tấn công) lên toàn bộ địch..'),
+  createHero2('e8_4','Lý An',68,8,'enemy','Tướng Minh','Lý An là tướng Minh có kinh nghiệm chiến đấu ở Giao Chỉ, từng tham gia nhiều chiến dịch đàn áp.','Địa Hình Kinh Nghiệm','Am hiểu địa hình Đại Việt, gây sát thương (136% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e8_5','Phương Chính',72,8,'enemy','Tướng Minh','Phương Chính là tướng nhà Minh có vai trò quan trọng trong cuộc chiến chống Lam Sơn.','Quân Minh Kiên Trì','Kiên trì đàn áp, gây sát thương (144% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e8_6','Liễu Thăng',80,8,'enemy','Đại tướng Minh',
+    'Liễu Thăng là đại tướng nhà Minh dẫn quân tiếp viện 10 vạn quân từ phương bắc trong kháng chiến Lam Sơn giai đoạn cuối. Ông bị Trần Nguyên Hãn phục kích và giết chết ở Chi Lăng năm 1427.',
+    'Chi Lăng Địa Ngục','Đánh thẳng vào điểm yếu nhưng dễ bị phản phục kích, gây sát thương (160% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e8_7','Mộc Thạnh',79,8,'enemy','Lão tướng Minh','Mộc Thạnh tái xuất trong kháng chiến Lam Sơn giai đoạn cuối, cùng Liễu Thăng tiếp viện nhưng cũng thất bại.','Lưỡng Lộ Hội Sư','Hợp quân từ hai hướng cho toàn đội (+10% Tấn công).'),
+  createHero2('e8_8','Thôi Tụ',70,8,'enemy','Tướng Minh','Thôi Tụ là tướng Minh bị bắt trong kháng chiến Lam Sơn, đại diện cho sự thất bại của quân Minh trước tinh thần yêu nước của nghĩa quân Lam Sơn.','Đầu Hàng Chiến Thuật','Giả vờ đầu hàng để tấn công bất ngờ, gây sát thương (140% Tấn công) lên 1 mục tiêu địch..'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 9 (địch) ═══════════════════════════════════════
+  createHero2('e9_1','Trịnh Kiểm',77,9,'enemy','Chúa Trịnh',
+    'Trịnh Kiểm là người sáng lập quyền lực chúa Trịnh, rể của Nguyễn Kim. Ông lấy danh nghĩa phò Lê để nắm thực quyền, hại chết anh em Nguyễn Kim và bắt đầu cục diện vua Lê - chúa Trịnh kéo dài hàng thế kỷ.',
+    'Lê-Trịnh Phân Quyền','Dùng danh chính ngôn thuận để che giấu tham vọng thực sự, gây sát thương (154% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e9_2','Trịnh Tùng',81,9,'enemy','Chúa Trịnh',
+    'Trịnh Tùng là chúa Trịnh hùng mạnh nhất, đánh bại nhà Mạc và khôi phục kinh đô Thăng Long. Ông nắm hoàn toàn quyền lực, biến vua Lê thành bù nhìn.',
+    'Trịnh Quyền Độc Đoán','Nắm toàn quyền kiểm soát chiến trường, gây sát thương (162% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e9_3','Lê Uy Mục',71,9,'enemy','Quỷ Vương',
+    'Lê Uy Mục (1488-1509) là vị vua thứ 8 của nhà Hậu Lê, nổi danh là "Quỷ Vương" vì sự tàn bạo, thích giết chóc và đam mê tửu sắc, đẩy triều đại vào con đường suy vong.',
+    'Quỷ Vương Thịnh Nộ','Gây khiếp sợ cho đối phương, làm giảm tinh thần và phòng thủ (+15%) của 1 mục tiêu địch. (+20 Nhuệ khí).'),
+  createHero2('e9_4','Lê Tương Dực',72,9,'enemy','Trư Vương',
+    'Lê Tương Dực (1495-1516) là vị vua thứ 9 của nhà Hậu Lê. Dù có công dẹp loạn Lê Uy Mục, nhưng sau lại sa đọa, xây dựng Cửu Trùng Đài tốn kém, bị sứ thần gọi là "Trư Vương".',
+    'Trư Vương Xa Hoa','Bòn rút tài nguyên chiến trường cho 1 đồng minh (Hồi 14% Máu tối đa).'),
+  createHero2('e9_5','Mạc Phúc Hải',70,9,'enemy','Vua Mạc','Mạc Phúc Hải là vua thứ hai nhà Mạc, tiếp tục cuộc chiến chống lại liên minh Lê-Trịnh.','Bắc Triều Thủ Vệ','Bảo vệ triều đình phía bắc cho toàn đội (+15% Phòng thủ).'),
+  createHero2('e9_6','Mạc Đăng Doanh',72,9,'enemy','Vua Mạc','Mạc Đăng Doanh là vua thứ hai nhà Mạc, con của Mạc Đăng Dung, được lịch sử ghi nhận trị vì khá hiền lành so với cha.','Mạc Triều Ổn Định','Duy trì phòng thủ (+15%) kiên cố, khó bị phá vỡ.'),
+  createHero2('e9_7','Mạc Kính Điển',79,9,'enemy','Đại tướng Mạc','Mạc Kính Điển là đại tướng nhà Mạc, nhiều lần tấn công liên minh Lê-Trịnh nhưng đều thất bại cuối cùng.','Mạc Quân Dũng Mãnh','Chiến đấu dũng cảm dù ở thế yếu hơn, gây sát thương (158% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e9_8','Trịnh Tráng',60,9,'enemy','Chúa Trịnh','Trịnh Tráng là chúa Trịnh tiếp theo, tiếp tục cuộc chiến với chúa Nguyễn ở phía nam.','Trịnh-Nguyễn Phân Tranh','Kinh nghiệm chiến tranh kéo dài, gây sát thương (120% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e9_9','Trịnh Tạc',59,9,'enemy','Chúa Trịnh','Trịnh Tạc là một trong các chúa Trịnh duy trì cuộc chiến Trịnh-Nguyễn.','Trịnh Binh Cố Thủ','phòng thủ (+15%) kiên trì theo thời gian.'),
+  createHero2('e9_10','Mạc Mậu Hợp',74,9,'enemy','Vua Mạc',
+    'Mạc Mậu Hợp (1560-1592) là vị vua thứ năm nhà Mạc. Dù ở ngôi lâu nhất (30 năm), nhưng vì đam mê tửu sắc, sa đọa và tin dùng nịnh thần, ông đã đánh mất lòng dân, dẫn đến việc kinh thành Thăng Long thất thủ vào tay Trịnh Tùng và cơ nghiệp nhà Mạc sụp đổ.',
+    'Tửu Sắc Hôn Quân','Gây nhiễu loạn chiến trường, gây sát thương (148% Tấn công) lên 1 mục tiêu địch..'),
+
+  // ═══════════════════════════════════════ CHƯƠNG 10 (địch) ═══════════════════════════════════════
+  createHero2('e10_1','Lê Chiêu Thống',70,10,'enemy','Phản quốc vương',
+    'Lê Chiêu Thống là vua cuối cùng nhà Hậu Lê, kẻ cầu viện 29 vạn quân Thanh sang xâm lược đất nước. Ông bị Quang Trung đánh đuổi, phải bỏ chạy sang Trung Quốc và chết ở đó trong tủi nhục.',
+    'Cầu Viện Ngoại Bang','Dựa vào sức mạnh ngoại bang, tăng nhưng mất tính chính danh. (+10% Tấn công).'),
+  createHero2('e10_2','Tôn Sĩ Nghị',84,10,'enemy','Đại tướng Thanh',
+    'Tôn Sĩ Nghị là tổng đốc Lưỡng Quảng nhà Thanh, chỉ huy 29 vạn quân xâm lược Đại Việt năm 1788. Ông bị Quang Trung đánh cho tan tác trong 5 ngày Tết, vứt cả ấn tín tháo chạy qua sông Nhị Hà.',
+    'Hai Mươi Chín Vạn Quân','Số lượng áp đảo, gây sát thương (168% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e10_3','Sầm Nghi Đống',80,10,'enemy','Tướng Thanh',
+    'Sầm Nghi Đống là tướng Thanh trấn thủ đồn Đống Đa, bị Quang Trung tấn công bất ngờ trong đêm Tết và tự sát. Cái chết của ông là biểu tượng cho sự thất bại hoàn toàn của quân Thanh.',
+    'Đống Đa Thủ Trận','phòng thủ (+25%) kiên cố nhưng không thể chống lại đòn tấn công Tết bất ngờ.'),
+  createHero2('e10_4','Chiêu Thùy',77,10,'enemy','Tướng Xiêm','Chiêu Thùy là tướng Xiêm La (Thái Lan) tham gia cuộc xâm lược Đại Việt năm 1785, bị Nguyễn Huệ đánh tan trong trận Rạch Gầm - Xoài Mút.','Xiêm La Thủy Quân','Thủy quân Xiêm La, gây sát thương (154% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e10_5','Chiêu Tăng',69,10,'enemy','Tướng Xiêm','Chiêu Tăng là đại tướng quân đội Xiêm La trong cuộc xâm lược Đại Việt, bị Nguyễn Huệ tiêu diệt trong trận Rạch Gầm.','Xiêm Binh Tiến Công','Quân Xiêm hung hãn, gây sát thương (138% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e10_6','Chiêu Sương',59,10,'enemy','Tướng Xiêm','Chiêu Sương là một trong các tướng Xiêm La thất bại trong trận Rạch Gầm-Xoài Mút năm 1785.','Mekong Thủy Chiến','Chiến đấu trên dòng sông Mekong, gây sát thương (118% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e10_7','Lục Côn',58,10,'enemy','Tướng Thanh','Lục Côn là tướng Thanh tham gia cuộc xâm lược Đại Việt năm 1788-1789, bị Quang Trung đánh bại.','Thanh Quân Hành Quân','Hành quân có kỷ luật nhưng chậm chạp, gây sát thương (116% Tấn công) lên 1 mục tiêu địch..'),
+];
+
+export const INITIAL_HEROES: Hero[] = ALL_HEROES;
+export const ENEMY_HEROES: Hero[] = ENEMY_HEROES_LIST;
+
+export const ENEMY_POOL_BY_CHAPTER: Record<number, string[]> = {};
+for (let c = 1; c <= 10; c++) {
+  ENEMY_POOL_BY_CHAPTER[c] = ENEMY_HEROES_LIST.filter(h => h.chapter === c).map(h => h.id);
+}
+
+// Added missing price property to Artifact objects
+export const ARTIFACTS: Artifact[] = [
+  { id: 'art_ngoc_an', name: 'Long Đồ Ngọc Ấn', description: 'Tăng 20% HP. Ấn ngọc giao long biểu trưng quyền uy.', price: 50000, bonusHpPc: 20, exclusiveTo: ['h1_1'], image: './items/artifacts/art_ngoc_an.png', effectDesc: 'Miễn sát thương (15% tỷ lệ chặn đứng đòn đánh)', specialEffect: 'immune', effectChance: 15 },
+  { id: 'art_thiet_truong', name: 'Thiết Trượng Đằng Ngà', description: 'Tăng 15% Tấn công, +20 Tốc độ. Bảo bối của Phù Đổng Thiên Vương.', price: 50000, bonusAtkPc: 15, bonusSpd: 20, exclusiveTo: ['h1_8'], image: './items/artifacts/art_thiet_truong.png', effectDesc: 'Thêm lượt đánh (20% tỷ lệ)', specialEffect: 'extra_turn', effectChance: 20 },
+  { id: 'art_no_lien_chau', name: 'Nỏ Thần Kim Quy', description: 'Tăng 25% Tấn công (giảm 10% Phòng thủ). Báu vật trấn quốc.', price: 50000, bonusAtkPc: 25, bonusDefPc: -10, exclusiveTo: ['h1_12'], image: './items/artifacts/art_no_lien_chau.png', effectDesc: 'Thêm lượt đánh (25% tỷ lệ)', specialEffect: 'extra_turn', effectChance: 25 },
+  { id: 'art_kiem_tran_hai', name: 'Kiếm Trấn Hải', description: 'Tăng 20% Tấn công. Thanh gươm diệt thủy quái của Lạc Long Quân.', price: 50000, bonusAtkPc: 20, exclusiveTo: ['h1_3'], image: './items/artifacts/art_kiem_tran_hai.png', effectDesc: 'Miễn sát thương (15% tỷ lệ)', specialEffect: 'immune', effectChance: 15 },
+  { id: 'art_gay_sinh_tu', name: 'Gậy Sinh Tử', description: 'Tăng 30% HP. Gậy thần cải tử hoàn sinh của Sơn Tinh.', price: 50000, bonusHpPc: 30, exclusiveTo: ['h1_6'], image: './items/artifacts/art_gay_sinh_tu.png', effectDesc: 'Hồi sinh với 50% HP (Kích hoạt 1 lần khi HP về 0)', specialEffect: 'revive', effectChance: 100 },
+  { id: 'art_song_kiem', name: 'Song Kiếm Mê Linh', description: 'Tăng 10% Tấn công, +10 Tốc độ. Cặp kiếm uy dũng của Hai Bà Trưng.', price: 50000, bonusAtkPc: 10, bonusSpd: 10, exclusiveTo: ['h2_1', 'h2_2'], image: './items/artifacts/art_song_kiem.png', effectDesc: 'Thêm lượt đánh (20% tỷ lệ)', specialEffect: 'extra_turn', effectChance: 20 },
+  { id: 'art_tram_nga', name: 'Trâm Ngà Chỉ Nguyệt', description: 'Tăng 15% HP, +100 Phòng thủ. Khí phách hiên ngang.', price: 50000, bonusHpPc: 15, bonusDef: 100, exclusiveTo: ['h2_6'], image: './items/artifacts/art_tram_nga.png', effectDesc: 'Miễn sát thương (15% tỷ lệ)', specialEffect: 'immune', effectChance: 15 },
+  { id: 'art_long_kiem_van_xuan', name: 'Long Kiếm Vạn Xuân', description: 'Tăng 15% Tấn công. Gắn liền việc lập nước Vạn Xuân.', price: 50000, bonusAtkPc: 15, exclusiveTo: ['h3_1'], image: './items/artifacts/art_long_kiem_van_xuan.png', effectDesc: 'Hồi máu (Hồi 20% max HP sau khi đánh, 30% tỷ lệ)', specialEffect: 'heal', effectChance: 30 },
+  { id: 'art_cu_moc', name: 'Cự Mộc Sát Hổ', description: 'Tăng 20% Tấn công. Sức mạnh bạt sơn của Phùng Hưng.', price: 50000, bonusAtkPc: 20, exclusiveTo: ['h3_5'], image: './items/artifacts/art_cu_moc.png', effectDesc: 'Gây choáng (20% tỷ lệ khiến địch mất lượt sau)', specialEffect: 'stun', effectChance: 20 },
+  { id: 'art_an_tiet_do_su', name: 'Ấn Tiết Độ Sứ', description: 'Tăng 25% Phòng thủ. Quyền uy ngoại giao đoạt tự chủ.', price: 50000, bonusDefPc: 25, exclusiveTo: ['h3_7'], image: './items/artifacts/art_an_tiet_do_su.png', effectDesc: 'Gây choáng (20% tỷ lệ tước vũ khí địch)', specialEffect: 'stun', effectChance: 20 },
+  { id: 'art_mu_dau_mau', name: 'Mũ Đâu Mâu Vuốt Rồng', description: 'Tăng 20% Tốc độ, +15% Tránh né. Lối đánh du kích Dạ Trạch.', price: 50000, bonusSpdPc: 20, exclusiveTo: ['h3_2'], image: './items/artifacts/art_mu_dau_mau.png', effectDesc: 'Miễn sát thương (20% tỷ lệ né tránh hoàn toàn)', specialEffect: 'immune', effectChance: 20 },
+  { id: 'art_hich_tam_thien', name: 'Hịch Lệnh Tam Thiên', description: 'Tăng 20% HP. Sức mạnh thu phục nhân tâm.', price: 50000, bonusHpPc: 20, exclusiveTo: ['h3_9'], image: './items/artifacts/art_hich_tam_thien.png', effectDesc: 'Hồi máu (Hồi 25% max HP sau khi đánh, 25% tỷ lệ)', specialEffect: 'heal', effectChance: 25 },
+  { id: 'art_coc_bach_dang', name: 'Hải Trấn Mộc Cọc', description: 'Tăng 20% Phòng thủ, +1000 HP. Kế sách đánh giặc lẫy lừng.', price: 50000, bonusDefPc: 20, bonusHp: 1000, exclusiveTo: ['h4_1'], image: './items/artifacts/art_coc_bach_dang.png', effectDesc: 'Gây choáng (20% tỷ lệ khiến địch mắc kẹt)', specialEffect: 'stun', effectChance: 20 },
+  { id: 'art_co_lau', name: 'Cờ Lau Vạn Thắng', description: 'Tăng 15% tất cả chỉ số. Lá cờ dẹp loạn 12 sứ quân.', price: 50000, bonusAtkPc: 15, bonusDefPc: 15, bonusHpPc: 15, bonusSpdPc: 15, exclusiveTo: ['h4_0'], image: './items/artifacts/art_co_lau.png', effectDesc: 'Thêm lượt đánh (15% tỷ lệ bách chiến bách thắng)', specialEffect: 'extra_turn', effectChance: 15 },
+  { id: 'art_ao_bao', name: 'Long Bào Thập Đạo', description: 'Tăng 25% HP, +200 Phòng thủ. Áo bào quyền lực của Lê Hoàn.', price: 50000, bonusHpPc: 25, bonusDef: 200, exclusiveTo: ['h4_2'], image: './items/artifacts/art_ao_bao.png', effectDesc: 'Miễn sát thương (15% tỷ lệ chân mệnh thiên tử)', specialEffect: 'immune', effectChance: 15 },
+  { id: 'art_thieu_doi_do', name: 'Thăng Long Thiên Chiếu', description: 'Tăng 30% HP. Hào quang chiến lược ngàn năm.', price: 50000, bonusHpPc: 30, exclusiveTo: ['h5_1'], image: './items/artifacts/art_thieu_doi_do.png', effectDesc: 'Hồi máu (Hồi 30% max HP, 20% tỷ lệ)', specialEffect: 'heal', effectChance: 20 },
+  { id: 'art_nam_quoc', name: 'Thiên Thư Trấn Quốc', description: 'Tăng 20% Tấn công, +500 Phòng thủ. Uy lực vô song từ Thần thơ.', price: 50000, bonusAtkPc: 20, bonusDef: 500, exclusiveTo: ['h5_2'], image: './items/artifacts/art_nam_quoc.png', effectDesc: 'Gây choáng (Bẻ gãy tâm lý, 25% tỷ lệ)', specialEffect: 'stun', effectChance: 25 },
+  { id: 'art_tich_truong', name: 'Tích Trượng Thiền Môn', description: 'Tăng 25% Phòng thủ. Đứng sau quyền lực ôn hòa.', price: 50000, bonusDefPc: 25, exclusiveTo: ['h5_10'], image: './items/artifacts/art_tich_truong.png', effectDesc: 'Miễn sát thương (20% tỷ lệ hóa giải đòn đánh)', specialEffect: 'immune', effectChance: 20 },
+  { id: 'art_guom_thai_su', name: 'Gươm Thái Sư', description: 'Tăng 25% Tấn công. Sự quyết đoán lạnh lùng.', price: 50000, bonusAtkPc: 25, exclusiveTo: ['h6_5'], image: './items/artifacts/art_guom_thai_su.png', effectDesc: 'Thêm lượt đánh (20% tỷ lệ chém không nương tay)', specialEffect: 'extra_turn', effectChance: 20 },
+  { id: 'art_binh_thu', name: 'Binh Thư Vạn Kiếp', description: 'Tăng 10% tất cả chỉ số. Binh thư trứ danh của Hưng Đạo Đại Vương.', price: 50000, bonusAtkPc: 10, bonusDefPc: 10, bonusHpPc: 10, bonusSpdPc: 10, exclusiveTo: ['h6_7'], image: './items/artifacts/art_binh_thu.png', effectDesc: 'Thêm lượt đánh (20% tỷ lệ nghệ thuật chiến tranh)', specialEffect: 'extra_turn', effectChance: 20 },
+  { id: 'art_thuan_thien', name: 'Thuận Thiên Kiếm', description: 'Tăng 15% HP, +500 Tấn công. Thanh bảo kiếm của Lê Lợi hội tụ tinh hoa.', price: 50000, bonusHpPc: 15, bonusAtk: 500, exclusiveTo: ['h8_1'], image: './items/artifacts/art_thuan_thien.png', effectDesc: 'Thêm lượt đánh (20% tỷ lệ thuận ý trời)', specialEffect: 'extra_turn', effectChance: 20 },
+  { id: 'art_ngu_but', name: 'Ngự Bút Côn Sơn', description: 'Tăng 20% Tấn công. Ngọn bút có sức mạnh vạn quân.', price: 50000, bonusAtkPc: 20, exclusiveTo: ['h8_2'], image: './items/artifacts/art_ngu_but.png', effectDesc: 'Gây choáng (Tâm công, 25% tỷ lệ)', specialEffect: 'stun', effectChance: 25 },
+  { id: 'art_o_long_dao', name: 'Ô Long Đại Đao & Áo Bào', description: 'Tăng 20% Tấn công, +15 Tốc độ. Biểu tượng bách chiến bách thắng.', price: 50000, bonusAtkPc: 20, bonusSpd: 15, exclusiveTo: ['h10_1'], image: './items/artifacts/art_o_long_dao.png', effectDesc: 'Thêm lượt đánh (25% tỷ lệ hành quân thần tốc)', specialEffect: 'extra_turn', effectChance: 25 },
+  { id: 'art_linh_tuong_ki', name: 'Linh Tượng Kì', description: 'Tăng 20% Tấn công, +500 HP. Cờ lệnh gọi voi chiến.', price: 50000, bonusAtkPc: 20, bonusHp: 500, exclusiveTo: ['h10_6'], image: './items/artifacts/art_linh_tuong_ki.png', effectDesc: 'Gây choáng (20% tỷ lệ voi chà đạp địch)', specialEffect: 'stun', effectChance: 20 },
+];
+
+
+export const JADE_BY_RARITY = {
+  [Rarity.UR]: 10,
+  [Rarity.SSR]: 6,
+  [Rarity.SR]: 4,
+  [Rarity.R]: 2,
+  [Rarity.C]: 1
+};
+
+export const SYNERGIES: Synergy[] = [
+  {
+    id: 'tram_trung_tram_con',
+    name: 'Trăm Trứng Trăm Con',
+    heroIds: ['h1_3', 'h1_4'],
+    description: 'Lạc Long Quân và Âu Cơ cùng xuất trận. Lạc Long Quân +5 Tấn Công, Âu Cơ +5 Phòng Ngự.',
+    applyEffect: (activeUnits, addLog) => {
+      const llq = activeUnits.find(u => u.id.startsWith('h1_3_'));
+      const auco = activeUnits.find(u => u.id.startsWith('h1_4_'));
+      if (llq && auco) {
+        llq.atk += 5;
+        auco.def += 5;
+        addLog('【Duyên Phận】 Trăm Trứng Trăm Con: Lạc Long Quân +5 ATK, Âu Cơ +5 DEF!');
+      }
+    }
+  },
+  {
+    id: 'tinh_si',
+    name: 'Tình Si',
+    heroIds: ['e1_3', 'h1_13'],
+    description: 'Nếu Trọng Thủy và Mị Châu cùng trên sân (bất kể phe), Mị Châu bị Mê Hoặc (đánh đồng đội). Trọng Thủy +3 ATK, +2 DEF.',
+    applyEffect: (activeUnits, addLog) => {
+      const tt = activeUnits.find(u => u.id.startsWith('e1_3_'));
+      const mc = activeUnits.find(u => u.id.startsWith('h1_13_'));
+      if (tt && mc) {
+        mc.isCharmed = true;
+        tt.atk += 3;
+        tt.def += 2;
+        addLog('【Duyên Phận】 Tình Si: Mị Châu bị mê hoặc! Trọng Thủy +3 ATK, +2 DEF!');
+      }
+    }
+  },
+  {
+    id: 'hai_ba_trung',
+    name: 'Chị Em Bất Khuất',
+    heroIds: ['h2_1', 'h2_2'],
+    description: 'Trưng Trắc và Trưng Nhị cùng xuất trận. Cả hai +5 ATK, +5 Tốc Độ.',
+    applyEffect: (activeUnits, addLog) => {
+      const tt = activeUnits.find(u => u.id.startsWith('h2_1_'));
+      const tn = activeUnits.find(u => u.id.startsWith('h2_2_'));
+      if (tt && tn) {
+        tt.atk += 5; tt.spd += 5;
+        tn.atk += 5; tn.spd += 5;
+        addLog('【Duyên Phận】 Chị Em Bất Khuất: Hai Bà Trưng +5 ATK, +5 SPD!');
+      }
+    }
+  },
+  {
+    id: 'hoi_nghi_binh_than',
+    name: 'Hội Nghị Bình Than',
+    heroIds: ['h6_2', 'h6_3'],
+    description: 'Trần Thánh Tông và Trần Nhân Tông cùng xuất trận. Cả hai +10 Phòng Ngự.',
+    applyEffect: (activeUnits, addLog) => {
+      const tt = activeUnits.find(u => u.id.startsWith('h6_2_'));
+      const tn = activeUnits.find(u => u.id.startsWith('h6_3_'));
+      if (tt && tn) {
+        tt.def += 10;
+        tn.def += 10;
+        addLog('【Duyên Phận】 Hội Nghị Bình Than: Thánh Tông & Nhân Tông +10 DEF!');
+      }
+    }
+  },
+  {
+    id: 'dai_pha_quan_thanh',
+    name: 'Đại Phá Quân Thanh',
+    heroIds: ['h10_1', 'h10_2'],
+    description: 'Quang Trung và Ngọc Hân cùng xuất trận. Quang Trung +10 ATK, Ngọc Hân +10 DEF & SPD.',
+    applyEffect: (activeUnits, addLog) => {
+      const qt = activeUnits.find(u => u.id.startsWith('h10_1_'));
+      const nh = activeUnits.find(u => u.id.startsWith('h10_2_'));
+      if (qt && nh) {
+        qt.atk += 10;
+        nh.def += 10; nh.spd += 10;
+        addLog('【Duyên Phận】 Đại Phá Quân Thanh: Quang Trung +10 ATK, Ngọc Hân +10 DEF & SPD!');
+      }
+    }
+  },
+  {
+    id: 'bach_dang_lich_su',
+    name: 'Bạch Đằng Lịch Sử',
+    heroIds: ['h4_1', 'h6_5'],
+    description: 'Ngô Quyền và Trần Hưng Đạo cùng xuất trận. Cả hai +15 ATK.',
+    applyEffect: (activeUnits, addLog) => {
+      const nq = activeUnits.find(u => u.id.startsWith('h4_1_'));
+      const thd = activeUnits.find(u => u.id.startsWith('h6_5_'));
+      if (nq && thd) {
+        nq.atk += 15;
+        thd.atk += 15;
+        addLog('【Duyên Phận】 Bạch Đằng Lịch Sử: Ngô Quyền & Trần Hưng Đạo +15 ATK!');
+      }
+    }
+  },
+  {
+    id: 'khai_quoc_nha_ly',
+    name: 'Khai Quốc Nhà Lý',
+    heroIds: ['h5_1', 'h5_10'],
+    description: 'Lý Công Uẩn và Sư Vạn Hạnh cùng xuất trận. Cả hai +5 ATK, +5 DEF.',
+    applyEffect: (activeUnits, addLog) => {
+      const lcu = activeUnits.find(u => u.id.startsWith('h5_1_'));
+      const svh = activeUnits.find(u => u.id.startsWith('h5_10_'));
+      if (lcu && svh) {
+        lcu.atk += 5; lcu.def += 5;
+        svh.atk += 5; svh.def += 5;
+        addLog('【Duyên Phận】 Khai Quốc Nhà Lý: Lý Công Uẩn & Sư Vạn Hạnh +5 ATK/DEF!');
+      }
+    }
+  },
+  {
+    id: 'thong_nhat_son_ha',
+    name: 'Thống Nhất Sơn Hà',
+    heroIds: ['h4_0', 'h4_3'],
+    description: 'Đinh Bộ Lĩnh và Nguyễn Bặc cùng xuất trận. Đinh Bộ Lĩnh +15 ATK, Nguyễn Bặc +15 DEF.',
+    applyEffect: (activeUnits, addLog) => {
+      const dbl = activeUnits.find(u => u.id.startsWith('h4_0_'));
+      const nb = activeUnits.find(u => u.id.startsWith('h4_3_'));
+      if (dbl && nb) {
+        dbl.atk += 15;
+        nb.def += 15;
+        addLog('【Duyên Phận】 Thống Nhất Sơn Hà: Đinh Bộ Lĩnh +15 ATK, Nguyễn Bặc +15 DEF!');
+      }
+    }
+  }
+];

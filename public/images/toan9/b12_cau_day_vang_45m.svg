@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 270" width="100%" height="100%" style="max-width: 540px; max-height: 270px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0050b4" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#c80000" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#009650" />
+    </marker>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#bae6fd" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <linearGradient id="seaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Nền trời -->
+  <rect x="5" y="5" width="530" height="260" rx="12" fill="url(#skyGrad)" stroke="#cbd5e1" stroke-width="1.5" />
+  
+  <!-- Mặt cầu dầm bê tông -->
+  <rect x="5" y="200" width="530" height="30" fill="#94a3b8" />
+  <line x1="5" y1="200" x2="535" y2="200" stroke="#475569" stroke-width="2" />
+  
+  <!-- Trụ cầu tháp thẳng đứng x=90 đến 130, y=25 đến 200 -->
+  <rect x="100" y="25" width="20" height="175" fill="#64748b" stroke="#334155" stroke-width="2" />
+  <rect x="94" y="20" width="32" height="10" rx="2" fill="#334155" />
+  
+  <!-- Đỉnh trụ T(110, 25), Chân trụ C(110, 200) -->
+  <!-- Các điểm neo trên mặt cầu: N1(210, 200), N2(320, 200), N3(460, 200) -->
+  <line x1="110" y1="25" x2="210" y2="200" stroke="#cbd5e1" stroke-width="2" />
+  <line x1="110" y1="25" x2="320" y2="200" stroke="#94a3b8" stroke-width="2" />
+  
+  <!-- Dây văng ngoài cùng N3 -->
+  <line x1="110" y1="25" x2="460" y2="200" stroke="#0050b4" stroke-width="3.5" />
+  
+  <!-- Góc 32 độ tại N3 -->
+  <path d="M 400 200 A 60 60 0 0 1 415 178" fill="none" stroke="#ea580c" stroke-width="2.5" />
+  <text x="390" y="190" font-size="14" font-weight="bold" fill="#ea580c">32°</text>
+
+  <!-- Ký hiệu góc vuông tại C -->
+  <polyline points="110,180 130,180 130,200" fill="none" stroke="#475569" stroke-width="2" />
+
+  <!-- Kích thước trụ cầu 45m -->
+  <line x1="75" y1="25" x2="75" y2="200" stroke="#dc2626" stroke-width="2" marker-start="url(#arrow-red)" marker-end="url(#arrow-red)" />
+  <text x="65" y="115" font-size="14" font-weight="bold" fill="#dc2626" text-anchor="end">45 m</text>
+
+  <!-- Kích thước khoảng cách d từ C đến N3 -->
+  <line x1="110" y1="245" x2="460" y2="245" stroke="#009650" stroke-width="2" marker-start="url(#arrow-green)" marker-end="url(#arrow-green)" />
+  <text x="285" y="240" font-size="13" font-weight="bold" fill="#009650" text-anchor="middle">d = ? (≈ 72,0 m)</text>
+
+  <!-- Nhãn trên dây văng L -->
+  <rect x="250" y="85" width="130" height="28" rx="6" fill="#eff6ff" stroke="#60a5fa" stroke-width="1.5" />
+  <text x="315" y="104" font-size="13" font-weight="bold" fill="#0050b4" text-anchor="middle">L = ? (≈ 84,9 m)</text>
+
+  <!-- Đỉnh T, N3, C -->
+  <circle cx="110" cy="25" r="4" fill="#0050b4" />
+  <text x="110" y="15" font-size="14" font-weight="bold" fill="#0050b4" text-anchor="middle">T (Đỉnh trụ)</text>
+
+  <circle cx="110" cy="200" r="4" fill="#0050b4" />
+  <text x="110" y="220" font-size="14" font-weight="bold" fill="#0050b4" text-anchor="middle">C (Chân trụ)</text>
+
+  <circle cx="460" cy="200" r="4" fill="#0050b4" />
+  <text x="460" y="220" font-size="14" font-weight="bold" fill="#0050b4" text-anchor="middle">N (Điểm neo)</text>
+
+</svg>

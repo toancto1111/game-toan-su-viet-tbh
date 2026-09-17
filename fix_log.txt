@@ -1,0 +1,4 @@
+❌ Fix 1a: Normal summon NOT found
+❌ Fix 1b: Ch9 summon NOT found
+✅ Fix 2: resetChapterAssets - strict isPermanent filter
+❌ Fix 3: allowedHeroes NOT found

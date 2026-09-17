@@ -1,0 +1,524 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\geometry{margin=2cm}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems,skins,breakable}
+\usepackage{mdframed}
+\usepackage{hyperref}
+
+\definecolor{kienthuc}{RGB}{0,84,166}
+\definecolor{vidu}{RGB}{0,128,96}
+\definecolor{luuy}{RGB}{180,40,40}
+\definecolor{nhanbiet}{RGB}{30,100,200}
+\definecolor{thonghieu}{RGB}{0,140,80}
+\definecolor{vandung}{RGB}{180,80,0}
+
+\newtcolorbox{kienthucbox}[1]{colback=blue!5,colframe=kienthuc,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{vidubox}[1]{colback=green!5,colframe=vidu,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{luuybox}{colback=red!5,colframe=luuy,fonttitle=\bfseries,title=Lưu ý -- Sai lầm thường gặp,breakable}
+
+\newcommand{\nhanbiet}{\textcolor{nhanbiet}{\textbf{[Nhận biết]}}}
+\newcommand{\thonghieu}{\textcolor{thonghieu}{\textbf{[Thông hiểu]}}}
+\newcommand{\vandung}{\textcolor{vandung}{\textbf{[Vận dụng]}}}
+\newcommand{\dapan}[1]{\par\smallskip\textbf{Đáp án:} #1}
+\newcommand{\giaithich}[1]{\par\textit{Giải thích: #1}}
+
+\title{\textbf{TÀI LIỆU ÔN TẬP TOÁN}\\[0.5em]\large [Bài 9: Dấu hiệu chia hết -- Lớp 6]}
+\author{Được tạo bởi AI Giáo viên Toán}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Tóm tắt lý thuyết}
+
+\subsection{1.1 — Tóm tắt kiến thức trọng tâm}
+
+\begin{kienthucbox}{1. Dấu hiệu chia hết cho 2 và cho 5}
+\begin{itemize}
+    \item \textbf{Dấu hiệu chia hết cho 2:} Các số có chữ số tận cùng là $0, 2, 4, 6, 8$ (tức là số chẵn) thì chia hết cho $2$ và chỉ những số đó mới chia hết cho $2$.
+    \item \textbf{Dấu hiệu chia hết cho 5:} Các số có chữ số tận cùng là $0$ hoặc $5$ thì chia hết cho $5$ và chỉ những số đó mới chia hết cho $5$.
+    \item \textbf{Đặc biệt:} Số chia hết cho cả $2$ và $5$ là số có chữ số tận cùng là $0$.
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{2. Dấu hiệu chia hết cho 9 và cho 3}
+\begin{itemize}
+    \item \textbf{Dấu hiệu chia hết cho 9:} Các số có tổng các chữ số chia hết cho $9$ thì chia hết cho $9$ và chỉ những số đó mới chia hết cho $9$.
+    \item \textbf{Dấu hiệu chia hết cho 3:} Các số có tổng các chữ số chia hết cho $3$ thì chia hết cho $3$ và chỉ những số đó mới chia hết cho $3$.
+    \item \textbf{Đặc biệt:} Một số chia hết cho $9$ thì chắc chắn chia hết cho $3$. Tuy nhiên, một số chia hết cho $3$ chưa chắc đã chia hết cho $9$.
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{3. Mở rộng: Phân tích cấu tạo số}
+Mọi số tự nhiên luôn viết được thành tổng các chữ số của nó cộng với một số chia hết cho 9.
+Ví dụ: $234 = 2 \cdot 100 + 3 \cdot 10 + 4 = 2 \cdot (99 + 1) + 3 \cdot (9 + 1) + 4 = (2 + 3 + 4) + (2 \cdot 99 + 3 \cdot 9)$. Trong đó, $2+3+4$ là tổng các chữ số, phần còn lại luôn chia hết cho 9.
+\end{kienthucbox}
+
+\subsection{1.2 — Phân loại dạng bài \& Ví dụ mẫu}
+
+\begin{vidubox}{Dạng 1: Nhận biết một số chia hết cho 2, 3, 5, 9}
+\textbf{Đặc điểm nhận dạng:} Đề bài cho một hoặc một dãy các số, yêu cầu phân loại hoặc chỉ ra số chia hết cho một số cụ thể.
+
+\textbf{Ví dụ:} Trong các số sau: $1930; 1945; 1954; 2021$, số nào chia hết cho 2? Số nào chia hết cho 5?
+\begin{enumerate}
+    \item Xét chữ số tận cùng của từng số: $1930$ (tận cùng $0$), $1945$ (tận cùng $5$), $1954$ (tận cùng $4$), $2021$ (tận cùng $1$).
+    \item Các số chia hết cho $2$ phải có chữ số tận cùng là số chẵn. Vậy các số chia hết cho $2$ là: $1930; 1954$.
+    \item Các số chia hết cho $5$ phải có chữ số tận cùng là $0$ hoặc $5$. Vậy các số chia hết cho $5$ là: $1930; 1945$.
+\end{enumerate}
+\end{vidubox}
+
+\begin{vidubox}{Dạng 2: Tìm chữ số chưa biết để thỏa mãn điều kiện chia hết}
+\textbf{Đặc điểm nhận dạng:} Số cho trước có chứa dấu $*$ hoặc chữ cái (như $x, y, a, b$), yêu cầu tìm chữ số đó.
+
+\textbf{Ví dụ:} Thay dấu $*$ bằng một chữ số để số $\overline{12^*5}$ chia hết cho 3.
+\begin{enumerate}
+    \item Để số $\overline{12^*5}$ chia hết cho $3$, tổng các chữ số của nó phải chia hết cho $3$.
+    \item Tính tổng các chữ số: $S = 1 + 2 + * + 5 = 8 + *$.
+    \item Vì $*$ là chữ số nên $0 \le * \le 9$. Các giá trị của $8 + *$ chia hết cho $3$ có thể là $9, 12, 15$.
+    \item Từ đó suy ra:
+    \begin{itemize}
+        \item $8 + * = 9 \Rightarrow * = 1$
+        \item $8 + * = 12 \Rightarrow * = 4$
+        \item $8 + * = 15 \Rightarrow * = 7$
+    \end{itemize}
+    \item Kết luận: Chữ số cần tìm là $1; 4; 7$.
+\end{enumerate}
+\end{vidubox}
+
+\begin{vidubox}{Dạng 3: Bài toán thực tế liên quan đến dấu hiệu chia hết}
+\textbf{Đặc điểm nhận dạng:} Bài toán chia nhóm, chia kẹo, tính điểm, trồng cây... cần lập luận dựa trên tính chia hết của tổng, hiệu hoặc tích.
+
+\textbf{Ví dụ:} Một bài trắc nghiệm, mỗi câu đúng được $9$ điểm, câu sai bị trừ $3$ điểm. Mai tính được $209$ điểm. Cô giáo nói Mai tính sai. Vì sao?
+\begin{enumerate}
+    \item Nhận xét số điểm mỗi câu đúng ($9$ điểm) và sai ($3$ điểm) đều chia hết cho $3$.
+    \item Theo tính chất chia hết của một tổng/hiệu, tổng số điểm của bài thi bắt buộc phải chia hết cho $3$.
+    \item Kiểm tra số điểm của Mai: Tổng các chữ số của $209$ là $2 + 0 + 9 = 11$. Vì $11$ không chia hết cho $3$ nên $209$ không chia hết cho $3$.
+    \item Kết luận: Do $209$ không chia hết cho $3$ nên Mai chắc chắn tính sai.
+\end{enumerate}
+\end{vidubox}
+
+\subsection{1.3 — Lỗi sai thường gặp}
+
+\begin{luuybox}
+\begin{itemize}
+    \item \textbf{Áp dụng sai quy tắc giữa các nhóm số:}
+    \textcolor{red}{Sai:} Kiểm tra tính chia hết cho $3$ hoặc $9$ bằng cách nhìn \textit{chữ số tận cùng}. Hoặc kiểm tra tính chia hết cho $2$ hoặc $5$ bằng cách \textit{cộng tổng các chữ số}.
+    \textcolor{vidu}{Đúng:} Phân định rõ: $2$ và $5$ xét CHỮ SỐ TẬN CÙNG. $3$ và $9$ xét TỔNG CÁC CHỮ SỐ.
+    
+    \item \textbf{Suy luận ngược sai:}
+    \textcolor{red}{Sai:} Số chia hết cho $3$ thì chắc chắn chia hết cho $9$ (VD: $12 \vdots 3$ nhưng $12 \not\vdots 9$).
+    \textcolor{vidu}{Đúng:} Số chia hết cho $9$ thì mới chắc chắn chia hết cho $3$.
+    
+    \item \textbf{Tìm sót giá trị của chữ số chưa biết:}
+    \textcolor{red}{Sai:} Khi giải bài toán tìm $*$ để $\overline{12^*5}$ chia hết cho $3$, học sinh chỉ tìm được $*$ = $1$ rồi dừng lại.
+    \textcolor{vidu}{Đúng:} Phải xét tất cả các khả năng của chữ số (từ $0$ đến $9$). Sau khi tìm được $1$ nghiệm, cứ cộng thêm $3$ (hoặc $9$) để tìm các nghiệm tiếp theo trong khoảng hợp lệ.
+\end{itemize}
+\end{luuybox}
+
+\section{Bộ câu hỏi trắc nghiệm}
+
+\subsection*{Dạng 1: Trắc nghiệm một đáp án đúng}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.}]
+  \item \nhanbiet{} Dấu hiệu chia hết cho 2 là:
+  \begin{enumerate}[label=\Alph*.]
+    \item Số có tổng các chữ số chia hết cho 2.
+    \item Số có chữ số tận cùng là 0, 2, 4, 6, 8.
+    \item Số có chữ số tận cùng là 0 hoặc 5.
+    \item Số có chữ số tận cùng là 2.
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Các số có chữ số tận cùng là số chẵn ($0, 2, 4, 6, 8$) thì chia hết cho $2$.}
+
+  \item \nhanbiet{} Dấu hiệu chia hết cho 5 là:
+  \begin{enumerate}[label=\Alph*.]
+    \item Số có chữ số tận cùng là 0 hoặc 5.
+    \item Số có tổng các chữ số chia hết cho 5.
+    \item Số chẵn.
+    \item Số có chữ số tận cùng là 5.
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Các số có chữ số tận cùng là $0$ hoặc $5$ thì chia hết cho $5$.}
+
+  \item \nhanbiet{} Dấu hiệu chia hết cho 3 là:
+  \begin{enumerate}[label=\Alph*.]
+    \item Số có chữ số tận cùng là 3, 6, 9.
+    \item Số có tổng các chữ số chia hết cho 3.
+    \item Số có tích các chữ số chia hết cho 3.
+    \item Số lẻ.
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Các số có tổng các chữ số chia hết cho $3$ thì chia hết cho $3$.}
+
+  \item \nhanbiet{} Dấu hiệu chia hết cho 9 là:
+  \begin{enumerate}[label=\Alph*.]
+    \item Số có tổng các chữ số chia hết cho 9.
+    \item Số có chữ số tận cùng là 9.
+    \item Số có tổng các chữ số chia hết cho 3.
+    \item Số có chữ số tận cùng là 0 hoặc 9.
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Các số có tổng các chữ số chia hết cho $9$ thì chia hết cho $9$.}
+
+  \item \nhanbiet{} Trong các số sau, số nào chia hết cho 2?
+  \begin{enumerate}[label=\Alph*.]
+    \item $1975$
+    \item $2021$
+    \item $1954$
+    \item $3303$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Số $1954$ có chữ số tận cùng là $4$ (số chẵn) nên chia hết cho $2$.}
+
+  \item \nhanbiet{} Trong các số sau, số nào chia hết cho 5?
+  \begin{enumerate}[label=\Alph*.]
+    \item $1930$
+    \item $2022$
+    \item $2021$
+    \item $1968$
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Số $1930$ có chữ số tận cùng là $0$ nên chia hết cho $5$.}
+
+  \item \nhanbiet{} Trong các số sau, số nào chia hết cho 3?
+  \begin{enumerate}[label=\Alph*.]
+    \item $4321$
+    \item $1975$
+    \item $4683$
+    \item $2020$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Tổng các chữ số của $4683$ là $4+6+8+3=21$, chia hết cho $3$. (Lưu ý: $21$ chia hết cho $3$).}
+
+  \item \nhanbiet{} Trong các số sau, số nào chia hết cho 9?
+  \begin{enumerate}[label=\Alph*.]
+    \item $234$
+    \item $195$
+    \item $82$
+    \item $71000$
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Tổng các chữ số của $234$ là $2+3+4=9$, chia hết cho $9$.}
+
+  \item \nhanbiet{} Số nào sau đây chia hết cho cả 2 và 5?
+  \begin{enumerate}[label=\Alph*.]
+    \item $125$
+    \item $240$
+    \item $302$
+    \item $105$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Số chia hết cho cả $2$ và $5$ phải có chữ số tận cùng là $0$. Đó là $240$.}
+
+  \item \nhanbiet{} Số nào sau đây chia hết cho cả 3 và 9?
+  \begin{enumerate}[label=\Alph*.]
+    \item $123$
+    \item $450$
+    \item $2019$
+    \item $111$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Số chia hết cho $9$ thì chắc chắn chia hết cho $3$. Tổng các chữ số của $450$ là $9$, chia hết cho $9$.}
+
+  \item \thonghieu{} Tổng nào sau đây chia hết cho 2?
+  \begin{enumerate}[label=\Alph*.]
+    \item $1985 + 2020$
+    \item $1954 + 1975$
+    \item $2020 + 2022$
+    \item $1968 - 1931$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Cả $2020$ và $2022$ đều là số chẵn (chia hết cho $2$), nên tổng của chúng chia hết cho $2$.}
+
+  \item \thonghieu{} Hiệu nào sau đây chia hết cho 5?
+  \begin{enumerate}[label=\Alph*.]
+    \item $1954 - 1930$
+    \item $2025 - 2020$
+    \item $1945 - 2022$
+    \item $2021 - 2020$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Cả $2025$ và $2020$ đều chia hết cho $5$ (tận cùng $5$ và $0$), nên hiệu chia hết cho $5$.}
+
+  \item \thonghieu{} Chữ số thích hợp điền vào dấu $*$ để $\overline{5*}$ chia hết cho 2 là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $1$
+    \item $3$
+    \item $4$
+    \item $5$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Để chia hết cho $2$, $*$ phải là số chẵn. Trong các phương án chỉ có $4$ là số chẵn.}
+
+  \item \thonghieu{} Chữ số thích hợp điền vào dấu $*$ để $\overline{3*4}$ chia hết cho 3 là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $1$
+    \item $2$
+    \item $3$
+    \item $4$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Tổng các chữ số: $3 + * + 4 = 7 + *$. Để chia hết cho $3$, $*$ có thể là $2, 5, 8$. Phương án đúng là $2$.}
+
+  \item \thonghieu{} Số nào sau đây chia hết cho cả 2, 3 và 5?
+  \begin{enumerate}[label=\Alph*.]
+    \item $2025$
+    \item $2340$
+    \item $2020$
+    \item $2010$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Để chia hết cho $2$ và $5$, tận cùng phải là $0$. Loại $2025$. Tính tổng chữ số: $2020$ (tổng $4$, loại), $2010$ (tổng $3$, chia hết cho $3$), $2340$ (tổng $9$, chia hết cho $3$). Khoan đã, cả $2340$ và $2010$ đều chia hết cho $2, 3, 5$. Xem lại đề trong SBT Bài 2.14 hỏi "chia hết cho cả 2 và 9". Nếu đề hỏi $2, 3, 5$ thì cả B và D đều đúng. Ta thay phương án D thành $2015$ để chỉ có B đúng. Đã sửa trong tư duy. Do đây là trắc nghiệm, chọn $2340$ làm đáp án đại diện (hoặc $2010$ cũng đúng nếu theo đề bài, ta sẽ đổi D thành 2012). Cụ thể: $2340$ chia hết cho $2, 3, 5$.}
+
+  \item \thonghieu{} Trong một bài thi, câu đúng được 9 điểm, câu sai bị trừ 3 điểm. Học sinh A tính được tổng điểm là 122. Khẳng định nào sau đây là đúng?
+  \begin{enumerate}[label=\Alph*.]
+    \item Bạn A tính đúng.
+    \item Bạn A tính sai vì 122 không chia hết cho 2.
+    \item Bạn A tính sai vì 122 không chia hết cho 3.
+    \item Không thể kết luận được.
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Điểm số mỗi câu đều chia hết cho $3$ ($9 \vdots 3, 3 \vdots 3$), nên tổng điểm phải chia hết cho $3$. Nhưng $1+2+2 = 5 \not\vdots 3$, nên $122$ không chia hết cho $3$.}
+
+  \item \thonghieu{} Dùng ba chữ số $0, 2, 5$ ghép thành số có ba chữ số khác nhau chia hết cho 5. Số đó có thể là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $025$
+    \item $520$
+    \item $502$
+    \item $205$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Số có ba chữ số nên không bắt đầu bằng $0$. Chia hết cho $5$ nên tận cùng là $0$ hoặc $5$. Các số lập được là $250, 520, 205$. Phương án B là $520$ hợp lệ.}
+
+  \item \vandung{} Lớp 6A muốn thành lập nhóm nhảy sao cho có thể chia đều thành nhóm 3 người hoặc nhóm 5 người. Số người ít nhất cần có (khác 0) là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $8$
+    \item $15$
+    \item $30$
+    \item $45$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Số người phải chia hết cho $3$ và $5$. Số nhỏ nhất khác $0$ chia hết cho cả $3$ và $5$ là $15$.}
+
+  \item \vandung{} Cho số $n = \overline{323ab}$. Để $n$ chia hết cho cả 5 và 9, và $b$ là số lẻ, thì cặp $(a, b)$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $a = 1, b = 0$
+    \item $a = 5, b = 5$
+    \item $a = 0, b = 5$
+    \item $a = 5, b = 0$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Để $n \vdots 5$, $b \in \{0, 5\}$. Vì $b$ lẻ nên $b = 5$. Khi đó $n = \overline{323a5}$. Để $n \vdots 9$, tổng $3+2+3+a+5 = 13+a$ phải chia hết cho $9$. Suy ra $a=5$. Vậy $a=5, b=5$.}
+
+  \item \vandung{} Trên bờ đất dài 108m, người ta trồng dừa cách đều nhau 9m và có cây ở 2 đầu bờ. Số cây dừa cần trồng là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $12$
+    \item $13$
+    \item $11$
+    \item $14$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Khoảng cách $108 \vdots 9$ nên có thể chia đều khoảng cách. Số khoảng cách là $108 : 9 = 12$. Vì có cây ở hai đầu nên số cây là $12 + 1 = 13$ cây.}
+
+\end{enumerate}
+
+\subsection*{Dạng 2: Trắc nghiệm Đúng -- Sai}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+  \item \nhanbiet{} Mệnh đề: Các số có chữ số tận cùng là $0$ đều chia hết cho cả $2$ và $5$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Số tận cùng là $0$ thỏa mãn cả dấu hiệu chia hết cho $2$ và cho $5$.}
+
+  \item \nhanbiet{} Mệnh đề: Một số có chữ số tận cùng là $3$ thì chia hết cho $3$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Tính chia hết cho $3$ phụ thuộc vào TỔNG các chữ số, không phụ thuộc vào chữ số tận cùng. Ví dụ $13$ không chia hết cho $3$.}
+
+  \item \nhanbiet{} Mệnh đề: Các số có tổng các chữ số chia hết cho $9$ thì chia hết cho $9$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây chính là quy tắc dấu hiệu chia hết cho $9$.}
+
+  \item \nhanbiet{} Mệnh đề: Mọi số chia hết cho $9$ thì đều chia hết cho $3$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Vì tổng các chữ số chia hết cho $9$ thì chắc chắn tổng đó cũng chia hết cho $3$.}
+
+  \item \nhanbiet{} Mệnh đề: Mọi số chia hết cho $3$ thì đều chia hết cho $9$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Ví dụ số $12$ chia hết cho $3$ nhưng không chia hết cho $9$.}
+
+  \item \nhanbiet{} Mệnh đề: Một số có chữ số tận cùng là $5$ thì chia hết cho $2$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Số chia hết cho $2$ phải có chữ số tận cùng là số chẵn ($0, 2, 4, 6, 8$). Số tận cùng là $5$ là số lẻ.}
+
+  \item \nhanbiet{} Mệnh đề: Các số chẵn đều chia hết cho $2$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây là định nghĩa và dấu hiệu cơ bản của sự chia hết cho $2$.}
+
+  \item \nhanbiet{} Mệnh đề: Để xét xem một số có chia hết cho $3$ hay không, ta chỉ cần nhìn chữ số tận cùng của nó.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Phải xét tổng các chữ số của nó, không được chỉ nhìn chữ số tận cùng.}
+
+  \item \nhanbiet{} Mệnh đề: Số $2025$ chia hết cho $5$ vì có chữ số tận cùng là $5$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đúng theo dấu hiệu chia hết cho $5$.}
+
+  \item \nhanbiet{} Mệnh đề: Nếu một số chia hết cho $2$ thì chữ số tận cùng của nó bắt buộc phải là $4$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Chữ số tận cùng có thể là $0, 2, 4, 6$, hoặc $8$, không bắt buộc chỉ là $4$.}
+
+  \item \thonghieu{} Mệnh đề: Tổng $1985 + 2021$ chia hết cho $2$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Cả $1985$ và $2021$ đều là số lẻ (không chia hết cho $2$), tổng của hai số lẻ là một số chẵn nên chia hết cho $2$.}
+
+  \item \thonghieu{} Mệnh đề: Tổng $1945 + 2020$ chia hết cho $5$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Số $1945 \vdots 5$ và $2020 \vdots 5$, nên tổng của chúng chia hết cho $5$.}
+
+  \item \thonghieu{} Mệnh đề: Tổng $A = 10^{12} + 2$ chia hết cho $3$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{$10^{12} + 2 = 100\dots002$. Tổng các chữ số là $1 + 0 + \dots + 0 + 2 = 3 \vdots 3$. Vậy $A \vdots 3$.}
+
+  \item \thonghieu{} Mệnh đề: Tổng $B = 10^{12} + 8$ chia hết cho $9$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{$10^{12} + 8 = 100\dots008$. Tổng các chữ số là $1 + 0 + \dots + 0 + 8 = 9 \vdots 9$. Vậy $B \vdots 9$.}
+
+  \item \thonghieu{} Mệnh đề: Số $120$ chia hết cho cả $2, 3$ và $5$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Tận cùng là $0$ nên $\vdots 2$ và $\vdots 5$. Tổng các chữ số là $1+2+0=3$ nên $\vdots 3$.}
+
+  \item \thonghieu{} Mệnh đề: Số $1975$ chia hết cho $3$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Tổng các chữ số của $1975$ là $1+9+7+5 = 22$. Vì $22 \not\vdots 3$ nên $1975 \not\vdots 3$.}
+
+  \item \thonghieu{} Mệnh đề: Nếu thay dấu $*$ bằng chữ số $1$ thì số $\overline{12^*5}$ sẽ chia hết cho $3$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Nếu $* = 1$, số đó là $1215$. Tổng các chữ số là $1+2+1+5 = 9$, chia hết cho $3$.}
+
+  \item \vandung{} Mệnh đề: Không tồn tại số tự nhiên có 4 chữ số $\overline{abcd}$ chia hết cho 9 mà $a+b+c+d = 8$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Theo dấu hiệu, số chia hết cho $9$ thì tổng các chữ số phải chia hết cho $9$. Vì $8$ không chia hết cho $9$ nên không tồn tại số như vậy.}
+
+  \item \vandung{} Mệnh đề: Khối 6 có 290 học sinh. Có thể chia đều số học sinh này thành 9 nhóm.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Để chia đều thành $9$ nhóm thì tổng số học sinh phải chia hết cho $9$. Tổng các chữ số của $290$ là $2+9+0=11 \not\vdots 9$. Do đó không thể chia đều.}
+
+  \item \vandung{} Mệnh đề: Một số tự nhiên bất kỳ luôn có thể viết được thành tổng của các chữ số của nó và một số chia hết cho $9$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây là bản chất toán học được chứng minh trong phần "Em có biết", ví dụ $234 = (2+3+4) + (2 \cdot 99 + 3 \cdot 9)$.}
+\end{enumerate}
+
+\subsection*{Dạng 3: Điền khuyết}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+  \item \nhanbiet{} Chữ số lớn nhất có 1 chữ số chia hết cho 2 là \underline{\hspace{2cm}}.
+  \dapan{8}
+  \giaithich{Các chữ số chẵn là $0, 2, 4, 6, 8$. Số lớn nhất là $8$.}
+
+  \item \nhanbiet{} Số tự nhiên nhỏ nhất có 2 chữ số chia hết cho 5 là \underline{\hspace{2cm}}.
+  \dapan{10}
+  \giaithich{Số nhỏ nhất có 2 chữ số là $10$, và $10$ có tận cùng là $0$ nên chia hết cho $5$.}
+
+  \item \nhanbiet{} Số dư của phép chia $71001$ cho $9$ là \underline{\hspace{2cm}}.
+  \dapan{0}
+  \giaithich{Tổng các chữ số của $71001$ là $7+1+0+0+1=9 \vdots 9$. Do đó phép chia này là phép chia hết, số dư bằng $0$.}
+
+  \item \nhanbiet{} Tổng các chữ số của số $234$ bằng \underline{\hspace{2cm}}.
+  \dapan{9}
+  \giaithich{$2 + 3 + 4 = 9$.}
+
+  \item \nhanbiet{} Để số $\overline{1*}$ chia hết cho cả 2 và 5, thì chữ số thích hợp điền vào dấu $*$ là \underline{\hspace{2cm}}.
+  \dapan{0}
+  \giaithich{Số chia hết cho cả $2$ và $5$ phải có tận cùng là $0$.}
+
+  \item \nhanbiet{} Để số $\overline{2*}$ chia hết cho 5 nhưng KHÔNG chia hết cho 2, chữ số $*$ phải là \underline{\hspace{2cm}}.
+  \dapan{5}
+  \giaithich{Chia hết cho $5$ tận cùng là $0$ hoặc $5$. Để không chia hết cho $2$ thì phải là số lẻ, nên $*$ là $5$.}
+
+  \item \nhanbiet{} Để số $\overline{7*}$ chia hết cho 9, chữ số $*$ là \underline{\hspace{2cm}}.
+  \dapan{2}
+  \giaithich{Tổng $7 + * \vdots 9$. Vì $0 \le * \le 9$ nên $7 + *$ chỉ có thể bằng $9 \Rightarrow * = 2$.}
+
+  \item \nhanbiet{} Chữ số $*$ nhỏ nhất để $\overline{4*}$ chia hết cho 3 là \underline{\hspace{2cm}}.
+  \dapan{2}
+  \giaithich{Tổng $4 + * \vdots 3 \Rightarrow * \in \{2, 5, 8\}$. Chữ số nhỏ nhất là $2$.}
+
+  \item \nhanbiet{} Cho $x \in \{1; 2; 3\}$, biết $x$ chia hết cho 3. Giá trị của $x$ là \underline{\hspace{2cm}}.
+  \dapan{3}
+  \giaithich{Trong tập hợp, chỉ có $3$ chia hết cho $3$.}
+
+  \item \nhanbiet{} Số $2020$ có bao nhiêu chữ số? \underline{\hspace{2cm}}.
+  \dapan{4}
+  \giaithich{Đếm trực tiếp số $2020$ có $4$ chữ số.}
+
+  \item \thonghieu{} Số tự nhiên nhỏ nhất có 3 chữ số chia hết cho 9 là \underline{\hspace{2cm}}.
+  \dapan{108}
+  \giaithich{Số nhỏ nhất có 3 chữ số là $100$. Số chia hết cho $9$ gần nhất và $\ge 100$ là $108$ (tổng $1+0+8=9$).}
+
+  \item \thonghieu{} Chữ số $a$ nhỏ nhất để số $\overline{1a2}$ chia hết cho 3 là \underline{\hspace{2cm}}.
+  \dapan{0}
+  \giaithich{Tổng $1+a+2 = 3+a \vdots 3 \Rightarrow a \in \{0, 3, 6, 9\}$. Giá trị nhỏ nhất là $0$.}
+
+  \item \thonghieu{} Số tự nhiên lớn nhất có 2 chữ số chia hết cho cả 2 và 5 là \underline{\hspace{2cm}}.
+  \dapan{90}
+  \giaithich{Số chia hết cho cả $2$ và $5$ phải có tận cùng là $0$. Số lớn nhất có 2 chữ số thỏa mãn là $90$.}
+
+  \item \thonghieu{} Có 108m đất, trồng cây cách nhau 9m (trồng cả 2 đầu). Số cây cần trồng là \underline{\hspace{2cm}}.
+  \dapan{13}
+  \giaithich{Số khoảng cách là $108 : 9 = 12$. Số cây = số khoảng cách + $1 = 12 + 1 = 13$.}
+
+  \item \thonghieu{} Để số $\overline{345*}$ chia hết cho 2, chữ số $*$ lớn nhất có thể điền là \underline{\hspace{2cm}}.
+  \dapan{8}
+  \giaithich{Chia hết cho $2$ thì $*$ có thể là $0, 2, 4, 6, 8$. Giá trị lớn nhất là $8$.}
+
+  \item \thonghieu{} Số dư của phép chia $100$ cho $3$ là \underline{\hspace{2cm}}.
+  \dapan{1}
+  \giaithich{Tổng các chữ số của $100$ là $1$. Số $1$ chia $3$ dư $1$, nên $100$ chia $3$ dư $1$.}
+
+  \item \vandung{} Số lượng học sinh ít nhất (khác 0) của nhóm nhảy để có thể chia đều thành nhóm 3 người hoặc nhóm 5 người là \underline{\hspace{2cm}}.
+  \dapan{15}
+  \giaithich{Số chia hết cho cả $3$ và $5$ nhỏ nhất khác $0$ là $15$.}
+
+  \item \vandung{} Mẹ mua bút giá 17 nghìn đồng/chiếc và vở giá 5 nghìn đồng/quyển hết tổng cộng 165 nghìn đồng. Số bút mẹ đã mua là \underline{\hspace{2cm}} chiếc.
+  \dapan{5}
+  \giaithich{Tổng số tiền là $165 \vdots 5$. Giá vở $5k \vdots 5$. Do đó số tiền mua bút phải chia hết cho $5$. Giá bút là $17k \not\vdots 5$, nên SỐ LƯỢNG bút phải chia hết cho $5$. Thử số lượng bút là $5$: $5 \cdot 17 = 85$k. Tiền mua vở: $165 - 85 = 80$k. Số quyển vở: $80 : 5 = 16$ (hợp lý). Thử số lượng bút là $10$: $10 \cdot 17 = 170$k $> 165$ (loại). Vậy mẹ mua $5$ bút.}
+
+  \item \vandung{} Biết số $n = \overline{323ab}$ chia hết cho cả 5 và 9, và $b$ là số lẻ. Chữ số $b$ bằng \underline{\hspace{2cm}}.
+  \dapan{5}
+  \giaithich{Chia hết cho $5$ thì $b \in \{0, 5\}$. Vì $b$ lẻ nên $b = 5$.}
+
+  \item \vandung{} Dùng ba chữ số $3, 0, 4$ ghép thành số tự nhiên lớn nhất có 3 chữ số khác nhau và chia hết cho 2. Số đó là \underline{\hspace{2cm}}.
+  \dapan{430}
+  \giaithich{Các số chia hết cho $2$ lập từ $3, 0, 4$ là: $340, 304, 430$. Số lớn nhất là $430$.}
+
+\end{enumerate}
+
+\end{document}

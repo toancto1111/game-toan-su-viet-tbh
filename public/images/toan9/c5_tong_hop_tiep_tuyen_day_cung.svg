@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" width="100%" height="100%" style="max-width: 560px; max-height: 360px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0050b4" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#c80000" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#009650" />
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#ea580c" />
+    </marker>
+  </defs>
+  
+  <rect x="5" y="5" width="550" height="350" rx="14" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+
+  <!-- Tiêu đề -->
+  <text x="280" y="28" font-size="15" font-weight="bold" fill="#0f172a" text-anchor="middle">TỔNG HỢP: TIẾP TUYẾN, CÁT TUYẾN &amp; DÂY CUNG</text>
+
+  <!-- Hình quạt tròn OBC tô màu nhạt -->
+  <!-- O(140, 185), B(185, 107.06), C(185, 262.94), R=90 -->
+  <path d="M 140 185 L 185 107.06 A 90 90 0 0 1 185 262.94 Z" fill="rgba(2, 132, 199, 0.18)" stroke="none" />
+
+  <!-- Đường tròn (O; R=90) -->
+  <circle cx="140" cy="185" r="90" fill="none" stroke="#0284c7" stroke-width="2.5" />
+
+  <!-- Đường nối tâm OA -->
+  <line x1="140" y1="185" x2="320" y2="185" stroke="#64748b" stroke-width="2" stroke-dasharray="5,4" />
+  <text x="235" y="202" font-size="13" font-weight="bold" fill="#64748b">2R</text>
+
+  <!-- Bán kính OB, OC -->
+  <line x1="140" y1="185" x2="185" y2="107.06" stroke="#0284c7" stroke-width="2" stroke-dasharray="4,3" />
+  <text x="150" y="145" font-size="13" font-weight="bold" fill="#0284c7">R</text>
+  <line x1="140" y1="185" x2="185" y2="262.94" stroke="#0284c7" stroke-width="2" stroke-dasharray="4,3" />
+  <text x="150" y="235" font-size="13" font-weight="bold" fill="#0284c7">R</text>
+
+  <!-- Dây cung BC -->
+  <line x1="185" y1="107.06" x2="185" y2="262.94" stroke="#059669" stroke-width="2.5" />
+  <text x="195" y="145" font-size="13" font-weight="bold" fill="#059669">Dây BC</text>
+
+  <!-- Tiếp tuyến AB và AC -->
+  <line x1="320" y1="185" x2="185" y2="107.06" stroke="#dc2626" stroke-width="2.5" />
+  <text x="260" y="135" font-size="13" font-weight="bold" fill="#dc2626">Tiếp tuyến AB</text>
+  <line x1="320" y1="185" x2="185" y2="262.94" stroke="#dc2626" stroke-width="2.5" />
+  <text x="260" y="245" font-size="13" font-weight="bold" fill="#dc2626">Tiếp tuyến AC</text>
+
+  <!-- Ký hiệu góc vuông tại B, C, H -->
+  <!-- Tại B: OB vector (45, -77.94), AB vector (-135, -77.94) -> vuông -->
+  <path d="M 178 119 L 169 114 L 176 102" fill="none" stroke="#dc2626" stroke-width="1.5" />
+  <!-- Tại C -->
+  <path d="M 178 251 L 169 256 L 176 268" fill="none" stroke="#dc2626" stroke-width="1.5" />
+  <!-- Tại H(185, 185) -->
+  <rect x="175" y="175" width="10" height="10" fill="none" stroke="#059669" stroke-width="1.5" />
+
+  <!-- Cung góc BOC = 120 độ -->
+  <path d="M 152 164 A 25 25 0 0 1 152 206" fill="none" stroke="#ea580c" stroke-width="2" />
+  <text x="160" y="189" font-size="11" font-weight="bold" fill="#ea580c">120°</text>
+
+  <!-- Điểm O, A, B, C, H -->
+  <circle cx="140" cy="185" r="4.5" fill="#0284c7" />
+  <text x="122" y="190" font-size="14" font-weight="bold" fill="#0284c7">O</text>
+  <circle cx="320" cy="185" r="4.5" fill="#dc2626" />
+  <text x="328" y="190" font-size="14" font-weight="bold" fill="#dc2626">A</text>
+  <circle cx="185" cy="107.06" r="4.5" fill="#dc2626" />
+  <text x="185" y="96" font-size="14" font-weight="bold" fill="#dc2626">B</text>
+  <circle cx="185" cy="262.94" r="4.5" fill="#dc2626" />
+  <text x="185" y="282" font-size="14" font-weight="bold" fill="#dc2626">C</text>
+  <circle cx="185" cy="185" r="4" fill="#0f172a" />
+  <text x="190" y="200" font-size="13" font-weight="bold" fill="#0f172a">H</text>
+
+  <!-- Khung tổng kết bên phải -->
+  <g transform="translate(365, 45)">
+    <rect x="0" y="0" width="180" height="285" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect x="0" y="0" width="180" height="34" rx="10" fill="#0284c7" />
+    <text x="90" y="22" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">KẾT QUẢ then chốt</text>
+
+    <text x="12" y="60" font-size="12" font-weight="bold" fill="#0f172a">1. Chứng minh AC là tiếp tuyến:</text>
+    <text x="16" y="80" font-size="11" fill="#334155">• OA ⊥ BC tại H ⇒ HB = HC</text>
+    <text x="16" y="98" font-size="11" fill="#334155">• AB = AC (tính chất đối xứng)</text>
+    <text x="16" y="116" font-size="11" fill="#334155">• ΔOAB = ΔOAC (c.c.c)</text>
+    <text x="16" y="134" font-size="11" font-weight="bold" fill="#dc2626">⇒ OCA = 90° ⇒ AC ⊥ OC</text>
+
+    <line x1="12" y1="148" x2="168" y2="148" stroke="#e2e8f0" stroke-width="1" />
+
+    <text x="12" y="172" font-size="12" font-weight="bold" fill="#0f172a">2. Góc ở tâm &amp; Quạt tròn:</text>
+    <text x="16" y="194" font-size="11" fill="#334155">• cos(AOB) = R/(2R) = 1/2</text>
+    <text x="16" y="212" font-size="11" fill="#334155">• AOB = 60° ⇒ BOC = 120°</text>
+    <text x="16" y="235" font-size="11" fill="#334155">• S_quạt = (120/360)·πR²</text>
+    <text x="16" y="258" font-size="13" font-weight="bold" fill="#0284c7">= πR² / 3</text>
+  </g>
+
+</svg>

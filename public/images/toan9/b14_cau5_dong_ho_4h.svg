@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 240" width="100%" height="100%" style="max-width: 340px; max-height: 240px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0050b4" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#c80000" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#009650" />
+    </marker>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#bae6fd" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+  
+  <rect x="5" y="5" width="330" height="230" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+  
+  <!-- Mặt đồng hồ O(130, 120), R = 80 -->
+  <circle cx="130" cy="120" r="80" fill="#ffffff" stroke="#1e293b" stroke-width="3" />
+  
+  <!-- 12 vạch giờ -->
+  <text x="130" y="58" font-size="14" font-weight="bold" fill="#1e293b" text-anchor="middle">12</text>
+  <text x="195" y="125" font-size="14" font-weight="bold" fill="#1e293b" text-anchor="middle">3</text>
+  <text x="130" y="190" font-size="14" font-weight="bold" fill="#1e293b" text-anchor="middle">6</text>
+  <text x="65" y="125" font-size="14" font-weight="bold" fill="#1e293b" text-anchor="middle">9</text>
+  <text x="175" y="168" font-size="13" font-weight="bold" fill="#dc2626" text-anchor="middle">4</text>
+
+  <!-- Kim phút chỉ 12 (thẳng đứng lên) -->
+  <line x1="130" y1="120" x2="130" y2="62" stroke="#0050b4" stroke-width="3.5" stroke-linecap="round" />
+  <!-- Kim giờ chỉ 4 (góc 30 độ hướng xuống phải: 130 + 50*cos(30), 120 + 50*sin(30)) = (173.3, 145) -->
+  <line x1="130" y1="120" x2="168" y2="142" stroke="#dc2626" stroke-width="4.5" stroke-linecap="round" />
+  
+  <!-- Cung góc 120 độ giữa kim phút và kim giờ -->
+  <path d="M 130 95 A 25 25 0 0 1 146 131" fill="none" stroke="#ea580c" stroke-width="2.5" />
+  <text x="150" y="112" font-size="13" font-weight="bold" fill="#ea580c">120°</text>
+
+  <!-- Tâm đồng hồ -->
+  <circle cx="130" cy="120" r="4" fill="#0f172a" />
+
+  <!-- Giải thích bên phải -->
+  <g transform="translate(230, 60)">
+    <text x="0" y="20" font-size="13" font-weight="bold" fill="#0f172a">Lúc 4 giờ đúng:</text>
+    <text x="0" y="42" font-size="12" fill="#475569">• 4 khoảng giờ</text>
+    <text x="0" y="64" font-size="12" fill="#475569">• Mỗi giờ = 30°</text>
+    <text x="0" y="90" font-size="13" font-weight="bold" fill="#dc2626">Góc = 120°</text>
+  </g>
+
+</svg>

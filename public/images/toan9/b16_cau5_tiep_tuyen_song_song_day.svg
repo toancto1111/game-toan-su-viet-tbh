@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 380" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="520" height="380" rx="14" fill="url(#bgGrad)"/>
+
+  <!-- Tâm O tại (260, 190), R = 110 (đại diện cho 10cm) -->
+  <!-- Dây AB song song Ox, khoảng cách d = 6cm -> 66px về phía dưới: y = 190 + 66 = 256 -->
+  <!-- Nửa độ dài AB: 8cm -> 88px => A(260-88, 256) = (172, 256), B(260+88, 256) = (348, 256) -->
+
+  <!-- Đường tròn (O; 10) -->
+  <circle cx="260" cy="190" r="110" fill="#eff6ff" stroke="#0284c7" stroke-width="2.5"/>
+
+  <!-- Dây cung AB -->
+  <line x1="172" y1="256" x2="348" y2="256" stroke="#16a34a" stroke-width="3"/>
+  <circle cx="172" cy="256" r="4" fill="#16a34a"/>
+  <circle cx="348" cy="256" r="4" fill="#16a34a"/>
+  <text x="155" y="260" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#16a34a">A</text>
+  <text x="355" y="260" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#16a34a">B</text>
+  <text x="260" y="248" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">AB = 16 cm</text>
+
+  <!-- Đoạn OH vuông góc AB (từ 190 đến 256) -->
+  <line x1="260" y1="190" x2="260" y2="256" stroke="#64748b" stroke-width="2" stroke-dasharray="4,4"/>
+  <circle cx="260" cy="256" r="3.5" fill="#64748b"/>
+  <text x="240" y="228" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#64748b">OH = 6</text>
+
+  <!-- Bán kính OA -->
+  <line x1="260" y1="190" x2="172" y2="256" stroke="#0284c7" stroke-width="2" stroke-dasharray="3,3"/>
+  <text x="202" y="215" font-family="system-ui, sans-serif" font-size="12" font-style="italic" font-weight="bold" fill="#0284c7">R=10</text>
+
+  <!-- Tiếp tuyến d1 (cùng phía, ở đáy y = 190 + 110 = 300) -->
+  <line x1="90" y1="300" x2="430" y2="300" stroke="#ea580c" stroke-width="2.5"/>
+  <text x="440" y="305" font-family="system-ui, sans-serif" font-size="13" font-style="italic" font-weight="bold" fill="#ea580c">d₁</text>
+  <!-- Khoảng cách AB đến d1: 4cm -->
+  <line x1="390" y1="256" x2="390" y2="300" stroke="#ea580c" stroke-width="2"/>
+  <text x="400" y="282" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#ea580c">4 cm</text>
+
+  <!-- Tiếp tuyến d2 (khác phía, ở đỉnh y = 190 - 110 = 80) -->
+  <line x1="90" y1="80" x2="430" y2="80" stroke="#9333ea" stroke-width="2.5"/>
+  <text x="440" y="85" font-family="system-ui, sans-serif" font-size="13" font-style="italic" font-weight="bold" fill="#9333ea">d₂</text>
+  <!-- Khoảng cách AB đến d2: 16cm -->
+  <line x1="120" y1="80" x2="120" y2="256" stroke="#9333ea" stroke-width="2" stroke-dasharray="3,3"/>
+  <text x="80" y="172" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#9333ea">16 cm</text>
+
+  <!-- Tâm O -->
+  <circle cx="260" cy="190" r="4.5" fill="#0284c7"/>
+  <text x="270" y="185" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#0f172a">O</text>
+
+  <!-- Hộp đáp án -->
+  <g transform="translate(260, 345)" filter="url(#shadow)">
+    <rect x="-170" y="-14" width="340" height="28" rx="6" fill="#ffffff" stroke="#0284c7" stroke-width="1.5"/>
+    <text x="0" y="5" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#0369a1" text-anchor="middle">
+      Khoảng cách giữa d và AB là 4 cm hoặc 16 cm
+    </text>
+  </g>
+</svg>

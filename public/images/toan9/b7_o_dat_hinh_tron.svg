@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 240" width="100%" height="100%" style="max-width: 380px; max-height: 240px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1e3a8a" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+    <marker id="arrow-black" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1f2937" />
+    </marker>
+    <pattern id="hatch-blue" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#3b82f6" stroke-width="1.5" />
+    </pattern>
+  </defs>
+  
+  <!-- Vỉa hè gạch xám lát đá -->
+  <rect x="15" y="15" width="350" height="210" rx="10" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2" />
+  <!-- Lưới mạch vỉa hè -->
+  <line x1="15" y1="85" x2="365" y2="85" stroke="#cbd5e1" stroke-width="1.5" />
+  <line x1="15" y1="155" x2="365" y2="155" stroke="#cbd5e1" stroke-width="1.5" />
+  <line x1="100" y1="15" x2="100" y2="225" stroke="#cbd5e1" stroke-width="1.5" />
+  <line x1="280" y1="15" x2="280" y2="225" stroke="#cbd5e1" stroke-width="1.5" />
+
+  <!-- Ô đất hình tròn trồng cây -->
+  <circle cx="190" cy="120" r="75" fill="#78350f" stroke="#451a03" stroke-width="4" />
+  
+  <!-- Cây con ở giữa -->
+  <circle cx="190" cy="120" r="18" fill="#15803d" />
+  <circle cx="180" cy="112" r="12" fill="#22c55e" opacity="0.8" />
+  <circle cx="200" cy="115" r="14" fill="#22c55e" opacity="0.8" />
+  <circle cx="190" cy="130" r="13" fill="#16a34a" opacity="0.8" />
+
+  <!-- Mũi tên đường kính -->
+  <line x1="117" y1="120" x2="263" y2="120" stroke="#ffffff" stroke-width="2.5" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+  <text x="190" y="112" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">d = ? m</text>
+
+  <!-- Thông số diện tích -->
+  <rect x="125" y="155" width="130" height="26" rx="6" fill="#ffffff" stroke="#15803d" stroke-width="1.5" />
+  <text x="190" y="173" font-size="13" font-weight="bold" fill="#15803d" text-anchor="middle">S = 2 m² (πR²)</text>
+
+  <!-- Kết quả tính toán -->
+  <text x="190" y="215" font-size="12" font-weight="bold" fill="#1e293b" text-anchor="middle">d = 2√(S/π) = 2√(2/π) ≈ 1,60 m</text>
+
+</svg>

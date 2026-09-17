@@ -1,0 +1,298 @@
+[
+  {
+    "id": "e1_1",
+    "name": "Ân Vương"
+  },
+  {
+    "id": "e1_2",
+    "name": "Triệu Đà"
+  },
+  {
+    "id": "e1_3",
+    "name": "Trọng Thủy"
+  },
+  {
+    "id": "e1_4",
+    "name": "Thủy Tinh"
+  },
+  {
+    "id": "e1_5",
+    "name": "Ngư Tinh"
+  },
+  {
+    "id": "e1_6",
+    "name": "Hồ Tinh"
+  },
+  {
+    "id": "e1_7",
+    "name": "Mộc Tinh"
+  },
+  {
+    "id": "e2_1",
+    "name": "Tô Định"
+  },
+  {
+    "id": "e2_2",
+    "name": "Mã Viện"
+  },
+  {
+    "id": "e2_3",
+    "name": "Chu Phù"
+  },
+  {
+    "id": "e2_4",
+    "name": "Lục Dận"
+  },
+  {
+    "id": "e2_5",
+    "name": "Lưu Long"
+  },
+  {
+    "id": "e2_6",
+    "name": "Đoàn Chí"
+  },
+  {
+    "id": "e3_1",
+    "name": "Tiêu Tư"
+  },
+  {
+    "id": "e3_2",
+    "name": "Trần Bá Tiên"
+  },
+  {
+    "id": "e3_3",
+    "name": "Dương Phiêu"
+  },
+  {
+    "id": "e3_4",
+    "name": "Tiêu Bột"
+  },
+  {
+    "id": "e3_5",
+    "name": "Trần Văn Giới"
+  },
+  {
+    "id": "e3_6",
+    "name": "Dương Sào"
+  },
+  {
+    "id": "e4_1",
+    "name": "Dương Tam Kha"
+  },
+  {
+    "id": "e4_2",
+    "name": "Kiều Công Tiễn"
+  },
+  {
+    "id": "e4_3",
+    "name": "Lưu Hoằng Thao"
+  },
+  {
+    "id": "e4_4",
+    "name": "Lưu Cung"
+  },
+  {
+    "id": "e4_5",
+    "name": "Hầu Nhân Bảo"
+  },
+  {
+    "id": "e4_6",
+    "name": "Tôn Toàn Hưng"
+  },
+  {
+    "id": "e4_7",
+    "name": "Lê Long Đĩnh"
+  },
+  {
+    "id": "e4_8",
+    "name": "Đỗ Thích"
+  },
+  {
+    "id": "e5_1",
+    "name": "Quách Quỳ"
+  },
+  {
+    "id": "e5_2",
+    "name": "Triệu Tiết"
+  },
+  {
+    "id": "e5_3",
+    "name": "Lý Kế Nguyên"
+  },
+  {
+    "id": "e5_4",
+    "name": "Ngô Nhật Khánh"
+  },
+  {
+    "id": "e6_1",
+    "name": "Trần Ích Tắc"
+  },
+  {
+    "id": "e6_2",
+    "name": "Hốt Tất Liệt"
+  },
+  {
+    "id": "e6_3",
+    "name": "Ngột Lương Hợp Thai"
+  },
+  {
+    "id": "e6_4",
+    "name": "Toa Đô"
+  },
+  {
+    "id": "e6_5",
+    "name": "Thoát Hoan"
+  },
+  {
+    "id": "e6_6",
+    "name": "Ô Mã Nhi"
+  },
+  {
+    "id": "e6_7",
+    "name": "Phàn Tiếp"
+  },
+  {
+    "id": "e6_8",
+    "name": "Chế Bồng Nga"
+  },
+  {
+    "id": "e6_9",
+    "name": "Trần Kiện"
+  },
+  {
+    "id": "e6_10",
+    "name": "Trần Lộng"
+  },
+  {
+    "id": "e7_1",
+    "name": "Trương Phụ"
+  },
+  {
+    "id": "e7_2",
+    "name": "Mộc Thạnh"
+  },
+  {
+    "id": "e7_3",
+    "name": "Hoàng Phúc"
+  },
+  {
+    "id": "e7_4",
+    "name": "Trần Húc"
+  },
+  {
+    "id": "e7_5",
+    "name": "Lý Bân"
+  },
+  {
+    "id": "e7_6",
+    "name": "Minh Thành Tổ"
+  },
+  {
+    "id": "e7_7",
+    "name": "Mã Kỳ"
+  },
+  {
+    "id": "e7_8",
+    "name": "Trần Sĩ Kỳ"
+  },
+  {
+    "id": "e8_1",
+    "name": "Trương Phụ"
+  },
+  {
+    "id": "e8_2",
+    "name": "Vương Thông"
+  },
+  {
+    "id": "e8_3",
+    "name": "Trần Trí"
+  },
+  {
+    "id": "e8_4",
+    "name": "Lý An"
+  },
+  {
+    "id": "e8_5",
+    "name": "Phương Chính"
+  },
+  {
+    "id": "e8_6",
+    "name": "Liễu Thăng"
+  },
+  {
+    "id": "e8_7",
+    "name": "Mộc Thạnh"
+  },
+  {
+    "id": "e8_8",
+    "name": "Thôi Tụ"
+  },
+  {
+    "id": "e9_1",
+    "name": "Trịnh Kiểm"
+  },
+  {
+    "id": "e9_2",
+    "name": "Trịnh Tùng"
+  },
+  {
+    "id": "e9_3",
+    "name": "Lê Uy Mục"
+  },
+  {
+    "id": "e9_4",
+    "name": "Lê Tương Dực"
+  },
+  {
+    "id": "e9_5",
+    "name": "Mạc Phúc Hải"
+  },
+  {
+    "id": "e9_6",
+    "name": "Mạc Đăng Doanh"
+  },
+  {
+    "id": "e9_7",
+    "name": "Mạc Kính Điển"
+  },
+  {
+    "id": "e9_8",
+    "name": "Trịnh Tráng"
+  },
+  {
+    "id": "e9_9",
+    "name": "Trịnh Tạc"
+  },
+  {
+    "id": "e9_10",
+    "name": "Mạc Mậu Hợp"
+  },
+  {
+    "id": "e10_1",
+    "name": "Lê Chiêu Thống"
+  },
+  {
+    "id": "e10_2",
+    "name": "Tôn Sĩ Nghị"
+  },
+  {
+    "id": "e10_3",
+    "name": "Sầm Nghi Đống"
+  },
+  {
+    "id": "e10_4",
+    "name": "Chiêu Thùy"
+  },
+  {
+    "id": "e10_5",
+    "name": "Chiêu Tăng"
+  },
+  {
+    "id": "e10_6",
+    "name": "Chiêu Sương"
+  },
+  {
+    "id": "e10_7",
+    "name": "Lục Côn"
+  }
+]

@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%" style="max-width: 600px; max-height: 360px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0050b4" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#c80000" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#009650" />
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#ea580c" />
+    </marker>
+  </defs>
+  
+  <rect x="5" y="5" width="590" height="350" rx="14" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+
+  <text x="300" y="28" font-size="15" font-weight="bold" fill="#0f172a" text-anchor="middle">ỨNG DỤNG THỰC TẾ: ĐỘ VÕNG CÁP TREO CẦU PARABOL</text>
+
+  <!-- Nước biển bên dưới -->
+  <rect x="25" y="260" width="550" height="70" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1.5" />
+  <text x="300" y="295" font-size="12" fill="#0284c7" text-anchor="middle">MẶT NƯỚC / SÔNG</text>
+
+  <!-- Mặt sàn cầu tại y=230, dài từ x=40 đến x=560 -->
+  <rect x="40" y="225" width="520" height="15" fill="#475569" stroke="#1e293b" stroke-width="2" />
+
+  <!-- Hai trụ tháp:
+       Trụ 1 tại x=100 (tọa độ x = -200m), cao 75m ~ 150px (từ y=230 lên y=80)
+       Trụ 2 tại x=500 (tọa độ x = +200m), cao 75m ~ 150px
+       Tâm cầu O tại x=300 (tọa độ x = 0), chạm mặt sàn cầu tại (300, 230)
+  -->
+  <!-- Trụ tháp 1 -->
+  <rect x="90" y="75" width="20" height="150" fill="#94a3b8" stroke="#334155" stroke-width="2" />
+  <polygon points="85,75 100,55 115,75" fill="#dc2626" />
+  <text x="100" y="48" font-size="12" font-weight="bold" fill="#dc2626" text-anchor="middle">Tháp A (75m)</text>
+
+  <!-- Trụ tháp 2 -->
+  <rect x="490" y="75" width="20" height="150" fill="#94a3b8" stroke="#334155" stroke-width="2" />
+  <polygon points="485,75 500,55 515,75" fill="#dc2626" />
+  <text x="500" y="48" font-size="12" font-weight="bold" fill="#dc2626" text-anchor="middle">Tháp B (75m)</text>
+
+  <!-- Dây cáp treo chính: parabol qua (100, 80), đỉnh (300, 230), qua (500, 80) -->
+  <path d="M 100 80 Q 300 230 500 80" fill="none" stroke="#ea580c" stroke-width="4" />
+
+  <!-- Dây cáp treo đứng phụ trợ cách đều nhau -->
+  
+      <line x1="150" y1="164.4" x2="150" y2="225" stroke="#64748b" stroke-width="1.5" stroke-dasharray="2,2" />
+      
+    
+
+      <line x1="200" y1="117.5" x2="200" y2="225" stroke="#64748b" stroke-width="1.5" stroke-dasharray="2,2" />
+      
+    
+
+      <line x1="250" y1="89.4" x2="250" y2="225" stroke="#64748b" stroke-width="1.5" stroke-dasharray="2,2" />
+      
+    
+
+      <line x1="350" y1="89.4" x2="350" y2="225" stroke="#64748b" stroke-width="1.5" stroke-dasharray="2,2" />
+      
+    
+
+      <line x1="400" y1="117.5" x2="400" y2="225" stroke="#dc2626" stroke-width="3" stroke-dasharray="none" />
+      <circle cx="400" cy="117.5" r="4.5" fill="#dc2626" />
+    
+
+      <line x1="450" y1="164.4" x2="450" y2="225" stroke="#64748b" stroke-width="1.5" stroke-dasharray="2,2" />
+      
+    
+
+  <!-- Đỉnh O chạm mặt cầu -->
+  <circle cx="300" cy="225" r="4.5" fill="#0284c7" />
+  <text x="300" y="248" font-size="13" font-weight="bold" fill="#0284c7" text-anchor="middle">Gốc O (Tâm cầu)</text>
+
+  <!-- Kích thước khoảng cách 2 tháp 400m -->
+  <line x1="100" y1="65" x2="500" y2="65" stroke="#059669" stroke-width="2" marker-start="url(#arrow-green)" marker-end="url(#arrow-green)" />
+  <text x="300" y="60" font-size="12" font-weight="bold" fill="#059669" text-anchor="middle">Khoảng cách 2 trụ tháp: 400 m</text>
+
+  <!-- Kích thước vị trí 100m -->
+  <line x1="300" y1="210" x2="400" y2="210" stroke="#0284c7" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+  <text x="350" y="204" font-size="11" font-weight="bold" fill="#0284c7" text-anchor="middle">100 m</text>
+
+  <!-- Chiều cao cần tìm tại x = 100m -->
+  <text x="410" y="195" font-size="13" font-weight="bold" fill="#dc2626">h = 18,75 m</text>
+
+  <!-- Ô tóm tắt công thức góc dưới trái -->
+  <g transform="translate(40, 95)">
+    <rect x="0" y="0" width="180" height="110" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="10" y="22" font-size="11.5" font-weight="bold" fill="#0f172a">Tính toán theo Parabol:</text>
+    <text x="12" y="42" font-size="11" fill="#334155">• Đỉnh tháp: (200; 75)</text>
+    <text x="12" y="62" font-size="11" fill="#334155">• y = ax² ⇒ a = 3/1600</text>
+    <text x="12" y="82" font-size="11" fill="#334155">• Tại x = 100 m:</text>
+    <text x="18" y="100" font-size="12" font-weight="bold" fill="#dc2626">y = (3/1600)·100² = 18,75 m</text>
+  </g>
+
+</svg>

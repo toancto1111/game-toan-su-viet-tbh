@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 240" width="100%" height="100%" style="max-width: 420px; max-height: 240px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1e3a8a" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+    <marker id="arrow-black" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1f2937" />
+    </marker>
+  </defs>
+  
+  <line x1="20" y1="200" x2="400" y2="200" stroke="#374151" stroke-width="3" />
+  <line x1="60" y1="200" x2="340" y2="70" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow)" />
+  <text x="190" y="120" fill="#2563eb" font-size="15" font-weight="bold">Quãng đường s</text>
+  <circle cx="340" cy="70" r="6" fill="#1f2937" />
+  <text x="350" y="65" fill="#1f2937" font-size="14" font-weight="bold">Máy bay</text>
+  <line x1="340" y1="70" x2="340" y2="200" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4" />
+  <path d="M 325 200 L 325 185 L 340 185" fill="none" stroke="#dc2626" stroke-width="2" />
+  <text x="355" y="140" fill="#dc2626" font-size="16" font-weight="bold">h = ?</text>
+  <path d="M 120 200 A 60 60 0 0 0 115 174" fill="none" stroke="#dc2626" stroke-width="2" />
+  <text x="130" y="190" fill="#dc2626" font-size="15" font-weight="bold">20°</text>
+
+</svg>

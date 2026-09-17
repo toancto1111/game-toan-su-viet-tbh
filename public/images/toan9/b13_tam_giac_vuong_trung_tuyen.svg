@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 240" width="100%" height="100%" style="max-width: 420px; max-height: 240px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0050b4" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#c80000" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#009650" />
+    </marker>
+  </defs>
+  
+  <rect x="5" y="5" width="410" height="230" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
+  
+  <!-- Đường tròn nét đứt tâm O(210, 180), R = 110 -->
+  <circle cx="210" cy="180" r="110" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4" />
+  
+  <!-- Cung nửa trên đường tròn tạo cảm giác nội tiếp -->
+  <path d="M 100 180 A 110 110 0 0 1 320 180" fill="rgba(0, 80, 180, 0.05)" stroke="#0050b4" stroke-width="2" />
+
+  <!-- Điểm B(100, 180), C(320, 180), O(210, 180) -->
+  <!-- Điểm A nằm trên đường tròn ở góc 60 độ: A(210 + 110*cos(120), 180 - 110*sin(120)) = (155, 84.7) -->
+  <polygon points="155,84.7 100,180 320,180" fill="rgba(0, 80, 180, 0.08)" stroke="#0050b4" stroke-width="2.5" />
+
+  <!-- Trung tuyến AO nét đứt đỏ -->
+  <line x1="155" y1="84.7" x2="210" y2="180" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4" />
+  
+  <!-- Ký hiệu góc vuông tại A -->
+  <!-- Hướng AB: (100-155, 180-84.7) = (-55, 95.3), Hướng AC: (320-155, 180-84.7) = (165, 95.3) -->
+  <g transform="translate(155, 84.7) rotate(-30)">
+    <polyline points="0,15 15,15 15,0" fill="none" stroke="#0050b4" stroke-width="1.8" />
+  </g>
+
+  <!-- Đỉnh A, B, C, O -->
+  <circle cx="155" cy="84.7" r="4" fill="#0050b4" />
+  <text x="150" y="70" font-size="16" font-weight="bold" fill="#0050b4">A</text>
+
+  <circle cx="100" cy="180" r="4" fill="#0050b4" />
+  <text x="80" y="190" font-size="16" font-weight="bold" fill="#0050b4">B</text>
+
+  <circle cx="320" cy="180" r="4" fill="#0050b4" />
+  <text x="330" y="190" font-size="16" font-weight="bold" fill="#0050b4">C</text>
+
+  <circle cx="210" cy="180" r="4.5" fill="#dc2626" />
+  <text x="205" y="205" font-size="16" font-weight="bold" fill="#dc2626">O</text>
+
+  <!-- Ký hiệu bằng nhau: OA = OB = OC = R -->
+  <line x1="155" y1="180" x2="155" y2="172" stroke="#16a34a" stroke-width="2.5" />
+  <line x1="265" y1="180" x2="265" y2="172" stroke="#16a34a" stroke-width="2.5" />
+  <line x1="180" y1="130" x2="188" y2="134" stroke="#16a34a" stroke-width="2.5" />
+
+  <!-- Dòng kết luận -->
+  <text x="210" y="225" font-size="13" font-weight="bold" fill="#0369a1" text-anchor="middle">Trung tuyến AO = BO = CO = BC/2 ⇒ A, B, C ∈ (O; BC/2)</text>
+
+</svg>

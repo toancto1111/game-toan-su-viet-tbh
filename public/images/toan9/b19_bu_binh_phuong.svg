@@ -1,0 +1,35 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" style="max-width:100%;font-family:Arial,sans-serif;background:#fff;">
+  <text x="320" y="22" text-anchor="middle" font-size="14" font-weight="bold" fill="#003366">Phương pháp "Bù bình phương" — x² + 6x = 16</text>
+  <!-- x^2 square -->
+  <rect x="50" y="50" width="150" height="150" rx="4" fill="#bbdefb" stroke="#0054a6" stroke-width="2"/>
+  <text x="125" y="128" text-anchor="middle" font-size="20" font-weight="bold" fill="#0054a6">x²</text>
+  <text x="125" y="215" text-anchor="middle" font-size="13" fill="#444">x</text>
+  <text x="22" y="130" text-anchor="middle" font-size="13" fill="#444">x</text>
+  <!-- 3x rectangle right -->
+  <rect x="200" y="50" width="90" height="150" rx="3" fill="#c8e6c9" stroke="#00702a" stroke-width="2"/>
+  <text x="245" y="128" text-anchor="middle" font-size="14" font-weight="bold" fill="#00702a">3x</text>
+  <text x="245" y="215" text-anchor="middle" font-size="13" fill="#444">3</text>
+  <!-- 3x rectangle top -->
+  <rect x="50" y="200" width="150" height="90" rx="3" fill="#c8e6c9" stroke="#00702a" stroke-width="2"/>
+  <text x="125" y="250" text-anchor="middle" font-size="14" font-weight="bold" fill="#00702a">3x</text>
+  <text x="22" y="250" text-anchor="middle" font-size="13" fill="#444">3</text>
+  <!-- +9 corner -->
+  <rect x="200" y="200" width="90" height="90" rx="3" fill="#ffe082" stroke="#e65100" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="245" y="252" text-anchor="middle" font-size="16" font-weight="bold" fill="#e65100">+9</text>
+  <!-- Brace: total x+3 -->
+  <line x1="304" y1="48" x2="304" y2="295" stroke="#c00" stroke-width="2"/>
+  <text x="315" y="172" font-size="13" fill="#c00" font-weight="bold">x+3</text>
+  <line x1="48" y1="298" x2="295" y2="298" stroke="#c00" stroke-width="2"/>
+  <text x="172" y="318" text-anchor="middle" font-size="13" fill="#c00" font-weight="bold">x+3</text>
+  <!-- Equation steps right -->
+  <rect x="340" y="60" width="270" height="220" rx="8" fill="#fff9e6" stroke="#f5a623" stroke-width="2"/>
+  <text x="475" y="88" text-anchor="middle" font-size="12" fill="#333">x² + 6x = 16</text>
+  <text x="475" y="114" text-anchor="middle" font-size="12" fill="#333">⟺ x² + 2·3·x + 3² = 16 + 9</text>
+  <text x="475" y="140" text-anchor="middle" font-size="12" fill="#333">⟺ (x + 3)² = 25</text>
+  <text x="475" y="170" text-anchor="middle" font-size="12" fill="#333">⟺ x + 3 = ±5</text>
+  <text x="475" y="198" text-anchor="middle" font-size="13" font-weight="bold" fill="#0054a6">⟹ x = 2  hoặc  x = −8</text>
+  <line x1="355" y1="215" x2="595" y2="215" stroke="#ddd" stroke-width="1"/>
+  <text x="475" y="238" text-anchor="middle" font-size="11" fill="#555">Công thức nghiệm tổng quát bắt nguồn</text>
+  <text x="475" y="255" text-anchor="middle" font-size="11" fill="#555">từ phương pháp hình học này!</text>
+  <text x="475" y="272" text-anchor="middle" font-size="11" fill="#888">Δ = b² − 4ac (generalization)</text>
+</svg>

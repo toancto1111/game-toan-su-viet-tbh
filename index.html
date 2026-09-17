@@ -1,0 +1,560 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử Việt Anh Hùng Truyện & Toán Học Kỳ Thư</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <script>
+      window.addEventListener('error', (event) => {
+        document.body.innerHTML += '<div style="color:red; background:white; position:fixed; top:0; z-index:9999; padding: 20px;">' + event.error.message + '<br/>' + event.error.stack + '</div>';
+      });
+    </script>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$']],
+          processEscapes: true,
+          macros: {
+            N: "{\\mathbb{N}}",
+            Z: "{\\mathbb{Z}}",
+            div: "\\vdots",
+            ndiv: "\\not\\vdots"
+          }
+        },
+        options: {
+          renderActions: {
+            addMenu: []
+          }
+        },
+        chtml: {
+          scale: 1.1,
+          fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+        },
+        startup: {
+          ready: () => {
+            MathJax.startup.defaultReady();
+          }
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* === FONT TIẾNG VIỆT TỐI ƯU === */
+        /* Be Vietnam Pro: thiết kế riêng cho tiếng Việt, precomposed Unicode diacritics */
+        /* Noto Serif: hỗ trợ toàn bộ Unicode Việt, phong cách cổ điển trang trọng */
+        /* Playfair Display: font tiêu đề sang trọng, cổ điển, hỗ trợ tiếng Việt đầy đủ */
+        body {
+            font-family: 'Be Vietnam Pro', 'Noto Serif', 'Segoe UI', Arial, sans-serif;
+            font-feature-settings: 'liga' 1, 'kern' 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            background-color: #0c0a09;
+            color: #e7e5e4;
+            overflow-x: hidden;
+        }
+        /* Override Tailwind utilities với !important */
+        .font-cinzel { font-family: 'Playfair Display', 'Noto Serif', serif !important; }
+        .font-serif   { font-family: 'Noto Serif', 'Be Vietnam Pro', serif !important; }
+        .font-sans    { font-family: 'Be Vietnam Pro', 'Noto Serif', sans-serif !important; }
+        /* class riêng cho mọi đoạn text tiếng Việt trong component */
+        .font-viet    { font-family: 'Be Vietnam Pro', 'Noto Serif', 'Segoe UI', Arial, sans-serif !important; }
+        /* Đảm bảo tất cả text trong body dùng font Việt chuẩn */
+        p, span, div, button, input, select, textarea, label, li, td, th, h1, h2, h3, h4, h5, h6 {
+            font-family: inherit;
+        }
+        /* Chỉ heading có class font-cinzel mới dùng Cinzel */
+        h1:not(.font-cinzel), h2:not(.font-cinzel), h3:not(.font-cinzel) {
+            font-family: 'Be Vietnam Pro', sans-serif;
+        }
+
+        /* === CHỦ ĐỀ LỊCH SỬ VIỆT NAM === */
+        :root {
+            --viet-red: #8B1A1A;
+            --viet-gold: #C9941A;
+            --viet-jade: #1A6B4A;
+            --viet-ink: #1C1008;
+            --viet-paper: #F0E4C3;
+        }
+
+        /* === KEYFRAME ANIMATIONS === */
+        @keyframes petalFall {
+            0%   { transform: translateY(-20px) translateX(0px) rotate(0deg); opacity: 0; }
+            10%  { opacity: 0.85; }
+            90%  { opacity: 0.6; }
+            100% { transform: translateY(105vh) translateX(55px) rotate(720deg); opacity: 0; }
+        }
+        @keyframes petalDrift {
+            0%   { transform: translateY(-20px) translateX(0px) rotate(0deg); opacity: 0; }
+            10%  { opacity: 0.75; }
+            90%  { opacity: 0.5; }
+            100% { transform: translateY(105vh) translateX(-75px) rotate(-540deg); opacity: 0; }
+        }
+        @keyframes lanternSwing {
+            0%, 100% { transform: rotate(-7deg); }
+            50% { transform: rotate(7deg); }
+        }
+        @keyframes goldShimmer {
+            0%   { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes shimmerSlide {
+            0%   { left: -60%; }
+            60%  { left: 120%; }
+            100% { left: 120%; }
+        }
+        @keyframes floatUp {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes battleFlicker {
+            0%, 100% { opacity: 0.28; }
+            50% { opacity: 0.45; }
+        }
+        @keyframes hpPulse {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.6) saturate(1.4); }
+        }
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.15; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(2); }
+        }
+        @keyframes rarityPulse {
+            0%, 100% { box-shadow: 0 0 15px var(--rarity-color, rgba(124,58,237,0.5)); }
+            50% { box-shadow: 0 0 35px var(--rarity-color, rgba(124,58,237,0.9)), 0 0 60px var(--rarity-color, rgba(124,58,237,0.3)); }
+        }
+        @keyframes shake {
+          0%   { transform: translate(1px, 1px) rotate(0deg); }
+          10%  { transform: translate(-1px, -2px) rotate(-1deg); }
+          20%  { transform: translate(-3px, 0px) rotate(1deg); }
+          30%  { transform: translate(3px, 2px) rotate(0deg); }
+          40%  { transform: translate(1px, -1px) rotate(1deg); }
+          50%  { transform: translate(-1px, 2px) rotate(-1deg); }
+          60%  { transform: translate(-3px, 1px) rotate(0deg); }
+          70%  { transform: translate(3px, 1px) rotate(-1deg); }
+          80%  { transform: translate(-1px, -1px) rotate(1deg); }
+          90%  { transform: translate(1px, 2px) rotate(0deg); }
+          100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        /* === NỀN TRANG === */
+        .ancient-bg {
+            background-color: #140c00;
+            background-image:
+                url('https://www.transparenttextures.com/patterns/aged-paper.png'),
+                radial-gradient(ellipse at 15% 15%, rgba(139,26,26,0.10) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 85%, rgba(201,148,26,0.06) 0%, transparent 55%);
+        }
+        .viet-bg {
+            background-color: #120800;
+            background-image:
+                repeating-linear-gradient(
+                    45deg,
+                    rgba(139,26,26,0.02) 0px, rgba(139,26,26,0.02) 1px,
+                    transparent 1px, transparent 40px
+                ),
+                radial-gradient(ellipse at 50% 0%, rgba(139,26,26,0.15) 0%, transparent 65%),
+                radial-gradient(ellipse at 80% 90%, rgba(60,10,0,0.25) 0%, transparent 50%);
+        }
+        .battle-bg {
+            background-color: #0d0000;
+            background-image:
+                radial-gradient(ellipse at 50% 90%, rgba(139,26,26,0.32) 0%, transparent 55%),
+                radial-gradient(ellipse at 20% 50%, rgba(80,10,10,0.22) 0%, transparent 40%),
+                radial-gradient(ellipse at 80% 50%, rgba(80,10,10,0.22) 0%, transparent 40%);
+        }
+
+        /* === CUỘN GIẤY / GIẤY DÓ === */
+        .scroll-bg {
+            background: #f0e4c3;
+            background-image:
+                url('https://www.transparenttextures.com/patterns/parchment.png'),
+                linear-gradient(180deg, rgba(240,228,195,0) 0%, rgba(215,195,155,0.18) 100%);
+            color: #431407;
+            border-left: 18px solid #7a2020;
+            border-right: 18px solid #7a2020;
+            box-shadow: 0 0 60px rgba(0,0,0,0.7), inset 0 0 60px rgba(139,26,26,0.04);
+            position: relative;
+        }
+        .scroll-bg::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 5px;
+            background: linear-gradient(90deg, transparent, rgba(122,32,32,0.22), transparent);
+            pointer-events: none; z-index: 0;
+        }
+        .scroll-bg::after {
+            content: '';
+            position: absolute; bottom: 0; left: 0; right: 0; height: 5px;
+            background: linear-gradient(90deg, transparent, rgba(122,32,32,0.22), transparent);
+            pointer-events: none; z-index: 0;
+        }
+
+        /* === CÁC PHẦN TỬ ĐẶC BIỆT === */
+        .lantern {
+            display: inline-block;
+            animation: lanternSwing 3s ease-in-out infinite;
+            transform-origin: top center;
+            filter: drop-shadow(0 0 8px rgba(255,150,30,0.7));
+        }
+        .petal {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 1;
+        }
+        .float-up {
+            animation: floatUp 4s ease-in-out infinite;
+        }
+        .gold-shimmer-btn {
+            background-size: 200% auto;
+            background-image: linear-gradient(
+                to right,
+                #5c1200 0%, #C9941A 25%, #F0C040 50%, #C9941A 75%, #5c1200 100%
+            );
+            animation: goldShimmer 3s linear infinite;
+            color: white;
+        }
+        .hp-low { animation: hpPulse 0.8s ease-in-out infinite; }
+        .battle-log {
+            background: linear-gradient(180deg, rgba(8,0,0,0.92) 0%, rgba(30,5,0,0.96) 100%);
+            border: 1px solid rgba(139,26,26,0.35);
+            font-family: 'Cinzel', serif;
+        }
+
+        /* === MENU HUB ITEMS === */
+        .menu-item-kinh-luan  { background: linear-gradient(135deg, #060e1e 0%, #0f1d3a 100%) !important; }
+        .menu-item-danh-trai  { background: linear-gradient(135deg, #071407 0%, #0f2a0f 100%) !important; }
+        .menu-item-quoc-tu-giam { background: linear-gradient(135deg, #1a0505 0%, #340c0c 100%) !important; }
+        .menu-item-ky-tran    { background: linear-gradient(135deg, #150f00 0%, #2e2000 100%) !important; }
+        .menu-item-chieu-mo   { background: linear-gradient(135deg, #0f0018 0%, #200040 100%) !important; }
+        .menu-item-ban-do     { background: linear-gradient(135deg, #001a14 0%, #003326 100%) !important; }
+
+        /* === RARITY GLOW === */
+        .summon-card-sr  { box-shadow: 0 0 20px rgba(201,148,26,0.5), 0 0 40px rgba(201,148,26,0.2) !important; }
+        .summon-card-ssr { box-shadow: 0 0 22px rgba(192,57,43,0.55), 0 0 44px rgba(192,57,43,0.2) !important; }
+        .summon-card-ur  {
+            box-shadow: 0 0 30px rgba(124,58,237,0.7), 0 0 60px rgba(124,58,237,0.3) !important;
+            animation: rarityPulse 1.5s ease-in-out infinite;
+            --rarity-color: rgba(124, 58, 237, 0.7);
+        }
+
+        /* === THẺ CHƯƠNG === */
+        .chapter-card-unlocked {
+            background: linear-gradient(135deg, #1c0f00 0%, #3a1a00 50%, #1c0f00 100%) !important;
+            position: relative;
+            overflow: hidden;
+        }
+        .chapter-card-unlocked::before {
+            content: '';
+            position: absolute; top: 0; bottom: 0; left: -60%;
+            width: 40%;
+            background: linear-gradient(90deg, transparent, rgba(201,148,26,0.09), transparent);
+            animation: shimmerSlide 3.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        /* === STYLES GỐC GIỮ NGUYÊN === */
+        .mjx-chtml { color: inherit !important; font-size: 1.2em !important; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #1c1917; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #78350f; border-radius: 10px; }
+        .hero-avatar {
+            filter: sepia(30%) contrast(110%) brightness(90%);
+            mix-blend-mode: multiply;
+        }
+        .avatar-container {
+            background-color: #d6b58c;
+            background-image: url('https://www.transparenttextures.com/patterns/handmade-paper.png');
+            position: relative; overflow: hidden;
+        }
+        .avatar-container::after {
+            content: ''; position: absolute; inset: 0;
+            box-shadow: inset 0 0 40px rgba(67,20,7,0.4);
+            pointer-events: none;
+        }
+        .animate-shake {
+          animation: shake 0.5s;
+          animation-iteration-count: 1;
+          filter: sepia(100%) saturate(300%) hue-rotate(-50deg) !important;
+        }
+        .quiz-content, .explanation-content { min-height: 2.5em; }
+        /* === GACHA ANIMATIONS === */
+        .gacha-card-container {
+            perspective: 1000px;
+        }
+        .gacha-card {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            position: relative;
+        }
+        .gacha-card.flipped {
+            transform: rotateY(180deg);
+        }
+        .gacha-card.flipped .gacha-front {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            box-shadow: none !important;
+            transition: opacity 0.2s ease-out;
+        }
+        .gacha-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 2rem;
+            -webkit-backface-visibility: hidden;
+        }
+        .gacha-front {
+            /* Thick 3D Card Edge + Inner Shadow */
+            background: radial-gradient(circle at center, #2a1600 0%, #110800 100%);
+            border: 2px solid #C9941A;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.9), 
+                        -1px 1px 0 #8c6310, 
+                        -2px 2px 0 #6e4e0d, 
+                        -3px 3px 0 #543b09, 
+                        -4px 4px 0 #3a2805, 
+                        -8px 8px 25px rgba(0,0,0,0.9);
+        }
+        .gacha-back {
+            /* This is the revealed hero face */
+            transform: rotateY(180deg);
+            background: transparent;
+        }
+        
+        @keyframes gachaSpin {
+            0% { transform: rotateZ(0deg) translateY(0); }
+            25% { transform: rotateZ(-2deg) translateY(-2px); }
+            50% { transform: rotateZ(0deg) translateY(0); }
+            75% { transform: rotateZ(2deg) translateY(-2px); }
+            100% { transform: rotateZ(0deg) translateY(0); }
+        }
+        .animate-gacha-spin {
+            animation: gachaSpin 0.15s ease-in-out infinite;
+        }
+
+        @keyframes ssrFlash {
+            0% { opacity: 0; transform: scale(0.9); }
+            10% { opacity: 1; transform: scale(1); filter: brightness(2); }
+            100% { opacity: 0; transform: scale(1.1); filter: brightness(1); }
+        }
+        .ssr-flash-overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255,215,0,0.4) 0%, transparent 60%);
+            z-index: 100;
+            pointer-events: none;
+            animation: ssrFlash 1.5s ease-out forwards;
+        }
+        
+        /* === LED AVATAR BORDERS (PERIMETER RUNNING BEAM) === */
+        .led-border {
+            position: relative;
+            z-index: 1;
+            padding: 2.5px;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background: #1c1917;
+        }
+        .led-border::before {
+            content: '';
+            position: absolute;
+            top: -75%;
+            left: -75%;
+            width: 250%;
+            height: 250%;
+            z-index: 0;
+            background: conic-gradient(
+                transparent 0deg,
+                transparent 240deg,
+                var(--led-color, #ef4444) 310deg,
+                #ffffff 360deg
+            );
+            animation: led-rotate 2.5s linear infinite;
+        }
+        .led-border::after {
+            content: '';
+            position: absolute;
+            inset: 2.5px;
+            background: #1c1917;
+            border-radius: calc(0.75rem - 2.5px);
+            z-index: 1;
+        }
+        .led-border > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .led-red {
+            --led-color: #ff1a1a;
+            box-shadow: 0 0 10px rgba(255, 26, 26, 0.4);
+        }
+        .led-purple {
+            --led-color: #c084fc;
+            box-shadow: 0 0 10px rgba(192, 132, 252, 0.4);
+        }
+        .led-white {
+            --led-color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        .led-gold {
+            --led-color: #fbbf24;
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+
+        @keyframes led-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .animated-border-purple {
+            position: relative;
+            background: #110022;
+            z-index: 1;
+        }
+        .animated-border-purple::before {
+            content: '';
+            position: absolute;
+            top: -4px; left: -4px; right: -4px; bottom: -4px;
+            background: linear-gradient(45deg, #ff00ff, #7c3aed, #00ffff, #7c3aed);
+            background-size: 400%;
+            z-index: -1;
+            filter: blur(10px);
+            border-radius: 3.5rem;
+            animation: glowing 10s linear infinite;
+        }
+        .animated-border-purple::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #110022;
+            border-radius: 3.5rem;
+            z-index: -1;
+        }
+        @keyframes glowing {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
+        /* === COMBAT ANIMATIONS === */
+        /* Cards fly out to center then RETURN automatically (round-trip, no forwards) */
+        .combat-clash-ally {
+            animation: clashAlly var(--clash-dur, 0.9s) ease-in-out both;
+            z-index: 100 !important;
+        }
+        .combat-clash-enemy {
+            animation: clashEnemy var(--clash-dur, 0.9s) ease-in-out both;
+            z-index: 100 !important;
+        }
+        @keyframes clashAlly {
+            0%   { transform: scale(1) translateX(0);   filter: drop-shadow(0 0 0 rgba(251,191,36,0)); }
+            35%, 65% { transform: scale(1.45) translateX(190px); filter: drop-shadow(0 0 28px rgba(251,191,36,1)); }
+            100% { transform: scale(1) translateX(0);   filter: drop-shadow(0 0 0 rgba(251,191,36,0)); }
+        }
+        @keyframes clashEnemy {
+            0%   { transform: scale(1) translateX(0);    filter: drop-shadow(0 0 0 rgba(220,38,38,0)); }
+            35%, 65% { transform: scale(1.45) translateX(-190px); filter: drop-shadow(0 0 28px rgba(220,38,38,1)); }
+            100% { transform: scale(1) translateX(0);    filter: drop-shadow(0 0 0 rgba(220,38,38,0)); }
+        }
+        .combat-hit {
+            animation: hitShake 0.35s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        @keyframes hitShake {
+            0%  { transform: translate3d(0, 0, 0) scale(1.45); }
+            15% { transform: translate3d(-5px, 0, 0) scale(1.45); filter: brightness(1.8) sepia(0.6) hue-rotate(-50deg); }
+            30% { transform: translate3d(6px, 0, 0) scale(1.45); }
+            45% { transform: translate3d(-7px, 0, 0) scale(1.45); }
+            60% { transform: translate3d(7px, 0, 0) scale(1.45); }
+            75% { transform: translate3d(-4px, 0, 0) scale(1.45); }
+            100%{ transform: translate3d(0, 0, 0) scale(1.45); }
+        }
+        /* Floating damage number */
+        .damage-popup {
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: 200;
+            font-family: 'Cinzel', serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255,80,0,0.9), 0 2px 4px rgba(0,0,0,0.8);
+            animation: damageFloat 0.9s ease-out forwards;
+        }
+        @keyframes damageFloat {
+            0%   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1.2); }
+            60%  { opacity: 1; transform: translateX(-50%) translateY(-40px) scale(1); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-60px) scale(0.8); }
+        }
+
+        /* Hit Effects Overlays */
+        .effect-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 60;
+            border-radius: inherit;
+            opacity: 0;
+            mix-blend-mode: screen;
+        }
+        .effect-fire {
+            background: radial-gradient(circle, rgba(255,120,0,0.95) 0%, rgba(255,50,0,0.4) 50%, rgba(255,0,0,0) 80%);
+            animation: effectFlash 0.55s ease-out forwards;
+        }
+        .effect-ice {
+            background: radial-gradient(circle, rgba(140,220,255,0.95) 0%, rgba(0,100,255,0.4) 50%, rgba(0,50,255,0) 80%);
+            animation: effectFlash 0.55s ease-out forwards;
+        }
+        .effect-lightning {
+            background: radial-gradient(circle, rgba(255,255,150,1) 0%, rgba(200,200,0,0.5) 40%, rgba(150,150,0,0) 80%);
+            animation: effectFlashStrobe 0.6s ease-out forwards;
+        }
+        .effect-slash {
+            background: linear-gradient(135deg, transparent 35%, rgba(255,255,255,0.9) 47%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.9) 53%, transparent 65%);
+            background-size: 200% 200%;
+            animation: slashStrike 0.35s ease-out forwards;
+        }
+        @keyframes effectFlash {
+            0%   { opacity: 0; transform: scale(0.4); }
+            25%  { opacity: 1; transform: scale(1.3); }
+            100% { opacity: 0; transform: scale(1.6); }
+        }
+        @keyframes effectFlashStrobe {
+            0%  { opacity: 0; }
+            12% { opacity: 1; filter: brightness(2.5); }
+            24% { opacity: 0.2; }
+            36% { opacity: 1; filter: brightness(2.5); }
+            60% { opacity: 0.6; }
+            100%{ opacity: 0; transform: scale(1.2); }
+        }
+        @keyframes slashStrike {
+            0%   { background-position: 160% 160%; opacity: 0; }
+            20%  { opacity: 1; }
+            100% { background-position: -60% -60%; opacity: 0; }
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

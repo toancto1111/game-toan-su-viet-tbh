@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 260" width="100%" height="100%" style="max-width: 340px; max-height: 260px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1e3a8a" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+    <marker id="arrow-black" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1f2937" />
+    </marker>
+    <pattern id="hatch-blue" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#3b82f6" stroke-width="1.5" />
+    </pattern>
+  </defs>
+  
+  <!-- Tam giác đều lớn: Đỉnh (170, 30), Đáy trái (50, 200), Đáy phải (290, 200) cạnh = 240px tương ứng 4cm -->
+  <polygon points="170,30 290,200 50,200" fill="rgba(59, 130, 246, 0.08)" stroke="#2563eb" stroke-width="3" />
+  
+  <!-- Trung điểm 3 cạnh: (110, 115), (230, 115), (170, 200) -->
+  <polygon points="110,115 230,115 170,200" fill="rgba(249, 115, 22, 0.15)" stroke="#ea580c" stroke-width="2" stroke-dasharray="5,4" />
+
+  <text x="170" y="85" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">① (2cm)</text>
+  <text x="110" y="175" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">② (2cm)</text>
+  <text x="230" y="175" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">③ (2cm)</text>
+  <text x="170" y="155" font-size="13" font-weight="bold" fill="#ea580c" text-anchor="middle">④ (2cm)</text>
+
+  <!-- Nhãn kích thước -->
+  <line x1="50" y1="215" x2="290" y2="215" stroke="#0f172a" stroke-width="2" marker-start="url(#arrow-black)" marker-end="url(#arrow-black)" />
+  <text x="170" y="232" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">Cạnh tam giác lớn: 4 cm</text>
+  <text x="170" y="250" font-size="12" font-weight="bold" fill="#dc2626" text-anchor="middle">1 tg lớn = 4 tg nhỏ ⇒ Lục giác = 6 × 4 = 24 tg</text>
+
+</svg>

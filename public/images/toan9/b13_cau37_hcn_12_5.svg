@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 240" width="100%" height="100%" style="max-width: 340px; max-height: 240px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1e3a8a" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+    <marker id="arrow-black" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1f2937" />
+    </marker>
+  </defs>
+  
+  <circle cx="170" cy="120" r="85" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="6,4" />
+  <!-- Rect width 156 (12cm), height 65 (5cm) -->
+  <rect x="92" y="87" width="156" height="65" fill="rgba(37, 99, 235, 0.05)" stroke="#0f172a" stroke-width="2" />
+  <line x1="92" y1="152" x2="248" y2="87" stroke="#dc2626" stroke-width="2" />
+  <circle cx="170" cy="120" r="4" fill="#dc2626" />
+  <text x="175" y="112" font-size="13" font-weight="bold" fill="#dc2626">O</text>
+
+  <text x="170" y="80" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">12 cm</text>
+  <text x="255" y="125" font-size="12" font-weight="bold" fill="#0f172a">5 cm</text>
+
+  <text x="170" y="185" font-size="12" font-weight="bold" fill="#dc2626" text-anchor="middle">Đường chéo = √(12² + 5²) = 13 cm</text>
+  <text x="170" y="205" font-size="12" font-weight="bold" fill="#15803d" text-anchor="middle">Bán kính R = 13 / 2 = 6,5 cm</text>
+
+</svg>

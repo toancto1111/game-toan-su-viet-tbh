@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 260" width="100%" height="100%" style="max-width: 520px; max-height: 260px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0050b4" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#c80000" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#009650" />
+    </marker>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#bae6fd" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <linearGradient id="seaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+  
+  <rect x="5" y="5" width="510" height="250" rx="12" fill="url(#skyGrad)" stroke="#cbd5e1" stroke-width="1.5" />
+  
+  <!-- Mặt đất -->
+  <rect x="5" y="210" width="510" height="45" fill="#e2e8f0" />
+  <line x1="5" y1="210" x2="515" y2="210" stroke="#64748b" stroke-width="2" />
+  
+  <!-- Điểm A(60, 210), H(420, 210), B(420, 50) -->
+  <!-- Đường nằm ngang AH nét đứt -->
+  <line x1="60" y1="210" x2="420" y2="210" stroke="#64748b" stroke-width="2" stroke-dasharray="6,4" />
+  
+  <!-- Đường thẳng đứng BH nét đứt đỏ -->
+  <line x1="420" y1="210" x2="420" y2="50" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6,4" />
+  <!-- Ký hiệu vuông tại H -->
+  <polyline points="398,210 398,188 420,188" fill="none" stroke="#dc2626" stroke-width="2" />
+
+  <!-- Đường bay AB mũi tên -->
+  <line x1="60" y1="210" x2="415" y2="53" stroke="#0284c7" stroke-width="3.5" marker-end="url(#arrow)" />
+  
+  <!-- Góc 30 độ tại A -->
+  <path d="M 120 210 A 60 60 0 0 0 112 180" fill="none" stroke="#ea580c" stroke-width="2.5" />
+  <text x="130" y="195" font-size="14" font-weight="bold" fill="#ea580c">30°</text>
+
+  <!-- Máy bay biểu tượng tại B -->
+  <g transform="translate(420, 50) rotate(-24)">
+    <path d="M -15 0 L 15 0 L 25 -5 L 15 -5 L 5 -18 L -2 -18 L 3 -5 L -10 -5 L -15 -12 L -18 -12 L -16 0 Z" fill="#0369a1" />
+  </g>
+
+  <!-- Đỉnh A, H, B -->
+  <circle cx="60" cy="210" r="4" fill="#0050b4" />
+  <text x="45" y="230" font-size="16" font-weight="bold" fill="#0050b4">A</text>
+
+  <circle cx="420" cy="210" r="4" fill="#0050b4" />
+  <text x="425" y="230" font-size="16" font-weight="bold" fill="#0050b4">H</text>
+
+  <circle cx="420" cy="50" r="4" fill="#0050b4" />
+  <text x="435" y="50" font-size="16" font-weight="bold" fill="#0050b4">B</text>
+
+  <!-- Nhãn độ cao h -->
+  <rect x="430" y="115" width="75" height="30" rx="6" fill="#fef2f2" stroke="#f87171" stroke-width="1.5" />
+  <text x="467" y="135" font-size="14" font-weight="bold" fill="#dc2626" text-anchor="middle">h = ?</text>
+
+  <!-- Nhãn vận tốc và quãng đường -->
+  <text x="210" y="110" font-size="13" font-weight="bold" fill="#0369a1" transform="rotate(-24 210 110)">v = 500 km/h (s = 10 km)</text>
+  <text x="240" y="232" font-size="12" fill="#475569" text-anchor="middle">Mặt đất (phương ngang)</text>
+
+</svg>

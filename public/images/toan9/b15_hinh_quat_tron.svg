@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="2" dy="4" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="460" height="360" rx="16" fill="url(#bgGrad)"/>
+
+  <!-- Tâm O(230, 200), R = 110 -->
+  <circle cx="230" cy="200" r="110" fill="none" stroke="#cbd5e1" stroke-width="1.8"/>
+
+  <!-- Góc 40 deg đến 150 deg (ngược chiều kim đồng hồ từ trục ox sang y âm) -->
+  <!-- 40 deg: cos(40)=0.766, sin(40)=-0.6428 => x=230+110*0.766=314.3, y=200-110*0.6428=129.3 -->
+  <!-- 150 deg: cos(150)=-0.866, sin(150)=-0.5 => x=230-110*0.866=134.7, y=200-110*0.5=145.0 -->
+
+  <!-- Hình quạt tròn tô màu cam vàng sang trọng -->
+  <path d="M 230 200 L 314.3 129.3 A 110 110 0 0 0 134.7 145 Z" fill="#fdba74" fill-opacity="0.55" stroke="#f97316" stroke-width="2.5"/>
+
+  <!-- Viền cung l màu đỏ tươi -->
+  <path d="M 314.3 129.3 A 110 110 0 0 0 134.7 145" fill="none" stroke="#dc2626" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- Cung biểu thị góc n độ -->
+  <path d="M 256.8 177.5 A 35 35 0 0 0 199.7 182.5" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+  <text x="230" y="172" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#c2410c" text-anchor="middle">n°</text>
+
+  <!-- Tâm O và 2 mút A, B -->
+  <circle cx="230" cy="200" r="4.5" fill="#0284c7"/>
+  <text x="230" y="222" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#0f172a" text-anchor="middle">O</text>
+
+  <circle cx="314.3" cy="129.3" r="4" fill="#0284c7"/>
+  <text x="328" y="132" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#0f172a">A</text>
+
+  <circle cx="134.7" cy="145" r="4" fill="#0284c7"/>
+  <text x="118" y="148" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#0f172a">B</text>
+
+  <!-- Ký hiệu Sq ở giữa quạt -->
+  <text x="230" y="130" font-family="system-ui, sans-serif" font-size="22" font-weight="900" fill="#c2410c" text-anchor="middle">S<tspan font-size="14" dy="5">q</tspan></text>
+  
+  <!-- Nhãn độ dài cung l -->
+  <text x="230" y="75" font-family="system-ui, sans-serif" font-size="16" font-style="italic" font-weight="bold" fill="#dc2626" text-anchor="middle">l</text>
+
+  <!-- Nhãn bán kính R -->
+  <text x="285" y="180" font-family="system-ui, sans-serif" font-size="14" font-style="italic" font-weight="bold" fill="#0284c7">R</text>
+
+  <!-- Hộp công thức phía dưới -->
+  <g transform="translate(230, 290)" filter="url(#shadow)">
+    <rect x="-170" y="-22" width="340" height="44" rx="10" fill="#ffffff" stroke="#f97316" stroke-width="2"/>
+    <text x="0" y="6" font-family="system-ui, sans-serif" font-size="15" font-weight="bold" fill="#c2410c" text-anchor="middle">
+      S<tspan font-size="11" dy="3">q</tspan><tspan font-size="15" dy="-3"> = (</tspan><tspan font-style="italic">n</tspan>/360) · π<tspan font-style="italic">R</tspan>² = (<tspan font-style="italic">l · R</tspan>) / 2
+    </text>
+  </g>
+
+  <text x="230" y="345" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#64748b" text-anchor="middle">
+    Hình 15.2(a) — Hình quạt tròn bán kính R, góc ở tâm n°
+  </text>
+</svg>

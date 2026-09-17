@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 230" width="100%" height="100%" style="max-width: 420px; max-height: 230px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0050b4" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#c80000" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#009650" />
+    </marker>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#bae6fd" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <linearGradient id="seaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+  
+  <rect x="5" y="5" width="410" height="220" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+  <!-- Mặt đất -->
+  <line x1="20" y1="190" x2="400" y2="190" stroke="#64748b" stroke-width="2" />
+  <!-- Cột điện A(80, 190) đến B(80, 40) -->
+  <line x1="80" y1="190" x2="80" y2="40" stroke="#334155" stroke-width="5" />
+  <line x1="60" y1="55" x2="100" y2="55" stroke="#334155" stroke-width="3" />
+  <line x1="65" y1="75" x2="95" y2="75" stroke="#334155" stroke-width="3" />
+  
+  <!-- Vuông góc tại A -->
+  <polyline points="80,172 98,172 98,190" fill="none" stroke="#334155" stroke-width="1.5" />
+  
+  <!-- Tia sáng mặt trời từ B(80, 40) đến C(300, 190) -->
+  <line x1="80" y1="40" x2="300" y2="190" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="5,4" />
+  <!-- Mặt trời -->
+  <circle cx="50" cy="30" r="16" fill="#fbbf24" stroke="#f59e0b" stroke-width="2" />
+  
+  <!-- Cung góc 40 độ tại C -->
+  <path d="M 250 190 A 50 50 0 0 1 262 165" fill="none" stroke="#ea580c" stroke-width="2" />
+  <text x="240" y="180" font-size="13" font-weight="bold" fill="#ea580c">40°</text>
+
+  <!-- Chiều cao 8m -->
+  <text x="65" y="115" font-size="14" font-weight="bold" fill="#dc2626" text-anchor="end">8 m</text>
+  
+  <!-- Bóng trên mặt đất x = ? -->
+  <line x1="80" y1="205" x2="300" y2="205" stroke="#009650" stroke-width="2" marker-start="url(#arrow-green)" marker-end="url(#arrow-green)" />
+  <text x="190" y="222" font-size="13" font-weight="bold" fill="#009650" text-anchor="middle">Bóng x = ? (≈ 9,5 m)</text>
+
+</svg>

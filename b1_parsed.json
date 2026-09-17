@@ -1,0 +1,722 @@
+[
+  {
+    "id": "TOAN9_B1_001",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Nhận biết",
+    "type": "multiple_choice_1",
+    "question": "Phương trình nào sau đây không phải phương trình bậc nhất hai ẩn?",
+    "options": [
+      "A. $2025x - 2026y + 2027 = 0$.",
+      "B. $\\dfrac{1}{2}y - \\dfrac{2026}{2027} = 0$.",
+      "C. $\\dfrac{1}{2}x - 2y = 0$.",
+      "D. $2x + y^2 - 2 = 0$."
+    ],
+    "correctAnswer": 3,
+    "explanation": "Phương trình bậc nhất hai ẩn có dạng $ax+by=c$. Phương trình $2x+y^2-2=0$ chứa $y^2$ nên không phải là phương trình bậc nhất hai ẩn[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_002",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Nhận biết",
+    "type": "multiple_choice_1",
+    "question": "Phương trình nào sau đây là phương trình bậc nhất hai ẩn?",
+    "options": [
+      "A. $2x^2 + 2 = 0$.",
+      "B. $3y - 1 = 5(y - 2)$.",
+      "C. $2x + \\dfrac{y}{2} - 1 = 0$.",
+      "D. $3\\sqrt{x} + y^2 = 0$."
+    ],
+    "correctAnswer": 2,
+    "explanation": "Phương trình $2x+\\dfrac{y}{2}-1=0$ có dạng $ax+by=c$ với $a=2, b=\\dfrac{1}{2}, c=1$ nên là phương trình bậc nhất hai ẩn[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_003",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Nhận biết",
+    "type": "multiple_choice_1",
+    "question": "Cặp số $\\left(1; -\\dfrac{1}{2}\\right)$ là nghiệm của phương trình bậc nhất hai ẩn nào sau đây?",
+    "options": [
+      "A. $2x - 1 = 0$.",
+      "B. $2y + 1 = 0$.",
+      "C. $x + 2y - 1 = 0$.",
+      "D. $2x - y - 3 = 0$."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Thay $y=-\\dfrac{1}{2}$ vào phương trình $2y+1=0$ ta được $2\\left(-\\dfrac{1}{2}\\right)+1 = -1+1=0$ (luôn đúng)[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_004",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Nhận biết",
+    "type": "multiple_choice_1",
+    "question": "Phương trình nào dưới đây nhận cặp số $(-2; 4)$ làm nghiệm?",
+    "options": [
+      "A. $x - 2y = 0$.",
+      "B. $2x + y = 0$.",
+      "C. $x - y = 2$.",
+      "D. $x + 2y + 1 = 0$."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Thay $x=-2, y=4$ vào phương trình $2x+y=0$, ta có $2(-2) + 4 = 0$ (đúng)[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_005",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Nhận biết",
+    "type": "multiple_choice_1",
+    "question": "Phương trình $x - 3y + 1 = 0$ nhận cặp số nào sau đây là nghiệm?",
+    "options": [
+      "A. $(1; -1)$.",
+      "B. $(-1; 0)$.",
+      "C. $(2; -1)$.",
+      "D. $\\left(0; -\\dfrac{1}{3}\\right)$."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Thay $x=-1, y=0$ ta có $-1 - 3(0) + 1 = 0$ (đúng)[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_006",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "multiple_choice_1",
+    "question": "Phương trình $x - 5y + 7 = 0$ nhận cặp số nào sau đây làm nghiệm?",
+    "options": [
+      "A. $(0; 1)$.",
+      "B. $(-1; 2)$.",
+      "C. $(3; 2)$.",
+      "D. $(2; 4)$."
+    ],
+    "correctAnswer": 2,
+    "explanation": "Thay $x=3, y=2$ vào phương trình ta được $3 - 5(2) + 7 = 3 - 10 + 7 = 0$ (đúng)[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_007",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "multiple_choice_1",
+    "question": "Phương trình $5x + 4y = 8$ nhận cặp số nào sau đây là nghiệm?",
+    "options": [
+      "A. $(-2; 1)$.",
+      "B. $(-1; 0)$.",
+      "C. $(1,5; 3)$.",
+      "D. $(4; -3)$."
+    ],
+    "correctAnswer": 3,
+    "explanation": "Thay $x=4, y=-3$ vào phương trình, ta có $5(4) + 4(-3) = 20 - 12 = 8$ (đúng)[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_008",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "multiple_choice_1",
+    "question": "Trong các cặp số $(-2; 1); (0; 2); (-1; 0); (1,5; 3); (4; -3)$, có bao nhiêu cặp số không là nghiệm của phương trình $3x + 5y = -3$?",
+    "options": [
+      "A. $1$.",
+      "B. $3$.",
+      "C. $2$.",
+      "D. $4$."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Thử lần lượt các nghiệm, chỉ có $(-1;0)$ và $(4;-3)$ là nghiệm. Vậy có $5-2=3$ cặp số không phải là nghiệm[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_009",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "multiple_choice_1",
+    "question": "Cho phương trình $ax + by = c$ với $a \\neq 0, b \\neq 0$. Nghiệm của phương trình được biểu diễn bởi:",
+    "options": [
+      "A. $\\begin{cases} x \\in \\mathbb{R} \\\\ y = -\\dfrac{a}{b}x + \\dfrac{c}{b} \\end{cases}$.",
+      "B. $\\begin{cases} x \\in \\mathbb{R} \\\\ y = -\\dfrac{a}{b}x - \\dfrac{c}{b} \\end{cases}$.",
+      "C. $\\begin{cases} x \\in \\mathbb{R} \\\\ y = \\dfrac{c}{b} \\end{cases}$.",
+      "D. $\\begin{cases} x \\in \\mathbb{R} \\\\ y = -\\dfrac{c}{b} \\end{cases}$."
+    ],
+    "correctAnswer": 0,
+    "explanation": "Với $b \\neq 0$, ta có $by = -ax + c \\Rightarrow y = -\\dfrac{a}{b}x + \\dfrac{c}{b}$[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_010",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "multiple_choice_1",
+    "question": "Cho phương trình $2x - y = 1$, nghiệm tổng quát của phương trình là:",
+    "options": [
+      "A. $(x; 2x + 1)$ với $x \\in \\mathbb{R}$ tùy ý.",
+      "B. $(-x; 2x - 1)$ với $x \\in \\mathbb{R}$ tùy ý.",
+      "C. $(-x; 2x + 1)$ với $x \\in \\mathbb{R}$ tùy ý.",
+      "D. $(x; 2x - 1)$ với $x \\in \\mathbb{R}$ tùy ý."
+    ],
+    "correctAnswer": 3,
+    "explanation": "Từ $2x - y = 1 \\Rightarrow y = 2x - 1$. Nghiệm tổng quát là $(x; 2x - 1)$ với $x \\in \\mathbb{R}$[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_011",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "multiple_choice_1",
+    "question": "Cho phương trình $0x + 4y = -16$, nghiệm tổng quát của phương trình là:",
+    "options": [
+      "A. $(x; -4)$ với $x \\in \\mathbb{R}$ tùy ý.",
+      "B. $(x; 4)$ với $x \\in \\mathbb{R}$ tùy ý.",
+      "C. $(-x; -4)$ với $x \\in \\mathbb{R}$ tùy ý.",
+      "D. $(-x; 4)$ với $x \\in \\mathbb{R}$ tùy ý."
+    ],
+    "correctAnswer": 0,
+    "explanation": "Phương trình suy ra $4y = -16 \\Rightarrow y = -4$. Nghiệm tổng quát là $(x; -4)$ với $x \\in \\mathbb{R}$[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_012",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "multiple_choice_1",
+    "question": "Cho phương trình $3x + 0y = 12$, nghiệm tổng quát của phương trình là:",
+    "options": [
+      "A. $(-4; y)$ với $y \\in \\mathbb{R}$ tùy ý.",
+      "B. $(4; -y)$ với $y \\in \\mathbb{R}$ tùy ý.",
+      "C. $(4; y)$ với $y \\in \\mathbb{R}$ tùy ý.",
+      "D. $(x; -4)$ với $x \\in \\mathbb{R}$ tùy ý."
+    ],
+    "correctAnswer": 2,
+    "explanation": "Phương trình suy ra $3x = 12 \\Rightarrow x = 4$. Nghiệm tổng quát là $(4; y)$ với $y \\in \\mathbb{R}$[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_013",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "multiple_choice_1",
+    "question": "Tập hợp nghiệm của phương trình bậc nhất hai ẩn nào sau đây được biểu diễn hình học là đường thẳng $d$ như hình dưới đây?\n\\begin{center}\n\\begin{tikzpicture}[scale=0.8]\n\\draw[->] (-2,0) -- (6,0) node[right] {$x$};\n\\draw[->] (0,-2) -- (0,3) node[above] {$y$};\n\\foreach \\x in {-1,1,2,3,4,5} \\draw (\\x,0.1) -- (\\x,-0.1) node[below] {$\\x$};\n\\foreach \\y in {-1,1,2} \\draw (0.1,\\y) -- (-0.1,\\y) node[left] {$\\y$};\n\\node[below left] at (0,0) {$O$};\n\\draw[thick, mainblue, domain=-1.5:4.5] plot (\\x, {-0.5*\\x + 1.5}) node[above right] {$d$};\n\\fill (-1,2) circle (2pt) node[above] {$N$};\n\\fill (3,0) circle (2pt) node[above right] {$B$};\n\\draw[dashed] (-1,0) -- (-1,2) -- (0,2);\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "A. $x - 3 = 0$.",
+      "B. $x - y + 3 = 0$.",
+      "C. $2x - y - 3 = 0$.",
+      "D. $x + 2y - 3 = 0$."
+    ],
+    "correctAnswer": 3,
+    "explanation": "Đường thẳng đi qua $N(-1; 2)$ và $B(3; 0)$. Thay tọa độ vào các phương án, chỉ có đáp án D thỏa mãn: $3 + 2(0) - 3 = 0$ và $-1 + 2(2) - 3 = 0$[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_014",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "multiple_choice_1",
+    "question": "Tập hợp nghiệm của phương trình bậc nhất hai ẩn nào sau đây được biểu diễn hình học là đường thẳng $d$ như hình dưới đây?\n\\begin{center}\n\\begin{tikzpicture}[scale=0.8]\n\\draw[->] (-4,0) -- (4,0) node[right] {$x$};\n\\draw[->] (0,-4) -- (0,2) node[above] {$y$};\n\\foreach \\x in {-3,-2,-1,1,2,3} \\draw (\\x,0.1) -- (\\x,-0.1) node[below] {$\\x$};\n\\foreach \\y in {-3,-2,-1,1} \\draw (0.1,\\y) -- (-0.1,\\y) node[left] {$\\y$};\n\\node[below left] at (0,0) {$O$};\n\\draw[thick, mainblue] (-3.5,-2) -- (3.5,-2) node[above right] {$d$};\n\\fill (0,-2) circle (2pt) node[above right] {$A$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "A. $y + 2 = 0$.",
+      "B. $x + 2 = 0$.",
+      "C. $y - 2 = 0$.",
+      "D. $x + y + 2 = 0$."
+    ],
+    "correctAnswer": 0,
+    "explanation": "Đồ thị là đường thẳng song song với trục hoành, cắt trục tung tại $y = -2$. Phương trình là $y = -2 \\Leftrightarrow y + 2 = 0$[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_015",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "multiple_choice_1",
+    "question": "Tập hợp nghiệm của phương trình bậc nhất hai ẩn nào sau đây được biểu diễn hình học là đường thẳng $d$ như hình dưới đây?\n\\begin{center}\n\\begin{tikzpicture}[scale=0.8]\n\\draw[->] (-3,0) -- (6,0) node[right] {$x$};\n\\draw[->] (0,-3) -- (0,3) node[above] {$y$};\n\\foreach \\x in {-2,-1,1,2,3,4,5} \\draw (\\x,0.1) -- (\\x,-0.1) node[below] {$\\x$};\n\\foreach \\y in {-2,-1,1,2} \\draw (0.1,\\y) -- (-0.1,\\y) node[left] {$\\y$};\n\\node[below left] at (0,0) {$O$};\n\\draw[thick, mainblue] (3,-2.5) -- (3,2.5) node[right] {$d$};\n\\fill (3,0) circle (2pt) node[above right] {$B$};\n\\end{tikzpicture}\n\\end{center}",
+    "options": [
+      "A. $y - 3 = 0$.",
+      "B. $x - 3 = 0$.",
+      "C. $x + 3 = 0$.",
+      "D. $2x + y - 6 = 0$."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Đồ thị là đường thẳng song song với trục tung, cắt trục hoành tại $x = 3$. Phương trình là $x = 3 \\Leftrightarrow x - 3 = 0$[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_016",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "multiple_choice_1",
+    "question": "Chọn khẳng định đúng. Đường thẳng $d$ biểu diễn tập nghiệm của phương trình $3x - y = 3$ là:",
+    "options": [
+      "A. Đường thẳng song song với trục hoành.",
+      "B. Đường thẳng song song với trục tung.",
+      "C. Đường thẳng đi qua gốc tọa độ.",
+      "D. Đường thẳng đi qua điểm $A(1; 0)$."
+    ],
+    "correctAnswer": 3,
+    "explanation": "Thay $x=1, y=0$ vào phương trình $3x - y = 3$ ta được $3(1) - 0 = 3$ (luôn đúng)[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_017",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "multiple_choice_1",
+    "question": "Cho đường thẳng nào dưới đây có biểu diễn hình học là đường thẳng song song với trục hoành?",
+    "options": [
+      "A. $5y = 7$.",
+      "B. $3x = 9$.",
+      "C. $x + y = 9$.",
+      "D. $6y + x = 7$."
+    ],
+    "correctAnswer": 0,
+    "explanation": "Phương trình dạng $y = k$ (hoặc $by = c$ với $a=0, b \\neq 0$) biểu diễn đường thẳng song song hoặc trùng với trục hoành[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_018",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "multiple_choice_1",
+    "question": "Tìm tất cả nghiệm nguyên của phương trình $5x - 3y = 8$.",
+    "options": [
+      "A. $\\begin{cases} x = 3t - 8 \\\\ y = 5t - 16 \\end{cases} (t \\in \\mathbb{Z})$.",
+      "B. $\\begin{cases} x = 3t - 8 \\\\ y = -5t - 6 \\end{cases} (t \\in \\mathbb{Z})$.",
+      "C. $\\begin{cases} x = 8t - 3 \\\\ y = 15t - 16 \\end{cases} (t \\in \\mathbb{Z})$.",
+      "D. $\\begin{cases} x = 3t + 8 \\\\ y = 5t + 6 \\end{cases} (t \\in \\mathbb{Z})$."
+    ],
+    "correctAnswer": 0,
+    "explanation": "$5x-3y=8 \\Rightarrow y = \\dfrac{5x-8}{3} = 2x - \\dfrac{x+8}{3}$. Đặt $\\dfrac{x+8}{3} = t \\Rightarrow x = 3t - 8$, thế vào $y$ được $y = 5t - 16$[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_019",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "multiple_choice_1",
+    "question": "Tìm tất cả các nghiệm nguyên của phương trình $3x - 2y = 5$.",
+    "options": [
+      "A. $\\begin{cases} x = 5 - 2t \\\\ y = -5 - 3t \\end{cases} (t \\in \\mathbb{Z})$.",
+      "B. $\\begin{cases} x = 5 + 2t \\\\ y = 5 - 3t \\end{cases} (t \\in \\mathbb{Z})$.",
+      "C. $\\begin{cases} x = 5 - 2t \\\\ y = 5 + 3t \\end{cases} (t \\in \\mathbb{Z})$.",
+      "D. $\\begin{cases} x = 5 + 2t \\\\ y = 5 + 3t \\end{cases} (t \\in \\mathbb{Z})$."
+    ],
+    "correctAnswer": 3,
+    "explanation": "Ta có $y = \\dfrac{3x-5}{2} = x + \\dfrac{x-5}{2}$. Đặt $\\dfrac{x-5}{2}=t \\Rightarrow x=2t+5$ và $y = 3t+5$[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_020",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "multiple_choice_1",
+    "question": "Cặp số $(2; -3)$ là nghiệm của hệ phương trình bậc nhất hai ẩn nào sau đây?",
+    "options": [
+      "A. $\\begin{cases} x - 2y = 4 \\\\ 2x + y = 3 \\end{cases}$.",
+      "B. $\\begin{cases} x - 3y = 5 \\\\ 2x + 3y = 1 \\end{cases}$.",
+      "C. $\\begin{cases} 3x - 2y = 12 \\\\ x + 2y = 9 \\end{cases}$.",
+      "D. $\\begin{cases} 2x - y = 7 \\\\ 3x + y = 3 \\end{cases}$."
+    ],
+    "correctAnswer": 3,
+    "explanation": "Thay $x=2, y=-3$ vào hệ $\\begin{cases} 2x - y = 7 \\\\ 3x + y = 3 \\end{cases}$ ta được $\\begin{cases} 2(2) - (-3) = 7 \\\\ 3(2) + (-3) = 3 \\end{cases}$ (thỏa mãn cả 2 pt)[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_021",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "true_false",
+    "question": "Cho phương trình $3x - y = -2$ (1). Xét khẳng định: \"Cặp số $(0; 2)$ là một nghiệm của phương trình (1).\"",
+    "correctAnswer": 0,
+    "explanation": "Thay $x=0, y=2$ vào (1) ta được $3(0) - 2 = -2$ (luôn đúng)[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_022",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "true_false",
+    "question": "Cho phương trình $3x - y = -2$ (1). Xét khẳng định: \"Cặp số $(2; 4)$ không phải là nghiệm của phương trình (1).\"",
+    "correctAnswer": 0,
+    "explanation": "Thay $x=2, y=4$ vào (1) ta được $3(2) - 4 = 2 \\neq -2$, nên cặp này không phải là nghiệm[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_023",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "true_false",
+    "question": "Cho phương trình $3x - y = -2$ (1). Xét khẳng định: \"Nghiệm của phương trình (1) là: $(x; 3x - 2)$ với $x \\in \\mathbb{R}$ tùy ý.\"",
+    "correctAnswer": 1,
+    "explanation": "Từ $3x - y = -2 \\Rightarrow y = 3x + 2$. Nghiệm tổng quát phải là $(x; 3x + 2)$ với $x \\in \\mathbb{R}$[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_024",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "true_false",
+    "question": "Cho phương trình $3x - y = -2$ (1). Xét khẳng định: \"Trong mặt phẳng tọa độ Oxy, đường thẳng $3x - y = -2$ có đồ thị biểu diễn đi qua các điểm $(0; 2)$ và $(-1; -1)$ như hình vẽ dưới đây:\"",
+    "correctAnswer": 0,
+    "explanation": "Đồ thị của $y = 3x + 2$ chính xác đi qua điểm $A(0; 2)$ và $B(-1; -1)$[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_025",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "true_false",
+    "question": "Cho phương trình $2x + y = 1$ (1). Xét khẳng định: \"Cặp số $(-1; 3)$ không phải là nghiệm của phương trình (1).\"",
+    "correctAnswer": 1,
+    "explanation": "Thay $x=-1, y=3$ vào (1) ta được $2(-1) + 3 = 1$ (đúng). Nên đây LÀ một nghiệm[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_026",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "true_false",
+    "question": "Cho phương trình $2x + y = 1$ (1). Xét khẳng định: \"Cặp số $(-2; 3)$ là một nghiệm của phương trình (1).\"",
+    "correctAnswer": 1,
+    "explanation": "Thay $x=-2, y=3$ vào (1) ta được $2(-2) + 3 = -1 \\neq 1$, nên đây KHÔNG PHẢI là nghiệm[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_027",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "true_false",
+    "question": "Cho phương trình $2x + y = 1$ (1). Xét khẳng định: \"Nghiệm của phương trình (1) là: $(x; -2x + 1)$ với $x \\in \\mathbb{R}$ tùy ý.\"",
+    "correctAnswer": 0,
+    "explanation": "Từ $2x + y = 1 \\Rightarrow y = -2x + 1$. Nghiệm tổng quát biểu diễn dưới dạng $(x; -2x+1)$[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_028",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "true_false",
+    "question": "Cho phương trình $2x + y = 1$ (1). Xét khẳng định: \"Trong mặt phẳng tọa độ Oxy, đường thẳng $2x + y = 1$ có đồ thị đi qua hai điểm $(0; 1)$ và $(1; -1)$ như hình vẽ dưới đây:\"",
+    "correctAnswer": 0,
+    "explanation": "Đồ thị $y = -2x + 1$ đi qua $x=0 \\Rightarrow y=1$ và $x=1 \\Rightarrow y=-1$ chính xác theo hình vẽ[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_029",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "true_false",
+    "question": "Cho hai phương trình $3x - 5y = -7$ và $2x + y = 4$ cùng với cặp số $(1; 2)$. Xét khẳng định: \"Cặp số $(1; 2)$ là một nghiệm của phương trình $3x - 5y = -7$.\"",
+    "correctAnswer": 0,
+    "explanation": "Thay $x=1, y=2$ vào pt ta được $3(1) - 5(2) = -7$ (luôn đúng)[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_030",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Thông hiểu",
+    "type": "true_false",
+    "question": "Cho hai phương trình $3x - 5y = -7$ và $2x + y = 4$ cùng với cặp số $(1; 2)$. Xét khẳng định: \"Cặp số $(1; 2)$ không phải là nghiệm của phương trình $2x + y = 4$.\"",
+    "correctAnswer": 1,
+    "explanation": "Thay $x=1, y=2$ vào pt ta được $2(1) + 2 = 4$ (đúng), vậy nó LÀ nghiệm[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_031",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "true_false",
+    "question": "Cho hai phương trình $3x - 5y = -7$ và $2x + y = 4$ cùng với cặp số $(1; 2)$. Xét khẳng định: \"Cặp số $(1; 2)$ không phải là nghiệm của hệ phương trình $\\begin{cases} 3x - 5y = -7 \\\\ 2x + y = 4 \\end{cases}$.\"",
+    "correctAnswer": 1,
+    "explanation": "Do $(1;2)$ thỏa mãn cả hai phương trình nên nó CHÍNH LÀ nghiệm của hệ[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_032",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "true_false",
+    "question": "Cho hai phương trình $3x - 5y = -7$ và $2x + y = 4$ cùng với cặp số $(1; 2)$. Xét khẳng định: \"Trong mặt phẳng tọa độ Oxy, hai đường thẳng $3x - 5y = -7$ và $2x + y = 4$ cắt nhau tại điểm có toạ độ $(1; 2)$.\"",
+    "correctAnswer": 0,
+    "explanation": "Điểm $(1;2)$ thỏa mãn cả 2 phương trình nên nó là điểm chung, tức là giao điểm[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_033",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "true_false",
+    "question": "Cho hai phương trình $\\dfrac{1}{2}x - 2y = -12$ và $x + \\dfrac{1}{3} = -\\dfrac{7}{3}$ cùng với cặp số $(-4; 5)$. Xét khẳng định: \"Cặp số $(-4; 5)$ không phải là nghiệm của phương trình $3x - 5y = -7$.\"",
+    "correctAnswer": 0,
+    "explanation": "Thay $x=-4, y=5$ vào $3(-4) - 5(5) = -37 \\neq -7$. Vậy nó không là nghiệm (theo file gốc đây là phương án bị hỏi nhầm của câu 34, đáp án gốc được ghi là Sai trong file, tuy nhiên tính chất khẳng định lại là Đúng do $-37 \\neq -7$). Để tôn trọng phân tích từ nguồn gốc: theo tài liệu nguồn[cite: 1], đáp án của câu này là Sai. (Có thể do lỗi in trong tài liệu gốc hỏi chéo pt)."
+  },
+  {
+    "id": "TOAN9_B1_034",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "true_false",
+    "question": "Cho hai phương trình $\\dfrac{1}{2}x - 2y = -12$ và $x + \\dfrac{1}{3} = -\\dfrac{7}{3}$ cùng với cặp số $(-4; 5)$. Xét khẳng định: \"Cặp số $(-4; 5)$ là một nghiệm của phương trình $\\dfrac{1}{2}x - 2y = -12$.\"",
+    "correctAnswer": 0,
+    "explanation": "Thay $x=-4, y=5$ vào phương trình ta được $\\dfrac{1}{2}(-4) - 2(5) = -12$ (đúng)[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_035",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "true_false",
+    "question": "Cho hai phương trình $\\dfrac{1}{2}x - 2y = -12$ và $x + \\dfrac{1}{3} = -\\dfrac{7}{3}$ cùng với cặp số $(-4; 5)$. Xét khẳng định: \"Cặp số $(-4; 5)$ là nghiệm duy nhất của hệ phương trình $\\begin{cases} \\dfrac{1}{2}x - 2y = -12 \\\\ x + \\dfrac{1}{3} = -\\dfrac{7}{3} \\end{cases}$.\"",
+    "correctAnswer": 0,
+    "explanation": "Cặp $(-4;5)$ thỏa mãn cả 2 pt và hệ này có định thức khác 0 nên có nghiệm duy nhất[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_036",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "true_false",
+    "question": "Cho hai phương trình $\\dfrac{1}{2}x - 2y = -12$ và $x + \\dfrac{1}{3} = -\\dfrac{7}{3}$ cùng với cặp số $(-4; 5)$. Xét khẳng định: \"Trong mặt phẳng tọa độ Oxy, hai đường thẳng $\\dfrac{1}{2}x - 2y = -12$ và $x + \\dfrac{1}{3} = -\\dfrac{7}{3}$ cắt nhau tại điểm có toạ độ $(-4; 5)$.\"",
+    "correctAnswer": 0,
+    "explanation": "Hai đường thẳng có nghiệm chung duy nhất là $(-4; 5)$ nên chúng cắt nhau tại điểm này[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_037",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "true_false",
+    "question": "Cho hai phương trình $2x - 3y = -19$ và $-3x + 2y = 7$ cùng cặp số $(-1; 2)$. Xét khẳng định: \"Phương trình $2x + 3y = -19$ có vô số nghiệm.\"",
+    "correctAnswer": 0,
+    "explanation": "Mọi phương trình bậc nhất hai ẩn đều có vô số nghiệm[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_038",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "true_false",
+    "question": "Cho hai phương trình $2x - 3y = -19$ và $-3x + 2y = 7$ cùng cặp số $(-1; 2)$. Xét khẳng định: \"Cặp số $(-1; 2)$ là một nghiệm của phương trình $-3x + 2y = 7$.\"",
+    "correctAnswer": 0,
+    "explanation": "Thay $x=-1, y=2$ vào pt ta được $-3(-1) + 2(2) = 7$ (luôn đúng)[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_039",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "true_false",
+    "question": "Cho hai phương trình $2x - 3y = -19$ và $-3x + 2y = 7$ cùng cặp số $(-1; 2)$. Xét khẳng định: \"Cặp số $(-1; 2)$ là nghiệm duy nhất của hệ phương trình $\\begin{cases} 2x - 3y = -19 \\\\ -3x + 2y = 7 \\end{cases}$.\"",
+    "correctAnswer": 1,
+    "explanation": "Thay $(-1;2)$ vào pt thứ nhất: $2(-1) - 3(2) = -8 \\neq -19$. Không phải nghiệm của hệ[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_040",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "true_false",
+    "question": "Cho hai phương trình $2x - 3y = -19$ và $-3x + 2y = 7$ cùng cặp số $(-1; 2)$. Xét khẳng định: \"Trong mặt phẳng tọa độ Oxy, hai đường thẳng $2x + 3y = -19$ và $-3x + 2y = 7$ cắt nhau tại điểm có toạ độ $(-1; 2)$.\"",
+    "correctAnswer": 1,
+    "explanation": "Cặp số $(-1; 2)$ không phải là nghiệm chung của 2 phương trình nên không phải là giao điểm[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_041",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "short_answer",
+    "question": "Để phương trình $x - y(m+1) - m + 4 = 0$ ($m$ là tham số) nhận cặp số $(-1; 3)$ là nghiệm thì giá trị $m$ bằng bao nhiêu?",
+    "correctAnswer": "0",
+    "explanation": "Thay $x=-1, y=3$ ta được: $-1 - 3(m+1) - m + 4 = 0 \\Rightarrow -4m = 0 \\Rightarrow m=0$[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_042",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "short_answer",
+    "question": "Để phương trình $2x - (m-2)^2y = 5$ ($m$ là tham số) nhận cặp số $(-10; -1)$ là nghiệm thì giá trị dương $m$ bằng bao nhiêu?",
+    "correctAnswer": "7",
+    "explanation": "Thay $x=-10, y=-1$: $2(-10) - (m-2)^2(-1) = 5 \\Rightarrow (m-2)^2 = 25 \\Rightarrow m=7$ hoặc $m=-3$. Giá trị dương là $m=7$[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_043",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "short_answer",
+    "question": "Để phương trình $\\sqrt{m-1} \\cdot x - 3y = -1$ ($m$ là tham số) nhận cặp số $(1; 1)$ là nghiệm thì giá trị $m$ bằng bao nhiêu?",
+    "correctAnswer": "5",
+    "explanation": "Thay $x=1, y=1$: $\\sqrt{m-1} - 3 = -1 \\Rightarrow \\sqrt{m-1} = 2 \\Rightarrow m-1=4 \\Rightarrow m=5$[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_044",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "short_answer",
+    "question": "Để phương trình $(m-2)x + (3m-1)y = 2m-6$ ($m$ là tham số) nhận cặp số $(0; 0)$ là nghiệm thì giá trị $m$ bằng bao nhiêu?",
+    "correctAnswer": "3",
+    "explanation": "Thay $x=0, y=0$: $0 + 0 = 2m-6 \\Rightarrow 2m=6 \\Rightarrow m=3$[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_045",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "short_answer",
+    "question": "Biết hai phương trình $ax + y = 5$ và $4x + by = 9$ nhận cặp số $(16; -11)$ làm nghiệm chung. Tính giá trị của $a+b$.",
+    "correctAnswer": "6",
+    "explanation": "Thay $(16;-11)$: $16a - 11 = 5 \\Rightarrow a=1$; $4(16) - 11b = 9 \\Rightarrow 11b = 55 \\Rightarrow b=5$. Vậy $a+b=6$[cite: 1]."
+  },
+  {
+    "id": "TOAN9_B1_046",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "short_answer",
+    "question": "Tìm giá trị $m$ để cặp số $(1; 2)$ là một nghiệm của phương trình bậc nhất hai ẩn $mx - 2y = 4$.",
+    "correctAnswer": "8",
+    "explanation": "Thay $x=1, y=2$ vào phương trình: $m(1) - 2(2) = 4 \\Rightarrow m - 4 = 4 \\Rightarrow m = 8$."
+  },
+  {
+    "id": "TOAN9_B1_047",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "short_answer",
+    "question": "Tìm tham số $k$ sao cho cặp số $(-2; 1)$ là một nghiệm của phương trình $3x + ky = -4$.",
+    "correctAnswer": "2",
+    "explanation": "Thay $x=-2, y=1$ vào phương trình: $3(-2) + k(1) = -4 \\Rightarrow -6 + k = -4 \\Rightarrow k = 2$."
+  },
+  {
+    "id": "TOAN9_B1_048",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "short_answer",
+    "question": "Biết phương trình $2x + 3y = c$ có một nghiệm là cặp số $(4; -1)$. Hãy tìm hằng số $c$.",
+    "correctAnswer": "5",
+    "explanation": "Thay $x=4, y=-1$ vào vế trái: $c = 2(4) + 3(-1) = 8 - 3 = 5$."
+  },
+  {
+    "id": "TOAN9_B1_049",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "short_answer",
+    "question": "Gọi $(x_0; y_0)$ là nghiệm duy nhất của hệ phương trình $\\begin{cases} x + y = 5 \\\\ x - y = 1 \\end{cases}$. Tính tích $x_0 \\cdot y_0$.",
+    "correctAnswer": "6",
+    "explanation": "Cộng hai phương trình ta được $2x = 6 \\Rightarrow x = 3$. Suy ra $y = 5 - 3 = 2$. Tích $x_0 y_0 = 3 \\cdot 2 = 6$."
+  },
+  {
+    "id": "TOAN9_B1_050",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng",
+    "type": "short_answer",
+    "question": "Tìm giá trị $a$ biết hai đường thẳng $ax + 2y = 8$ và $3x - y = 5$ cắt nhau tại điểm $M(2; 1)$.",
+    "correctAnswer": "3",
+    "explanation": "Vì $(2;1)$ là giao điểm nên nó thỏa mãn $ax + 2y = 8 \\Rightarrow a(2) + 2(1) = 8 \\Rightarrow 2a = 6 \\Rightarrow a = 3$."
+  },
+  {
+    "id": "TOAN9_B1_051",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng cao",
+    "type": "short_answer",
+    "question": "Cho phương trình bậc nhất hai ẩn $4x - y = 5$. Tìm tham số $m$ biết cặp số $(m; 3)$ là một nghiệm của phương trình.",
+    "correctAnswer": "2",
+    "explanation": "Thay $x=m, y=3$ ta được $4m - 3 = 5 \\Rightarrow 4m = 8 \\Rightarrow m = 2$."
+  },
+  {
+    "id": "TOAN9_B1_052",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng cao",
+    "type": "short_answer",
+    "question": "Tìm số lượng cặp nghiệm $(x;y)$ nguyên dương của phương trình $x + y = 3$.",
+    "correctAnswer": "2",
+    "explanation": "Các cặp số nguyên dương là $x \\geq 1, y \\geq 1$. Ta có các cặp $(1;2)$ và $(2;1)$, tổng cộng có 2 cặp."
+  },
+  {
+    "id": "TOAN9_B1_053",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng cao",
+    "type": "short_answer",
+    "question": "Tìm tung độ giao điểm (trục Oy) của đường thẳng biểu diễn phương trình $2x - y = 4$.",
+    "correctAnswer": "-4",
+    "explanation": "Giao điểm với trục tung ứng với hoành độ $x=0$. Thay vào pt: $2(0) - y = 4 \\Rightarrow y = -4$."
+  },
+  {
+    "id": "TOAN9_B1_054",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng cao",
+    "type": "short_answer",
+    "question": "Tìm hoành độ giao điểm (trục Ox) của đường thẳng biểu diễn phương trình $3x + 4y = 12$.",
+    "correctAnswer": "4",
+    "explanation": "Giao điểm với trục hoành ứng với tung độ $y=0$. Thay vào pt: $3x + 4(0) = 12 \\Rightarrow 3x = 12 \\Rightarrow x = 4$."
+  },
+  {
+    "id": "TOAN9_B1_055",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng cao",
+    "type": "short_answer",
+    "question": "Tìm hệ số góc $m$ của đường thẳng $y = mx + 2$ biết đường thẳng này đi qua điểm $(-1; -1)$.",
+    "correctAnswer": "3",
+    "explanation": "Thay $x=-1, y=-1$ vào đường thẳng ta được $-1 = m(-1) + 2 \\Rightarrow -m = -3 \\Rightarrow m = 3$."
+  },
+  {
+    "id": "TOAN9_B1_056",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng cao",
+    "type": "short_answer",
+    "question": "Hai phương trình $x + y = 2$ và $2x + 2y = m$ kết hợp tạo thành hệ phương trình có vô số nghiệm. Tìm giá trị của $m$.",
+    "correctAnswer": "4",
+    "explanation": "Hệ có vô số nghiệm khi các hệ số tương ứng tỉ lệ: $\\dfrac{1}{2} = \\dfrac{1}{2} = \\dfrac{2}{m} \\Rightarrow m = 4$."
+  },
+  {
+    "id": "TOAN9_B1_057",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng cao",
+    "type": "short_answer",
+    "question": "Gọi $(a; b)$ là một nghiệm của phương trình $5x - 2y = 10$. Biết $a = 0$, hãy tìm giá trị của $b$.",
+    "correctAnswer": "-5",
+    "explanation": "Thay $x=a=0$ vào phương trình: $5(0) - 2b = 10 \\Rightarrow -2b = 10 \\Rightarrow b = -5$."
+  },
+  {
+    "id": "TOAN9_B1_058",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng cao",
+    "type": "short_answer",
+    "question": "Tìm giá trị $m$ để hệ phương trình $\\begin{cases} mx + y = 3 \\\\ x - y = 1 \\end{cases}$ nhận $(2; 1)$ làm một nghiệm.",
+    "correctAnswer": "1",
+    "explanation": "Cặp $(2;1)$ đã thỏa mãn pt dưới. Thay vào pt trên: $m(2) + 1 = 3 \\Rightarrow 2m = 2 \\Rightarrow m = 1$."
+  },
+  {
+    "id": "TOAN9_B1_059",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng cao",
+    "type": "short_answer",
+    "question": "Tìm tham số $k$ để đường thẳng biểu diễn phương trình $kx - 3y = 6$ đi qua điểm $(3; 0)$.",
+    "correctAnswer": "2",
+    "explanation": "Thay $x=3, y=0$ vào phương trình: $k(3) - 3(0) = 6 \\Rightarrow 3k = 6 \\Rightarrow k = 2$."
+  },
+  {
+    "id": "TOAN9_B1_060",
+    "grade": 9,
+    "chapter": 1,
+    "level": "Vận dụng cao",
+    "type": "short_answer",
+    "question": "Biết hệ phương trình $\\begin{cases} 2x - y = 1 \\\\ ax + y = 2 \\end{cases}$ có nghiệm là cặp số $(1; 1)$. Tìm hệ số $a$.",
+    "correctAnswer": "1",
+    "explanation": "Cặp $(1;1)$ thỏa mãn phương trình đầu. Thay vào phương trình thứ hai: $a(1) + 1 = 2 \\Rightarrow a = 1$."
+  }
+]

@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 280" width="100%" height="100%" style="max-width: 520px; max-height: 280px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <!-- Metallic gradients -->
+    <linearGradient id="metalCase" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#64748b"/>
+      <stop offset="50%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="innerPanel" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="rotorGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="25%" stop-color="#334155"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="75%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="goldAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="50%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <filter id="lockShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="3" dy="6" stdDeviation="5" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title-txt { font-family: system-ui, -apple-system, sans-serif; font-size: 15px; font-weight: 700; fill: #0050b3; text-anchor: middle; }
+    .label-txt { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; font-weight: 700; fill: #334155; text-anchor: middle; }
+    .sub-txt { font-family: system-ui, -apple-system, sans-serif; font-size: 11.5px; font-weight: 600; fill: #64748b; text-anchor: middle; }
+    .active-digit { font-family: 'Courier New', Courier, monospace; font-size: 32px; font-weight: 900; fill: #ffffff; text-anchor: middle; dominant-baseline: central; }
+    .dim-digit { font-family: 'Courier New', Courier, monospace; font-size: 20px; font-weight: 700; fill: #64748b; opacity: 0.6; text-anchor: middle; dominant-baseline: central; }
+    .calc-txt { font-family: system-ui, -apple-system, sans-serif; font-size: 13px; font-weight: 700; fill: #b45309; text-anchor: middle; }
+  </style>
+
+  <rect x="10" y="10" width="500" height="260" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="260" y="36" class="title-txt">Mô phỏng ổ khóa vali số gồm hai vòng quay số độc lập</text>
+
+  <!-- VALI LOCK HOUSING (Center) -->
+  <g transform="translate(140, 55)" filter="url(#lockShadow)">
+    <!-- Outer metallic casing -->
+    <rect x="0" y="0" width="240" height="145" rx="14" fill="url(#metalCase)" stroke="#1e293b" stroke-width="2.5"/>
+    <rect x="8" y="8" width="224" height="129" rx="10" fill="none" stroke="#94a3b8" stroke-width="1" opacity="0.4"/>
+
+    <!-- Keyhole / release button -->
+    <circle cx="210" cy="72" r="14" fill="#0f172a" stroke="#94a3b8" stroke-width="1.5"/>
+    <rect x="208" y="64" width="4" height="16" rx="2" fill="#fbbf24"/>
+
+    <!-- Gold Center Indicator Line -->
+    <rect x="16" y="69" width="168" height="7" rx="3.5" fill="url(#goldAccent)" opacity="0.85"/>
+
+    <!-- ROTOR 1 (Odd: 1, 3, 5) -->
+    <g transform="translate(35, 18)">
+      <rect x="0" y="0" width="55" height="110" rx="6" fill="url(#rotorGrad)" stroke="#0f172a" stroke-width="2"/>
+      <!-- Divider lines -->
+      <line x1="0" y1="36" x2="55" y2="36" stroke="#475569" stroke-width="1.5"/>
+      <line x1="0" y1="74" x2="55" y2="74" stroke="#475569" stroke-width="1.5"/>
+      <!-- Digits -->
+      <text x="27.5" y="18" class="dim-digit">1</text>
+      <text x="27.5" y="55" class="active-digit">3</text>
+      <text x="27.5" y="92" class="dim-digit">5</text>
+    </g>
+
+    <!-- ROTOR 2 (Even: 2, 4, 6, 8) -->
+    <g transform="translate(110, 18)">
+      <rect x="0" y="0" width="55" height="110" rx="6" fill="url(#rotorGrad)" stroke="#0f172a" stroke-width="2"/>
+      <!-- Divider lines -->
+      <line x1="0" y1="36" x2="55" y2="36" stroke="#475569" stroke-width="1.5"/>
+      <line x1="0" y1="74" x2="55" y2="74" stroke="#475569" stroke-width="1.5"/>
+      <!-- Digits -->
+      <text x="27.5" y="18" class="dim-digit">4</text>
+      <text x="27.5" y="55" class="active-digit">6</text>
+      <text x="27.5" y="92" class="dim-digit">8</text>
+    </g>
+  </g>
+
+  <!-- LABELS BELOW ROTORS -->
+  <g transform="translate(175, 220)">
+    <text x="0" y="0" class="label-txt">Vòng 1 (Lẻ)</text>
+    <text x="0" y="17" class="sub-txt">{1; 3; 5} (3 số)</text>
+  </g>
+
+  <g transform="translate(250, 220)">
+    <text x="0" y="0" class="label-txt">Vòng 2 (Chẵn)</text>
+    <text x="0" y="17" class="sub-txt">{2; 4; 6; 8} (4 số)</text>
+  </g>
+
+  <!-- SUMMARY NOTE -->
+  <text x="260" y="255" class="calc-txt">Tổng số mã khóa 2 chữ số có thể tạo thành: n(Ω) = 3 × 4 = 12 phần tử</text>
+</svg>

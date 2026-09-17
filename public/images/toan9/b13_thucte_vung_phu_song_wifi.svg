@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 270" width="100%" height="100%" style="max-width: 480px; max-height: 270px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0050b4" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#c80000" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#009650" />
+    </marker>
+  </defs>
+  
+  <!-- Nền cỏ công viên -->
+  <rect x="5" y="5" width="470" height="260" rx="12" fill="#dcfce7" stroke="#86efac" stroke-width="1.5" />
+  
+  <!-- Vùng phủ sóng hình tròn tâm O(200, 135), R = 90 (đại diện cho 50m) -->
+  <circle cx="200" cy="135" r="90" fill="rgba(56, 189, 248, 0.25)" stroke="#0284c7" stroke-width="2.5" stroke-dasharray="6,4" />
+  
+  <!-- Cột phát Wi-Fi tại O(200, 135) -->
+  <rect x="197" y="115" width="6" height="20" fill="#475569" />
+  <circle cx="200" cy="115" r="4" fill="#dc2626" />
+  <!-- Sóng Wi-Fi tỏa ra -->
+  <path d="M 208 111 A 12 12 0 0 1 208 123" fill="none" stroke="#dc2626" stroke-width="2" />
+  <path d="M 213 107 A 18 18 0 0 1 213 127" fill="none" stroke="#dc2626" stroke-width="2" />
+  <text x="180" y="150" font-size="13" font-weight="bold" fill="#1e293b">Trạm O</text>
+
+  <!-- Ghế A cách 40m: d = 90*(40/50) = 72. Góc -40 độ -> (200 + 72*cos(-40), 135 - 72*sin(40)) = (255, 88.7) -->
+  <line x1="200" y1="135" x2="255" y2="88.7" stroke="#64748b" stroke-width="1.5" stroke-dasharray="3,3" />
+  <rect x="250" y="80" width="16" height="10" rx="2" fill="#0284c7" />
+  <circle cx="258" cy="85" r="4" fill="#ffffff" />
+  <text x="272" y="87" font-size="12" font-weight="bold" fill="#0284c7">Ghế A (40m)</text>
+  <text x="272" y="100" font-size="11" fill="#16a34a">✓ Sóng khỏe</text>
+
+  <!-- Ghế B cách đúng 50m (nằm trên viền): d = 90. Góc -135 độ -> (200 - 90*cos(45), 135 + 90*sin(45)) = (136.4, 198.6) -->
+  <line x1="200" y1="135" x2="136.4" y2="198.6" stroke="#64748b" stroke-width="1.5" stroke-dasharray="3,3" />
+  <rect x="128" y="195" width="16" height="10" rx="2" fill="#16a34a" />
+  <circle cx="136" cy="200" r="4" fill="#ffffff" />
+  <text x="45" y="200" font-size="12" font-weight="bold" fill="#16a34a">Ghế B (50m)</text>
+  <text x="45" y="213" font-size="11" fill="#0284c7">✓ Rìa phủ sóng</text>
+
+  <!-- Ghế C cách 65m (nằm ngoài): d = 90*(65/50) = 117. Góc 30 độ -> (200 + 117*cos(30), 135 + 117*sin(30)) = (301.3, 193.5) -->
+  <line x1="200" y1="135" x2="301.3" y2="193.5" stroke="#64748b" stroke-width="1.5" stroke-dasharray="3,3" />
+  <rect x="295" y="190" width="16" height="10" rx="2" fill="#ea580c" />
+  <circle cx="303" cy="195" r="4" fill="#ffffff" />
+  <text x="320" y="195" font-size="12" font-weight="bold" fill="#ea580c">Ghế C (65m)</text>
+  <text x="320" y="208" font-size="11" fill="#dc2626">✗ Mất sóng</text>
+
+  <!-- Mũi tên bán kính R = 50m sang trái -->
+  <line x1="200" y1="135" x2="110" y2="135" stroke="#dc2626" stroke-width="2" marker-end="url(#arrow-red)" />
+  <text x="155" y="128" font-size="12" font-weight="bold" fill="#dc2626" text-anchor="middle">R = 50 m</text>
+
+  <rect x="15" y="15" width="220" height="26" rx="6" fill="#ffffff" stroke="#cbd5e1" opacity="0.9" />
+  <text x="125" y="32" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">Vùng phủ sóng Wi-Fi (Hình tròn R=50m)</text>
+
+</svg>

@@ -1,0 +1,882 @@
+[
+  {
+    "id": "TOAN9_B25_001",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "multiple_choice_1",
+    "question": "Phép thử ngẫu nhiên là hành động hoặc thực nghiệm mà:",
+    "options": [
+      "A. Luôn biết chắc chắn kết quả trước khi làm.",
+      "B. Không thể liệt kê được các kết quả có thể.",
+      "C. Không biết trước kết quả nhưng liệt kê được tất cả kết quả có thể xảy ra.",
+      "D. Chỉ có đúng 1 kết quả duy nhất có thể xảy ra."
+    ],
+    "correctAnswer": 2,
+    "explanation": "Theo định nghĩa SGK, phép thử ngẫu nhiên là thực nghiệm không thể biết trước kết quả nhưng có thể liệt kê được tất cả các kết quả có thể xảy ra."
+  },
+  {
+    "id": "TOAN9_B25_002",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "multiple_choice_1",
+    "question": "Tập hợp tất cả các kết quả có thể xảy ra của một phép thử ngẫu nhiên được gọi là:",
+    "options": [
+      "A. Biến cố ngẫu nhiên.",
+      "B. Không gian mẫu.",
+      "C. Mẫu dữ liệu.",
+      "D. Tần số mẫu."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Tập hợp tất cả các kết quả có thể xảy ra của phép thử được gọi là không gian mẫu, kí hiệu là $\\Omega$."
+  },
+  {
+    "id": "TOAN9_B25_003",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "multiple_choice_1",
+    "question": "Kí hiệu quy ước quốc tế của không gian mẫu là:",
+    "options": [
+      "A. $\\Sigma$.",
+      "B. $\\Omega$.",
+      "C. $\\Delta$.",
+      "D. $\\Phi$."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Không gian mẫu được kí hiệu bằng chữ cái Hy Lạp $\\Omega$ (Omega)."
+  },
+  {
+    "id": "TOAN9_B25_004",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "multiple_choice_1",
+    "question": "Gieo một đồng xu cân đối một lần. Không gian mẫu $\\Omega$ là:",
+    "options": [
+      "A. $\\Omega = \\{S\\}$.",
+      "B. $\\Omega = \\{N\\}$.",
+      "C. $\\Omega = \\{S; N\\}$.",
+      "D. $\\Omega = \\{SS; NN\\}$."
+    ],
+    "correctAnswer": 2,
+    "explanation": "Đồng xu có 2 mặt là mặt sấp ($S$) và mặt ngửa ($N$), nên $\\Omega = \\{S; N\\}$."
+  },
+  {
+    "id": "TOAN9_B25_005",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "multiple_choice_1",
+    "question": "Gieo một con xúc xắc 6 mặt cân đối một lần. Số phần tử của không gian mẫu $n(\\Omega)$ là:",
+    "options": [
+      "A. $4$.",
+      "B. $6$.",
+      "C. $12$.",
+      "D. $36$."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Con xúc xắc có 6 mặt từ 1 đến 6 chấm nên $n(\\Omega) = 6$."
+  },
+  {
+    "id": "TOAN9_B25_006",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "multiple_choice_1",
+    "question": "Trong hộp có 3 quả bóng: Xanh ($X$), Đỏ ($Đ$), Vàng ($V$). Rút ngẫu nhiên 1 quả bóng. Không gian mẫu là:",
+    "options": [
+      "A. $\\Omega = \\{X; Đ\\}$.",
+      "B. $\\Omega = \\{X; Đ; V\\}$.",
+      "C. $\\Omega = \\{(X, Đ); (Đ, V)\\}$.",
+      "D. $\\Omega = \\{1; 2; 3\\}$."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Kết quả có thể là rút được bóng Xanh, bóng Đỏ hoặc bóng Vàng."
+  },
+  {
+    "id": "TOAN9_B25_007",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "multiple_choice_1",
+    "question": "Hành động nào sau đây \\textbf{không phải} là phép thử ngẫu nhiên?",
+    "options": [
+      "A. Bốc thăm trúng thưởng.",
+      "B. Gieo một con xúc xắc xem số chấm.",
+      "C. Đun nước nguyên chất ở áp suất 1 atm xem sôi ở nhiệt độ nào.",
+      "D. Chọn ngẫu nhiên 1 bạn trong lớp làm lớp trưởng."
+    ],
+    "correctAnswer": 2,
+    "explanation": "Nước nguyên chất ở 1 atm luôn sôi ở đúng 100°C (kết quả tất định biết trước), không có tính ngẫu nhiên."
+  },
+  {
+    "id": "TOAN9_B25_008",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "multiple_choice_1",
+    "question": "Gieo đồng thời hai đồng xu cân đối và đồng chất. Số phần tử của không gian mẫu là:",
+    "options": [
+      "A. $2$.",
+      "B. $3$.",
+      "C. $4$.",
+      "D. $6$."
+    ],
+    "correctAnswer": 2,
+    "explanation": "Không gian mẫu $\\Omega = \\{SS; SN; NS; NN\\}$, có $n(\\Omega) = 4$."
+  },
+  {
+    "id": "TOAN9_B25_009",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "multiple_choice_1",
+    "question": "Quay một tấm bìa hình tròn chia thành 6 hình quạt bằng nhau đánh số từ 1 đến 6. Kết quả của phép thử là:",
+    "options": [
+      "A. Thời gian tấm bìa quay.",
+      "B. Số ghi trên hình quạt mà mũi tên chỉ vào khi dừng.",
+      "C. Màu sắc của tấm bìa.",
+      "D. Bán kính tấm bìa."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Kết quả quan sát của phép thử là số ghi trên hình quạt mà mũi tên chỉ vào khi tấm bìa dừng lại."
+  },
+  {
+    "id": "TOAN9_B25_010",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "multiple_choice_1",
+    "question": "Gieo một con xúc xắc cân đối liên tiếp 2 lần. Số phần tử của không gian mẫu là:",
+    "options": [
+      "A. $12$.",
+      "B. $18$.",
+      "C. $24$.",
+      "D. $36$."
+    ],
+    "correctAnswer": 3,
+    "explanation": "Lần 1 có 6 kết quả, lần 2 có 6 kết quả. Số phần tử là $6 \\times 6 = 36$."
+  },
+  {
+    "id": "TOAN9_B25_011",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "multiple_choice_1",
+    "question": "Một hộp chứa 3 thẻ đánh số $1; 2; 3$. Rút ngẫu nhiên lần lượt 2 thẻ không hoàn lại. Số phần tử của không gian mẫu là:",
+    "options": [
+      "A. $9$.",
+      "B. $6$.",
+      "C. $3$.",
+      "D. $8$."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Lần 1 có 3 cách, lần 2 có 2 cách (không rút lại thẻ cũ). Số phần tử là $3 \\times 2 = 6$."
+  },
+  {
+    "id": "TOAN9_B25_012",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "multiple_choice_1",
+    "question": "Chọn ngẫu nhiên một gia đình có 2 con và quan sát giới tính ($T$: trai, $G$: gái) theo thứ tự sinh. Không gian mẫu là:",
+    "options": [
+      "A. $\\{T; G\\}$.",
+      "B. $\\{TT; TG; GG\\}$.",
+      "C. $\\{TT; TG; GT; GG\\}$.",
+      "D. $\\{T; TG; G\\}$."
+    ],
+    "correctAnswer": 2,
+    "explanation": "Có tính thứ tự sinh nên có 4 kết quả: $TT, TG, GT, GG$."
+  },
+  {
+    "id": "TOAN9_B25_013",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "multiple_choice_1",
+    "question": "Ba bạn An, Bình, Cúc xếp thành một hàng dọc ngẫu nhiên. Số phần tử của không gian mẫu là:",
+    "options": [
+      "A. $3$.",
+      "B. $6$.",
+      "C. $9$.",
+      "D. $4$."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Số cách hoán vị 3 bạn là $3 \\times 2 \\times 1 = 6$."
+  },
+  {
+    "id": "TOAN9_B25_014",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "multiple_choice_1",
+    "question": "Bạn Nam tung 1 đồng xu cân đối và gieo 1 con xúc xắc 4 mặt (đánh số 1 đến 4). Cặp kết quả nào sau đây thuộc không gian mẫu?",
+    "options": [
+      "A. $(S, 5)$.",
+      "B. $(N, 0)$.",
+      "C. $(S, 3)$.",
+      "D. $(SS, 4)$."
+    ],
+    "correctAnswer": 2,
+    "explanation": "Đồng xu có mặt $S, N$ và xúc xắc có số $1, 2, 3, 4$. Cặp $(S, 3)$ thỏa mãn."
+  },
+  {
+    "id": "TOAN9_B25_015",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "multiple_choice_1",
+    "question": "Gieo một con xúc xắc 6 mặt 2 lần liên tiếp. Có bao nhiêu kết quả có thể mà tổng số chấm ở 2 lần gieo bằng 4?",
+    "options": [
+      "A. $2$.",
+      "B. $3$.",
+      "C. $4$.",
+      "D. $5$."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Các cặp có tổng bằng 4 là: $(1, 3); (2, 2); (3, 1)$ (gồm 3 kết quả)."
+  },
+  {
+    "id": "TOAN9_B25_016",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "multiple_choice_1",
+    "question": "Cho tập hợp $A = \\{1; 3; 5\\}$ và $B = \\{2; 4\\}$. Chọn ngẫu nhiên 1 phần tử từ $A$ và 1 phần tử từ $B$. Số kết quả có thể là:",
+    "options": [
+      "A. $5$.",
+      "B. $6$.",
+      "C. $8$.",
+      "D. $9$."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Số kết quả là $3 \\times 2 = 6$."
+  },
+  {
+    "id": "TOAN9_B25_017",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "multiple_choice_1",
+    "question": "Một túi chứa 2 bi đỏ ($Đ_1, Đ_2$) và 1 bi xanh ($X$). Rút đồng thời 2 viên bi. Không gian mẫu gồm các cặp:",
+    "options": [
+      "A. $\\{Đ_1Đ_2; Đ_1X; Đ_2X\\}$.",
+      "B. $\\{ĐX; XĐ\\}$.",
+      "C. $\\{Đ_1; Đ_2; X\\}$.",
+      "D. $\\{Đ_1Đ_1; Đ_2Đ_2; XX\\}$."
+    ],
+    "correctAnswer": 0,
+    "explanation": "Lấy đồng thời 2 viên bi từ 3 viên phân biệt cho 3 tổ hợp: $\\{Đ_1Đ_2; Đ_1X; Đ_2X\\}$."
+  },
+  {
+    "id": "TOAN9_B25_018",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Vận dụng",
+    "type": "multiple_choice_1",
+    "question": "Một hộp có 5 chiếc kẹo với các vị: Dâu ($D$), Cam ($C$), Nho ($N$), Bạc hà ($B$), Táo ($T$). Bạn Lan lấy ngẫu nhiên 1 chiếc kẹo cho em, sau đó lấy tiếp 1 chiếc cho mình. Không gian mẫu có bao nhiêu phần tử?",
+    "options": [
+      "A. $10$.",
+      "B. $20$.",
+      "C. $25$.",
+      "D. $15$."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Lấy lần lượt không hoàn lại: $5 \\times 4 = 20$ phần tử."
+  },
+  {
+    "id": "TOAN9_B25_019",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Vận dụng",
+    "type": "multiple_choice_1",
+    "question": "Một bài thi trắc nghiệm gồm 2 câu hỏi, mỗi câu có 4 phương án lựa chọn $A, B, C, D$. Học sinh khoanh ngẫu nhiên cả 2 câu. Không gian mẫu có bao nhiêu phần tử?",
+    "options": [
+      "A. $8$.",
+      "B. $16$.",
+      "C. $6$.",
+      "D. $4$."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Số cách khoanh là $4 \\times 4 = 16$ phần tử."
+  },
+  {
+    "id": "TOAN9_B25_020",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Vận dụng",
+    "type": "multiple_choice_1",
+    "question": "Bốn đội bóng $A, B, C, D$ thi đấu vòng tròn 1 lượt (mỗi đội gặp nhau đúng 1 trận). Số trận đấu diễn ra là:",
+    "options": [
+      "A. $6$.",
+      "B. $12$.",
+      "C. $8$.",
+      "D. $4$."
+    ],
+    "correctAnswer": 0,
+    "explanation": "Các trận đấu là các cặp không phân biệt thứ tự: $AB, AC, AD, BC, BD, CD$ (gồm 6 trận)."
+  },
+  {
+    "id": "TOAN9_B25_021",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "true_false",
+    "question": "Kết quả của một phép thử ngẫu nhiên là không thể dự đoán chính xác trước khi thực hiện.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Đây là đặc tính cơ bản của phép thử ngẫu nhiên."
+  },
+  {
+    "id": "TOAN9_B25_022",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "true_false",
+    "question": "Không gian mẫu là tập hợp con của tập các kết quả có thể xảy ra.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Không gian mẫu là tập hợp chứa tất cả các kết quả có thể, không phải tập con."
+  },
+  {
+    "id": "TOAN9_B25_023",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "true_false",
+    "question": "Gieo đồng thời hai con xúc xắc 6 mặt cân đối thì cặp kết quả $(1, 2)$ và $(2, 1)$ được tính là cùng một phần tử trong không gian mẫu.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Hai con xúc xắc phân biệt nên $(1, 2)$ và $(2, 1)$ là 2 kết quả khác nhau."
+  },
+  {
+    "id": "TOAN9_B25_024",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "true_false",
+    "question": "Phép thử gieo một đồng xu cân đối 3 lần liên tiếp có không gian mẫu gồm 8 phần tử.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Số phần tử là $2^3 = 8$."
+  },
+  {
+    "id": "TOAN9_B25_025",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "true_false",
+    "question": "Rút ngẫu nhiên một lá bài từ bộ bài 52 lá thì không gian mẫu chỉ gồm 4 phần tử là cơ, rô, bích, tép.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Chất bài chỉ là đặc tính, không gian mẫu đầy đủ phải gồm 52 lá bài riêng biệt."
+  },
+  {
+    "id": "TOAN9_B25_026",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "true_false",
+    "question": "Trong phép thử rút lần lượt 2 thẻ từ hộp $\\{1; 2; 3; 4\\}$ có hoàn lại, cặp kết quả $(2, 2)$ có thể xuất hiện.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Vì rút có hoàn lại nên thẻ số 2 sau khi rút lần 1 được bỏ lại vào hộp và có thể rút tiếp ở lần 2."
+  },
+  {
+    "id": "TOAN9_B25_027",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "true_false",
+    "question": "Phép thử chọn ngẫu nhiên một số tự nhiên có một chữ số có không gian mẫu gồm 9 phần tử.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Các số tự nhiên có một chữ số từ 0 đến 9 gồm 10 số, nên không gian mẫu có 10 phần tử."
+  },
+  {
+    "id": "TOAN9_B25_028",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "true_false",
+    "question": "Hành động bấm máy tính để tính kết quả của phép tính $25 \\times 4$ là một phép thử ngẫu nhiên.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Kết quả của phép tính này là tất định (luôn bằng 100), không phải hiện tượng ngẫu nhiên."
+  },
+  {
+    "id": "TOAN9_B25_029",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "true_false",
+    "question": "Sơ đồ hình cây có thể dùng để biểu diễn không gian mẫu của các phép thử gồm nhiều bước liên tiếp.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Sơ đồ hình cây biểu diễn trực quan các nhánh rẽ cho từng bước thực nghiệm liên tiếp."
+  },
+  {
+    "id": "TOAN9_B25_030",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "true_false",
+    "question": "Không gian mẫu của phép thử ngẫu nhiên không bao giờ là tập hợp rỗng.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Phép thử luôn có ít nhất một kết quả có thể xảy ra khi thực hiện, nên $\\Omega \\neq \\emptyset$."
+  },
+  {
+    "id": "TOAN9_B25_031",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "true_false",
+    "question": "Khi gieo một con xúc xắc 6 mặt cân đối 2 lần liên tiếp, có đúng 6 kết quả mà hai lần gieo xuất hiện số chấm giống nhau.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Các kết quả là $(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6)$ (đúng 6 kết quả)."
+  },
+  {
+    "id": "TOAN9_B25_032",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "true_false",
+    "question": "Gieo một con xúc xắc 6 mặt 2 lần liên tiếp, có thể xuất hiện kết quả mà tổng số chấm bằng 13.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Số chấm lớn nhất mỗi lần là 6 nên tổng lớn nhất là $6 + 6 = 12 < 13$."
+  },
+  {
+    "id": "TOAN9_B25_033",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "true_false",
+    "question": "Từ 3 chữ số $1; 2; 3$, lập các số tự nhiên có 2 chữ số khác nhau thì không gian mẫu có 6 phần tử.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Số các số lập được là $3 \\times 2 = 6$ số: $\\{12; 13; 21; 23; 31; 32\\}$."
+  },
+  {
+    "id": "TOAN9_B25_034",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "true_false",
+    "question": "Chọn ngẫu nhiên 2 bạn từ nhóm gồm 3 nam và 2 nữ thì có tất cả 10 cách chọn khác nhau.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Số cách chọn 2 bạn từ 5 bạn là $\\frac{5 \\times 4}{2} = 10$ cách."
+  },
+  {
+    "id": "TOAN9_B25_035",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "true_false",
+    "question": "Một hộp có 4 viên bi được đánh số $1; 2; 3; 4$. Rút lần lượt 2 viên bi không hoàn lại thì có 4 kết quả mà hai số rút được bằng nhau.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Rút không hoàn lại thì hai số rút ra bắt buộc phải khác nhau, không có kết quả nào hai số bằng nhau."
+  },
+  {
+    "id": "TOAN9_B25_036",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "true_false",
+    "question": "Gieo một đồng xu và một con xúc xắc 6 mặt, có đúng 3 kết quả mà đồng xu xuất hiện mặt ngửa và số chấm là số nguyên tố.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Số nguyên tố là $\\{2; 3; 5\\}$ (3 số), kết hợp với mặt ngửa có 3 cặp: $(N, 2), (N, 3), (N, 5)$."
+  },
+  {
+    "id": "TOAN9_B25_037",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "true_false",
+    "question": "Gieo đồng thời hai con xúc xắc 6 mặt, số kết quả có thể để tích số chấm là số lẻ là 9.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Tích lẻ khi cả hai lần đều ra số lẻ $\\{1; 3; 5\\}$, số kết quả là $3 \\times 3 = 9$."
+  },
+  {
+    "id": "TOAN9_B25_038",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Vận dụng",
+    "type": "true_false",
+    "question": "Phép thử tung một đồng xu cho đến khi xuất hiện mặt sấp thì dừng lại (tối đa tung 3 lần) có không gian mẫu gồm 4 phần tử.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Không gian mẫu là $\\{S; NS; NNS; NNN\\}$ (đúng 4 phần tử)."
+  },
+  {
+    "id": "TOAN9_B25_039",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Vận dụng",
+    "type": "true_false",
+    "question": "Xếp ngẫu nhiên 4 bạn $A, B, C, D$ vào một bàn dài 4 chỗ thì số cách sắp xếp là 16.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Số cách xếp là hoán vị của 4 bạn: $4! = 4 \\times 3 \\times 2 \\times 1 = 24$, không phải 16."
+  },
+  {
+    "id": "TOAN9_B25_040",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Vận dụng",
+    "type": "true_false",
+    "question": "Một hộp có 3 quả bóng đỏ và 2 quả bóng xanh. Lấy lần lượt 2 quả bóng không hoàn lại thì số phần tử của không gian mẫu (phân biệt theo màu và thứ tự) là 4.",
+    "options": [
+      "Đúng",
+      "Sai"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Các kết quả theo màu là: (Đỏ, Đỏ), (Đỏ, Xanh), (Xanh, Đỏ), (Xanh, Xanh) (gồm 4 kết quả)."
+  },
+  {
+    "id": "TOAN9_B25_041",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "short_answer",
+    "question": "Gieo một con xúc xắc 6 mặt cân đối một lần. Số phần tử của không gian mẫu là bao nhiêu?",
+    "options": [],
+    "correctAnswer": "6",
+    "explanation": "Không gian mẫu $\\Omega = \\{1; 2; 3; 4; 5; 6\\}$ gồm 6 phần tử."
+  },
+  {
+    "id": "TOAN9_B25_042",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "short_answer",
+    "question": "Tung một đồng xu cân đối hai lần liên tiếp. Không gian mẫu có bao nhiêu phần tử?",
+    "options": [],
+    "correctAnswer": "4",
+    "explanation": "Số phần tử là $2 \\times 2 = 4$."
+  },
+  {
+    "id": "TOAN9_B25_043",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "short_answer",
+    "question": "Hộp có 4 tấm thẻ được đánh số $1; 2; 3; 4$. Rút ngẫu nhiên 1 tấm thẻ. Số kết quả có thể là bao nhiêu?",
+    "options": [],
+    "correctAnswer": "4",
+    "explanation": "Có 4 tấm thẻ nên có 4 kết quả có thể."
+  },
+  {
+    "id": "TOAN9_B25_044",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "short_answer",
+    "question": "Tung đồng thời 3 đồng xu cân đối. Không gian mẫu có bao nhiêu phần tử?",
+    "options": [],
+    "correctAnswer": "8",
+    "explanation": "Số phần tử là $2^3 = 8$."
+  },
+  {
+    "id": "TOAN9_B25_045",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "short_answer",
+    "question": "Một lớp có 18 bạn nam và 16 bạn nữ. Giáo viên chọn ngẫu nhiên 1 bạn làm cán sự. Không gian mẫu có bao nhiêu phần tử?",
+    "options": [],
+    "correctAnswer": "34",
+    "explanation": "Tổng số học sinh là $18 + 16 = 34$ bạn."
+  },
+  {
+    "id": "TOAN9_B25_046",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "short_answer",
+    "question": "Quay một đĩa quay chia thành 8 hình quạt đều nhau đánh số từ 1 đến 8 một lần. Số phần tử của không gian mẫu là bao nhiêu?",
+    "options": [],
+    "correctAnswer": "8",
+    "explanation": "Mũi tên có thể dừng ở 1 trong 8 ô nên có 8 phần tử."
+  },
+  {
+    "id": "TOAN9_B25_047",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "short_answer",
+    "question": "Gieo một con xúc xắc 6 mặt một lần. Có bao nhiêu kết quả có thể mà số chấm xuất hiện là số lẻ?",
+    "options": [],
+    "correctAnswer": "3",
+    "explanation": "Các mặt lẻ là $\\{1; 3; 5\\}$ gồm 3 kết quả."
+  },
+  {
+    "id": "TOAN9_B25_048",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "short_answer",
+    "question": "Tung một đồng xu một lần. Có bao nhiêu kết quả có thể xuất hiện mặt sấp?",
+    "options": [],
+    "correctAnswer": "1",
+    "explanation": "Chỉ có 1 kết quả là mặt sấp ($S$)."
+  },
+  {
+    "id": "TOAN9_B25_049",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "short_answer",
+    "question": "Hộp có 5 viên bi màu khác nhau. Rút ngẫu nhiên đồng thời 1 viên bi. Số phần tử của không gian mẫu là bao nhiêu?",
+    "options": [],
+    "correctAnswer": "5",
+    "explanation": "Có 5 viên bi nên có 5 kết quả có thể."
+  },
+  {
+    "id": "TOAN9_B25_050",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Nhận biết",
+    "type": "short_answer",
+    "question": "Gieo một con xúc xắc 6 mặt một lần. Có bao nhiêu kết quả có thể mà số chấm là số nguyên tố?",
+    "options": [],
+    "correctAnswer": "3",
+    "explanation": "Các số nguyên tố là $\\{2; 3; 5\\}$, gồm 3 kết quả."
+  },
+  {
+    "id": "TOAN9_B25_051",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "short_answer",
+    "question": "Gieo một con xúc xắc 6 mặt và tung 1 đồng xu. Số phần tử của không gian mẫu là bao nhiêu?",
+    "options": [],
+    "correctAnswer": "12",
+    "explanation": "Số phần tử là $6 \\times 2 = 12$."
+  },
+  {
+    "id": "TOAN9_B25_052",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "short_answer",
+    "question": "Một hộp có 4 chiếc bút bi khác nhau. Bạn An lấy lần lượt 2 chiếc bút không hoàn lại. Không gian mẫu có bao nhiêu phần tử?",
+    "options": [],
+    "correctAnswer": "12",
+    "explanation": "Lần 1 có 4 cách, lần 2 có 3 cách $\\implies 4 \\times 3 = 12$."
+  },
+  {
+    "id": "TOAN9_B25_053",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "short_answer",
+    "question": "Có 3 bạn $A, B, C$ xếp thành một hàng ngang để chụp ảnh. Có bao nhiêu cách sắp xếp khác nhau?",
+    "options": [],
+    "correctAnswer": "6",
+    "explanation": "Số hoán vị của 3 bạn là $3 \\times 2 \\times 1 = 6$."
+  },
+  {
+    "id": "TOAN9_B25_054",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "short_answer",
+    "question": "Từ 3 chữ số $1; 2; 3$, lập được bao nhiêu số tự nhiên có 2 chữ số (các chữ số có thể giống nhau)?",
+    "options": [],
+    "correctAnswer": "9",
+    "explanation": "Chữ số hàng chục có 3 cách, hàng đơn vị có 3 cách $\\implies 3 \\times 3 = 9$."
+  },
+  {
+    "id": "TOAN9_B25_055",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "short_answer",
+    "question": "Rút ngẫu nhiên một số trong các số tự nhiên từ 1 đến 25. Có bao nhiêu kết quả rút được số chia hết cho 4?",
+    "options": [],
+    "correctAnswer": "6",
+    "explanation": "Các số chia hết cho 4 là $\\{4; 8; 12; 16; 20; 24\\}$, gồm 6 kết quả."
+  },
+  {
+    "id": "TOAN9_B25_056",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Thông hiểu",
+    "type": "short_answer",
+    "question": "Gieo đồng thời hai con xúc xắc 6 mặt cân đối. Có bao nhiêu kết quả có thể mà tổng số chấm trên hai con xúc xắc bằng 7?",
+    "options": [],
+    "correctAnswer": "6",
+    "explanation": "Các cặp tổng bằng 7 là: $(1, 6), (2, 5), (3, 4), (4, 3), (5, 2), (6, 1)$ (gồm 6 kết quả)."
+  },
+  {
+    "id": "TOAN9_B25_057",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Vận dụng",
+    "type": "short_answer",
+    "question": "Một nhóm học sinh gồm 2 nam và 3 nữ. Chọn ngẫu nhiên đồng thời 2 học sinh đi trực ban. Không gian mẫu có bao nhiêu phần tử?",
+    "options": [],
+    "correctAnswer": "10",
+    "explanation": "Số cách chọn 2 bạn từ 5 bạn là $\\frac{5 \\times 4}{2} = 10$ phần tử."
+  },
+  {
+    "id": "TOAN9_B25_058",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Vận dụng",
+    "type": "short_answer",
+    "question": "Một thực đơn có 3 món khai vị, 4 món chính và 2 món tráng miệng. Chọn một bữa ăn gồm 1 khai vị, 1 món chính, 1 tráng miệng. Không gian mẫu có bao nhiêu phần tử?",
+    "options": [],
+    "correctAnswer": "24",
+    "explanation": "Số cách kết hợp là $3 \\times 4 \\times 2 = 24$ phần tử."
+  },
+  {
+    "id": "TOAN9_B25_059",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Vận dụng",
+    "type": "short_answer",
+    "question": "Có 4 đội bóng thi đấu vòng tròn 1 lượt (tổng cộng 6 trận). Mỗi trận chỉ có thắng hoặc thua (không hòa). Có bao nhiêu kết quả dự đoán có thể cho toàn bộ 6 trận đấu?",
+    "options": [],
+    "correctAnswer": "64",
+    "explanation": "Mỗi trận có 2 kết quả. 6 trận có $2^6 = 64$ kết quả."
+  },
+  {
+    "id": "TOAN9_B25_060",
+    "grade": 9,
+    "chapter": 8,
+    "lesson": 25,
+    "level": "Vận dụng",
+    "type": "short_answer",
+    "question": "Hộp có 5 quả cầu đánh số từ 1 đến 5. Rút lần lượt 2 quả cầu có hoàn lại. Có bao nhiêu kết quả có thể mà tích hai số ghi trên hai quả cầu là số lẻ?",
+    "options": [],
+    "correctAnswer": "9",
+    "explanation": "Tích lẻ khi cả hai lần rút đều ra số lẻ $\\{1; 3; 5\\}$. Số kết quả là $3 \\times 3 = 9$."
+  }
+]

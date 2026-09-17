@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" width="100%" height="100%">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="520" height="360" rx="14" fill="#f8fafc"/>
+
+  <!-- Tọa độ chuẩn hình học:
+       Tam giác O1 M O2 vuông tại M. O1M = 12, O2M = 5, O1O2 = 13.
+       MH = 12*5/13 = 60/13 ~ 4.615
+       O1H = 144/13 ~ 11.077, O2H = 25/13 ~ 1.923
+       Tỉ lệ 1cm = 20px:
+       O1O2 = 260px.
+       O1(100, 200), O2(360, 200)
+       H(100 + 221.5, 200) = (321.5, 200)
+       M(321.5, 200 - 92.3) = (321.5, 107.7)
+       N(321.5, 200 + 92.3) = (321.5, 292.3)
+  -->
+
+  <!-- Đường tròn (O1; 12) tâm (100, 200), R = 240px -->
+  <circle cx="100" cy="200" r="240" fill="#eff6ff" fill-opacity="0.3" stroke="#0284c7" stroke-width="2"/>
+
+  <!-- Đường tròn (O2; 5) tâm (360, 200), r = 100px -->
+  <circle cx="360" cy="200" r="100" fill="#fef3c7" fill-opacity="0.4" stroke="#ea580c" stroke-width="2"/>
+
+  <!-- Tam giác O1 M O2 vuông tại M -->
+  <polygon points="100,200 360,200 321.5,107.7" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+
+  <!-- Dây chung MN (thẳng đứng x = 321.5 từ 107.7 đến 292.3) -->
+  <line x1="321.5" y1="107.7" x2="321.5" y2="292.3" stroke="#dc2626" stroke-width="3" filter="url(#shadow)"/>
+
+  <!-- Đường nối tâm O1O2 -->
+  <line x1="70" y1="200" x2="400" y2="200" stroke="#0f172a" stroke-width="2.5"/>
+
+  <!-- Ký hiệu góc vuông tại M (góc O1 M O2) -->
+  <path d="M 310 112 L 315 124 L 326 120" fill="none" stroke="#dc2626" stroke-width="1.8"/>
+
+  <!-- Ký hiệu góc vuông tại H (đường cao MH) -->
+  <rect x="309.5" y="188" width="12" height="12" fill="none" stroke="#0f172a" stroke-width="1.5"/>
+
+  <!-- Điểm O1, O2, M, N, H -->
+  <circle cx="100" cy="200" r="4.5" fill="#0284c7"/>
+  <text x="85" y="220" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#0284c7">O₁</text>
+
+  <circle cx="360" cy="200" r="4.5" fill="#ea580c"/>
+  <text x="375" y="220" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#ea580c">O₂</text>
+
+  <circle cx="321.5" cy="107.7" r="4.5" fill="#dc2626"/>
+  <text x="325" y="95" font-family="system-ui, sans-serif" font-size="15" font-weight="900" fill="#dc2626">M</text>
+
+  <circle cx="321.5" cy="292.3" r="4.5" fill="#dc2626"/>
+  <text x="325" y="315" font-family="system-ui, sans-serif" font-size="15" font-weight="900" fill="#dc2626">N</text>
+
+  <circle cx="321.5" cy="200" r="3.5" fill="#0f172a"/>
+  <text x="330" y="215" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0f172a">H</text>
+
+  <!-- Độ dài các cạnh -->
+  <text x="195" y="145" font-family="system-ui, sans-serif" font-size="12" font-style="italic" font-weight="bold" fill="#0284c7">O₁M = 12</text>
+  <text x="355" y="145" font-family="system-ui, sans-serif" font-size="12" font-style="italic" font-weight="bold" fill="#ea580c">O₂M = 5</text>
+  <text x="210" y="220" font-family="system-ui, sans-serif" font-size="12" font-style="italic" font-weight="bold" fill="#0f172a">O₁O₂ = 13</text>
+
+  <!-- Hộp giải thích -->
+  <g transform="translate(260, 335)" filter="url(#shadow)">
+    <rect x="-190" y="-12" width="380" height="24" rx="5" fill="#ffffff" stroke="#334155" stroke-width="1.2"/>
+    <text x="0" y="5" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">
+      12² + 5² = 13² ⟹ △O₁MO₂ vuông tại M; MH = 60/13, O₁H = 144/13 cm
+    </text>
+  </g>
+</svg>

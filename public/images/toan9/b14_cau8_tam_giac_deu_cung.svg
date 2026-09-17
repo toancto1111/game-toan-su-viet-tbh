@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" width="100%" height="100%" style="max-width: 400px; max-height: 240px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0050b4" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#c80000" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#009650" />
+    </marker>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#bae6fd" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+  
+  <rect x="5" y="5" width="390" height="230" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
+  
+  <!-- Đường tròn O(160, 125), R = 80 -->
+  <circle cx="160" cy="125" r="80" fill="rgba(0, 80, 180, 0.05)" stroke="#0050b4" stroke-width="2" />
+  
+  <!-- Tam giác đều ABC: A đỉnh trên (160, 45), B(160 - 80*cos(30), 125 + 80*sin(30)) = (90.7, 165), C(229.3, 165) -->
+  <polygon points="160,45 90.7,165 229.3,165" fill="rgba(0, 150, 80, 0.1)" stroke="#009650" stroke-width="2.5" />
+
+  <!-- Bán kính OA, OB, OC nét đứt -->
+  <line x1="160" y1="125" x2="160" y2="45" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,3" />
+  <line x1="160" y1="125" x2="90.7" y2="165" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,3" />
+  <line x1="160" y1="125" x2="229.3" y2="165" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,3" />
+
+  <!-- Tâm O -->
+  <circle cx="160" cy="125" r="4" fill="#dc2626" />
+  <text x="170" y="132" font-size="13" font-weight="bold" fill="#dc2626">O</text>
+
+  <!-- Đỉnh A, B, C -->
+  <circle cx="160" cy="45" r="4" fill="#0050b4" />
+  <text x="160" y="35" font-size="14" font-weight="bold" fill="#0050b4" text-anchor="middle">A</text>
+
+  <circle cx="90.7" cy="165" r="4" fill="#0050b4" />
+  <text x="75" y="172" font-size="14" font-weight="bold" fill="#0050b4">B</text>
+
+  <circle cx="229.3" cy="165" r="4" fill="#0050b4" />
+  <text x="240" y="172" font-size="14" font-weight="bold" fill="#0050b4">C</text>
+
+  <!-- Góc ở tâm 120 độ -->
+  <path d="M 148 105 A 25 25 0 0 0 138 140" fill="none" stroke="#ea580c" stroke-width="2" />
+  <text x="110" y="115" font-size="12" font-weight="bold" fill="#ea580c">120°</text>
+
+  <!-- Bảng tóm tắt bên phải -->
+  <g transform="translate(265, 45)">
+    <rect x="0" y="0" width="120" height="145" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="10" y="24" font-size="11.5" font-weight="bold" fill="#009650">Tam giác đều:</text>
+    <text x="10" y="48" font-size="11" fill="#475569">• 3 cung nhỏ = nhau</text>
+    <text x="10" y="70" font-size="11" font-weight="bold" fill="#ea580c">sđ(AB) = 120°</text>
+    <line x1="8" y1="84" x2="112" y2="84" stroke="#e2e8f0" stroke-width="1.5" />
+    <text x="10" y="104" font-size="11" fill="#475569">• Cung lớn AB:</text>
+    <text x="10" y="125" font-size="11" font-weight="bold" fill="#0050b4">sđ = 240°</text>
+  </g>
+
+</svg>

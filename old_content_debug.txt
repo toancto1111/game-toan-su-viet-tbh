@@ -1,0 +1,9 @@
+      {
+        title: "Bài 22: Bảng tần số và biểu đồ tần số",
+        summary: commonSummaryPrefix + `### 1. Bảng tần số
+- Tần số của một giá trị là số lần xuất hiện của giá trị đó trong mẫu dữ liệu. Kí hiệu: $n_i$.
+- Tổng các tần số bằng kích thước mẫu $N$: $n_1 + n_2 + \dots + n_k = N$.
+
+### 2. Biểu đồ tần số
+- Biểu đồ đoạn thẳng (hoặc biểu đồ cột) biểu diễn phân bố tần số trực quan.`
+      },

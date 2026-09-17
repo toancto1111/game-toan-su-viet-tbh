@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="600" height="360" rx="14" fill="#url(#bgGrad)"/>
+
+  <!-- Tọa độ: Đặt tiếp tuyến chung AB nằm ngang ở đỉnh y = 70 -->
+  <!-- Bánh lớn (O1): R1 = 90px (15cm). Tâm O1 tại (160, 70 + 90) = (160, 160) -->
+  <!-- Tiếp điểm A tại (160, 70) -->
+  <!-- Khoảng cách O1O2 = 26cm -> 156px. O1H = R1 - R2 = 10cm -> 60px -->
+  <!-- O2H = AB = 24cm -> 144px. Vậy O2 tại (160 + 144, 70 + 30) = (304, 100)??? -->
+  <!-- Chờ chút: Nếu AB nằm ngang thì O1A = R1 thẳng đứng, O2B = R2 thẳng đứng. Vậy O1 ở y = 70 + 90 = 160, O2 ở y = 70 + 30 = 100 -->
+  <!-- Delta y = 160 - 100 = 60px (10cm). Delta x = 144px (24cm). Khoảng cách O1O2 = sqrt(144^2 + 60^2) = 156px (26cm)! Hoàn hảo! -->
+  <!-- Vậy:
+       Tâm O1: (160, 160), R1 = 90
+       Tâm O2: (304 + 50, 100) -> mở rộng tỉ lệ một chút để hình thoáng:
+       Tỉ lệ 1cm = 8px:
+       R1 = 15*8 = 120px
+       R2 = 5*8 = 40px
+       O1H = 10*8 = 80px
+       O2H = 24*8 = 192px
+       O1O2 = 26*8 = 208px
+       AB nằm ngang y = 60:
+       Tâm O1 = (160, 60 + 120) = (160, 180)
+       Tiếp điểm A = (160, 60)
+       Tâm O2 = (160 + 192, 60 + 40) = (352, 100)
+       Tiếp điểm B = (352, 60)
+  -->
+
+  <!-- Bánh lớn (O1; 15cm) -->
+  <circle cx="160" cy="180" r="120" fill="#eff6ff" stroke="#0284c7" stroke-width="3" filter="url(#shadow)"/>
+  <circle cx="160" cy="180" r="105" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <circle cx="160" cy="180" r="18" fill="#cbd5e1" stroke="#0284c7" stroke-width="2"/>
+  <circle cx="160" cy="180" r="5" fill="#0284c7"/>
+
+  <!-- Bánh nhỏ (O2; 5cm) -->
+  <circle cx="352" cy="100" r="40" fill="#fef3c7" stroke="#ea580c" stroke-width="2.5" filter="url(#shadow)"/>
+  <circle cx="352" cy="100" r="32" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <circle cx="352" cy="100" r="12" fill="#fed7aa" stroke="#ea580c" stroke-width="1.5"/>
+  <circle cx="352" cy="100" r="4" fill="#ea580c"/>
+
+  <!-- Dây curoa (Tiếp tuyến chung AB) -->
+  <line x1="80" y1="60" x2="430" y2="60" stroke="#dc2626" stroke-width="4" filter="url(#shadow)"/>
+  <text x="440" y="65" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#dc2626">Dây curoa</text>
+
+  <!-- Bán kính O1A (thẳng đứng lên A(160, 60)) -->
+  <line x1="160" y1="180" x2="160" y2="60" stroke="#0284c7" stroke-width="2.5"/>
+  <text x="135" y="125" font-family="system-ui, sans-serif" font-size="12" font-style="italic" font-weight="bold" fill="#0284c7">R₁=15</text>
+  <rect x="160" y="60" width="12" height="12" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+
+  <!-- Bán kính O2B (thẳng đứng lên B(352, 60)) -->
+  <line x1="352" y1="100" x2="352" y2="60" stroke="#ea580c" stroke-width="2.5"/>
+  <text x="360" y="85" font-family="system-ui, sans-serif" font-size="12" font-style="italic" font-weight="bold" fill="#ea580c">R₂=5</text>
+  <rect x="340" y="60" width="12" height="12" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+
+  <!-- Đoạn nối tâm O1O2: từ (160, 180) đến (352, 100) -->
+  <line x1="160" y1="180" x2="352" y2="100" stroke="#64748b" stroke-width="2.5" stroke-dasharray="5,5"/>
+  <rect x="230" y="130" width="85" height="22" rx="4" fill="#ffffff" stroke="#64748b" stroke-width="1"/>
+  <text x="272" y="145" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">
+    O₁O₂ = 26 cm
+  </text>
+
+  <!-- Hạ O2H vuông góc O1A tại H(160, 100) -->
+  <line x1="352" y1="100" x2="160" y2="100" stroke="#9333ea" stroke-width="2.5" stroke-dasharray="4,4"/>
+  <rect x="160" y="88" width="12" height="12" fill="none" stroke="#9333ea" stroke-width="1.5"/>
+  <circle cx="160" cy="100" r="3.5" fill="#9333ea"/>
+  <text x="145" y="105" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#9333ea">H</text>
+  <text x="185" y="150" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#9333ea">O₁H = 10</text>
+
+  <!-- Điểm A, B, O1, O2 -->
+  <circle cx="160" cy="60" r="4.5" fill="#dc2626"/>
+  <text x="160" y="48" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#dc2626" text-anchor="middle">A</text>
+
+  <circle cx="352" cy="60" r="4.5" fill="#dc2626"/>
+  <text x="352" y="48" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#dc2626" text-anchor="middle">B</text>
+
+  <text x="160" y="205" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#0284c7" text-anchor="middle">O₁</text>
+  <text x="352" y="125" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#ea580c" text-anchor="middle">O₂</text>
+
+  <!-- Đoạn AB nổi bật -->
+  <g transform="translate(256, 35)" filter="url(#shadow)">
+    <rect x="-60" y="-12" width="120" height="24" rx="4" fill="#ffffff" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="0" y="5" font-family="system-ui, sans-serif" font-size="13" font-weight="900" fill="#dc2626" text-anchor="middle">
+      AB = 24 cm
+    </text>
+  </g>
+
+  <!-- Hộp giải thích tam giác vuông O1HO2 -->
+  <g transform="translate(300, 310)" filter="url(#shadow)">
+    <rect x="-240" y="-15" width="480" height="30" rx="6" fill="#ffffff" stroke="#0284c7" stroke-width="1.5"/>
+    <text x="0" y="5" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="middle">
+      AB = O₂H = √(O₁O₂² − O₁H²) = √(26² − (15 − 5)²) = √(676 − 100) = 24 cm
+    </text>
+  </g>
+</svg>

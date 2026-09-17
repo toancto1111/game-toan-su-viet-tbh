@@ -1,0 +1,140 @@
+{
+      "id": "USER_B18_11",
+      "level": "Thông hiểu",
+      "type": "multiple_choice_1",
+      "question": "Hai đường chéo của hình vuông có đặc điểm gì?",
+      "options": [
+          "A. Không bằng nhau và không vuông góc.",
+          "B. Bằng nhau và không vuông góc.",
+          "C. Bằng nhau và vuông góc với nhau.",
+          "D. Không cắt nhau."
+      ],
+      "answer": "C",
+      "explanation": "Trong hình vuông, hai đường chéo có độ dài bằng nhau và vuông góc với nhau tại trung điểm của mỗi đường."
+  },
+  {
+      "id": "USER_B18_12",
+      "level": "Thông hiểu",
+      "type": "multiple_choice_1",
+      "question": "Một hình lục giác đều được tạo thành từ bao nhiêu hình tam giác đều nhỏ giống nhau (khi nối tâm với các đỉnh)?",
+      "options": [
+          "A. $3$",
+          "B. $4$",
+          "C. $6$",
+          "D. $8$"
+      ],
+      "answer": "C",
+      "explanation": "Khi kẻ 3 đường chéo chính, hình lục giác đều được chia thành 6 hình tam giác đều bằng nhau."
+  },
+  {
+      "id": "USER_B18_13",
+      "level": "Thông hiểu",
+      "type": "multiple_choice_1",
+      "question": "Biển báo giao thông hình tam giác có viền đỏ, nền vàng thường có hình dạng là:",
+      "options": [
+          "A. Tam giác đều",
+          "B. Tam giác vuông",
+          "C. Tam giác cân (không đều)",
+          "D. Tam giác tù"
+      ],
+      "answer": "A",
+      "explanation": "Đa số các biển báo nguy hiểm ở Việt Nam được thiết kế theo hình tam giác đều."
+  },
+  {
+      "id": "USER_B18_14",
+      "level": "Thông hiểu",
+      "type": "multiple_choice_1",
+      "question": "Có bao nhiêu đường chéo phụ trong một hình lục giác đều?",
+      "options": [
+          "A. $3$",
+          "B. $4$",
+          "C. $6$",
+          "D. $9$"
+      ],
+      "answer": "C",
+      "explanation": "Hình lục giác đều có tổng cộng 9 đường chéo, trong đó có 3 đường chéo chính và 6 đường chéo phụ."
+  },
+  {
+      "id": "USER_B18_15",
+      "level": "Thông hiểu",
+      "type": "multiple_choice_1",
+      "question": "Khẳng định nào sau đây là \\textbf{sai}?",
+      "options": [
+          "A. Tam giác đều có ba góc bằng nhau.",
+          "B. Hình vuông có hai đường chéo bằng nhau.",
+          "C. Hình lục giác đều có 6 đường chéo chính bằng nhau.",
+          "D. Hình lục giác đều có sáu cạnh bằng nhau."
+      ],
+      "answer": "C",
+      "explanation": "Hình lục giác đều chỉ có đúng 3 đường chéo chính, không phải 6."
+  },
+  {
+      "id": "USER_B18_16",
+      "level": "Thông hiểu",
+      "type": "multiple_choice_1",
+      "question": "Nếu một hình vuông có cạnh là $a$, chu vi của nó được tính bằng công thức:",
+      "options": [
+          "A. $a + 4$",
+          "B. $a^2$",
+          "C. $4 \\cdot a$",
+          "D. $2 \\cdot a$"
+      ],
+      "answer": "C",
+      "explanation": "Chu vi hình vuông là tổng độ dài 4 cạnh: $a+a+a+a = 4 \\cdot a$."
+  },
+  {
+      "id": "USER_B18_17",
+      "level": "Thông hiểu",
+      "type": "multiple_choice_1",
+      "question": "Khẳng định nào sau đây là \\textbf{đúng}?",
+      "options": [
+          "A. Hình vuông là hình có 4 góc vuông.",
+          "B. Hình có 4 cạnh bằng nhau chắc chắn là hình vuông.",
+          "C. Hình vuông có 4 góc vuông và 4 cạnh bằng nhau.",
+          "D. Tam giác có 2 cạnh bằng nhau là tam giác đều."
+      ],
+      "answer": "C",
+      "explanation": "Để là hình vuông, tứ giác cần có đủ cả 4 cạnh bằng nhau và 4 góc vuông. Đáp án A thiếu cạnh, B thiếu góc (có thể là hình thoi)."
+  },
+  {
+      "id": "USER_B18_18",
+      "level": "Vận dụng",
+      "type": "multiple_choice_1",
+      "question": "Biết độ dài cạnh của một hình lục giác đều là $4\\text{ cm}$. Độ dài đường chéo chính của hình lục giác đều đó là:",
+      "options": [
+          "A. $4\\text{ cm}$",
+          "B. $6\\text{ cm}$",
+          "C. $8\\text{ cm}$",
+          "D. $12\\text{ cm}$"
+      ],
+      "answer": "C",
+      "explanation": "Đường chéo chính của lục giác đều gấp 2 lần độ dài cạnh (do lục giác đều được tạo bởi 6 tam giác đều). Vậy độ dài là $2 \\cdot 4 = 8\\text{ cm"
+  },
+  {
+      "id": "USER_B18_19",
+      "level": "Vận dụng",
+      "type": "multiple_choice_1",
+      "question": "Nếu bạn có 2 hình tam giác đều giống nhau, ghép cạnh của chúng sát vào nhau. Hình mới tạo thành là hình gì?",
+      "options": [
+          "A. Hình chữ nhật",
+          "B. Hình thoi",
+          "C. Hình vuông",
+          "D. Hình lục giác"
+      ],
+      "answer": "B",
+      "explanation": "Hai tam giác đều ghép lại (chung 1 cạnh) sẽ tạo thành một hình thoi (có 4 cạnh bằng nhau, các góc đối bằng $60^\\circ$ và $120^\\circ$)."
+  },
+  {
+      "id": "USER_B18_20",
+      "level": "Vận dụng",
+      "type": "multiple_choice_1",
+      "question": "Người ta dùng các viên gạch hình vuông cạnh $20\\text{ cm}$ để lát nền. Nếu cần xếp thành một hình vuông lớn cạnh $100\\text{ cm}$, số viên gạch cần dùng là:",
+      "options": [
+          "A. $5$",
+          "B. $20$",
+          "C. $25$",
+          "D. $100$"
+      ],
+      "answer": "C",
+      "explanation": "Độ dài một cạnh lớn chứa được $100 : 20 = 5$ viên gạch. Số viên gạch tạo thành hình vuông lớn là $5 \\cdot 5 = 25$ viên."
+  }

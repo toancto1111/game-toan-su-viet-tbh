@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 620" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="2" dy="4" stdDeviation="3" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <rect width="920" height="620" rx="16" fill="url(#bgGrad)"/>
+
+  <!-- TIÊU ĐỀ CHÍNH -->
+  <text x="460" y="36" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="#0f172a" text-anchor="middle">
+    Hình 17.1 — Tổng hợp các vị trí tương đối giữa hai đường tròn theo khoảng cách tâm d
+  </text>
+
+  <!-- ==================== HÀNG 1: 3 VỊ TRÍ GIAO NHAU VÀ NGOÀI ==================== -->
+
+  <!-- (1) CẮT NHAU: Tâm (160, 160) -->
+  <g transform="translate(160, 150)">
+    <rect x="-135" y="-100" width="270" height="200" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
+    <!-- O1( -30, 0), R=50; O2( 30, 0), r=40 => d=60 (R-r=10 < 60 < 90=R+r) -->
+    <circle cx="-25" cy="0" r="50" fill="#eff6ff" stroke="#0284c7" stroke-width="2"/>
+    <circle cx="35" cy="0" r="38" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+    <line x1="-25" y1="0" x2="35" y2="0" stroke="#dc2626" stroke-width="2" stroke-dasharray="3,3"/>
+    
+    <!-- 2 giao điểm A, B -->
+    <circle cx="10" cy="-35.7" r="3.5" fill="#0f172a"/>
+    <text x="18" y="-38" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#0f172a">A</text>
+    <circle cx="10" cy="35.7" r="3.5" fill="#0f172a"/>
+    <text x="18" y="44" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#0f172a">B</text>
+
+    <!-- Tâm O, O' -->
+    <circle cx="-25" cy="0" r="3.5" fill="#0284c7"/>
+    <text x="-36" y="4" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0284c7">O</text>
+    <circle cx="35" cy="0" r="3.5" fill="#16a34a"/>
+    <text x="44" y="4" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#16a34a">O'</text>
+
+    <!-- Nhãn bên dưới -->
+    <text x="0" y="68" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#0369a1" text-anchor="middle">1. Cắt nhau (2 điểm chung)</text>
+    <text x="0" y="86" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#dc2626" text-anchor="middle">R − r &lt; d &lt; R + r</text>
+  </g>
+
+  <!-- (2) TIẾP XÚC NGOÀI: Tâm (460, 150) -->
+  <g transform="translate(460, 150)">
+    <rect x="-135" y="-100" width="270" height="200" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
+    <!-- O1(-35, 0), R=45; O2(40, 0), r=30 => d = 75 = R + r -->
+    <circle cx="-35" cy="0" r="45" fill="#eff6ff" stroke="#0284c7" stroke-width="2"/>
+    <circle cx="40" cy="0" r="30" fill="#fef3c7" stroke="#ea580c" stroke-width="2"/>
+    <line x1="-35" y1="0" x2="40" y2="0" stroke="#dc2626" stroke-width="2" stroke-dasharray="3,3"/>
+
+    <!-- Tiếp điểm A tại (10, 0) -->
+    <circle cx="10" cy="0" r="4" fill="#dc2626"/>
+    <text x="10" y="-8" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#dc2626" text-anchor="middle">A</text>
+
+    <circle cx="-35" cy="0" r="3.5" fill="#0284c7"/>
+    <text x="-46" y="4" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0284c7">O</text>
+    <circle cx="40" cy="0" r="3.5" fill="#ea580c"/>
+    <text x="48" y="4" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#ea580c">O'</text>
+
+    <!-- Nhãn bên dưới -->
+    <text x="0" y="68" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#c2410c" text-anchor="middle">2. Tiếp xúc ngoài (1 điểm chung)</text>
+    <text x="0" y="86" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#dc2626" text-anchor="middle">d = R + r</text>
+  </g>
+
+  <!-- (3) NGOÀI NHAU: Tâm (760, 150) -->
+  <g transform="translate(760, 150)">
+    <rect x="-135" y="-100" width="270" height="200" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
+    <!-- O1(-45, 0), R=40; O2(45, 0), r=28 => d = 90 > 68 = R + r -->
+    <circle cx="-45" cy="0" r="40" fill="#eff6ff" stroke="#0284c7" stroke-width="2"/>
+    <circle cx="45" cy="0" r="28" fill="#fdf4ff" stroke="#a855f7" stroke-width="2"/>
+    <line x1="-45" y1="0" x2="45" y2="0" stroke="#dc2626" stroke-width="2" stroke-dasharray="3,3"/>
+
+    <circle cx="-45" cy="0" r="3.5" fill="#0284c7"/>
+    <text x="-56" y="4" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0284c7">O</text>
+    <circle cx="45" cy="0" r="3.5" fill="#a855f7"/>
+    <text x="54" y="4" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#a855f7">O'</text>
+
+    <!-- Nhãn bên dưới -->
+    <text x="0" y="68" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#7e22ce" text-anchor="middle">3. Ngoài nhau (0 điểm chung)</text>
+    <text x="0" y="86" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#dc2626" text-anchor="middle">d &gt; R + r</text>
+  </g>
+
+  <!-- ==================== HÀNG 2: 3 VỊ TRÍ LỒNG NHAU ==================== -->
+
+  <!-- (4) TIẾP XÚC TRONG: Tâm (160, 420) -->
+  <g transform="translate(160, 420)">
+    <rect x="-135" y="-100" width="270" height="200" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
+    <!-- O1(-10, 0), R=55; O2(15, 0), r=30 => tiếp điểm tại x = 45 => d = 25 = 55 - 30 = R - r -->
+    <circle cx="-10" cy="0" r="55" fill="#eff6ff" stroke="#0284c7" stroke-width="2"/>
+    <circle cx="15" cy="0" r="30" fill="#fef3c7" stroke="#ea580c" stroke-width="2"/>
+    <line x1="-10" y1="0" x2="15" y2="0" stroke="#dc2626" stroke-width="2" stroke-dasharray="3,3"/>
+
+    <!-- Tiếp điểm chung A tại (45, 0) -->
+    <circle cx="45" cy="0" r="4" fill="#dc2626"/>
+    <text x="55" y="4" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#dc2626">A</text>
+
+    <circle cx="-10" cy="0" r="3.5" fill="#0284c7"/>
+    <text x="-22" y="4" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0284c7">O</text>
+    <circle cx="15" cy="0" r="3.5" fill="#ea580c"/>
+    <text x="18" y="16" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#ea580c">O'</text>
+
+    <!-- Nhãn bên dưới -->
+    <text x="0" y="68" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#c2410c" text-anchor="middle">4. Tiếp xúc trong (1 điểm chung)</text>
+    <text x="0" y="86" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#dc2626" text-anchor="middle">d = R − r &gt; 0</text>
+  </g>
+
+  <!-- (5) ĐỰNG NHAU: Tâm (460, 420) -->
+  <g transform="translate(460, 420)">
+    <rect x="-135" y="-100" width="270" height="200" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
+    <!-- O1(-5, 0), R=55; O2(10, 0), r=25 => d = 15 < 30 = R - r -->
+    <circle cx="-5" cy="0" r="55" fill="#eff6ff" stroke="#0284c7" stroke-width="2"/>
+    <circle cx="10" cy="0" r="25" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+    <line x1="-5" y1="0" x2="10" y2="0" stroke="#dc2626" stroke-width="2" stroke-dasharray="3,3"/>
+
+    <circle cx="-5" cy="0" r="3.5" fill="#0284c7"/>
+    <text x="-16" y="4" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0284c7">O</text>
+    <circle cx="10" cy="0" r="3.5" fill="#64748b"/>
+    <text x="18" y="14" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#475569">O'</text>
+
+    <!-- Nhãn bên dưới -->
+    <text x="0" y="68" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#475569" text-anchor="middle">5. Đựng nhau (0 điểm chung)</text>
+    <text x="0" y="86" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#dc2626" text-anchor="middle">0 &lt; d &lt; R − r</text>
+  </g>
+
+  <!-- (6) ĐỒNG TÂM: Tâm (760, 420) -->
+  <g transform="translate(760, 420)">
+    <rect x="-135" y="-100" width="270" height="200" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
+    <!-- O = O' tại (0,0), R=55, r=28 => d = 0 -->
+    <circle cx="0" cy="0" r="55" fill="#eff6ff" stroke="#0284c7" stroke-width="2"/>
+    <circle cx="0" cy="0" r="28" fill="#ffffff" stroke="#0284c7" stroke-width="2"/>
+
+    <circle cx="0" cy="0" r="4" fill="#0284c7"/>
+    <text x="0" y="-8" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0284c7" text-anchor="middle">O ≡ O'</text>
+
+    <!-- Nhãn bên dưới -->
+    <text x="0" y="68" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#0369a1" text-anchor="middle">6. Đồng tâm (0 điểm chung)</text>
+    <text x="0" y="86" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#dc2626" text-anchor="middle">d = 0</text>
+  </g>
+</svg>

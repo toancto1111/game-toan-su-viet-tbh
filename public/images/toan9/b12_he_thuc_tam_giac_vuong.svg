@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 270" width="100%" height="100%" style="max-width: 520px; max-height: 270px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0050b4" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#c80000" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#009650" />
+    </marker>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#bae6fd" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <linearGradient id="seaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Nền nhẹ -->
+  <rect x="5" y="5" width="510" height="260" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+  
+  <!-- Tam giác ABC -->
+  <!-- A(70, 210), B(300, 210), C(70, 50) -->
+  <polygon points="70,210 300,210 70,50" fill="rgba(0, 80, 180, 0.08)" stroke="#0050b4" stroke-width="2.5" />
+  
+  <!-- Góc vuông tại A -->
+  <polyline points="70,188 92,188 92,210" fill="none" stroke="#0050b4" stroke-width="2" />
+  <circle cx="81" cy="199" r="2" fill="#0050b4" />
+  
+  <!-- Cung góc B -->
+  <path d="M 265 210 A 35 35 0 0 0 274 192" fill="none" stroke="#c80000" stroke-width="2.5" />
+  <text x="250" y="198" font-size="14" font-weight="bold" fill="#c80000">B</text>
+
+  <!-- Cung góc C -->
+  <path d="M 70 85 A 35 35 0 0 0 88 78" fill="none" stroke="#ea580c" stroke-width="2.5" />
+  <text x="85" y="105" font-size="14" font-weight="bold" fill="#ea580c">C</text>
+
+  <!-- Đỉnh -->
+  <circle cx="70" cy="210" r="4" fill="#0050b4" />
+  <text x="50" y="225" font-size="16" font-weight="bold" fill="#0050b4">A</text>
+  
+  <circle cx="300" cy="210" r="4" fill="#0050b4" />
+  <text x="310" y="225" font-size="16" font-weight="bold" fill="#0050b4">B</text>
+  
+  <circle cx="70" cy="50" r="4" fill="#0050b4" />
+  <text x="52" y="45" font-size="16" font-weight="bold" fill="#0050b4">C</text>
+
+  <!-- Cạnh kề AB = c -->
+  <text x="185" y="235" font-size="13" font-weight="bold" fill="#009650" text-anchor="middle">c = AB (cạnh kề góc B)</text>
+
+  <!-- Cạnh đối AC = b -->
+  <text x="15" y="135" font-size="13" font-weight="bold" fill="#009650" transform="rotate(-90 15 135)" text-anchor="middle">b = AC (cạnh đối góc B)</text>
+
+  <!-- Cạnh huyền BC = a -->
+  <text x="210" y="115" font-size="14" font-weight="bold" fill="#c80000" transform="rotate(-35 210 115)" text-anchor="middle">a = BC (Cạnh huyền)</text>
+
+  <!-- Hộp công thức tóm tắt bên phải -->
+  <g transform="translate(325, 30)">
+    <rect x="0" y="0" width="180" height="200" rx="10" fill="#ffffff" stroke="#93c5fd" stroke-width="2" />
+    <rect x="0" y="0" width="180" height="32" rx="10" fill="#0050b4" />
+    <text x="90" y="21" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">HỆ THỨC LƯỢNG</text>
+    
+    <text x="12" y="55" font-size="11.5" font-weight="bold" fill="#1e3a8a">1. Cạnh huyền &amp; Sin/Cos:</text>
+    <text x="16" y="75" font-size="12" fill="#0369a1">b = a · sin B = a · cos C</text>
+    <text x="16" y="95" font-size="12" fill="#0369a1">c = a · sin C = a · cos B</text>
+    
+    <line x1="12" y1="110" x2="168" y2="110" stroke="#e2e8f0" stroke-width="1.5" />
+    
+    <text x="12" y="130" font-size="11.5" font-weight="bold" fill="#1e3a8a">2. Hai cạnh góc vuông:</text>
+    <text x="16" y="150" font-size="12" fill="#0369a1">b = c · tan B = c · cot C</text>
+    <text x="16" y="170" font-size="12" fill="#0369a1">c = b · tan C = b · cot B</text>
+  </g>
+
+</svg>

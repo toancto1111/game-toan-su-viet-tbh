@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 380" width="100%" height="100%">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <rect width="460" height="380" rx="14" fill="#f8fafc"/>
+
+  <!-- Trục tọa độ Oxy: Gốc O tại (230, 190). Tỷ lệ 1 đơn vị = 30px -->
+  <!-- R = 3 -> 90px -->
+  <line x1="40" y1="190" x2="420" y2="190" stroke="#64748b" stroke-width="2"/> <!-- Ox -->
+  <polygon points="420,190 410,185 410,195" fill="#64748b"/>
+  <text x="425" y="194" font-family="system-ui, sans-serif" font-size="14" font-style="italic" font-weight="bold" fill="#64748b">x</text>
+
+  <line x1="230" y1="350" x2="230" y2="30" stroke="#64748b" stroke-width="2"/> <!-- Oy -->
+  <polygon points="230,30 225,40 235,40" fill="#64748b"/>
+  <text x="235" y="25" font-family="system-ui, sans-serif" font-size="14" font-style="italic" font-weight="bold" fill="#64748b">y</text>
+
+  <!-- Gốc O -->
+  <circle cx="230" cy="190" r="4" fill="#0f172a"/>
+  <text x="215" y="205" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#0f172a">O</text>
+
+  <!-- Đường tròn (O; 3): tâm (230, 190), r = 90 -->
+  <circle cx="230" cy="190" r="90" fill="#eff6ff" fill-opacity="0.6" stroke="#0284c7" stroke-width="2.5"/>
+
+  <!-- Các điểm đặc biệt trên trục: (-3, 0), (3, 0), (0, 3), (0, -3) -->
+  <text x="325" y="208" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0284c7">3</text>
+  <text x="130" y="208" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0284c7">-3</text>
+  <text x="215" y="105" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0284c7">3</text>
+  <text x="210" y="285" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0284c7">-3</text>
+
+  <!-- Đường thẳng d: y = 4 (y = 190 - 120 = 70) -> Không giao -->
+  <line x1="50" y1="70" x2="410" y2="70" stroke="#9333ea" stroke-width="3" filter="url(#shadow)"/>
+  <text x="415" y="75" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#9333ea">y = 4 (d &gt; R)</text>
+
+  <!-- Đường thẳng y = -3 (y = 190 + 90 = 280) -> Tiếp tuyến tại (0, -3) -->
+  <line x1="50" y1="280" x2="410" y2="280" stroke="#ea580c" stroke-width="3" filter="url(#shadow)"/>
+  <circle cx="230" cy="280" r="4.5" fill="#ea580c"/>
+  <text x="415" y="285" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#ea580c">y = -3 (Tiếp tuyến)</text>
+
+  <!-- Chú thích Ox là cát tuyến -->
+  <text x="70" y="175" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#16a34a">Ox (Cát tuyến)</text>
+  <circle cx="140" cy="190" r="4" fill="#16a34a"/>
+  <circle cx="320" cy="190" r="4" fill="#16a34a"/>
+
+  <text x="230" y="365" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#64748b" text-anchor="middle">
+    Vị trí tương đối của các đường thẳng đối với đường tròn (O; 3) trên Oxy
+  </text>
+</svg>
