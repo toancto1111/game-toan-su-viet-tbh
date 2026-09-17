@@ -66,21 +66,23 @@ export const AdminView: React.FC<{ setView: (v: string) => void }> = ({ setView 
   const handleCreateCode = async () => {
     if (!newCodeStr.trim()) return alert('Vui lòng nhập mã code');
     if (newRewards.length === 0) return alert('Vui lòng thêm ít nhất 1 phần thưởng');
-    
-    const expiresAt = expiresAtDate ? new Date(expiresAtDate).getTime() : undefined;
-    const allowedPlayers = isPrivate
-      ? allowedPlayersText.split('\n').map(s => s.trim()).filter(Boolean)
-      : undefined;
+    // Dữ liệu sẽ được build động để tránh undefined fields (Firestore reject)
     
     setLoading(true);
-    const success = await saveCloudGiftCode({
+    const newGiftCode: any = {
       code: newCodeStr.trim().toUpperCase(),
       rewards: newRewards,
       usedBy: [],
-      expiresAt,
-      isPrivate,
-      allowedPlayers
-    });
+      isPrivate
+    };
+    if (expiresAtDate) {
+      newGiftCode.expiresAt = new Date(expiresAtDate).getTime();
+    }
+    if (isPrivate && allowedPlayersText) {
+      newGiftCode.allowedPlayers = allowedPlayersText.split('\n').map(s => s.trim()).filter(Boolean);
+    }
+    
+    const success = await saveCloudGiftCode(newGiftCode);
     if (success) {
       const updatedCodes = await fetchCloudGiftCodes();
       setGiftCodes(updatedCodes);
