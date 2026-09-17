@@ -873,6 +873,38 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
     setLoading(false);
   };
 
+  const handleGuestLogin = () => {
+    const guestKey = `guest_${Date.now()}`;
+    const guestData: PlayerState = {
+      playerName: `Khách ${Math.floor(Math.random() * 10000)}`,
+      legionName: 'Lãng Khách',
+      gold: 50000,
+      normalTickets: 10,
+      premiumTickets: 5,
+      jade: 500,
+      inventory: [INITIAL_HEROES[0], INITIAL_HEROES[1], INITIAL_HEROES[2], INITIAL_HEROES[3]],
+      lineup: [INITIAL_HEROES[0].id, INITIAL_HEROES[1].id, INITIAL_HEROES[2].id, INITIAL_HEROES[3].id, null, null],
+      currentChapter: 1,
+      progress: { 1: 0 },
+      mathProgress: {},
+      seenMathQuestions: [],
+      isGuest: true,
+      permArtifacts: []
+    };
+    
+    // Save to local storage only
+    const accounts = getAccounts();
+    accounts[guestKey] = {
+      username: guestKey,
+      passwordHash: '',
+      playerData: guestData,
+      updatedAt: Date.now()
+    };
+    localStorage.setItem("sv_accounts", JSON.stringify(accounts));
+    setSession(guestKey);
+    onLogin(guestKey, guestData);
+  };
+
   return (
     <div className="min-h-screen viet-bg flex items-center justify-center p-6 text-stone-900 relative overflow-hidden">
       <div className="absolute inset-0 bg-cover bg-center opacity-10 pointer-events-none" style={{ backgroundImage: `url('${import.meta.env.BASE_URL}images/vietnam_map.png')` }}></div>
@@ -946,6 +978,10 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
             <button id="auth-login-btn" onClick={handleLogin}
               className="gold-shimmer-btn px-10 py-4 rounded-2xl font-black uppercase w-full text-base shadow-xl transition-all active:scale-95 border border-amber-600/30 mt-2">
               ⚔ Vào Đại Nghiệp
+            </button>
+            <button onClick={handleGuestLogin}
+              className="w-full bg-stone-800 hover:bg-stone-700 text-stone-300 font-bold py-3 rounded-2xl border border-stone-600 transition-colors uppercase text-sm mt-2">
+              Chơi Ngay Không Cần Đăng Ký
             </button>
           </div>
         ) : (
@@ -1977,7 +2013,7 @@ const App: React.FC = () => {
           <div className="flex-1 relative w-full h-full overflow-hidden bg-black flex items-center justify-center">
             <div 
               className="relative w-full aspect-[16/9] max-h-full mx-auto shadow-2xl shadow-black overflow-hidden bg-stone-950"
-              style={{ maxWidth: '177.78vh' }}
+              style={{ maxWidth: '177.78vh', containerType: 'size' }}
             >
               {/* Ảnh nền Isometric */}
               <div 
@@ -1986,6 +2022,7 @@ const App: React.FC = () => {
               />
               {/* Lớp mờ (overlay) cho những viền ngoài để làm nổi bật */}
             <div className="absolute inset-0 bg-black/10 pointer-events-none" />
+            <div className="absolute inset-0 origin-top-left" style={{ width: 1920, height: 1080, transform: `scale(calc(100cqw / 1920))` }}>
 
             {/* AMBIENT ANIMATIONS (Hiệu ứng môi trường làm sống động bức tranh) */}
             <style>
@@ -2155,8 +2192,8 @@ const App: React.FC = () => {
                 `}
               </style>
               
-              <h1 className="title-glow text-[min(6vw,60px)] font-cinzel font-black tracking-widest uppercase text-center whitespace-nowrap relative z-10 pt-4 pb-0">VIỆT SỬ ANH HÙNG</h1>
-              <div className="font-cinzel font-black uppercase text-[10px] md:text-sm tracking-[0.3em] rainbow-text-animate drop-shadow-[0_2px_2px_rgba(0,0,0,0.9)] relative z-20 mt-1">
+              <h1 className="title-glow text-[80px] font-cinzel font-black tracking-widest uppercase text-center whitespace-nowrap relative z-10 pt-4 pb-0">VIỆT SỬ ANH HÙNG</h1>
+              <div className="font-cinzel font-black uppercase text-[20px] tracking-[0.3em] rainbow-text-animate drop-shadow-[0_2px_2px_rgba(0,0,0,0.9)] relative z-20 mt-1">
                 Một sản phẩm được phát triển bởi Trần Minh Toàn
               </div>
             </div>
@@ -2176,9 +2213,9 @@ const App: React.FC = () => {
               }}
               className="absolute top-[38%] left-[12%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
-              <div className="bg-blue-900/85 hover:bg-blue-800 backdrop-blur-md border-2 border-blue-400/60 px-[min(2vw,24px)] py-[min(1vw,12px)] rounded-full shadow-[0_0_20px_rgba(59,130,246,0.6)] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] transition-shadow">
-                <BookOpen className="w-[min(2vw,24px)] h-[min(2vw,24px)] text-blue-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[min(1.5vw,20px)] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Thí Luyện Đường</span>
+              <div className="bg-blue-900/85 hover:bg-blue-800 backdrop-blur-md border-2 border-blue-400/60 px-6 py-3 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.6)] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] transition-shadow">
+                <BookOpen className="w-8 h-8 text-blue-300" />
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Thí Luyện Đường</span>
               </div>
             </button>
 
@@ -2187,9 +2224,9 @@ const App: React.FC = () => {
               onClick={() => setView('danh-trai')}
               className="absolute top-[68%] left-[12%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
-              <div className="bg-green-900/85 hover:bg-green-800 backdrop-blur-md border-2 border-green-400/60 px-[min(2vw,24px)] py-[min(1vw,12px)] rounded-full shadow-[0_0_20px_rgba(34,197,94,0.6)] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(34,197,94,0.8)] transition-shadow">
-                <Tent className="w-[min(2vw,24px)] h-[min(2vw,24px)] text-green-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[min(1.5vw,20px)] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Doanh Trại</span>
+              <div className="bg-green-900/85 hover:bg-green-800 backdrop-blur-md border-2 border-green-400/60 px-6 py-3 rounded-full shadow-[0_0_20px_rgba(34,197,94,0.6)] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(34,197,94,0.8)] transition-shadow">
+                <Tent className="w-8 h-8 text-green-300" />
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Doanh Trại</span>
               </div>
             </button>
 
@@ -2198,20 +2235,20 @@ const App: React.FC = () => {
               onClick={() => setView('quoc-tu-giam')}
               className="absolute top-[28%] left-[45%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
-              <div className="bg-red-900/85 hover:bg-red-800 backdrop-blur-md border-2 border-red-400/60 px-[min(2vw,24px)] py-[min(1vw,12px)] rounded-full shadow-[0_0_20px_rgba(239,68,68,0.6)] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(239,68,68,0.8)] transition-shadow">
-                <School className="w-[min(2vw,24px)] h-[min(2vw,24px)] text-red-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[min(1.5vw,20px)] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Quốc Tử Giám</span>
+              <div className="bg-red-900/85 hover:bg-red-800 backdrop-blur-md border-2 border-red-400/60 px-6 py-3 rounded-full shadow-[0_0_20px_rgba(239,68,68,0.6)] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(239,68,68,0.8)] transition-shadow">
+                <School className="w-8 h-8 text-red-300" />
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Quốc Tử Giám</span>
               </div>
             </button>
 
             {/* 4. DANH VỌNG ĐÀI - Cạnh trên (phải) -> Tòa cung điện chính */}
             <button 
               onClick={() => setView('danh-vong-dai')}
-              className="absolute top-[28%] left-[65%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
+              className="absolute top-[28%] left-[68%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
-              <div className="bg-indigo-900/85 hover:bg-indigo-800 backdrop-blur-md border-2 border-indigo-400/60 px-[min(2vw,24px)] py-[min(1vw,12px)] rounded-full shadow-[0_0_25px_rgba(99,102,241,0.7)] flex items-center gap-3 hover:shadow-[0_0_35px_rgba(99,102,241,0.9)] transition-shadow">
-                <Crown className="w-[min(2vw,24px)] h-[min(2vw,24px)] text-indigo-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[min(1.5vw,20px)] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Bảng Vàng Danh Dự</span>
+              <div className="bg-indigo-900/85 hover:bg-indigo-800 backdrop-blur-md border-2 border-indigo-400/60 px-6 py-3 rounded-full shadow-[0_0_25px_rgba(99,102,241,0.7)] flex items-center gap-3 hover:shadow-[0_0_35px_rgba(99,102,241,0.9)] transition-shadow">
+                <Crown className="w-8 h-8 text-indigo-300" />
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>DANH VỌNG ĐÀI</span>
               </div>
             </button>
 
@@ -2220,9 +2257,9 @@ const App: React.FC = () => {
               onClick={() => setView('quan-doan')}
               className="absolute top-[60%] left-[88%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
-              <div className="bg-amber-900/85 hover:bg-amber-800 backdrop-blur-md border-2 border-amber-400/60 px-[min(2vw,24px)] py-[min(1vw,12px)] rounded-full shadow-[0_0_20px_rgba(217,119,6,0.6)] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(217,119,6,0.8)] transition-shadow">
-                <Shield className="w-[min(2vw,24px)] h-[min(2vw,24px)] text-amber-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[min(1.5vw,20px)] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Quân Đoàn</span>
+              <div className="bg-amber-900/85 hover:bg-amber-800 backdrop-blur-md border-2 border-amber-400/60 px-6 py-3 rounded-full shadow-[0_0_20px_rgba(217,119,6,0.6)] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(217,119,6,0.8)] transition-shadow">
+                <Shield className="w-8 h-8 text-amber-300" />
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Quân Đoàn</span>
               </div>
             </button>
 
@@ -2231,9 +2268,9 @@ const App: React.FC = () => {
               onClick={() => setView('hero-trial')}
               className="absolute top-[90%] left-[86%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
-              <div className="bg-red-900/85 hover:bg-red-800 backdrop-blur-md border-2 border-red-500/60 px-[min(2vw,24px)] py-[min(1vw,12px)] rounded-full shadow-[0_0_25px_rgba(239,68,68,0.7)] flex items-center gap-3 hover:shadow-[0_0_35px_rgba(239,68,68,0.9)] transition-shadow">
-                <Swords className="w-[min(2vw,24px)] h-[min(2vw,24px)] text-red-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[min(1.5vw,20px)] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Anh Hùng Quá Ải</span>
+              <div className="bg-red-900/85 hover:bg-red-800 backdrop-blur-md border-2 border-red-500/60 px-6 py-3 rounded-full shadow-[0_0_25px_rgba(239,68,68,0.7)] flex items-center gap-3 hover:shadow-[0_0_35px_rgba(239,68,68,0.9)] transition-shadow">
+                <Swords className="w-8 h-8 text-red-300" />
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Anh Hùng Quá Ải</span>
               </div>
             </button>
 
@@ -2242,9 +2279,9 @@ const App: React.FC = () => {
               onClick={() => setView('shop')}
               className="absolute top-[90%] left-[32%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
-              <div className="bg-amber-900/85 hover:bg-amber-800 backdrop-blur-md border-2 border-amber-400/60 px-[min(2vw,24px)] py-[min(1vw,12px)] rounded-full shadow-[0_0_20px_rgba(251,191,36,0.6)] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(251,191,36,0.8)] transition-shadow">
-                <ShoppingBag className="w-[min(2vw,24px)] h-[min(2vw,24px)] text-amber-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[min(1.5vw,20px)] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Kỳ Trân Các</span>
+              <div className="bg-amber-900/85 hover:bg-amber-800 backdrop-blur-md border-2 border-amber-400/60 px-6 py-3 rounded-full shadow-[0_0_20px_rgba(251,191,36,0.6)] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(251,191,36,0.8)] transition-shadow">
+                <ShoppingBag className="w-8 h-8 text-amber-300" />
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Kỳ Trân Các</span>
               </div>
             </button>
 
@@ -2253,9 +2290,9 @@ const App: React.FC = () => {
               onClick={() => setView('summon')}
               className="absolute top-[76%] left-[65%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
-              <div className="bg-purple-900/85 hover:bg-purple-800 backdrop-blur-md border-2 border-purple-400/60 px-[min(2vw,24px)] py-[min(1vw,12px)] rounded-full shadow-[0_0_25px_rgba(168,85,247,0.7)] flex items-center gap-3 hover:shadow-[0_0_35px_rgba(168,85,247,0.9)] transition-shadow">
-                <UserPlus className="w-[min(2vw,24px)] h-[min(2vw,24px)] text-purple-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[min(1.5vw,20px)] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Chiêu Hiền Đài</span>
+              <div className="bg-purple-900/85 hover:bg-purple-800 backdrop-blur-md border-2 border-purple-400/60 px-6 py-3 rounded-full shadow-[0_0_25px_rgba(168,85,247,0.7)] flex items-center gap-3 hover:shadow-[0_0_35px_rgba(168,85,247,0.9)] transition-shadow">
+                <UserPlus className="w-8 h-8 text-purple-300" />
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Chiêu Hiền Đài</span>
               </div>
             </button>
 
@@ -2264,9 +2301,9 @@ const App: React.FC = () => {
               onClick={() => setView('tu-hao-su-viet')}
               className="absolute top-[48%] left-[50%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
-              <div className="bg-gradient-to-r from-red-950/90 via-amber-900/90 to-red-950/90 hover:from-red-800 hover:to-amber-800 backdrop-blur-md border-2 border-amber-400/80 px-[min(2.5vw,28px)] py-[min(1.2vw,14px)] rounded-full shadow-[0_0_30px_rgba(245,158,11,0.8)] flex items-center gap-3 hover:shadow-[0_0_45px_rgba(245,158,11,1)] transition-all">
-                <ScrollText className="w-[min(2.2vw,26px)] h-[min(2.2vw,26px)] text-yellow-300 animate-pulse" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[min(1.6vw,22px)] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 12px rgba(255,215,0,0.8), 0 2px 4px rgba(0,0,0,1)' }}>Tự Hào Sử Việt</span>
+              <div className="bg-gradient-to-r from-red-950/90 via-amber-900/90 to-red-950/90 hover:from-red-800 hover:to-amber-800 backdrop-blur-md border-2 border-amber-400/80 px-8 py-4 rounded-full shadow-[0_0_30px_rgba(245,158,11,0.8)] flex items-center gap-3 hover:shadow-[0_0_45px_rgba(245,158,11,1)] transition-all">
+                <ScrollText className="w-10 h-10 text-yellow-300 animate-pulse" />
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[32px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 12px rgba(255,215,0,0.8), 0 2px 4px rgba(0,0,0,1)' }}>Tự Hào Sử Việt</span>
               </div>
             </button>
 
@@ -2285,6 +2322,8 @@ const App: React.FC = () => {
             )}
 
 
+
+            </div>
 
             {showCh9FactionModal && (
               <Ch9FactionSelectModal

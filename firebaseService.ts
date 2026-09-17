@@ -90,6 +90,7 @@ export const syncPlayerToLeaderboard = async (entry: LeaderboardEntry): Promise<
   if (!db) {
     return false;
   }
+  if (entry.uid && entry.uid.startsWith('guest_')) return false;
 
   try {
     const safeId = (entry.uid || entry.playerName || "player").toLowerCase().replace(/[^a-z0-9_-]/g, '_');
@@ -308,7 +309,7 @@ export const getCloudAccount = async (username: string): Promise<{ passwordHash:
  * Lưu dữ liệu game (tiến độ, vàng, tướng...) lên Cloud sau mỗi hành động quan trọng
  */
 export const savePlayerDataToCloud = async (username: string, playerData: any): Promise<boolean> => {
-  if (!db) return false;
+  if (!db || playerData?.isGuest || username.startsWith('guest_')) return false;
   try {
     const docRef = doc(db, "accounts", username.toLowerCase());
     await setDoc(docRef, { playerData, updatedAt: Date.now() }, { merge: true });
@@ -332,7 +333,7 @@ export const savePlayerProgress = async (
   username: string,
   playerData: PlayerState
 ): Promise<boolean> => {
-  if (!db) return false;
+  if (!db || playerData.isGuest || username.startsWith('guest_')) return false;
   try {
     // Strip avatar Base64 để tiết kiệm Firestore quota (~500KB/save)
     const { customAvatar: _ignored, ...safePlayerData } = playerData as any;

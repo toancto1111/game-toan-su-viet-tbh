@@ -108,6 +108,7 @@ export interface PlayerState {
   tuHaoSuVietScore?: number;      // Điểm xếp hạng Khoa Cử
   fullName?: string;              // Họ và tên thật của học sinh (VD: Nguyễn Văn A)
   className?: string;             // Tên lớp (VD: 6A1, 9B...)
+  isGuest?: boolean;              // Cờ đánh dấu tài khoản Khách (không lưu lên Cloud)
   grade?: number;                 // Khối lớp học sinh đang học (6, 7, 8, 9)
   customAvatar?: string;          // Ảnh đại diện tải lên từ máy tính (Data URL/Base64)
   username?: string;              // Tên tài khoản đăng nhập
