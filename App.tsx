@@ -1773,6 +1773,9 @@ const App: React.FC = () => {
           if (playerData.inventory) {
             playerData.inventory = syncHeroInventoryStats(playerData.inventory);
           }
+          
+          // Bắt buộc set username để ProfileModal có dữ liệu chính xác thay vì fallback về playerName
+          playerData.username = username;
 
           if (playerData.grade) setSelectedGrade(playerData.grade);
           setCurrentUser(username);
