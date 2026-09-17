@@ -293,7 +293,11 @@ export const getCloudAccount = async (username: string): Promise<{ passwordHash:
     const docSnap = await getDoc(docRef);
     if (!docSnap.exists()) return null;
     const data = docSnap.data();
-    return { passwordHash: data.passwordHash, playerData: data.playerData };
+    return { 
+      passwordHash: data.passwordHash, 
+      playerData: data.playerData,
+      updatedAt: data.updatedAt || 0
+    };
   } catch (error) {
     console.error("Lỗi lấy tài khoản từ Cloud:", error);
     return null;

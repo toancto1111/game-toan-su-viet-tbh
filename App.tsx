@@ -710,20 +710,62 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
     const key = username.trim().toLowerCase();
     setLoading(true);
     
-    // 1. Ưu tiên kiểm tra Cloud Firebase
+    // 1. Lấy dữ liệu từ Local & Cloud
+    const localAccounts = getAccounts();
+    const localAccount = localAccounts[key];
     const cloudAccount = await getCloudAccount(key);
-    if (cloudAccount) {
-      if (cloudAccount.passwordHash !== hashPassword(password)) {
+
+    if (cloudAccount || localAccount) {
+      // Validate password if cloud account exists
+      if (cloudAccount && cloudAccount.passwordHash !== hashPassword(password)) {
         setError('Mật khẩu không đúng. Vui lòng thử lại.');
         setLoading(false);
         return;
+      } else if (!cloudAccount && localAccount && localAccount.passwordHash !== hashPassword(password)) {
+        setError('Mật khẩu không đúng. Vui lòng thử lại (Offline mode).');
+        setLoading(false);
+        return;
       }
-      // Cập nhật localStorage để hỗ trợ offline
-      const accounts = getAccounts();
-      accounts[key] = cloudAccount;
-      saveAccounts(accounts);
+
+      let bestPlayerData = null;
+      let needCloudSync = false;
+
+      if (cloudAccount && localAccount) {
+        const localTime = localAccount.updatedAt || 0;
+        const cloudTime = cloudAccount.updatedAt || 0;
+        
+        // Nếu Local mới hơn Cloud (VD: do tắt tab đột ngột trước khi kịp sync Cloud)
+        if (localTime > cloudTime) {
+          console.log("Local data is newer than Cloud! Using Local.");
+          bestPlayerData = localAccount.playerData;
+          needCloudSync = true;
+        } else {
+          console.log("Cloud data is newer or equal. Using Cloud.");
+          bestPlayerData = cloudAccount.playerData;
+        }
+      } else if (cloudAccount) {
+        bestPlayerData = cloudAccount.playerData;
+      } else {
+        bestPlayerData = localAccount.playerData;
+        needCloudSync = true;
+      }
+
+      // Cập nhật lại localStorage
+      if (cloudAccount) {
+         localAccounts[key] = {
+           passwordHash: cloudAccount.passwordHash,
+           playerData: bestPlayerData,
+           updatedAt: Date.now()
+         };
+         saveAccounts(localAccounts);
+      }
+
+      if (needCloudSync && isFirebaseReady()) {
+         savePlayerProgress(key, bestPlayerData).catch(() => {});
+      }
+
       setSession(key);
-      onLogin(key, JSON.parse(JSON.stringify(cloudAccount.playerData)));
+      onLogin(key, JSON.parse(JSON.stringify(bestPlayerData)));
       setLoading(false);
       return;
     }
@@ -1062,6 +1104,7 @@ const App: React.FC = () => {
       const accts = getAccounts();
       if (accts[user]) {
         accts[user].playerData = data;
+        accts[user].updatedAt = Date.now();
         saveAccounts(accts);
       }
     } catch (e) {
