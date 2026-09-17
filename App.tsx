@@ -1950,9 +1950,10 @@ const App: React.FC = () => {
       case 'chapter-hub': return (
         <div className="min-h-screen flex flex-col relative overflow-hidden bg-black">
           <Header state={player} setView={setView} onLogout={handleLogout} onOpenProfile={() => setIsProfileOpen(true)} syncStatus={syncStatus} />
-          <div className="flex-1 relative w-full h-full overflow-hidden bg-black">
+          <div className="flex-1 relative w-full h-full overflow-hidden bg-black flex items-center justify-center">
             <div 
-              className="absolute inset-0 shadow-2xl shadow-black overflow-hidden"
+              className="relative w-full aspect-[16/9] max-h-full mx-auto shadow-2xl shadow-black overflow-hidden bg-stone-950"
+              style={{ maxWidth: '177.78vh' }}
             >
               {/* Ảnh nền Isometric */}
               <div 
