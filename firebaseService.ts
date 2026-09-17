@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, doc, setDoc, where, getDoc, deleteDoc } from "firebase/firestore";
 import { GiftCode } from "./types";
-import { TrialRecord, LeaderboardEntry } from "./types";
+import { TrialRecord, LeaderboardEntry, PlayerState } from "./types";
 
 // HƯỚNG DẪN CẤU HÌNH FIREBASE:
 // 1. Vào trang https://console.firebase.google.com/ tạo một Project mới.
@@ -235,8 +235,10 @@ export const redeemCloudGiftCode = async (codeStr: string, playerName: string): 
     // Kiểm tra code có giới hạn tài khoản không
     if (code.isPrivate && code.allowedPlayers && code.allowedPlayers.length > 0) {
       const normalizedAllowed = code.allowedPlayers.map(p => p.toLowerCase().trim());
-      if (!normalizedAllowed.includes(playerName.toLowerCase().trim())) {
-        return { success: false, message: "Tài khoản của bạn không có quyền sử dụng mã code đặc biệt này." };
+      const normalizedPlayer = playerName.toLowerCase().trim();
+      // So sánh cả username lẫn playerName (để tương thích code cũ)
+      if (!normalizedAllowed.includes(normalizedPlayer)) {
+        return { success: false, message: "Tài khoản của bạn không có quyền sử dụng mã code đặc biệt này.\n\n(Gợi ý: Nhờ Admin thêm tên tài khoản đăng nhập vào danh sách cho phép)" };
       }
     }
     
@@ -256,3 +258,208 @@ export const redeemCloudGiftCode = async (codeStr: string, playerName: string): 
     return { success: false, message: "Lỗi kết nối máy chủ." };
   }
 };
+
+// ==================== TÀI KHOẢN NGƯỜI CHƠI (CLOUD) ====================
+
+/**
+ * Đăng ký tài khoản mới lên Cloud Firestore
+ * Collection: "accounts" | Doc ID: username (lowercase)
+ */
+export const saveCloudAccount = async (username: string, passwordHash: string, playerData: any): Promise<boolean> => {
+  if (!db) return false;
+  try {
+    const docRef = doc(db, "accounts", username.toLowerCase());
+    await setDoc(docRef, {
+      username: username.toLowerCase(),
+      passwordHash,
+      playerData,
+      createdAt: Date.now(),
+      updatedAt: Date.now()
+    });
+    return true;
+  } catch (error) {
+    console.error("Lỗi tạo tài khoản Cloud:", error);
+    return false;
+  }
+};
+
+/**
+ * Lấy thông tin tài khoản từ Cloud Firestore (dùng khi đăng nhập)
+ */
+export const getCloudAccount = async (username: string): Promise<{ passwordHash: string; playerData: any } | null> => {
+  if (!db) return null;
+  try {
+    const docRef = doc(db, "accounts", username.toLowerCase());
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) return null;
+    const data = docSnap.data();
+    return { passwordHash: data.passwordHash, playerData: data.playerData };
+  } catch (error) {
+    console.error("Lỗi lấy tài khoản từ Cloud:", error);
+    return null;
+  }
+};
+
+/**
+ * Lưu dữ liệu game (tiến độ, vàng, tướng...) lên Cloud sau mỗi hành động quan trọng
+ */
+export const savePlayerDataToCloud = async (username: string, playerData: any): Promise<boolean> => {
+  if (!db) return false;
+  try {
+    const docRef = doc(db, "accounts", username.toLowerCase());
+    await setDoc(docRef, { playerData, updatedAt: Date.now() }, { merge: true });
+    return true;
+  } catch (error) {
+    console.error("Lỗi lưu dữ liệu người chơi lên Cloud:", error);
+    return false;
+  }
+};
+
+// ==================== OFFLINE-FIRST SAVE SYSTEM ====================
+
+/** Kiểm tra Firebase đã sẵn sàng (có kết nối) chưa */
+export const isFirebaseReady = (): boolean => !!db;
+
+/**
+ * Lưu tiến độ game lên Cloud Firestore — Offline-first.
+ * Tự động loại bỏ customAvatar (Base64 ~500KB) để tiết kiệm quota miễn phí.
+ */
+export const savePlayerProgress = async (
+  username: string,
+  playerData: PlayerState
+): Promise<boolean> => {
+  if (!db) return false;
+  try {
+    // Strip avatar Base64 để tiết kiệm Firestore quota (~500KB/save)
+    const { customAvatar: _ignored, ...safePlayerData } = playerData as any;
+    const docRef = doc(db, "accounts", username.toLowerCase());
+    await setDoc(
+      docRef,
+      {
+        playerData: safePlayerData,
+        updatedAt: Date.now()
+      },
+      { merge: true }
+    );
+    return true;
+  } catch (error) {
+    console.error("Lỗi lưu tiến độ lên Cloud:", error);
+    return false;
+  }
+};
+
+/**
+ * Tải toàn bộ tiến độ game từ Cloud Firestore khi đăng nhập.
+ * Ưu tiên Cloud (mới nhất) > localStorage (backup offline).
+ * Trả về PlayerState hoặc null nếu không có / lỗi.
+ */
+export const loadPlayerDataFromCloud = async (
+  username: string
+): Promise<PlayerState | null> => {
+  if (!db) return null;
+  try {
+    const docRef = doc(db, "accounts", username.toLowerCase());
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) return null;
+    const data = docSnap.data();
+    if (!data?.playerData) return null;
+    return data.playerData as PlayerState;
+  } catch (error) {
+    console.error("Lỗi tải tiến độ từ Cloud:", error);
+    return null;
+  }
+};
+
+// ==================== ANALYTICS HỌC SINH (CLOUD) ====================
+
+export interface StudentAnalytics {
+  username: string;
+  fullName: string;
+  className: string;
+  grade: number;
+  totalQuestionsAnswered: number;
+  correctAnswers: number;
+  accuracy: number; // phần trăm chính xác
+  lastSessionAt: number;
+  studyStreakDays: number;
+  chapterProgress: Record<string, number>; // chapterId: stage đã đạt
+  topChapter: number;
+  knowledgeScore: number;
+  combatPower: number;
+  heroCount: number;
+  totalGold: number;
+  updatedAt: number;
+}
+
+/**
+ * Cập nhật analytics học sinh lên Cloud (fire-and-forget, không block).
+ * Được gọi tự động cùng với savePlayerProgress để giáo viên theo dõi.
+ */
+export const updateStudentAnalytics = async (
+  username: string,
+  playerData: PlayerState,
+  combatPower?: number
+): Promise<void> => {
+  if (!db) return;
+  try {
+    const totalAnswered = Object.values(playerData.mathProgress || {}).reduce((a, b) => a + b, 0);
+    const tuLuyenCorrect = Object.values(playerData.tuLuyenCorrectIds || {}).reduce(
+      (sum, arr) => sum + (arr?.length || 0),
+      0
+    );
+
+    const analytics: StudentAnalytics = {
+      username: username.toLowerCase(),
+      fullName: playerData.fullName || playerData.playerName,
+      className: playerData.className || "",
+      grade: playerData.grade || 6,
+      totalQuestionsAnswered: totalAnswered,
+      correctAnswers: tuLuyenCorrect,
+      accuracy: totalAnswered > 0 ? Math.round((tuLuyenCorrect / totalAnswered) * 100) : 0,
+      lastSessionAt: Date.now(),
+      studyStreakDays: (playerData as any).studyStreak || 0,
+      chapterProgress: Object.fromEntries(
+        Object.entries(playerData.progress || {}).map(([k, v]) => [k, v])
+      ),
+      topChapter: Math.max(...Object.keys(playerData.progress || { 1: 1 }).map(Number), 1),
+      knowledgeScore: playerData.tuHaoSuVietScore || 0,
+      combatPower: combatPower || 0,
+      heroCount: (playerData.inventory || []).length,
+      totalGold: playerData.gold || 0,
+      updatedAt: Date.now()
+    };
+
+    const docRef = doc(db, "analytics", username.toLowerCase());
+    await setDoc(docRef, analytics, { merge: true });
+  } catch (error) {
+    // Analytics không critical — fail silently để không ảnh hưởng gameplay
+    console.warn("Lỗi cập nhật analytics (không ảnh hưởng gameplay):", error);
+  }
+};
+
+/**
+ * Lấy analytics của tất cả học sinh (dành cho Admin/Giáo viên).
+ * Có thể filter theo lớp hoặc khối.
+ */
+export const fetchAllStudentAnalytics = async (
+  gradeFilter?: number,
+  classFilter?: string
+): Promise<StudentAnalytics[]> => {
+  if (!db) return [];
+  try {
+    const q = query(collection(db, "analytics"), orderBy("updatedAt", "desc"));
+    const snapshot = await getDocs(q);
+    let result: StudentAnalytics[] = [];
+    snapshot.forEach(docSnap => {
+      result.push(docSnap.data() as StudentAnalytics);
+    });
+    // Filter client-side (đơn giản, không cần composite index)
+    if (gradeFilter) result = result.filter(s => s.grade === gradeFilter);
+    if (classFilter) result = result.filter(s => s.className.toUpperCase() === classFilter.toUpperCase());
+    return result;
+  } catch (error) {
+    console.error("Lỗi lấy analytics học sinh:", error);
+    return [];
+  }
+};
+

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, Download, Database } from 'lucide-react';
-import { getAllTrialRecords, fetchCloudGiftCodes, saveCloudGiftCode, deleteCloudGiftCode } from './firebaseService';
+import { getAllTrialRecords, fetchCloudGiftCodes, saveCloudGiftCode, deleteCloudGiftCode, fetchAllStudentAnalytics, StudentAnalytics } from './firebaseService';
 import * as XLSX from 'xlsx';
 import { GiftCode, GiftCodeReward } from './types';
 import { Plus, Trash2, Gift, Code } from 'lucide-react';
@@ -26,7 +26,7 @@ const ITEM_OPTIONS = [
 export const AdminView: React.FC<{ setView: (v: string) => void }> = ({ setView }) => {
   const [loading, setLoading] = useState(false);
   const [records, setRecords] = useState<any[]>([]);
-  const [activeTab, setActiveTab] = useState<'thi_luyen' | 'giftcode'>('thi_luyen');
+  const [activeTab, setActiveTab] = useState<'thi_luyen' | 'giftcode' | 'analytics'>('analytics');
   const [giftCodes, setGiftCodes] = useState<GiftCode[]>([]);
   const [newCodeStr, setNewCodeStr] = useState('');
   const [newRewards, setNewRewards] = useState<GiftCodeReward[]>([]);
@@ -35,6 +35,13 @@ export const AdminView: React.FC<{ setView: (v: string) => void }> = ({ setView 
   const [expiresAtDate, setExpiresAtDate] = useState<string>('');
   const [isPrivate, setIsPrivate] = useState(false);
   const [allowedPlayersText, setAllowedPlayersText] = useState(''); // Mỗi dòng 1 tên tài khoản
+
+  // Analytics state
+  const [analytics, setAnalytics] = useState<StudentAnalytics[]>([]);
+  const [analyticsLoading, setAnalyticsLoading] = useState(false);
+  const [analyticsFilter, setAnalyticsFilter] = useState<{ grade: string; className: string }>({ grade: '', className: '' });
+  const [analyticsSortBy, setAnalyticsSortBy] = useState<keyof StudentAnalytics>('updatedAt');
+  const [analyticsSortDir, setAnalyticsSortDir] = useState<'asc' | 'desc'>('desc');
 
   useEffect(() => {
     const fetchCodes = async () => {
@@ -111,6 +118,57 @@ export const AdminView: React.FC<{ setView: (v: string) => void }> = ({ setView 
     fetchRecords();
   }, []);
 
+  // Load analytics khi chuyển sang tab analytics
+  useEffect(() => {
+    if (activeTab !== 'analytics') return;
+    const load = async () => {
+      setAnalyticsLoading(true);
+      const data = await fetchAllStudentAnalytics();
+      setAnalytics(data);
+      setAnalyticsLoading(false);
+    };
+    load();
+  }, [activeTab]);
+
+  const handleExportAnalytics = () => {
+    if (analytics.length === 0) return alert('Không có dữ liệu!');
+    const rows = analytics.map(s => ({
+      'Tên Tài Khoản': s.username,
+      'Họ Tên': s.fullName,
+      'Lớp': s.className,
+      'Khối': s.grade,
+      'Số Câu Đã Làm': s.totalQuestionsAnswered,
+      'Số Câu Đúng': s.correctAnswers,
+      'Tỷ Lệ Đúng (%)': s.accuracy,
+      'Chương Cao Nhất': s.topChapter,
+      'Điểm Sử Việt': s.knowledgeScore,
+      'Số Tướng': s.heroCount,
+      'Phiên Học Cuối': new Date(s.lastSessionAt).toLocaleString('vi-VN'),
+    }));
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Analytics');
+    XLSX.writeFile(wb, `BaoCao_HocSinh_${new Date().getTime()}.xlsx`);
+  };
+
+  const filteredAnalytics = analytics
+    .filter(s => !analyticsFilter.grade || String(s.grade) === analyticsFilter.grade)
+    .filter(s => !analyticsFilter.className || s.className.toLowerCase().includes(analyticsFilter.className.toLowerCase()))
+    .sort((a, b) => {
+      const av = a[analyticsSortBy] as any;
+      const bv = b[analyticsSortBy] as any;
+      return analyticsSortDir === 'asc' ? (av > bv ? 1 : -1) : (av < bv ? 1 : -1);
+    });
+
+  const handleSortClick = (col: keyof StudentAnalytics) => {
+    if (analyticsSortBy === col) setAnalyticsSortDir(d => d === 'asc' ? 'desc' : 'asc');
+    else { setAnalyticsSortBy(col); setAnalyticsSortDir('desc'); }
+  };
+
+  const SortIcon = ({ col }: { col: keyof StudentAnalytics }) => (
+    <span className="text-[10px] ml-0.5">{analyticsSortBy === col ? (analyticsSortDir === 'asc' ? '▲' : '▼') : '⇅'}</span>
+  );
+
   const handleExport = () => {
     if (records.length === 0) return alert("Không có dữ liệu để xuất!");
 
@@ -170,11 +228,111 @@ export const AdminView: React.FC<{ setView: (v: string) => void }> = ({ setView 
       </div>
 
       <div className="flex border-b border-stone-800 bg-stone-900/50">
+        <button onClick={() => setActiveTab('analytics')} className={`flex-1 py-4 font-bold tracking-wider uppercase transition-colors ${activeTab === 'analytics' ? 'text-emerald-400 border-b-2 border-emerald-400 bg-emerald-500/10' : 'text-stone-400 hover:text-stone-200'}`}>📊 Analytics Học Sinh</button>
         <button onClick={() => setActiveTab('thi_luyen')} className={`flex-1 py-4 font-bold tracking-wider uppercase transition-colors ${activeTab === 'thi_luyen' ? 'text-amber-500 border-b-2 border-amber-500 bg-amber-500/10' : 'text-stone-400 hover:text-stone-200'}`}>Dữ Liệu Thí Luyện</button>
         <button onClick={() => setActiveTab('giftcode')} className={`flex-1 py-4 font-bold tracking-wider uppercase transition-colors ${activeTab === 'giftcode' ? 'text-amber-500 border-b-2 border-amber-500 bg-amber-500/10' : 'text-stone-400 hover:text-stone-200'}`}>Quản Lý Giftcode</button>
       </div>
 
-      <div className="flex-1 p-8 overflow-auto">
+      <div className="flex-1 p-6 overflow-auto">
+
+        {/* ===== TAB: ANALYTICS HỌC SINH ===== */}
+        {activeTab === 'analytics' && (
+          <div className="max-w-7xl mx-auto">
+            {/* Header + Controls */}
+            <div className="flex flex-wrap gap-4 items-center justify-between mb-6">
+              <div>
+                <h2 className="text-2xl font-black text-white">📊 Bảng Phân Tích Học Sinh</h2>
+                <p className="text-stone-400 text-sm mt-1">Dữ liệu được cập nhật tự động sau mỗi lần học sinh lưu tiến độ (~3 giây).</p>
+              </div>
+              <div className="flex gap-3 items-center flex-wrap">
+                <select value={analyticsFilter.grade} onChange={e => setAnalyticsFilter(f => ({ ...f, grade: e.target.value }))} className="bg-stone-800 border border-stone-600 px-3 py-2 rounded-xl text-white text-sm outline-none focus:border-emerald-500">
+                  <option value="">Tất cả khối</option>
+                  {[6,7,8,9].map(g => <option key={g} value={g}>Khối {g}</option>)}
+                </select>
+                <input type="text" placeholder="Tìm theo lớp (VD: 9A1)" value={analyticsFilter.className} onChange={e => setAnalyticsFilter(f => ({ ...f, className: e.target.value }))} className="bg-stone-800 border border-stone-600 px-3 py-2 rounded-xl text-white text-sm outline-none focus:border-emerald-500 w-44" />
+                <button onClick={() => { setAnalyticsLoading(true); fetchAllStudentAnalytics().then(d => { setAnalytics(d); setAnalyticsLoading(false); }); }} className="bg-stone-700 hover:bg-stone-600 px-4 py-2 rounded-xl text-white text-sm font-bold flex items-center gap-2">
+                  🔄 Tải lại
+                </button>
+                <button onClick={handleExportAnalytics} disabled={filteredAnalytics.length === 0} className="bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 px-4 py-2 rounded-xl text-white text-sm font-bold flex items-center gap-2">
+                  <Download size={16} /> Xuất Excel ({filteredAnalytics.length})
+                </button>
+              </div>
+            </div>
+
+            {/* Summary Cards */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              {[
+                { label: 'Tổng học sinh', value: filteredAnalytics.length, color: 'text-emerald-400', bg: 'bg-emerald-950/40 border-emerald-800' },
+                { label: 'TB câu đúng', value: filteredAnalytics.length ? Math.round(filteredAnalytics.reduce((s,x) => s + x.correctAnswers,0) / filteredAnalytics.length) : 0, color: 'text-amber-400', bg: 'bg-amber-950/40 border-amber-800' },
+                { label: 'TB tỷ lệ đúng', value: filteredAnalytics.length ? Math.round(filteredAnalytics.reduce((s,x) => s + x.accuracy,0) / filteredAnalytics.length) + '%' : '—', color: 'text-blue-400', bg: 'bg-blue-950/40 border-blue-800' },
+                { label: 'Chương cao nhất', value: filteredAnalytics.length ? Math.max(...filteredAnalytics.map(x => x.topChapter)) : 0, color: 'text-purple-400', bg: 'bg-purple-950/40 border-purple-800' },
+              ].map((card, i) => (
+                <div key={i} className={`${card.bg} border rounded-2xl p-4`}>
+                  <div className="text-xs text-stone-400 uppercase tracking-wider mb-1">{card.label}</div>
+                  <div className={`text-3xl font-black ${card.color}`}>{analyticsLoading ? '...' : card.value}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Table */}
+            {analyticsLoading ? (
+              <div className="text-center py-20 text-stone-400">⏳ Đang tải dữ liệu từ Cloud...</div>
+            ) : filteredAnalytics.length === 0 ? (
+              <div className="text-center py-20 text-stone-500 italic">Chưa có dữ liệu analytics. Học sinh cần chơi game và lưu tiến độ để dữ liệu xuất hiện.</div>
+            ) : (
+              <div className="overflow-x-auto rounded-2xl border border-stone-700 shadow-xl">
+                <table className="w-full text-sm">
+                  <thead className="bg-stone-800/80">
+                    <tr>
+                      {[
+                        { label: '#', col: null },
+                        { label: 'Tên TK', col: 'username' as keyof StudentAnalytics },
+                        { label: 'Họ Tên', col: 'fullName' as keyof StudentAnalytics },
+                        { label: 'Lớp', col: 'className' as keyof StudentAnalytics },
+                        { label: 'Câu Đúng', col: 'correctAnswers' as keyof StudentAnalytics },
+                        { label: 'Tỷ Lệ', col: 'accuracy' as keyof StudentAnalytics },
+                        { label: 'Chương', col: 'topChapter' as keyof StudentAnalytics },
+                        { label: 'Điểm Sử', col: 'knowledgeScore' as keyof StudentAnalytics },
+                        { label: 'Tướng', col: 'heroCount' as keyof StudentAnalytics },
+                        { label: 'Phiên Cuối', col: 'updatedAt' as keyof StudentAnalytics },
+                      ].map((h, i) => (
+                        <th key={i} onClick={() => h.col && handleSortClick(h.col)} className={`text-left px-4 py-3 text-xs font-black uppercase text-stone-400 tracking-wider whitespace-nowrap ${h.col ? 'cursor-pointer hover:text-emerald-400 select-none' : ''}`}>
+                          {h.label}{h.col && <SortIcon col={h.col} />}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredAnalytics.map((s, idx) => (
+                      <tr key={s.username} className={`border-t border-stone-800 transition-colors ${idx % 2 === 0 ? 'bg-stone-900/30' : 'bg-stone-900/10'} hover:bg-emerald-950/20`}>
+                        <td className="px-4 py-3 text-stone-500 font-mono text-xs">{idx + 1}</td>
+                        <td className="px-4 py-3 text-amber-400 font-bold font-mono">{s.username}</td>
+                        <td className="px-4 py-3 text-white">{s.fullName}</td>
+                        <td className="px-4 py-3">
+                          <span className="bg-stone-700 text-amber-300 text-xs font-black px-2 py-0.5 rounded-full">{s.className} • K{s.grade}</span>
+                        </td>
+                        <td className="px-4 py-3 text-emerald-400 font-bold">{s.correctAnswers}<span className="text-stone-500 text-xs">/{s.totalQuestionsAnswered}</span></td>
+                        <td className="px-4 py-3">
+                          <div className="flex items-center gap-2">
+                            <div className="w-16 bg-stone-700 rounded-full h-1.5">
+                              <div className="h-1.5 rounded-full" style={{ width: `${s.accuracy}%`, background: s.accuracy >= 80 ? '#34d399' : s.accuracy >= 50 ? '#fbbf24' : '#f87171' }} />
+                            </div>
+                            <span className={`text-xs font-bold ${s.accuracy >= 80 ? 'text-emerald-400' : s.accuracy >= 50 ? 'text-amber-400' : 'text-red-400'}`}>{s.accuracy}%</span>
+                          </div>
+                        </td>
+                        <td className="px-4 py-3 text-blue-400 font-bold">{s.topChapter}</td>
+                        <td className="px-4 py-3 text-purple-400 font-bold">{s.knowledgeScore.toLocaleString()}</td>
+                        <td className="px-4 py-3 text-stone-300">{s.heroCount}</td>
+                        <td className="px-4 py-3 text-stone-400 text-xs whitespace-nowrap">{s.updatedAt ? new Date(s.updatedAt).toLocaleString('vi-VN', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' }) : '—'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
+
         {activeTab === 'thi_luyen' && (
         <div className="max-w-4xl mx-auto bg-stone-800 border border-stone-700 p-8 rounded-3xl shadow-xl">
           <h2 className="text-2xl font-bold text-white mb-4">Hệ Thống Phân Tích Thí Luyện</h2>
@@ -268,13 +426,13 @@ export const AdminView: React.FC<{ setView: (v: string) => void }> = ({ setView 
                  </div>
                  {isPrivate && (
                    <>
-                     <p className="text-purple-400/80 text-xs">Chỉ những tài khoản bên dưới mới được dùng code này. Mỗi dòng 1 tên tài khoản.</p>
+                     <p className="text-purple-400/80 text-xs">⚠️ Nhập <b className="text-yellow-300">Tên Tài Khoản Đăng Nhập</b> (không phải tên Chúa công). Mỗi dòng 1 tên tài khoản.</p>
                      <textarea
                        value={allowedPlayersText}
                        onChange={e => setAllowedPlayersText(e.target.value)}
                        rows={4}
                        className="bg-stone-900 border border-purple-700 p-3 rounded-xl text-white outline-none focus:border-purple-400 font-mono text-sm w-full resize-none"
-                       placeholder="NamAnh2025&#10;ThanhHuong9A&#10;MinhTri9B"
+                       placeholder={"hocsinh123\nnamhung9a\nthanhhuong2025\n\n⚠ Nhập tên đăng nhập, không phải tên ingame"}
                      />
                      <span className="text-xs text-purple-400/60 italic">{allowedPlayersText.split('\n').filter(Boolean).length} tài khoản được chỉ định</span>
                    </>

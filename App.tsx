@@ -29,7 +29,7 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
 import { PlayerState, Rarity, Question, Hero, Artifact, TrialRecord } from './types';
 import { INITIAL_HEROES, ARTIFACTS, ENEMY_HEROES, DEFAULT_ALLY_IMG, DEFAULT_ENEMY_IMG, SYNERGIES, AVAILABLE_VIDEOS } from './constants';
 import { CHAPTER_NAMES, MATH_DATA, getMathQuestions, getQuestionsForLesson } from './geminiService';
-import { saveTrialRecord, syncPlayerToLeaderboard } from './firebaseService';
+import { saveTrialRecord, syncPlayerToLeaderboard, savePlayerProgress, loadPlayerDataFromCloud, updateStudentAnalytics, isFirebaseReady, getCloudAccount, saveCloudAccount } from './firebaseService';
 import { AdminView } from './AdminView';
 import { demoTuLuyenData } from './demo_tu_luyen_data';
 import * as XLSX from 'xlsx';
@@ -601,7 +601,25 @@ const BGMPlayer: React.FC = () => {
   );
 };
 
-const Header: React.FC<{ state: PlayerState, setView: any, onLogout?: () => void, onOpenProfile?: () => void }> = ({ state, setView, onLogout, onOpenProfile }) => {
+const SyncStatusBadge: React.FC<{ status: 'idle' | 'saving' | 'saved' | 'offline' }> = ({ status }) => {
+  if (status === 'idle') return null;
+  return (
+    <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full border transition-all duration-500"
+      style={{
+        background: status === 'saving' ? 'rgba(59,130,246,0.12)' : status === 'saved' ? 'rgba(16,185,129,0.12)' : 'rgba(245,158,11,0.12)',
+        borderColor: status === 'saving' ? 'rgba(59,130,246,0.4)' : status === 'saved' ? 'rgba(16,185,129,0.4)' : 'rgba(245,158,11,0.4)',
+        color: status === 'saving' ? '#60a5fa' : status === 'saved' ? '#34d399' : '#fbbf24'
+      }}
+    >
+      {status === 'saving' && <span className="animate-spin inline-block">↻</span>}
+      {status === 'saved' && <span>☁</span>}
+      {status === 'offline' && <span>📵</span>}
+      <span>{status === 'saving' ? 'Đang lưu...' : status === 'saved' ? 'Đã lưu Cloud' : 'Offline'}</span>
+    </div>
+  );
+};
+
+const Header: React.FC<{ state: PlayerState, setView: any, onLogout?: () => void, onOpenProfile?: () => void, syncStatus?: 'idle' | 'saving' | 'saved' | 'offline' }> = ({ state, setView, onLogout, onOpenProfile, syncStatus = 'idle' }) => {
   const currentAvatarHero = (state.inventory || []).find(h => h.id === state.avatarId);
   const avatarImg = state.customAvatar || (currentAvatarHero ? currentAvatarHero.image : DEFAULT_ALLY_IMG);
 
@@ -659,6 +677,7 @@ const Header: React.FC<{ state: PlayerState, setView: any, onLogout?: () => void
             <div className="text-amber-600 font-cinzel text-[10px] uppercase tracking-widest bg-stone-800/80 px-2.5 py-0.5 rounded-full border border-amber-700/20 italic">
               Chương {state.currentChapter}
             </div>
+            <SyncStatusBadge status={syncStatus} />
             {onLogout && (
               <button onClick={onLogout} title="Đăng xuất" className="text-stone-500 hover:text-red-400 text-[9px] uppercase tracking-widest font-bold transition-colors flex items-center gap-1">
                 ⏻ Đăng xuất
@@ -683,20 +702,53 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
   const [playerName, setPlayerName] = React.useState('');
   const [legionName, setLegionName] = React.useState('');
   const [error, setError] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setError('');
     if (!username.trim() || !password) { setError('Vui lòng nhập đầy đủ tên tài khoản và mật khẩu.'); return; }
-    const accounts = getAccounts();
     const key = username.trim().toLowerCase();
+    setLoading(true);
+    
+    // 1. Ưu tiên kiểm tra Cloud Firebase
+    const cloudAccount = await getCloudAccount(key);
+    if (cloudAccount) {
+      if (cloudAccount.passwordHash !== hashPassword(password)) {
+        setError('Mật khẩu không đúng. Vui lòng thử lại.');
+        setLoading(false);
+        return;
+      }
+      // Cập nhật localStorage để hỗ trợ offline
+      const accounts = getAccounts();
+      accounts[key] = cloudAccount;
+      saveAccounts(accounts);
+      setSession(key);
+      onLogin(key, JSON.parse(JSON.stringify(cloudAccount.playerData)));
+      setLoading(false);
+      return;
+    }
+
+    // 2. Fallback: kiểm tra localStorage (tài khoản cũ chưa migrate)
+    const accounts = getAccounts();
     const account = accounts[key];
-    if (!account) { setError('Tài khoản không tồn tại. Hãy đăng ký mới.'); return; }
-    if (account.passwordHash !== hashPassword(password)) { setError('Mật khẩu không đúng. Vui lòng thử lại.'); return; }
+    if (!account) {
+      setError('Tài khoản không tồn tại. Hãy đăng ký mới.');
+      setLoading(false);
+      return;
+    }
+    if (account.passwordHash !== hashPassword(password)) {
+      setError('Mật khẩu không đúng. Vui lòng thử lại.');
+      setLoading(false);
+      return;
+    }
+    // Tự động migrate tài khoản cũ lên Cloud
+    saveCloudAccount(key, account.passwordHash, account.playerData).catch(() => {});
     setSession(key);
     onLogin(key, JSON.parse(JSON.stringify(account.playerData)));
+    setLoading(false);
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     setError('');
     if (!fullName.trim()) { setError('Vui lòng nhập họ và tên học sinh.'); return; }
     if (!className.trim()) { setError('Vui lòng nhập tên lớp học (ví dụ: 6A1, 9B...).'); return; }
@@ -705,9 +757,17 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
     if (username.trim().length < 3) { setError('Tên tài khoản phải có ít nhất 3 ký tự.'); return; }
     if (password.length < 4) { setError('Mật khẩu phải có ít nhất 4 ký tự.'); return; }
     if (password !== confirmPassword) { setError('Mật khẩu xác nhận không khớp. Vui lòng kiểm tra lại.'); return; }
-    const accounts = getAccounts();
     const key = username.trim().toLowerCase();
-    if (accounts[key]) { setError('Tên tài khoản đã tồn tại. Hãy chọn tên khác.'); return; }
+    setLoading(true);
+
+    // Kiểm tra tên đã tồn tại trên Cloud
+    const existing = await getCloudAccount(key);
+    if (existing) { setError('Tên tài khoản đã tồn tại. Hãy chọn tên khác.'); setLoading(false); return; }
+    
+    // Kiểm tra cả localStorage
+    const accounts = getAccounts();
+    if (accounts[key]) { setError('Tên tài khoản đã tồn tại. Hãy chọn tên khác.'); setLoading(false); return; }
+
     const newPlayerData: PlayerState = {
       fullName: fullName.trim(),
       grade: Number(grade),
@@ -730,10 +790,21 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
       mathProgress: {},
       seenMathQuestions: []
     };
-    accounts[key] = { passwordHash: hashPassword(password), playerData: newPlayerData };
+    const pwHash = hashPassword(password);
+
+    // Lưu lên Cloud Firebase (cách như ưu tiên)
+    const cloudOk = await saveCloudAccount(key, pwHash, newPlayerData);
+    
+    // Lưu backup vào localStorage
+    accounts[key] = { passwordHash: pwHash, playerData: newPlayerData };
     saveAccounts(accounts);
+    
+    if (!cloudOk) {
+      console.warn('Không lưu được lên Cloud, chỉ lưu local. Học sinh cần chơi trên cùng thiết bị/trình duyệt.');
+    }
     setSession(key);
     onLogin(key, newPlayerData);
+    setLoading(false);
   };
 
   return (
@@ -928,7 +999,7 @@ const App: React.FC = () => {
   const [activeTrialStage, setActiveTrialStage] = useState<number>(0);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   // Toast thông báo khi click chương bị khóa
-  const [lockedChapterToast, setLockedChapterToast] = useState<{ chapterNum: number } | null>(null);
+  const [lockedChapterToast, setLockedChapterToast] = useState<{ chapterNum: number; reason?: string } | null>(null);
   // Lưu lessonId đang học trong Thí Luyện Đường
   const [activeLessonId, setActiveLessonId] = useState<string | null>(null);
   // Tổng số câu gốc của bài đang chơi (dùng để check hoàn thành)
@@ -980,16 +1051,69 @@ const App: React.FC = () => {
     };
   });
 
-  // Tự động lưu dữ liệu người chơi vào tài khoản khi có thay đổi
-  useEffect(() => {
-    if (currentUser) {
+  // ========= CLOUD SYNC STATE =========
+  const [syncStatus, setSyncStatus] = useState<'idle' | 'saving' | 'saved' | 'offline'>('idle');
+  const syncTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Hàm lưu tiến độ: localStorage (backup offline) + Firebase Cloud (chính)
+  const persistPlayerData = React.useCallback(async (data: PlayerState, user: string, isForced = false) => {
+    // 1. Luôn lưu vào localStorage làm backup offline
+    try {
       const accts = getAccounts();
-      if (accts[currentUser]) {
-        accts[currentUser].playerData = player;
+      if (accts[user]) {
+        accts[user].playerData = data;
         saveAccounts(accts);
       }
+    } catch (e) {
+      console.warn("Lỗi lưu localStorage:", e);
     }
-  }, [player, currentUser]);
+
+    // 2. Lưu lên Firebase Cloud
+    if (!isFirebaseReady()) {
+      setSyncStatus('offline');
+      return;
+    }
+    setSyncStatus('saving');
+    try {
+      const ok = await savePlayerProgress(user, data);
+      if (ok) {
+        setSyncStatus('saved');
+        // Fire-and-forget analytics (không block)
+        updateStudentAnalytics(user, data).catch(() => {});
+        // Reset về idle sau 3 giây
+        setTimeout(() => setSyncStatus('idle'), 3000);
+      } else {
+        setSyncStatus('offline');
+      }
+    } catch (e) {
+      setSyncStatus('offline');
+    }
+  }, []);
+
+  // Auto-save với debounce 3 giây khi player state thay đổi
+  useEffect(() => {
+    if (!currentUser) return;
+    setSyncStatus('saving');
+    if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
+    syncTimerRef.current = setTimeout(() => {
+      persistPlayerData(player, currentUser);
+    }, 3000);
+    return () => {
+      if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
+    };
+  }, [player, currentUser, persistPlayerData]);
+
+  // Force-save ngay khi tab bị ẩn (người dùng chuyển tab hoặc đóng trình duyệt)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden && currentUser) {
+        if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
+        persistPlayerData(player, currentUser, true);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [player, currentUser, persistPlayerData]);
 
   const [combatUnits, setCombatUnits] = useState<{ ally: Hero[], enemy: Hero[] }>({ ally: [], enemy: [] });
   const [battleLogs, setBattleLogs] = useState<string[]>([]);
@@ -1031,8 +1155,14 @@ const App: React.FC = () => {
     });
   };
 
-  /** Đăng xuất: xóa session, reset về màn hình auth */
-  const handleLogout = () => {
+  /** Đăng xuất: lưu tiến độ ngay lập tức → xóa session → về màn hình auth */
+  const handleLogout = async () => {
+    if (currentUser) {
+      // Hủy debounce đang chờ
+      if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
+      // Force-save ngay (không debounce)
+      await persistPlayerData(player, currentUser, true);
+    }
     clearSession();
     setCurrentUser(null);
     setView('auth');
@@ -1612,9 +1742,38 @@ const App: React.FC = () => {
   const renderView = () => {
     switch (view) {
       case 'auth': return (
-        <AuthView onLogin={(username: string, playerData: PlayerState) => {
+        <AuthView onLogin={async (username: string, playerData: PlayerState) => {
+          // Khởi tạo các trường mặc định
           if (!playerData.permLineup) playerData.permLineup = [null, null, null, null, null, null];
           if (playerData.legionTickets === undefined) playerData.legionTickets = 0;
+          if (!playerData.unlockedChapters) playerData.unlockedChapters = [1];
+          if (!playerData.tuLuyenCorrectIds) playerData.tuLuyenCorrectIds = {};
+          if (!playerData.tuLuyenUnlockedLessons) playerData.tuLuyenUnlockedLessons = ['B1'];
+
+          // Thử tải dữ liệu mới nhất từ Cloud (Cloud luôn thắng nếu có)
+          try {
+            const cloudData = await loadPlayerDataFromCloud(username);
+            if (cloudData) {
+              // Merge: dùng cloud làm gốc nhưng giữ lại các trường mặc định nếu thiếu
+              playerData = {
+                ...cloudData,
+                permLineup: cloudData.permLineup || [null, null, null, null, null, null],
+                legionTickets: cloudData.legionTickets ?? 0,
+                unlockedChapters: cloudData.unlockedChapters || [1],
+                tuLuyenCorrectIds: cloudData.tuLuyenCorrectIds || {},
+                tuLuyenUnlockedLessons: cloudData.tuLuyenUnlockedLessons || ['B1'],
+              };
+            }
+          } catch (e) {
+            // Không load được cloud — dùng local data (offline fallback)
+            console.warn("Không tải được dữ liệu Cloud, dùng local backup:", e);
+          }
+
+          // Sync hero stats từ game data mới nhất
+          if (playerData.inventory) {
+            playerData.inventory = syncHeroInventoryStats(playerData.inventory);
+          }
+
           if (playerData.grade) setSelectedGrade(playerData.grade);
           setCurrentUser(username);
           setPlayer(playerData);
@@ -1744,7 +1903,7 @@ const App: React.FC = () => {
       );
       case 'chapter-hub': return (
         <div className="min-h-screen flex flex-col relative overflow-hidden bg-black">
-          <Header state={player} setView={setView} onLogout={handleLogout} onOpenProfile={() => setIsProfileOpen(true)} />
+          <Header state={player} setView={setView} onLogout={handleLogout} onOpenProfile={() => setIsProfileOpen(true)} syncStatus={syncStatus} />
           <div className="flex-1 relative w-full h-full overflow-hidden bg-black">
             <div 
               className="absolute inset-0 shadow-2xl shadow-black overflow-hidden"

@@ -27,7 +27,9 @@ export const ProfileModal: React.FC<{
     if (!codeStr.trim()) return alert("Vui lòng nhập mã code");
     
     setIsRedeeming(true);
-    const result = await redeemCloudGiftCode(codeStr.trim(), player.playerName);
+    // Dùng username (tên đăng nhập) để so sánh allowedPlayers — Admin nhập tên TK không phải tên ingame
+    const identifier = player.username || player.playerName;
+    const result = await redeemCloudGiftCode(codeStr.trim(), identifier);
     setIsRedeeming(false);
     
     if (!result.success || !result.code) {
