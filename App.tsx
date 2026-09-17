@@ -6216,8 +6216,18 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
           <video
             src={videoQueue[currentVideoIndex].skillVideoUrl}
             autoPlay
+            playsInline
+            preload="auto"
             className="w-full max-w-4xl h-auto max-h-[70vh] object-contain border-2 border-amber-500/50 rounded-xl shadow-[0_0_50px_rgba(245,158,11,0.3)] pointer-events-none"
             onEnded={() => {
+              if (currentVideoIndex < videoQueue.length - 1) {
+                setCurrentVideoIndex(currentVideoIndex + 1);
+              } else {
+                setAnimState('revealing');
+              }
+            }}
+            onError={(e) => {
+              console.warn("Video load failed, skipping...", e);
               if (currentVideoIndex < videoQueue.length - 1) {
                 setCurrentVideoIndex(currentVideoIndex + 1);
               } else {
