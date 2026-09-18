@@ -2580,20 +2580,20 @@ const App: React.FC = () => {
 
       {view !== 'auth' && (
         <div className="md:hidden fixed bottom-0 left-0 right-0 z-[200] bg-stone-950 border-t-2 border-stone-800 flex items-center justify-around shadow-[0_-5px_20px_rgba(0,0,0,1)] px-2 py-1 h-[72px]">
-          <button onClick={() => { setView('chapter-hub'); setActiveTab('chapters'); }} className={`flex flex-col items-center justify-center p-1 flex-1 ${view === 'chapter-hub' && activeTab !== 'items' && activeTab !== 'gold' ? 'text-amber-400' : 'text-stone-500'}`}>
-            <Tent size={26} className={view === 'chapter-hub' && activeTab !== 'items' && activeTab !== 'gold' ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
+          <button onClick={() => setView('chapter-hub')} className={`flex flex-col items-center justify-center p-1 flex-1 ${view === 'chapter-hub' ? 'text-amber-400' : 'text-stone-500'}`}>
+            <Tent size={26} className={view === 'chapter-hub' ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
             <span className="text-[10px] font-black uppercase mt-1">Thành Chính</span>
           </button>
-          <button onClick={() => { setView('chapter-hub'); setActiveTab('items'); }} className={`flex flex-col items-center justify-center p-1 flex-1 ${view === 'chapter-hub' && activeTab === 'items' ? 'text-amber-400' : 'text-stone-500'}`}>
-            <Users size={26} className={view === 'chapter-hub' && activeTab === 'items' ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
+          <button onClick={() => setView('quan-doan')} className={`flex flex-col items-center justify-center p-1 flex-1 ${view === 'quan-doan' || view === 'danh-trai' ? 'text-amber-400' : 'text-stone-500'}`}>
+            <Users size={26} className={view === 'quan-doan' || view === 'danh-trai' ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
             <span className="text-[10px] font-black uppercase mt-1">Tướng</span>
           </button>
-          <button onClick={() => setView('hero-trial')} className={`flex flex-col items-center justify-center p-1 flex-1 ${view === 'hero-trial' ? 'text-amber-400' : 'text-stone-500'}`}>
-            <Crosshair size={32} className={view === 'hero-trial' ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)] animate-pulse' : ''}/>
+          <button onClick={() => setView('hero-trial')} className={`flex flex-col items-center justify-center p-1 flex-1 ${view === 'hero-trial' || view === 'chapter-select' ? 'text-amber-400' : 'text-stone-500'}`}>
+            <Crosshair size={32} className={view === 'hero-trial' || view === 'chapter-select' ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)] animate-pulse' : ''}/>
             <span className="text-[10px] font-black uppercase mt-1">Chinh Chiến</span>
           </button>
-          <button onClick={() => { setView('chapter-hub'); setActiveTab('gold'); }} className={`flex flex-col items-center justify-center p-1 flex-1 ${view === 'chapter-hub' && activeTab === 'gold' ? 'text-amber-400' : 'text-stone-500'}`}>
-            <ShoppingBag size={26} className={view === 'chapter-hub' && activeTab === 'gold' ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
+          <button onClick={() => setView('shop')} className={`flex flex-col items-center justify-center p-1 flex-1 ${view === 'shop' ? 'text-amber-400' : 'text-stone-500'}`}>
+            <ShoppingBag size={26} className={view === 'shop' ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
             <span className="text-[10px] font-black uppercase mt-1">Bồi Dưỡng</span>
           </button>
           <button onClick={() => setIsProfileOpen(true)} className={`flex flex-col items-center justify-center p-1 flex-1 ${isProfileOpen ? 'text-amber-400' : 'text-stone-500'}`}>
