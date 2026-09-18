@@ -198,7 +198,10 @@ const streamMessageWithKeyRotation = async (
 
         // Chuẩn bị payload gửi: Hỗ trợ cả text lẫn ảnh đính kèm
         const contentParts: any[] = [];
-        const textToSend = userPrompt.trim() || 'Em gửi hình ảnh bài toán / câu hỏi này, nhờ thầy cô hướng dẫn giải chi tiết từng bước ạ.';
+        let textToSend = userPrompt.trim() || 'Em gửi hình ảnh bài toán / câu hỏi này, nhờ thầy cô hướng dẫn giải chi tiết từng bước ạ.';
+        if (imagePayload) {
+          textToSend += ' (LƯU Ý QUAN TRỌNG: Nếu đây là bài toán hình học, thầy cô BẮT BUỘC PHẢI VẼ HÌNH bằng thẻ <svg> trước khi giải chi tiết. TUYỆT ĐỐI KHÔNG ĐƯỢC BỎ QUA BƯỚC VẼ HÌNH).';
+        }
         contentParts.push({ text: textToSend });
 
         if (imagePayload) {
