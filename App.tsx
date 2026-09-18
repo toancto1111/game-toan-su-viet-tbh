@@ -2046,14 +2046,84 @@ const App: React.FC = () => {
         </div>
       );
       case 'chapter-hub': return (
-        <div className="h-screen w-screen bg-black overflow-hidden relative">
+        <div className="h-screen w-screen bg-black overflow-hidden relative flex">
+          
+          {/* MOBILE VIEW */}
+          <div className="md:hidden w-full h-full bg-stone-900 flex flex-col items-center justify-start overflow-y-auto relative pb-20">
+             <div className="w-full relative h-[45vh] shrink-0 bg-[url('/hub-bg.png?v=2')] bg-cover bg-center border-b-4 border-amber-900 shadow-xl overflow-hidden">
+                 <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-stone-900/40 to-black/70"></div>
+                 <div className="absolute top-8 left-4 z-30">
+                    <h2 className="text-amber-400 font-cinzel font-black text-2xl md:text-3xl uppercase tracking-[0.25em] drop-shadow-[0_0_10px_rgba(201,148,26,0.8)]">Chương {activeChapter}</h2>
+                    <p className="text-amber-100 font-cinzel text-sm md:text-base mt-0.5 italic tracking-widest">{CHAPTER_NAMES[activeChapter]}</p>
+                 </div>
+                 {/* Floating character or icon to make it lively */}
+                 <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 flex flex-col items-center">
+                    <span className="text-7xl md:text-8xl drop-shadow-lg filter sepia opacity-80">🏯</span>
+                 </div>
+             </div>
+
+             <div className="w-full max-w-md mx-auto flex-1 px-5 py-8 flex flex-col gap-4 relative z-10 -mt-12">
+                <button onClick={() => setView('chapter-select')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
+                   <div className="w-14 h-14 shrink-0 rounded-xl bg-amber-900/50 flex flex-col items-center justify-center border border-amber-500/50">
+                     <span className="text-2xl drop-shadow-md">🏕️</span>
+                   </div>
+                   <div className="text-left flex-1">
+                     <div className="font-cinzel font-black text-amber-400 text-lg uppercase tracking-wider">Doanh Trại</div>
+                     <div className="text-xs text-stone-400 font-bold">Vượt Ải Cốt Truyện</div>
+                   </div>
+                </button>
+                <button onClick={() => setView('tu-luyen-menu')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
+                   <div className="w-14 h-14 shrink-0 rounded-xl bg-blue-900/50 flex flex-col items-center justify-center border border-blue-500/50">
+                     <span className="text-2xl drop-shadow-md">📚</span>
+                   </div>
+                   <div className="text-left flex-1">
+                     <div className="font-cinzel font-black text-blue-400 text-lg uppercase tracking-wider">Quốc Tử Giám</div>
+                     <div className="text-xs text-stone-400 font-bold">Tu Luyện Môn Quy</div>
+                   </div>
+                </button>
+                <button onClick={() => setView('danh-vong-dai')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
+                   <div className="w-14 h-14 shrink-0 rounded-xl bg-purple-900/50 flex flex-col items-center justify-center border border-purple-500/50">
+                     <span className="text-2xl drop-shadow-md">🏆</span>
+                   </div>
+                   <div className="text-left flex-1">
+                     <div className="font-cinzel font-black text-purple-400 text-lg uppercase tracking-wider">Danh Vọng Đài</div>
+                     <div className="text-xs text-stone-400 font-bold">Bảng Xếp Hạng Đỉnh Cao</div>
+                   </div>
+                </button>
+                <button onClick={() => setView('quan-doan')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
+                   <div className="w-14 h-14 shrink-0 rounded-xl bg-green-900/50 flex flex-col items-center justify-center border border-green-500/50">
+                     <span className="text-2xl drop-shadow-md">🎪</span>
+                   </div>
+                   <div className="text-left flex-1">
+                     <div className="font-cinzel font-black text-green-400 text-lg uppercase tracking-wider">Quân Đoàn</div>
+                     <div className="text-xs text-stone-400 font-bold">Gia nhập Thế Lực</div>
+                   </div>
+                </button>
+                <button onClick={() => setView('hero-trial')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
+                   <div className="w-14 h-14 shrink-0 rounded-xl bg-red-900/50 flex flex-col items-center justify-center border border-red-500/50">
+                     <span className="text-2xl drop-shadow-md">⚔️</span>
+                   </div>
+                   <div className="text-left flex-1">
+                     <div className="font-cinzel font-black text-red-400 text-lg uppercase tracking-wider">Thí Luyện</div>
+                     <div className="text-xs text-stone-400 font-bold">Thử thách leo tháp</div>
+                   </div>
+                </button>
+                <button onClick={() => setView('tu-hao-su-viet')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
+                   <div className="w-14 h-14 shrink-0 rounded-xl bg-emerald-900/50 flex flex-col items-center justify-center border border-emerald-500/50">
+                     <span className="text-2xl drop-shadow-md">🐉</span>
+                   </div>
+                   <div className="text-left flex-1">
+                     <div className="font-cinzel font-black text-emerald-400 text-lg uppercase tracking-wider">Tự Hào Sử Việt</div>
+                     <div className="text-xs text-stone-400 font-bold">Quà tặng đặc biệt</div>
+                   </div>
+                </button>
+             </div>
+          </div>
+
+          {/* DESKTOP VIEW */}
           <div 
-            className="absolute top-1/2 left-1/2 flex flex-col bg-black transition-transform duration-300 origin-center"
-            style={
-              isPortrait 
-                ? { width: '100vh', height: '100vw', transform: 'translate(-50%, -50%) rotate(-90deg)' } 
-                : { width: '100vw', height: '100vh', transform: 'translate(-50%, -50%)' }
-            }
+            className="hidden md:flex absolute top-1/2 left-1/2 flex-col bg-black transition-transform duration-300 origin-center"
+            style={{ width: '100vw', height: '100vh', transform: 'translate(-50%, -50%)' }}
           >
             <Header state={player} setView={setView} onLogout={handleLogout} onOpenProfile={() => setIsProfileOpen(true)} syncStatus={syncStatus} />
             <div 
@@ -2504,9 +2574,34 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className="relative z-0">
+      <div className={`relative z-0 ${view !== 'auth' ? 'pb-[72px] md:pb-0' : ''}`}>
         {renderView()}
       </div>
+
+      {view !== 'auth' && (
+        <div className="md:hidden fixed bottom-0 left-0 right-0 z-[200] bg-stone-950 border-t-2 border-stone-800 flex items-center justify-around shadow-[0_-5px_20px_rgba(0,0,0,1)] px-2 py-1 h-[72px]">
+          <button onClick={() => { setView('chapter-hub'); setActiveTab('chapters'); }} className={`flex flex-col items-center justify-center p-1 flex-1 ${view === 'chapter-hub' && activeTab !== 'items' && activeTab !== 'gold' ? 'text-amber-400' : 'text-stone-500'}`}>
+            <Tent size={26} className={view === 'chapter-hub' && activeTab !== 'items' && activeTab !== 'gold' ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
+            <span className="text-[10px] font-black uppercase mt-1">Thành Chính</span>
+          </button>
+          <button onClick={() => { setView('chapter-hub'); setActiveTab('items'); }} className={`flex flex-col items-center justify-center p-1 flex-1 ${view === 'chapter-hub' && activeTab === 'items' ? 'text-amber-400' : 'text-stone-500'}`}>
+            <Users size={26} className={view === 'chapter-hub' && activeTab === 'items' ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
+            <span className="text-[10px] font-black uppercase mt-1">Tướng</span>
+          </button>
+          <button onClick={() => setView('hero-trial')} className={`flex flex-col items-center justify-center p-1 flex-1 ${view === 'hero-trial' ? 'text-amber-400' : 'text-stone-500'}`}>
+            <Crosshair size={32} className={view === 'hero-trial' ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)] animate-pulse' : ''}/>
+            <span className="text-[10px] font-black uppercase mt-1">Chinh Chiến</span>
+          </button>
+          <button onClick={() => { setView('chapter-hub'); setActiveTab('gold'); }} className={`flex flex-col items-center justify-center p-1 flex-1 ${view === 'chapter-hub' && activeTab === 'gold' ? 'text-amber-400' : 'text-stone-500'}`}>
+            <ShoppingBag size={26} className={view === 'chapter-hub' && activeTab === 'gold' ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
+            <span className="text-[10px] font-black uppercase mt-1">Bồi Dưỡng</span>
+          </button>
+          <button onClick={() => setIsProfileOpen(true)} className={`flex flex-col items-center justify-center p-1 flex-1 ${isProfileOpen ? 'text-amber-400' : 'text-stone-500'}`}>
+            <User size={26} className={isProfileOpen ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
+            <span className="text-[10px] font-black uppercase mt-1">Nhân Vật</span>
+          </button>
+        </div>
+      )}
       {view !== 'auth' && <BGMPlayer />}
       {view !== 'auth' && <ProfileModal 
          isOpen={isProfileOpen} 
@@ -2826,8 +2921,8 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
           </div>
        </div>
 
-       <div className="flex-1 flex overflow-hidden">
-          <div className="w-1/3 bg-stone-950/80 border-r-2 border-amber-900/50 p-6 overflow-y-auto custom-scrollbar shadow-2xl z-10 flex flex-col">
+       <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+          <div className="w-full h-[55%] md:h-auto md:w-1/3 bg-stone-950/80 border-t-2 md:border-t-0 border-amber-900/50 p-4 md:p-6 overflow-y-auto custom-scrollbar shadow-2xl z-10 flex flex-col order-2 md:order-1">
              
              {/* Tabs */}
              <div className="flex gap-2 mb-6 border-b border-amber-900/30 pb-4">
@@ -2922,9 +3017,10 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
              )}
           </div>
 
-          <div className="flex-1 p-10 flex flex-col items-center justify-center relative bg-stone-900/30">
-             <div className="absolute top-10 text-amber-900/10 font-cinzel font-black uppercase tracking-[0.5em] text-4xl pointer-events-none select-none">TRẬN ĐỒ QUÂN TA</div>
-             <div className="grid grid-cols-3 gap-8 p-12 bg-black/40 rounded-[4rem] border-4 border-dashed border-amber-900/20 shadow-inner relative">
+          <div className="w-full h-[45%] md:h-auto md:flex-1 p-4 md:p-10 flex flex-col items-center justify-center relative bg-[url('/hub-bg.png')] bg-cover bg-center order-1 md:order-2 overflow-hidden">
+             <div className="absolute inset-0 bg-stone-900/70"></div>
+             <div className="absolute top-2 md:top-10 text-amber-900/20 font-cinzel font-black uppercase tracking-[0.2em] md:tracking-[0.5em] text-xl md:text-4xl pointer-events-none select-none z-0">TRẬN ĐỒ QUÂN TA</div>
+             <div className="grid grid-cols-3 gap-4 md:gap-8 p-6 md:p-12 bg-black/40 rounded-[2rem] md:rounded-[4rem] border-2 md:border-4 border-dashed border-amber-900/40 shadow-inner relative z-10 transform scale-90 md:scale-100">
                 {[0, 1, 2, 3, 4, 5].map(idx => {
                    const hId = player.lineup[idx];
                    const hero = player.inventory.find(h => h.id === hId);
@@ -4625,7 +4721,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
             </div>
 
             {/* Battle Field - Split into 3 columns */}
-            <div className="flex-1 relative flex flex-row w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-stone-900 via-stone-950 to-black overflow-hidden z-10">
+            <div className="flex-1 relative flex flex-col md:flex-row w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-stone-900 via-stone-950 to-black overflow-hidden z-10">
                 
                 {/* Full screen vignette flash when attacker is flying out */}
                 {activeAttacker && (
@@ -4729,13 +4825,13 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
 
 
 
-                {/* Left Column - Ally */}
-                <div className="w-[30%] flex items-center justify-start pl-2 sm:pl-4 md:pl-8 py-4">
+                {/* Left Column - Ally (Bottom on Mobile) */}
+                <div className="w-full md:w-[30%] h-[40%] md:h-auto flex items-center justify-center md:justify-start pl-0 md:pl-8 py-2 md:py-4 order-3 md:order-1">
                     {renderGrid(units.ally, true)}
                 </div>
 
-                {/* Center Column - Turn Queue, Animation Stage, Logs */}
-                <div className="w-[40%] flex flex-col items-center justify-between py-4 relative z-0 border-x border-stone-800/30 bg-black/20">
+                {/* Center Column - Turn Queue, Animation Stage, Logs (Middle on Mobile) */}
+                <div className="w-full md:w-[40%] h-[20%] md:h-auto flex flex-col items-center justify-center md:justify-between py-1 md:py-4 relative z-20 border-y md:border-y-0 md:border-x border-stone-800/30 bg-black/40 order-2 md:order-2">
                     {/* Turn Queue at the top center */}
                     <div className="w-full flex justify-center mt-2 px-2">
                         <div className="bg-stone-950/80 border border-stone-800 rounded-full flex items-center px-4 py-2 overflow-x-auto custom-scrollbar gap-3 shadow-lg backdrop-blur-sm max-w-full">
@@ -4749,12 +4845,12 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                     </div>
 
                     {/* Stage Center Graphic */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20 pointer-events-none select-none flex flex-col items-center">
+                    <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20 pointer-events-none select-none flex-col items-center">
                         <div className="text-7xl md:text-9xl text-red-800 font-cinzel font-black tracking-widest drop-shadow-2xl opacity-60">VS</div>
                     </div>
 
                     {/* Logs at the bottom center */}
-                    <div className="w-full max-w-lg bg-stone-950/80 border border-stone-900 p-3 sm:p-5 rounded-3xl h-32 sm:h-44 overflow-hidden flex flex-col-reverse text-[11px] sm:text-xs md:text-sm shadow-2xl backdrop-blur-sm mb-4 mx-4 border-t-2 border-t-red-900/50">
+                    <div className="hidden md:flex w-full max-w-lg bg-stone-950/80 border border-stone-900 p-3 sm:p-5 rounded-3xl h-32 sm:h-44 overflow-hidden flex-col-reverse text-[11px] sm:text-xs md:text-sm shadow-2xl backdrop-blur-sm mb-4 mx-4 border-t-2 border-t-red-900/50">
                         {logs.map((log: string, i: number) => (
                             <div key={i} className={`mb-1.5 truncate ${i === 0 ? 'text-amber-400 font-black text-sm md:text-base' : 'text-stone-500 font-bold'}`}>
                                 {log}
@@ -4763,8 +4859,8 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                     </div>
                 </div>
 
-                {/* Right Column - Enemy */}
-                <div className="w-[30%] flex items-center justify-end pr-2 sm:pr-4 md:pr-8 py-4">
+                {/* Right Column - Enemy (Top on Mobile) */}
+                <div className="w-full md:w-[30%] h-[40%] md:h-auto flex items-center justify-center md:justify-end pr-0 md:pr-8 py-2 md:py-4 order-1 md:order-3">
                     {renderGrid(units.enemy, false)}
                 </div>
             </div>
@@ -7195,8 +7291,8 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
           </div>
        </div>
 
-       <div className="flex-1 flex overflow-hidden">
-          <div className="w-1/3 bg-stone-950/80 border-r-2 border-amber-900/50 p-6 overflow-y-auto custom-scrollbar shadow-2xl z-10 flex flex-col">
+       <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+          <div className="w-full h-[55%] md:h-auto md:w-1/3 bg-stone-950/80 border-t-2 md:border-t-0 border-amber-900/50 p-4 md:p-6 overflow-y-auto custom-scrollbar shadow-2xl z-10 flex flex-col order-2 md:order-1">
              
              {/* Tabs */}
              <div className="flex gap-2 mb-6 border-b border-amber-900/30 pb-4">
@@ -7315,9 +7411,10 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
               )}
            </div>
 
-           <div className="flex-1 p-10 flex flex-col items-center justify-center relative bg-stone-900/30">
-             <div className="absolute top-10 text-amber-900/10 font-cinzel font-black uppercase tracking-[0.5em] text-4xl pointer-events-none select-none">TRẬN ĐỒ QUÂN TA</div>
-             <div className="grid grid-cols-3 gap-8 p-12 bg-black/40 rounded-[4rem] border-4 border-dashed border-amber-900/20 shadow-inner relative">
+           <div className="w-full h-[45%] md:h-auto md:flex-1 p-4 md:p-10 flex flex-col items-center justify-center relative bg-[url('/hub-bg.png')] bg-cover bg-center order-1 md:order-2 overflow-hidden">
+             <div className="absolute inset-0 bg-stone-900/70"></div>
+             <div className="absolute top-2 md:top-10 text-amber-900/20 font-cinzel font-black uppercase tracking-[0.2em] md:tracking-[0.5em] text-xl md:text-4xl pointer-events-none select-none z-0">TRẬN ĐỒ QUÂN TA</div>
+             <div className="grid grid-cols-3 gap-4 md:gap-8 p-6 md:p-12 bg-black/40 rounded-[2rem] md:rounded-[4rem] border-2 md:border-4 border-dashed border-amber-900/40 shadow-inner relative z-10 transform scale-90 md:scale-100">
                 {[0, 1, 2, 3, 4, 5].map(idx => {
                    const hId = player.permLineup[idx];
                    const hero = player.inventory.filter(h => h.isPermanent === true).find(h => h.id === hId);
