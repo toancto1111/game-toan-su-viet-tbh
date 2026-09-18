@@ -267,6 +267,21 @@ const streamMessageWithKeyRotation = async (
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 const formatTime = (d: Date) => d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+const sanitizeSvg = (svgStr: string): string => {
+  return svgStr
+    // Loại bỏ các thẻ script và thuộc tính nguy hiểm
+    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '')
+    .replace(/\son\w+="[^"]*"/gi, '')
+    .replace(/\son\w+='[^']*'/gi, '')
+    .replace(/\son\w+=[^\s>]+/gi, '')
+    // Force SVG to be responsive and minimalist
+    .replace(/<svg([^>]*)>/i, '<svg$1 style="max-width: 100%; height: auto; display: block; margin: 16px auto; stroke: white; fill: transparent; font-family: monospace;">')
+    .replace(/stroke="[^"]*"/gi, 'stroke="white"')
+    .replace(/stroke='[^']*'/gi, 'stroke="white"')
+    .replace(/fill="none"/gi, 'fill="transparent"')
+    .replace(/fill='none'/gi, 'fill="transparent"');
+};
+
 const markdownToHtml = (text: string): string => {
   if (!text) return '';
 
@@ -284,9 +299,17 @@ const markdownToHtml = (text: string): string => {
   }
 
   const mathBlocks: string[] = [];
+  const svgBlocks: string[] = [];
+
+  // 0. Trích xuất và bảo vệ các khối SVG trước khi xử lý Markdown
+  let protectedText = sanitizedText.replace(/<svg[\s\S]*?<\/svg>/gi, match => {
+    const idx = svgBlocks.length;
+    svgBlocks.push(sanitizeSvg(match));
+    return `@@SVG_BLOCK_${idx}@@`;
+  });
 
   // 1. Tách và bảo vệ các khối công thức toán học display $$...$$ hoặc \[...\]
-  let protectedText = sanitizedText.replace(/(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\])/g, match => {
+  protectedText = protectedText.replace(/(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\])/g, match => {
     const idx = mathBlocks.length;
     mathBlocks.push(match);
     return `@@MATH_BLOCK_${idx}@@`;
@@ -315,6 +338,11 @@ const markdownToHtml = (text: string): string => {
   // 4. Khôi phục lại các khối công thức toán nguyên vẹn cho MathJax
   mathBlocks.forEach((math, idx) => {
     html = html.replace(`@@MATH_BLOCK_${idx}@@`, math);
+  });
+
+  // 5. Khôi phục lại các khối SVG
+  svgBlocks.forEach((svg, idx) => {
+    html = html.replace(`@@SVG_BLOCK_${idx}@@`, svg);
   });
 
   return html;
