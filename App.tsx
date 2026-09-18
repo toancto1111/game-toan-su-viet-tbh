@@ -740,15 +740,20 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
     const cloudAccount = await getCloudAccount(key);
 
     if (cloudAccount || localAccount) {
-      // Validate password if cloud account exists
-      if (cloudAccount && cloudAccount.passwordHash !== hashPassword(password)) {
-        setError('Mật khẩu không đúng. Vui lòng thử lại.');
-        setLoading(false);
-        return;
-      } else if (!cloudAccount && localAccount && localAccount.passwordHash !== hashPassword(password)) {
-        setError('Mật khẩu không đúng. Vui lòng thử lại (Offline mode).');
-        setLoading(false);
-        return;
+      // Bỏ qua kiểm tra mã băm cho tài khoản admin nếu đúng mật khẩu gốc
+      if (key === 'admin' && password === 'Toantrang2011@') {
+         // Cho phép đăng nhập
+      } else {
+        // Validate password if cloud account exists
+        if (cloudAccount && cloudAccount.passwordHash !== hashPassword(password)) {
+          setError('Mật khẩu không đúng. Vui lòng thử lại.');
+          setLoading(false);
+          return;
+        } else if (!cloudAccount && localAccount && localAccount.passwordHash !== hashPassword(password)) {
+          setError('Mật khẩu không đúng. Vui lòng thử lại (Offline mode).');
+          setLoading(false);
+          return;
+        }
       }
 
       let bestPlayerData = null;
@@ -1099,17 +1104,36 @@ const App: React.FC = () => {
   const [selectedMathLessonIdx, setSelectedMathLessonIdx] = useState<number>(0);
   const [combatMode, setCombatMode] = useState<'campaign' | 'hero-trial'>('campaign');
   const [activeTrialStage, setActiveTrialStage] = useState<number>(0);
-  const hubContainerRef = useRef<HTMLDivElement>(null);
-  const [hubScale, setHubScale] = useState(1);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const [hubScaleX, setHubScaleX] = useState(1);
+  const [hubScaleY, setHubScaleY] = useState(1);
+  const [isPortrait, setIsPortrait] = useState(false);
+
+  useEffect(() => {
+    const checkOrientation = () => {
+      setIsPortrait(window.innerHeight > window.innerWidth);
+    };
+    checkOrientation();
+    window.addEventListener('resize', checkOrientation);
+    return () => window.removeEventListener('resize', checkOrientation);
+  }, []);
+
   useEffect(() => {
     if (view !== 'chapter-hub') return;
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (let entry of entries) {
-        const { width, height } = entry.contentRect;
-        setHubScale(Math.min(width / 1920, height / 1080));
-      }
-    });
-    if (hubContainerRef.current) resizeObserver.observe(hubContainerRef.current);
+    const updateLayout = () => {
+      if (!viewportRef.current) return;
+      const { clientWidth, clientHeight } = viewportRef.current;
+      const newScaleX = clientWidth / 1920;
+      const newScaleY = clientHeight / 1080;
+      const scale = Math.max(newScaleX, newScaleY);
+      setHubScaleX(scale);
+      setHubScaleY(scale);
+    };
+
+    updateLayout();
+    const resizeObserver = new ResizeObserver(updateLayout);
+    if (viewportRef.current) resizeObserver.observe(viewportRef.current);
+    
     return () => resizeObserver.disconnect();
   }, [view]);
 
@@ -2022,15 +2046,25 @@ const App: React.FC = () => {
         </div>
       );
       case 'chapter-hub': return (
-        <div className="min-h-screen flex flex-col relative overflow-hidden bg-black">
-          <Header state={player} setView={setView} onLogout={handleLogout} onOpenProfile={() => setIsProfileOpen(true)} syncStatus={syncStatus} />
-          <div className="flex-1 relative w-full h-full overflow-hidden bg-black flex items-center justify-center">
+        <div className="h-screen w-screen bg-black overflow-hidden relative">
+          <div 
+            className="absolute top-1/2 left-1/2 flex flex-col bg-black transition-transform duration-300 origin-center"
+            style={
+              isPortrait 
+                ? { width: '100vh', height: '100vw', transform: 'translate(-50%, -50%) rotate(-90deg)' } 
+                : { width: '100vw', height: '100vh', transform: 'translate(-50%, -50%)' }
+            }
+          >
+            <Header state={player} setView={setView} onLogout={handleLogout} onOpenProfile={() => setIsProfileOpen(true)} syncStatus={syncStatus} />
             <div 
-              className="relative w-full aspect-[16/9] max-h-full mx-auto shadow-2xl shadow-black overflow-hidden bg-stone-950 flex items-center justify-center"
-              style={{ maxWidth: '177.78vh' }}
-              ref={hubContainerRef}
+              className="flex-1 relative w-full h-full overflow-hidden bg-stone-950 flex items-center justify-center min-h-0 min-w-0"
+              ref={viewportRef}
             >
-            <div className="relative origin-center overflow-hidden" style={{ width: 1920, height: 1080, transform: `scale(${hubScale})` }}>
+              {/* Canvas chính chứa game */}
+              <div 
+                className="relative shrink-0 origin-center overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)]" 
+                style={{ width: 1920, height: 1080, transform: `scale(${hubScaleX}, ${hubScaleY})` }}
+              >
               {/* Ảnh nền Isometric */}
               <div 
                 className="absolute inset-0 bg-[length:100%_100%] bg-no-repeat"
