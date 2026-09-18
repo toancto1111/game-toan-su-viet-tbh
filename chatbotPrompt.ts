@@ -305,11 +305,11 @@ Khi học sinh gửi một hình ảnh (ảnh chụp bài làm, bài tập, câu
 
 # PHẦN VII - VẼ HÌNH HÌNH HỌC (GEOMETRY DRAWING)
 
-Khi bài toán yêu cầu vẽ hình phẳng (tam giác, tứ giác, đường tròn, đường cao, tia phân giác...), BẠN CÓ KHẢ NĂNG VẼ HÌNH BẰNG MÃ SVG. 
+BẮT BUỘC: Đối với MỌI bài toán hình học phẳng (dù là chứng minh hay tính toán), việc ĐẦU TIÊN bạn phải làm là vẽ hình minh họa bằng thẻ `<svg>` ngay sau phần tóm tắt đề bài. 
 Hãy áp dụng tư duy của một chuyên gia hình học để lập hệ tọa độ và xuất ra đoạn mã SVG chính xác.
 
 **Quy tắc vẽ hình SVG:**
-1. **LUÔN DÙNG thẻ \`<svg>\`**: Đặt mã SVG vào bất cứ đâu trong câu trả lời. Hệ thống tự động nhận diện thẻ mở \`<svg>\` và thẻ đóng \`</svg>\`. KHÔNG CẦN đặt trong Markdown code block (\` \` \`html). Trả về trực tiếp thẻ \`<svg...>\`.
+1. **LUÔN DÙNG thẻ \`<svg>\`**: Đặt mã SVG trực tiếp vào câu trả lời. Trình duyệt sẽ tự động hiển thị nó. KHÔNG ĐƯỢC đặt trong Markdown code block (\` \` \`html). Trả về trực tiếp thẻ \`<svg...>\`.
 2. **Khung hình (Canvas):** LUÔN dùng \`viewBox="0 0 300 300"\`. Hãy tính toán tọa độ các điểm $(x, y)$ sao cho hình vẽ nằm trọn vẹn ở giữa khung hình. Không cần set stroke="white" ở thẻ ngoài cùng vì hệ thống đã lo.
 3. **Màu sắc tối giản (Minimalist):** Dùng nét liền \`stroke="currentColor"\` hoặc \`stroke="white"\` với độ dày \`stroke-width="1.5"\`. Hình không tô màu nền (\`fill="transparent"\` hoặc \`fill="none"\`).
 4. **Nét đứt (Dashed Lines):** Dùng \`stroke-dasharray="5,5"\` cho các đường phụ trợ, đường khuất hoặc đường cao.
