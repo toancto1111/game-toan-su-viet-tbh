@@ -2817,7 +2817,7 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
           <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors"><ChevronLeft/> Trở về</button>
           <div className="flex flex-col items-center">
              <h2 className="text-xl font-cinzel text-amber-400 font-black uppercase tracking-widest drop-shadow-[0_0_8px_rgba(201,148,26,0.3)]">⚔ Danh Trại · Binh Pháp ⚔</h2>
-             <div className="text-[10px] md:text-xs font-bold text-amber-500/80 uppercase tracking-widest mt-0.5 bg-black/40 px-3 py-0.5 rounded-full border border-amber-900/30">Lực chiến Thí luyện: <span className="text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.8)]">{combatPower.toLocaleString()}</span></div>
+             <div className="text-[10px] md:text-xs font-bold text-amber-500/80 uppercase tracking-widest mt-0.5 bg-black/40 px-3 py-0.5 rounded-full border border-amber-900/30">Lực chiến Thí luyện: <span className="text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.8)]">{(combatPower || 0).toLocaleString()}</span></div>
               <div className="text-[9px] text-orange-400/70 italic mt-0.5 font-semibold">⚠ Tướng tạm thời — sẽ xóa khi qua chương mới</div>
           </div>
           <div className="flex gap-3">
@@ -2894,7 +2894,7 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
                         <div className="text-white font-bold text-sm uppercase">Ngân Lượng (Vàng)</div>
                         <div className="text-stone-400 text-xs">Dùng để mua sắm trong Kỳ Trân Các</div>
                      </div>
-                     <div className="text-2xl font-black text-yellow-500">{player.gold.toLocaleString()}</div>
+                     <div className="text-2xl font-black text-yellow-500">{(player.gold || 0).toLocaleString()}</div>
                   </div>
 
                   <div className="bg-stone-900/80 p-4 rounded-2xl border border-stone-700 flex items-center gap-4">
@@ -5310,9 +5310,9 @@ const StatBar = ({ label, value, max, color, isHp, bonus = 0 }: { label: string,
       <div className="flex justify-between items-center mb-1">
         <span className="text-[9px] text-stone-500 font-bold uppercase tracking-widest">{label}</span>
         <span className="text-[10px] text-white font-black flex gap-1">
-          {isHp ? value.toLocaleString() : value}
-          {bonus > 0 && <span className="text-emerald-400">+{isHp ? bonus.toLocaleString() : bonus}</span>}
-          {bonus < 0 && <span className="text-red-400">{isHp ? bonus.toLocaleString() : bonus}</span>}
+          {isHp ? (value || 0).toLocaleString() : value}
+          {bonus > 0 && <span className="text-emerald-400">+{isHp ? (bonus || 0).toLocaleString() : bonus}</span>}
+          {bonus < 0 && <span className="text-red-400">{isHp ? (bonus || 0).toLocaleString() : bonus}</span>}
         </span>
       </div>
       <div className="w-full h-1.5 bg-stone-800 rounded-full overflow-hidden">
@@ -6839,7 +6839,7 @@ const ShopView = ({ player, setPlayer, setView }: any) => {
          <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors bg-stone-800 px-4 py-2 rounded-xl border border-amber-900/30 font-sans"><ChevronLeft/> Trở về</button>
          <div className="text-amber-400 font-black font-cinzel text-xl md:text-2xl tracking-widest uppercase drop-shadow-[0_0_10px_rgba(251,191,36,0.3)]">✦ Kỳ Trân Các ✦</div>
          <div className="flex items-center gap-3 font-sans">
-           <div className="bg-stone-950 px-3 py-1.5 rounded-xl border border-yellow-700/50 flex items-center gap-1.5"><span className="text-yellow-500">🪙</span><span className="text-yellow-400 font-black text-sm">{player.gold.toLocaleString()}</span></div>
+           <div className="bg-stone-950 px-3 py-1.5 rounded-xl border border-yellow-700/50 flex items-center gap-1.5"><span className="text-yellow-500">🪙</span><span className="text-yellow-400 font-black text-sm">{(player.gold || 0).toLocaleString()}</span></div>
            <div className="bg-stone-950 px-3 py-1.5 rounded-xl border border-green-700/50 flex items-center gap-1.5"><span className="text-green-400 text-base">💚</span><span className="text-green-400 font-black text-sm">{(player.jade || 0).toLocaleString()}</span></div>
          </div>
        </div>
@@ -6952,9 +6952,9 @@ const ShopItem = ({ title, price, qty, setQty, onBuy, img, icon, color, desc, it
       
       <div className={`flex items-center gap-1.5 bg-stone-950/70 px-4 py-1.5 rounded-xl border border-white/5`}>
         {isJade ? (
-          <><span className="text-green-400 text-base">💚</span><span className="text-green-400 font-black text-sm md:text-base">{price.toLocaleString()}</span></>
+          <><span className="text-green-400 text-base">💚</span><span className="text-green-400 font-black text-sm md:text-base">{(price || 0).toLocaleString()}</span></>
         ) : (
-          <><span className="text-yellow-500 text-base">🪙</span><span className="text-yellow-400 font-black text-sm md:text-base">{price.toLocaleString()}</span></>
+          <><span className="text-yellow-500 text-base">🪙</span><span className="text-yellow-400 font-black text-sm md:text-base">{(price || 0).toLocaleString()}</span></>
         )}
       </div>
       
@@ -7187,7 +7187,7 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
           <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors"><ChevronLeft/> Trở về</button>
           <div className="flex flex-col items-center">
              <h2 className="text-xl font-cinzel text-amber-400 font-black uppercase tracking-widest drop-shadow-[0_0_8px_rgba(201,148,26,0.3)]">⚔ Quân Đoàn ⚔</h2>
-             <div className="text-[10px] md:text-xs font-bold text-amber-500/80 uppercase tracking-widest mt-0.5 bg-black/40 px-3 py-0.5 rounded-full border border-amber-900/30">Lực chiến Quân Đoàn: <span className="text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.8)]">{combatPower.toLocaleString()}</span></div>
+             <div className="text-[10px] md:text-xs font-bold text-amber-500/80 uppercase tracking-widest mt-0.5 bg-black/40 px-3 py-0.5 rounded-full border border-amber-900/30">Lực chiến Quân Đoàn: <span className="text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.8)]">{(combatPower || 0).toLocaleString()}</span></div>
           </div>
           <div className="flex gap-3">
              <button onClick={quickLineup} className="bg-amber-900/80 text-amber-200 px-5 py-2 rounded-xl font-black uppercase text-xs flex items-center gap-2 hover:bg-amber-800 shadow-lg transition-all border border-amber-800/40"><Zap size={16}/> Bày trận nhanh</button>
@@ -7309,7 +7309,7 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
                         <div className="text-white font-bold text-sm uppercase">Ngân Lượng</div>
                         <div className="text-stone-400 text-xs">Vàng dùng để mua sắm trong Kỳ Trân Các</div>
                      </div>
-                     <div className="text-xl font-black text-yellow-500">{player.gold.toLocaleString()}</div>
+                     <div className="text-xl font-black text-yellow-500">{(player.gold || 0).toLocaleString()}</div>
                   </div>
                </div>
               )}
