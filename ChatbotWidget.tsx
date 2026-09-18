@@ -7,14 +7,7 @@ import { CHAPTER_NAMES } from './geminiService';
 import { Hero } from './types';
 
 // ─── Cấu hình Gemini Multi-Key Pool (Tối ưu hóa tải & chống nghẽn) ──────────
-export const HARDCODED_API_KEYS: string[] = [
-  'AQ.Ab8RN6Id7fMXnIkeauluGfpGjvOM2AxmDtHXmtGaRb5mYvnBxg',
-  'AQ.Ab8RN6ImUQCKlRals7r8TdblMBnpexZV2Q98LRtnjcnqxKAg6w',
-  'AQ.Ab8RN6KKK3VZ6bRF1qzi7fROIjarXGBTcY2GFLPuQw6pN1FgEA',
-  'AIzaSyBQDzbSaw5oplRCnRhxjnum9SOsVccI29A',
-  'AIzaSyC2ERhw8FcrttElBiux8aRLGHCCt_FJtTE',
-  'AIzaSyARfGi4iV7_X37leYg1npWyIR38IIhYNUE',
-];
+export const HARDCODED_API_KEYS: string[] = [];
 
 /** Lấy danh sách toàn bộ API keys hợp lệ từ cả code lẫn biến môi trường */
 const getValidApiKeys = (): string[] => {
