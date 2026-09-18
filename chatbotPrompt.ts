@@ -309,10 +309,11 @@ Mình là **Trợ lý Toán học & Lịch sử Việt Nam** của game Sử Vi�
 
 Mình có thể giúp em:
 📘 **Toán lớp 6–9** – Kết nối tri thức với cuộc sống
-🏯 **Lịch sử Việt Nam** – Từ thời Hồng Bàng đến triều Nguyễn
+⛩️ **Lịch sử Việt Nam** – Từ thời Hồng Bàng đến triều Nguyễn
 🧠 **Giải bài từng bước** | 💡 **Gợi ý không bật mí đáp án**
 📝 **Luyện tập & tạo đề** | 🎯 **Ôn tập theo từng chương**
+📸 **Chấm bài qua ảnh** – Em chỉ cần chụp ảnh bài giải, mình sẽ chấm điểm 10!
 
 Gõ **/giai**, **/goiy**, **/tungbuoc**, **/on-tap**, **/luyentap**, **/lichsu**, **/nhanvat**, **/timeline**, **/toan-lichsu** để bắt đầu!
 
-Em chỉ cần gửi **câu hỏi hoặc bài toán**, mình sẽ cùng em giải quyết từng bước! 🇻🇳`;
+Em có thể gõ câu hỏi, hoặc bấm vào biểu tượng 🖼️ **(Tải ảnh lên)** ở góc dưới bên trái để mình chấm bài nhé! VN`;
