@@ -6125,7 +6125,7 @@ const QuizResultView = ({ correct, total, rewards, setView, player }: any) => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 mt-10 text-center">
            <div className="group relative bg-stone-900 p-4 rounded-2xl border border-amber-500/20 shadow-lg flex flex-col items-center justify-center cursor-pointer">
               <img src="/items/gold.png" alt="Vàng" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2 drop-shadow-md group-hover:scale-110 transition-transform" />
-              <div className="text-yellow-500 font-black text-2xl">+{rewards.gold.toLocaleString()}</div>
+              <div className="text-yellow-500 font-black text-2xl">+{(rewards.gold || 0).toLocaleString()}</div>
               <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-xl border border-amber-500/30">Vàng</div>
            </div>
            <div className="group relative bg-stone-900 p-4 rounded-2xl border border-blue-500/20 shadow-lg flex flex-col items-center justify-center cursor-pointer">
@@ -7707,7 +7707,7 @@ const DanhVongDaiView = ({ player, setView }: any) => {
                                {lb.isPlayer && <span className="ml-2 text-[10px] bg-amber-600 text-white px-2 py-0.5 rounded-full uppercase tracking-widest align-middle">Bạn</span>}
                             </td>
                             <td className="p-4 text-center font-black text-amber-500 tracking-wider">
-                               {activeTab === 'combat' ? lb.power.toLocaleString() : lb.score}
+                               {activeTab === 'combat' ? (lb.power || 0).toLocaleString() : lb.score}
                             </td>
                          </tr>
                       ))}

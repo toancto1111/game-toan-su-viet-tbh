@@ -262,8 +262,8 @@ export const LeaderboardView: React.FC<{
 
   // Helper lấy nhãn điểm hiển thị
   const getMetricLabel = (item: LeaderboardEntry) => {
-    if (activeTab === 'combat') return `${item.combatPower.toLocaleString()} CL`;
-    if (activeTab === 'knowledge') return `${item.knowledgeScore.toLocaleString()} Điểm`;
+    if (activeTab === 'combat') return `${(item.combatPower || 0).toLocaleString()} CL`;
+    if (activeTab === 'knowledge') return `${(item.knowledgeScore || 0).toLocaleString()} Điểm`;
     if (activeTab === 'trial') return `Ải ${item.trialStage}`;
     return `${item.questionsAnswered} Câu (${item.studyStreak} ngày)`;
   };
@@ -739,7 +739,7 @@ export const LeaderboardView: React.FC<{
                 </div>
                 <p className="text-stone-400 text-xs mt-0.5">Quân Đoàn: <span className="text-white font-bold">{inspectTarget.legionName}</span></p>
                 <div className="flex flex-wrap gap-3 mt-2 text-xs font-bold">
-                  <span className="text-amber-400">⚔️ Chiến Lực: {inspectTarget.combatPower.toLocaleString()}</span>
+                  <span className="text-amber-400">⚔️ Chiến Lực: {(inspectTarget.combatPower || 0).toLocaleString()}</span>
                   <span className="text-sky-400">📜 Điểm Khoa Cử: {inspectTarget.knowledgeScore}</span>
                   <span className="text-purple-400">🏛️ Ải Thí Luyện: {inspectTarget.trialStage}</span>
                   <span className="text-emerald-400">⚡ Đã làm: {inspectTarget.questionsAnswered} câu</span>
@@ -769,7 +769,7 @@ export const LeaderboardView: React.FC<{
                       </span>
                     </div>
                     <div className="font-bold text-xs text-white text-center truncate w-full">{h.name}</div>
-                    <div className="text-[10px] text-amber-500 font-black mt-1">Lực Chiến: {h.overall.toLocaleString()}</div>
+                    <div className="text-[10px] text-amber-500 font-black mt-1">Lực Chiến: {(h.overall || 0).toLocaleString()}</div>
                   </div>
                 ))}
 

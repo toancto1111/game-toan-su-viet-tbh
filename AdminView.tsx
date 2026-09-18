@@ -323,7 +323,7 @@ export const AdminView: React.FC<{ setView: (v: string) => void }> = ({ setView 
                           </div>
                         </td>
                         <td className="px-4 py-3 text-blue-400 font-bold">{s.topChapter}</td>
-                        <td className="px-4 py-3 text-purple-400 font-bold">{s.knowledgeScore.toLocaleString()}</td>
+                        <td className="px-4 py-3 text-purple-400 font-bold">{(s.knowledgeScore || 0).toLocaleString()}</td>
                         <td className="px-4 py-3 text-stone-300">{s.heroCount}</td>
                         <td className="px-4 py-3 text-stone-400 text-xs whitespace-nowrap">{s.updatedAt ? new Date(s.updatedAt).toLocaleString('vi-VN', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' }) : '—'}</td>
                       </tr>
