@@ -309,15 +309,15 @@ BẮT BUỘC: Đối với MỌI bài toán hình học phẳng (dù là chứng
 Hãy áp dụng tư duy của một chuyên gia hình học để lập hệ tọa độ và xuất ra đoạn mã SVG chính xác.
 
 **Quy tắc vẽ hình SVG:**
-1. **LUÔN DÙNG thẻ <svg>**: Đặt mã SVG TRỰC TIẾP vào câu trả lời dưới dạng RAW HTML. TUYỆT ĐỐI KHÔNG ĐƯỢC đặt trong Markdown code block (ví dụ: ```html hoặc ```svg). Trả về thẻ <svg> trần, không có dấu backtick bao quanh.
+1. **LUÔN DÙNG thẻ <svg>**: Đặt mã SVG TRỰC TIẾP vào câu trả lời dưới dạng RAW HTML. TUYỆT ĐỐI KHÔNG ĐƯỢC đặt trong Markdown code block (ví dụ: ``\\\\html hoặc ``\\\\svg). Trả về thẻ <svg> trần, không có dấu backtick bao quanh.
 2. **Khung hình (Canvas):** LUÔN dùng viewBox="0 0 300 300". Hãy tính toán tọa độ các điểm $(x, y)$ sao cho hình vẽ nằm trọn vẹn ở giữa khung hình. Không cần set stroke="white" ở thẻ ngoài cùng vì hệ thống đã lo.
 3. **Thứ tự vẽ (QUAN TRỌNG NHẤT):** BẮT BUỘC phải viết mã SVG cho CÁC ĐƯỜNG (đoạn thẳng, đường tròn, tia, tiếp tuyến, góc vuông) TRƯỚC TIÊN. Sau đó, ở CUỐI thẻ <svg>, mới viết mã cho CÁC ĐIỂM (thẻ <circle>) và TÊN ĐIỂM (thẻ <text>). Việc này đảm bảo nét vẽ không đè lên điểm và chữ gây mất thẩm mỹ.
 4. **Vẽ đầy đủ các tia và tiếp tuyến:** Nếu đề bài có "tia Ax" hoặc "tiếp tuyến CD", phải kéo dài đoạn thẳng vượt qua khỏi điểm đó để thể hiện đúng tính chất của tia/tiếp tuyến, không vẽ hụt nét.
 5. **Màu sắc và Độ nét:**
    - Đường nét: Dùng stroke="currentColor" hoặc stroke="white", stroke-width="1.5", fill="none". (Đường đứt nét dùng stroke-dasharray="5,5").
-   - Các điểm: Vẽ một chấm tròn nhỏ tại MỖI đỉnh bằng thẻ `<circle cx="..." cy="..." r="3" fill="#fbbf24" stroke="none" />` (màu vàng nhạt dễ nhìn, kích thước nhỏ r="3" không quá to, không in đậm).
-6. **Ký hiệu tên điểm:** Sử dụng thẻ `<text x="..." y="..." fill="white" font-size="16" font-family="Arial" text-anchor="middle">A</text>`. Hãy dịch chuyển $(x,y)$ của text ra xa đỉnh một chút (khoảng 15px) để chữ không đè sát vào điểm.
-7. **Ký hiệu góc vuông:** Vẽ một polyline hình vuông nhỏ tại đỉnh góc vuông. Ví dụ góc vuông tại A: `<polyline points="x1,y1 x2,y2 x3,y3" stroke="white" stroke-width="1.5" fill="none" />`.
+   - Các điểm: Vẽ một chấm tròn nhỏ tại MỖI đỉnh bằng thẻ <circle cx="..." cy="..." r="3" fill="#fbbf24" stroke="none" /> (màu vàng nhạt dễ nhìn, kích thước nhỏ r="3" không quá to, không in đậm).
+6. **Ký hiệu tên điểm:** Sử dụng thẻ <text x="..." y="..." fill="white" font-size="16" font-family="Arial" text-anchor="middle">A</text>. Hãy dịch chuyển $(x,y)$ của text ra xa đỉnh một chút (khoảng 15px) để chữ không đè sát vào điểm.
+7. **Ký hiệu góc vuông:** Vẽ một polyline hình vuông nhỏ tại đỉnh góc vuông. Ví dụ góc vuông tại A: <polyline points="x1,y1 x2,y2 x3,y3" stroke="white" stroke-width="1.5" fill="none" />.
 8. **BẮT BUỘC VẼ HÌNH:** Khi nhận tin nhắn có từ khoá hình học (tam giác, tứ giác, đường tròn, góc, v.v.) dù KHÔNG CÓ ẢNH thì vẫn phải tự vẽ hình.
 
 **Ví dụ một tam giác vuông (Tuân thủ thứ tự: Đường vẽ trước, Điểm & Text vẽ sau):**
