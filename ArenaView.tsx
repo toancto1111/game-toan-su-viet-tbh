@@ -189,8 +189,19 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
         if (screen === 'SELECT_DEFENSE') {
           handleSaveDefense(formation);
         } else {
-          setAttackFormation(formation);
-          setScreen('COMBAT');
+          const matchData = {
+              opponentScore: selectedOpponent?.arenaScore || 1000,
+              opponentUid: selectedOpponent?.uid,
+              opponentName: selectedOpponent?.playerName
+          };
+          if (initArenaCombat) {
+              const enemyLineup = selectedOpponent?.arenaDefenseFormation || [];
+              const myLineup = formation.map(id => playerData.inventory.find((h: any) => h.id === id));
+              initArenaCombat(myLineup, enemyLineup, matchData);
+          } else {
+              setAttackFormation(formation);
+              setScreen('COMBAT');
+          }
         }
       }}
     />

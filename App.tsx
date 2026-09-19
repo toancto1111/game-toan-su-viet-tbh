@@ -29,7 +29,7 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
 import { PlayerState, Rarity, Question, Hero, Artifact, TrialRecord } from './types';
 import { INITIAL_HEROES, ARTIFACTS, ENEMY_HEROES, DEFAULT_ALLY_IMG, DEFAULT_ENEMY_IMG, SYNERGIES, AVAILABLE_VIDEOS } from './constants';
 import { CHAPTER_NAMES, MATH_DATA, getMathQuestions, getQuestionsForLesson } from './geminiService';
-import { saveTrialRecord, syncPlayerToLeaderboard, savePlayerProgress, loadPlayerDataFromCloud, updateStudentAnalytics, isFirebaseReady, getCloudAccount, saveCloudAccount } from './firebaseService';
+import { saveTrialRecord, syncPlayerToLeaderboard, savePlayerProgress, loadPlayerDataFromCloud, updateStudentAnalytics, isFirebaseReady, getCloudAccount, saveCloudAccount , updateArenaScore } from './firebaseService';
 import { AdminView } from './AdminView';
 import { demoTuLuyenData } from './demo_tu_luyen_data';
 import * as XLSX from 'xlsx';
@@ -1111,7 +1111,8 @@ const App: React.FC = () => {
   });
   const [selectedMathChapterIdx, setSelectedMathChapterIdx] = useState<number>(0);
   const [selectedMathLessonIdx, setSelectedMathLessonIdx] = useState<number>(0);
-  const [combatMode, setCombatMode] = useState<'campaign' | 'hero-trial'>('campaign');
+  const [combatMode, setCombatMode] = useState<'campaign' | 'hero-trial' | 'arena'>('campaign');
+  const [arenaMatchData, setArenaMatchData] = useState<any>(null);
   const [activeTrialStage, setActiveTrialStage] = useState<number>(0);
   const viewportRef = useRef<HTMLDivElement>(null);
   const [hubScaleX, setHubScaleX] = useState(1);
@@ -1799,6 +1800,73 @@ const App: React.FC = () => {
       setTimeout(() => alert(`Chúc mừng Bệ hạ đã bình định thành công! Nhận được: 1 Vé Triệu Hồi Quân Đoàn (Vĩnh viễn)!\n\n⚠️ Tướng địch đã bị tiêu diệt nhưng Bản Đồ Chương ${nextChapter} vẫn chưa mở.\nChúa công vui lòng hoàn thành "Toán Chương ${nextChapter - 1}" trong Thí Luyện Đường để có thể tiến quân!`), 100);
       setView('chapter-select');
     }
+  };
+
+  
+  const handleArenaEnd = async (resultStr: 'win' | 'lose') => {
+    if (!arenaMatchData) return;
+    const isWin = resultStr === 'win';
+    
+    // ELO logic
+    const kFactor = 32;
+    const expectedScore = 1 / (1 + Math.pow(10, ((arenaMatchData.opponentScore || 1000) - (player.arenaScore || 1000)) / 400));
+    const scoreDiff = Math.round(kFactor * ((isWin ? 1 : 0) - expectedScore));
+    const pointChange = isWin ? Math.max(10, scoreDiff) : Math.min(-10, scoreDiff);
+    
+    const newScore = Math.max(0, (player.arenaScore || 1000) + pointChange);
+
+    // Save to Firebase
+    await updateArenaScore(player.username || 'guest', newScore);
+    
+    // Update local state
+    setPlayer(prev => ({
+        ...prev,
+        arenaScore: newScore
+    }));
+    
+    // Pass info to UI by storing the change in arenaMatchData
+    setArenaMatchData(prev => ({
+        ...prev,
+        pointChange,
+        newScore,
+        oldScore: player.arenaScore || 1000,
+        resultStr
+    }));
+  };
+
+  const initArenaCombat = (myLineup: any[], enemyLineup: any[], matchData: any) => {
+    setCombatMode('arena');
+    setArenaMatchData(matchData);
+    
+    const processHero = (a: any, index: number, isAlly: boolean) => {
+        if (!a) return null;
+        return {
+            id: isAlly ? `ally_${index}` : `enemy_${index}`,
+            name: a.name,
+            hp: a.hp,
+            hpMax: a.hp,
+            atk: a.atk,
+            def: a.def,
+            spd: a.spd,
+            morale: 0,
+            image: a.image,
+            isAlly: isAlly,
+            skillEffect: a.skillEffect || null,
+            skillName: a.skillName,
+            skillDmgMult: a.skillDmgMult,
+            targetScope: a.targetScope
+        };
+    };
+
+    const allies = myLineup.map((h, i) => processHero(h, i, true)).filter(Boolean);
+    const enemies = enemyLineup.map((h, i) => processHero(h, i, false)).filter(Boolean);
+
+    setCombatUnits({ ally: allies, enemy: enemies });
+    setBattleLogs(["[ĐẤU TRƯỜNG BÁ VƯƠNG] Trận chiến bắt đầu!"]);
+    setCombatResult(null);
+    setBattleActive(true);
+    setCombatSpeed(1);
+    setView('combat-play');
   };
 
   const initTrialCombat = (stageId: number, trialEnemies: Hero[]) => {
@@ -2528,7 +2596,7 @@ const App: React.FC = () => {
         }} setView={setView} onCombat={() => { setView('chapter-hub'); }} />;
       case 'danh-vong-dai': return <LeaderboardView player={player} setView={setView} selectedGrade={selectedGrade} />;
       case 'summon': return <SummonView player={player} summon={performSummon} results={summonResults} setView={setView} clearResults={() => setSummonResults([])} chapter={activeChapter} />;
-      case 'combat-play': return <CombatView units={combatUnits} setUnits={setCombatUnits} logs={battleLogs} setLogs={setBattleLogs} result={combatResult} setResult={setCombatResult} active={battleActive} setActive={setBattleActive} setView={setView} speed={combatSpeed} setSpeed={setCombatSpeed} onWin={combatMode === 'hero-trial' ? advanceTrialStage : advanceChapter} chapter={combatMode === 'hero-trial' ? activeTrialStage : activeChapter} combatMode={combatMode} />;
+      case 'combat-play': return <CombatView units={combatUnits} setUnits={setCombatUnits} logs={battleLogs} setLogs={setBattleLogs} result={combatResult} setResult={setCombatResult} active={battleActive} setActive={setBattleActive} setView={setView} speed={combatSpeed} setSpeed={setCombatSpeed} onWin={combatMode === 'hero-trial' ? advanceTrialStage : advanceChapter} chapter={combatMode === 'hero-trial' ? activeTrialStage : activeChapter} combatMode={combatMode} arenaMatchData={arenaMatchData} onArenaEnd={handleArenaEnd} />;
       case 'shop': return <ShopView player={player} setPlayer={setPlayer} setView={setView} />;
       case 'quoc-tu-giam': return <QuocTuGiamView setView={setView} activeChapter={activeChapter} />;
       case 'hero-trial': return <ErrorBoundary><HeroTrialView playerState={player} onBack={() => setView('chapter-hub')} onStartCombat={initTrialCombat} /></ErrorBoundary>;
@@ -3265,8 +3333,15 @@ const determineSkillEffect = (hero: Hero): string => {
   return 'slash';
 };
 
-const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active, setActive, setView, speed, setSpeed, onWin, chapter, combatMode }: any) => {
+const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active, setActive, setView, speed, setSpeed, onWin, chapter, combatMode, arenaMatchData, onArenaEnd }: any) => {
     const [turnQueue, setTurnQueue] = useState<any[]>([]);
+
+    React.useEffect(() => {
+        if (combatMode === 'arena' && result && onArenaEnd) {
+            onArenaEnd(result);
+        }
+    }, [result, combatMode, onArenaEnd]);
+    
     
     const handleFlee = () => {
         if (window.confirm("Nếu rời trận xem như phe ta đã bại. Bạn có chắc chắn muốn rời trận?")) {
@@ -3585,7 +3660,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
         setDamagePopups([]);
 
         // ===== VIDEO CUT-IN: Nếu là Tuyệt chiêu và tướng có video =====
-        const hasSkillVideo = isUltimate && currentActorState.skillVideoUrl;
+        const hasSkillVideo = isUltimate && currentActorState.skillVideoUrl && speed < 99;
         if (hasSkillVideo) {
             setActiveSkillVideo(currentActorState.skillVideoUrl!);
         }
@@ -4979,19 +5054,37 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
             {result && (
                 <div className="absolute inset-0 bg-black/80 flex items-center justify-center z-[100] backdrop-blur-sm animate-in fade-in duration-500 p-4">
                     <div className="bg-gradient-to-b from-stone-900 to-stone-950 p-6 sm:p-10 rounded-[2rem] border-2 shadow-2xl text-center max-w-sm w-full animate-in zoom-in-95 duration-500 ease-out border-amber-900/50">
-                        <div className={`text-3xl sm:text-5xl font-cinzel font-black uppercase tracking-widest mb-2 sm:mb-4 drop-shadow-[0_0_15px_currentColor] ${result === 'win' ? 'text-yellow-500' : 'text-stone-500'}`}>
-                            {result === 'win' ? 'CHIẾN THẮNG' : 'THẤT BẠI'}
-                        </div>
-                        <p className="text-stone-400 text-xs sm:text-sm mb-6 sm:mb-8 italic">{result === 'win' ? 'Quân địch đã bị tiêu diệt hoàn toàn!' : 'Đội hình của bạn đã bị đập tan.'}</p>
+                        {combatMode === 'arena' && arenaMatchData ? (
+                            <>
+                                <div className={`text-3xl sm:text-5xl font-cinzel font-black uppercase tracking-widest mb-2 sm:mb-4 drop-shadow-[0_0_15px_currentColor] ${result === 'win' ? 'text-yellow-500' : 'text-stone-500'}`}>
+                                    {result === 'win' ? 'CHIẾN THẮNG' : 'THẤT BẠI'}
+                                </div>
+                                <div className="text-xl sm:text-2xl font-bold text-white mb-6">
+                                    ĐIỂM ELO
+                                    <div className="mt-2 text-3xl flex items-center justify-center gap-4">
+                                        <span className="text-slate-400">{arenaMatchData.oldScore}</span>
+                                        <span className="text-slate-500 text-xl">&gt;</span>
+                                        <span className={result === 'win' ? 'text-green-400 drop-shadow-[0_0_10px_rgba(74,222,128,0.5)]' : 'text-red-400 drop-shadow-[0_0_10px_rgba(248,113,113,0.5)]'}>
+                                            {result === 'win' ? '+' : ''}{arenaMatchData.pointChange}
+                                        </span>
+                                    </div>
+                                </div>
+                            </>
+                        ) : (
+                            <div className={`text-3xl sm:text-5xl font-cinzel font-black uppercase tracking-widest mb-2 sm:mb-4 drop-shadow-[0_0_15px_currentColor] ${result === 'win' ? 'text-yellow-500' : 'text-stone-500'}`}>
+                                {result === 'win' ? 'CHIẾN THẮNG' : 'THẤT BẠI'}
+                            </div>
+                        )}
+                        <p className="text-stone-400 text-xs sm:text-sm mb-6 sm:mb-8 italic">{combatMode === 'arena' ? 'So tài hoàn tất!' : (result === 'win' ? 'Quân địch đã bị tiêu diệt hoàn toàn!' : 'Đội hình của bạn đã bị đập tan.')}</p>
                         
                         <div className="flex flex-col gap-3">
-                            {result === 'win' && onWin && (
+                            {result === 'win' && combatMode !== 'arena' && onWin && (
                                 <button onClick={() => { setActive(false); onWin(); }} className="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-black uppercase py-3 sm:py-4 rounded-xl shadow-[0_0_20px_rgba(217,119,6,0.4)] transition-all active:scale-95 text-xs sm:text-sm border border-amber-500/50">
                                     Nhận Thưởng & Đi Tiếp
                                 </button>
                             )}
-                            <button onClick={() => { setActive(false); setView(combatMode === 'hero-trial' ? 'hero-trial' : 'quan-doan'); }} className="bg-stone-800 hover:bg-stone-700 text-stone-300 font-black uppercase py-3 sm:py-4 rounded-xl shadow-lg transition-all active:scale-95 text-xs sm:text-sm border border-stone-600">
-                                {combatMode === 'hero-trial' ? 'Trở về Quá Ải' : 'Trở về Quân Đoàn'}
+                            <button onClick={() => { setActive(false); setView(combatMode === 'hero-trial' ? 'hero-trial' : combatMode === 'arena' ? 'arena' : 'quan-doan'); }} className="bg-stone-800 hover:bg-stone-700 text-stone-300 font-black uppercase py-3 sm:py-4 rounded-xl shadow-lg transition-all active:scale-95 text-xs sm:text-sm border border-stone-600">
+                                {combatMode === 'hero-trial' ? 'Trở về Quỷ Ải' : combatMode === 'arena' ? 'Trở về Đấu Trường' : 'Trở về Quân Doanh'}
                             </button>
                         </div>
                     </div>
