@@ -67,10 +67,14 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
         def: h.def,
         hp: h.hp,
         spd: h.spd,
-        skillEffect: h.skillEffect
+        skillEffect: h.skillEffect || null
       };
     });
-    updateArenaDefenseFormation(playerData.username || 'guest', playerData.playerName || playerData.username || 'Khuyết Danh', fullFormation, playerData.arenaScore || 1000);
+    
+    // Sanitize to remove any undefined fields before saving to Firestore
+    const sanitizedFormation = JSON.parse(JSON.stringify(fullFormation));
+    
+    updateArenaDefenseFormation(playerData.username || 'guest', playerData.playerName || playerData.username || 'Khuyết Danh', sanitizedFormation, playerData.arenaScore || 1000);
     
     setScreen('LOBBY');
   };
