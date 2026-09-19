@@ -523,7 +523,7 @@ export const updateArenaScore = async (uid: string, newScore: number): Promise<b
   }
 };
 
-export const updateArenaDefenseFormation = async (uid: string, formation: any[]): Promise<boolean> => {
+export const updateArenaDefenseFormation = async (uid: string, playerName: string, formation: any[], currentScore: number): Promise<boolean> => {
   if (!db) return false;
   if (uid.startsWith('guest_')) return false;
 
@@ -531,7 +531,10 @@ export const updateArenaDefenseFormation = async (uid: string, formation: any[])
     const safeId = uid.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
     const docRef = doc(db, "leaderboards", safeId);
     await setDoc(docRef, {
+      uid: safeId,
+      playerName: playerName,
       arenaDefenseFormation: formation,
+      arenaScore: currentScore, // Ensure field exists so orderBy("arenaScore") does not exclude it
       updatedAt: Date.now()
     }, { merge: true });
     

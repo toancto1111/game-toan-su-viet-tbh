@@ -70,7 +70,7 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
         skillEffect: h.skillEffect
       };
     });
-    updateArenaDefenseFormation(playerData.username || 'guest', fullFormation);
+    updateArenaDefenseFormation(playerData.username || 'guest', playerData.playerName || playerData.username || 'Khuyết Danh', fullFormation, playerData.arenaScore || 1000);
     
     setScreen('LOBBY');
   };
