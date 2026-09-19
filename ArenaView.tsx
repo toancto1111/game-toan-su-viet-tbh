@@ -80,7 +80,7 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
       <div className="fixed inset-0 bg-slate-950 z-50 flex flex-col items-center p-6 overflow-y-auto">
         <div className="w-full max-w-5xl flex justify-between items-center mb-8 mt-4">
           <button 
-            onClick={() => setView('main')} 
+            onClick={() => setView('chapter-hub')} 
             className="text-slate-400 hover:text-red-400 flex items-center gap-2 transition-colors border border-slate-700 hover:border-red-500/50 px-4 py-2 rounded-lg"
           >
             <ChevronLeft /> Rút lui
