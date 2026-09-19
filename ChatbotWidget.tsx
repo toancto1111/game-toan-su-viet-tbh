@@ -709,8 +709,8 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
       top: 80px;
       right: 0;
       width: min(700px, 95vw);
-      height: min(750px, 85vh);
-      max-height: calc(100vh - 85px);
+      height: min(750px, calc(100vh - 190px));
+      max-height: calc(100vh - 190px);
       background: rgba(15, 23, 42, 0.96);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);

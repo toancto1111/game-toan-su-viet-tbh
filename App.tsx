@@ -1133,9 +1133,8 @@ const App: React.FC = () => {
       const { clientWidth, clientHeight } = viewportRef.current;
       const newScaleX = clientWidth / 1920;
       const newScaleY = clientHeight / 1080;
-      const scale = Math.min(newScaleX, newScaleY);
-      setHubScaleX(scale);
-      setHubScaleY(scale);
+      setHubScaleX(newScaleX);
+      setHubScaleY(newScaleY);
     };
 
     updateLayout();
