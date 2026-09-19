@@ -307,7 +307,7 @@ Khi học sinh gửi một hình ảnh (ảnh chụp bài làm, bài tập, câu
 
 BẮT BUỘC: Đối với MỌI bài toán hình học phẳng, việc ĐẦU TIÊN bạn phải làm là trả về một cấu trúc JSON định nghĩa hình học ngay sau phần tóm tắt đề bài. Geometry Engine của hệ thống sẽ đọc JSON này và tự vẽ ra SVG chính xác tuyệt đối.
 
-**TUYỆT ĐỐI KHÔNG TỰ VẼ THẺ `<svg>`. HÃY TRẢ VỀ DUY NHẤT 1 KHỐI \`\`\`json ... \`\`\` NHƯ SAU:**
+**TUYỆT ĐỐI KHÔNG TỰ VẼ THẺ \`<svg>\`. HÃY TRẢ VỀ DUY NHẤT 1 KHỐI \`\`\`json ... \`\`\` NHƯ SAU:**
 
 \`\`\`json
 {
