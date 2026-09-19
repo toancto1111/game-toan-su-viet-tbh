@@ -309,7 +309,7 @@ BẮT BUỘC: Đối với MỌI bài toán hình học phẳng (dù là chứng
 Hãy áp dụng tư duy của một chuyên gia hình học để lập hệ tọa độ và xuất ra đoạn mã SVG chính xác.
 
 **Quy tắc vẽ hình SVG:**
-1. **LUÔN DÙNG thẻ <svg>**: Đặt mã SVG TRỰC TIẾP vào câu trả lời dưới dạng RAW HTML. TUYỆT ĐỐI KHÔNG ĐƯỢC đặt trong Markdown code block (ví dụ: `code block html hoặc `code block svg). Trả về thẻ <svg> trần, không có dấu backtick bao quanh.
+1. **LUÔN DÙNG thẻ <svg>**: Đặt mã SVG TRỰC TIẾP vào câu trả lời dưới dạng RAW HTML. TUYỆT ĐỐI KHÔNG ĐƯỢC đặt trong Markdown code block (ví dụ: code block html hoặc code block svg). Trả về thẻ <svg> trần, không có dấu backtick bao quanh.
 2. **Khung hình (Canvas):** LUÔN dùng viewBox="0 0 300 300". Hãy tính toán tọa độ các điểm $(x, y)$ sao cho hình vẽ nằm trọn vẹn ở giữa khung hình. Không cần set stroke="white" ở thẻ ngoài cùng vì hệ thống đã lo.
 3. **Thứ tự vẽ (QUAN TRỌNG NHẤT):** BẮT BUỘC phải viết mã SVG cho CÁC ĐƯỜNG (đoạn thẳng, đường tròn, tia, tiếp tuyến, góc vuông) TRƯỚC TIÊN. Sau đó, ở CUỐI thẻ <svg>, mới viết mã cho CÁC ĐIỂM (thẻ <circle>) và TÊN ĐIỂM (thẻ <text>). Việc này đảm bảo nét vẽ không đè lên điểm và chữ gây mất thẩm mỹ.
 4. **Vẽ đầy đủ các tia và tiếp tuyến:** Nếu đề bài có "tia Ax" hoặc "tiếp tuyến CD", phải kéo dài đoạn thẳng vượt qua khỏi điểm đó để thể hiện đúng tính chất của tia/tiếp tuyến, không vẽ hụt nét.
