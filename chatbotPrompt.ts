@@ -336,7 +336,14 @@ BẮT BUỘC: Đối với MỌI bài toán hình học phẳng, việc ĐẦU T
 **Quy tắc:**
 1. **Chỉ cung cấp tọa độ \`(x,y)\` cho các điểm tự do (free).** (Ví dụ: Tam giác ABC luôn có tọa độ cố định như trên).
 2. Các điểm phụ thuộc (giao điểm, hình chiếu, trung điểm, tâm đường tròn) **TUYỆT ĐỐI KHÔNG TỰ TÍNH TỌA ĐỘ**. Hãy dùng lệnh \`"type": "projection"\`, \`"type": "intersection"\`, \`"type": "circumcenter"\`, \`"type": "midpoint"\`. Hệ thống sẽ tính chính xác 100%.
-3. Mảng \`draw\` sẽ vẽ các nét. Hỗ trợ: \`polygon\`, \`segment\`, \`ray\`, \`line\`, \`circle\`, \`rightAngle\` (kí hiệu góc vuông), \`equalSegments\` (kí hiệu cạnh bằng nhau), \`equalAngles\` (kí hiệu góc bằng nhau).
+3. **VẼ HÌNH THẬT TỈ MỈ VÀ THẨM MỸ (QUAN TRỌNG NHẤT):**
+   - Mảng \`draw\` sẽ vẽ các nét. Hỗ trợ: \`polygon\`, \`segment\`, \`ray\`, \`line\`, \`circle\`, \`rightAngle\` (kí hiệu góc vuông), \`equalSegments\` (kí hiệu cạnh bằng nhau), \`equalAngles\` (kí hiệu góc bằng nhau).
+   - **BẮT BUỘC VẼ ĐẦY ĐỦ CÁC NÉT NỐI:** Nếu đề bài có giao điểm (VD: cắt BC tại N), phải dùng \`segment\`, \`ray\` hoặc \`line\` để vẽ đường thẳng nối đến tận điểm đó (VD: nối A với N, nối dài B tới N). Không để các điểm lơ lửng giữa hình.
+   - **BẮT BUỘC VẼ KÝ HIỆU HÌNH HỌC:**
+     + Có đường cao, vuông góc, hình chiếu $\rightarrow$ phải vẽ \`rightAngle\`.
+     + Có trung điểm, đường trung tuyến, cạnh bằng nhau (như tam giác cân/đều) $\rightarrow$ phải vẽ \`equalSegments\`.
+     + Có tia phân giác, góc bằng nhau $\rightarrow$ phải vẽ \`equalAngles\`.
+   - Hãy là một chuyên gia hình học Top 0.1%, minh họa trọn vẹn mọi dữ kiện đề bài lên hình vẽ.
 
 ---
 # PHẦN VIII - TƯƠNG TÁC TỪNG BƯỚC & NÚT BẤM (QUAN TRỌNG)
