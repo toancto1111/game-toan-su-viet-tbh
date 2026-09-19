@@ -312,6 +312,9 @@ const sanitizeSvg = (svgStr: string): string => {
 const markdownToHtml = (text: string): string => {
   if (!text) return '';
 
+  // Sửa lỗi AI gõ nhầm 1 hoặc 2 backticks thành 3 backticks (khi nó đứng 1 mình trên dòng)
+  text = text.replace(/(^|\n)`{1,2}\s*(\n|$)/g, '$1```$2');
+
   // ★ Pre-process: AI đôi khi bọc SVG trong ```html ... ``` hoặc ```svg ...```
   // Strip code fences để SVG được render thành hình thật
   let sanitizedText = text
@@ -331,6 +334,12 @@ const markdownToHtml = (text: string): string => {
   const singleDollarCount = (withoutDouble.replace(/\\\$/g, '').match(/\$/g) || []).length;
   if (singleDollarCount % 2 !== 0) {
     sanitizedText += '$';
+  }
+
+  // Tự động đóng khối code ``` nếu bị dừng dở dang
+  const codeFenceCount = (sanitizedText.match(/```/g) || []).length;
+  if (codeFenceCount % 2 !== 0) {
+    sanitizedText += '\n```';
   }
 
   const mathBlocks: string[] = [];
