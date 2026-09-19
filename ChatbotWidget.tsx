@@ -211,7 +211,7 @@ const streamMessageWithKeyRotation = async (
         const lowerPrompt = userPrompt.toLowerCase();
         const isGeometryProblem = GEOMETRY_KEYWORDS.some(kw => lowerPrompt.includes(kw));
         const drawingInstruction = isGeometryProblem || imagePayload
-          ? ' (LƯU Ý QUAN TRỌNG: Đây là bài toán hình học. Thầy/cô BẮT BUỘC PHẢI VẼ HÌNH minh họa bằng thẻ <svg> RAW (KHÔNG bọc trong ```html hay code block) ngay sau phần tóm tắt đề bài, TRƯỚC khi giải. Tọa độ phải hợp lệ, ký hiệu tên điểm rõ ràng. VẼ ĐẦY ĐỦ các tia (VD: tia Ax), tiếp tuyến vượt quá điểm. ĐẶC BIỆT LƯU Ý THẨM MỸ: Mã vẽ ĐƯỜNG thẳng/đường tròn/tia phải nằm TRƯỚC, mã vẽ ĐIỂM (<circle r="3" fill="#fbbf24"/>) và CHỮ (<text>) phải nằm SAU CÙNG ở cuối thẻ SVG để chữ và điểm nổi lên trên, không bị các đường cắt ngang đè lên. TUYỆT ĐỐI không bỏ qua bước vẽ hình.)'
+          ? ' (LƯU Ý QUAN TRỌNG: Nếu đây là bài toán hình học, BẮT BUỘC trả về duy nhất 1 khối ```json chứa cấu hình Geometry Engine để vẽ hình. TUYỆT ĐỐI KHÔNG tự sinh mã <svg> thủ công vì hệ thống có Geometry Engine xử lý JSON rất chính xác.)'
           : '';
 
         const contentParts: any[] = [];
@@ -335,12 +335,20 @@ const markdownToHtml = (text: string): string => {
 
   const mathBlocks: string[] = [];
   const svgBlocks: string[] = [];
+  const codeBlocks: string[] = [];
 
   // 0. Trích xuất và bảo vệ các khối SVG trước khi xử lý Markdown
   let protectedText = sanitizedText.replace(/<svg[\s\S]*?<\/svg>/gi, match => {
     const idx = svgBlocks.length;
     svgBlocks.push(sanitizeSvg(match));
     return `@@SVG_BLOCK_${idx}@@`;
+  });
+
+  // 0.5. Trích xuất và bảo vệ các khối Code Fences (kể cả JSON) trước khi xử lý Markdown
+  protectedText = protectedText.replace(/```[\s\S]*?```/g, match => {
+    const idx = codeBlocks.length;
+    codeBlocks.push(match);
+    return `@@CODE_BLOCK_${idx}@@`;
   });
 
   // 1. Tách và bảo vệ các khối công thức toán học display $$...$$ hoặc \[...\]
@@ -373,6 +381,11 @@ const markdownToHtml = (text: string): string => {
   // 4. Khôi phục lại các khối công thức toán nguyên vẹn cho MathJax
   mathBlocks.forEach((math, idx) => {
     html = html.replace(`@@MATH_BLOCK_${idx}@@`, math);
+  });
+
+  // 4.5. Khôi phục lại các khối Code Fences
+  codeBlocks.forEach((code, idx) => {
+    html = html.replace(`@@CODE_BLOCK_${idx}@@`, code);
   });
 
   // 5. Khôi phục lại các khối SVG
