@@ -1,10 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Bot, GraduationCap, ChevronDown, BookOpen, Sparkles, Image as ImageIcon, Paperclip } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Bot, GraduationCap, X, ChevronDown, Paperclip, Send, Image as ImageIcon } from 'lucide-react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { CHATBOT_SYSTEM_PROMPT, CHATBOT_WELCOME_MESSAGE } from './chatbotPrompt';
 import { INITIAL_HEROES as heroes } from './constants';
 import { CHAPTER_NAMES } from './geminiService';
 import { Hero } from './types';
+import { GeometryRenderer } from './GeometryRenderer';
 
 // ─── Cấu hình Gemini Multi-Key Pool (Tối ưu hóa tải & chống nghẽn) ──────────
 export const HARDCODED_API_KEYS: string[] = [];
@@ -416,6 +417,67 @@ const MathJaxBubble = React.memo(({ html, isStreaming }: { html: string; isStrea
   }, [html, isStreaming]);
 
   return <span ref={containerRef} />;
+});
+
+/**
+ * Component bọc ngoài để bóc tách JSON vẽ hình và nút bấm từ nội dung Markdown
+ */
+const MessageRenderer = React.memo(({ html, isStreaming, onQuickAction }: { html: string; isStreaming?: boolean; onQuickAction: (text: string) => void }) => {
+  const jsonBlocks: string[] = [];
+  
+  // Trích xuất các khối ```json ... ``` để đẩy vào GeometryRenderer
+  let textWithoutJson = html.replace(/```(?:json)?\s*(\{[\s\S]*?\})\s*```/gi, (match, jsonStr) => {
+    jsonBlocks.push(jsonStr);
+    return '';
+  });
+
+  const quickActions: string[] = [];
+  // Trích xuất các nút bấm dạng [Giải tiếp...]
+  const textWithoutActions = textWithoutJson.replace(/\[(.*?)\]/g, (match, text) => {
+    if (/^(giải tiếp|xem gợi ý|giảng lại|chuyển sang|chuyển qua|đi tiếp)/i.test(text.trim())) {
+      quickActions.push(text.trim());
+      return '';
+    }
+    return match;
+  });
+
+  return (
+    <>
+      <MathJaxBubble html={textWithoutActions} isStreaming={isStreaming} />
+      
+      {/* Geometry Engine: Render SVG khi AI trả về JSON và đã stream xong */}
+      {jsonBlocks.map((jsonStr, idx) => (
+        <GeometryRenderer key={idx} jsonStr={jsonStr} />
+      ))}
+      
+      {/* Quick Action Buttons */}
+      {!isStreaming && quickActions.length > 0 && (
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' }}>
+          {quickActions.map((action, idx) => (
+            <button
+              key={idx}
+              onClick={() => onQuickAction(action)}
+              style={{
+                background: 'rgba(99,102,241,0.15)',
+                border: '1px solid rgba(99,102,241,0.4)',
+                color: '#a5b4fc',
+                padding: '6px 12px',
+                borderRadius: '16px',
+                fontSize: '0.8rem',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                fontWeight: '600',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.3)'; e.currentTarget.style.color = '#fff'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.15)'; e.currentTarget.style.color = '#a5b4fc'; }}
+            >
+              🚀 {action}
+            </button>
+          ))}
+        </div>
+      )}
+    </>
+  );
 });
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -1198,7 +1260,7 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
                       </div>
                     ) : (
                       <>
-                        <MathJaxBubble html={msg.html} isStreaming={msg.isStreaming} />
+                        <MessageRenderer html={msg.html} isStreaming={msg.isStreaming} onQuickAction={handleSend} />
                         {msg.isStreaming && <span className="cb-cursor" />}
                       </>
                     )}
