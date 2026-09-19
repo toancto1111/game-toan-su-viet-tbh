@@ -656,6 +656,14 @@ const Header: React.FC<{ state: PlayerState, setView: any, onLogout?: () => void
             <span className="bg-stone-800/80 px-3 py-1 rounded-full border border-blue-900/40 flex items-center gap-1.5 text-blue-400 text-xs font-bold">🎫 {state.normalTickets || 0}</span>
           </div>
           <button 
+            onClick={() => alert("Chào mừng đến với Sử Việt Anh Hùng!\\n\\n1. Doanh Trại: Nơi vượt các ải cốt truyện, chiến đấu với quân thù.\\n2. Quốc Tử Giám: Nơi thu thập kiến thức, tu luyện và trả lời câu hỏi.\\n3. Danh Vọng Đài: Xem bảng xếp hạng anh tài.\\n4. Quân Đoàn: Nơi quản lý tướng lĩnh và đội hình xuất chiến.\\n5. Thí Luyện: Leo tháp thử thách cực hạn.\\n6. Tự Hào Sử Việt: Nhận phần thưởng đặc biệt.\\n7. AI Trạng Nguyên: Sẵn sàng giải đáp mọi thắc mắc của bạn (nút ở góc phải)!")} 
+            className="text-amber-400 hover:text-amber-300 transition-colors bg-stone-900 hover:bg-stone-800 p-2 rounded-xl border border-amber-900/40 ml-1 flex items-center gap-1.5"
+            title="Hướng dẫn trò chơi"
+          >
+            <Info size={18} />
+            <span className="hidden md:inline text-xs font-bold uppercase whitespace-nowrap">Hướng Dẫn</span>
+          </button>
+          <button 
             onClick={toggleFullscreen} 
             className="text-stone-400 hover:text-white transition-colors bg-stone-900 hover:bg-stone-800 p-2 rounded-xl border border-stone-700 ml-1"
             title="Toàn Màn Hình"
@@ -1125,7 +1133,7 @@ const App: React.FC = () => {
       const { clientWidth, clientHeight } = viewportRef.current;
       const newScaleX = clientWidth / 1920;
       const newScaleY = clientHeight / 1080;
-      const scale = Math.max(newScaleX, newScaleY);
+      const scale = Math.min(newScaleX, newScaleY);
       setHubScaleX(scale);
       setHubScaleY(scale);
     };

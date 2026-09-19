@@ -210,7 +210,7 @@ const streamMessageWithKeyRotation = async (
         const lowerPrompt = userPrompt.toLowerCase();
         const isGeometryProblem = GEOMETRY_KEYWORDS.some(kw => lowerPrompt.includes(kw));
         const drawingInstruction = isGeometryProblem || imagePayload
-          ? ' (LƯU Ý QUAN TRỌNG: Đây là bài toán hình học. Thầy/cô BẮT BUỘC PHẢI VẼ HÌNH minh họa bằng thẻ <svg> RAW (KHÔNG bọc trong ```html hay code block) ngay sau phần tóm tắt đề bài, TRƯỚC khi giải. Tọa độ phải hợp lệ, ký hiệu tên điểm rõ ràng. TUYỆT ĐỐI không bỏ qua bước vẽ hình.)'
+          ? ' (LƯU Ý QUAN TRỌNG: Đây là bài toán hình học. Thầy/cô BẮT BUỘC PHẢI VẼ HÌNH minh họa bằng thẻ <svg> RAW (KHÔNG bọc trong ```html hay code block) ngay sau phần tóm tắt đề bài, TRƯỚC khi giải. Tọa độ phải hợp lệ, ký hiệu tên điểm rõ ràng. VẼ ĐẦY ĐỦ các tia (VD: tia Ax), tiếp tuyến vượt quá điểm. ĐẶC BIỆT LƯU Ý THẨM MỸ: Mã vẽ ĐƯỜNG thẳng/đường tròn/tia phải nằm TRƯỚC, mã vẽ ĐIỂM (<circle r="3" fill="#fbbf24"/>) và CHỮ (<text>) phải nằm SAU CÙNG ở cuối thẻ SVG để chữ và điểm nổi lên trên, không bị các đường cắt ngang đè lên. TUYỆT ĐỐI không bỏ qua bước vẽ hình.)'
           : '';
 
         const contentParts: any[] = [];
@@ -655,15 +655,15 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
 
     .cb-container {
       position: fixed;
-      bottom: 24px;
+      top: 90px;
       right: 24px;
       z-index: 9998;
       font-family: 'Inter', system-ui, sans-serif;
     }
 
     .cb-fab {
-      width: 58px;
-      height: 58px;
+      width: 68px;
+      height: 68px;
       border-radius: 50%;
       background: linear-gradient(135deg, #1d4ed8, #7c3aed);
       color: white;
@@ -706,7 +706,7 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
 
     .cb-window {
       position: absolute;
-      bottom: 72px;
+      top: 80px;
       right: 0;
       width: min(700px, 95vw);
       height: min(750px, 85vh);
@@ -720,10 +720,10 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
       flex-direction: column;
       box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(99,102,241,0.1);
       overflow: hidden;
-      transform-origin: bottom right;
+      transform-origin: top right;
       transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       opacity: 0;
-      transform: scale(0.7) translateY(20px);
+      transform: scale(0.7) translateY(-20px);
       pointer-events: none;
     }
     .cb-window.open {
@@ -1112,10 +1112,10 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
           <div className="cb-header">
             <div className="cb-header-info">
               <div className="cb-avatar">
-                <Bot size={20} />
+                <Bot size={22} />
               </div>
               <div>
-                <div className="cb-header-title">AI Gia Sư Toán & Lịch Sử</div>
+                <div className="cb-header-title">AI Trạng Nguyên</div>
                 <div className="cb-header-sub">
                   <span className="cb-status-dot" />
                   {hasRealKeys
