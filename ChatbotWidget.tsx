@@ -28,9 +28,12 @@ const getValidApiKeys = (): string[] => {
       k &&
       !k.includes('PASTE_YOUR_') &&
       !k.includes('PLACEHOLDER_') &&
+      // Chấp nhận cả format cũ (AIzaSy*) lẫn format mới Google AI Studio (AQ.*)
+      (k.startsWith('AIzaSy') || k.startsWith('AQ.')) &&
       k.length > 20
   );
 };
+
 
 const API_KEYS_POOL = getValidApiKeys();
 let currentKeyCursor = API_KEYS_POOL.length > 0 ? Math.floor(Math.random() * API_KEYS_POOL.length) : 0;
@@ -159,14 +162,15 @@ const streamMessageWithKeyRotation = async (
     throw new Error('NO_API_KEY');
   }
 
-  const maxAttempts = API_KEYS_POOL.length;
-  let lastError: any = null;
-  // Giữ 8 lượt hội thoại gần nhất để giảm tối đa token overhead và tăng tốc độ xử lý
+  // Giữ 8 lượt hội thoại gần nhất để giảm token overhead
   const truncatedHistory = globalConversationHistory.slice(-8);
-  // Ưu tiên model nhanh nhất: gemini-3.5-flash (~1.5s - 2s), fallback sang gemini-3.6-flash
-  const CANDIDATE_MODELS = ['gemini-3.5-flash', 'gemini-3.6-flash'];
+  // ★ TOP 0.1% STRATEGY: Thử hết models với key hiện tại TRƯỚC, rồi mới rotate key.
+  // Lý do: 503 thường do 1 model overload, không phải do key hết quota.
+  // Thứ tự: flash-2.0 (nhanh nhất) → flash (ổn định) → flash-lite (fallback nhẹ)
+  const CANDIDATE_MODELS = ['gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-flash-latest'];
+  let lastError: any = null;
 
-  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+  for (let attempt = 0; attempt < API_KEYS_POOL.length; attempt++) {
     const keyIndex = (currentKeyCursor + attempt) % API_KEYS_POOL.length;
     const apiKey = API_KEYS_POOL[keyIndex];
 
@@ -178,7 +182,7 @@ const streamMessageWithKeyRotation = async (
           systemInstruction: CHATBOT_SYSTEM_PROMPT,
           generationConfig: {
             temperature: 0.5,
-            maxOutputTokens: 8192, // Tăng lên 8192 tokens (gấp hơn 3.2 lần) để giải quyết trọn vẹn 5-8 bài toán dài
+            maxOutputTokens: 8192,
           },
         });
 
@@ -189,12 +193,23 @@ const streamMessageWithKeyRotation = async (
           })),
         });
 
-        // Chuẩn bị payload gửi: Hỗ trợ cả text lẫn ảnh đính kèm
+        // ★ AUTO-DETECT HÌNH HỌC: Inject lệnh vẽ SVG ngay cả khi không có ảnh
+        const GEOMETRY_KEYWORDS = [
+          'tam giác', 'tứ giác', 'hình thang', 'hình bình hành', 'hình chữ nhật',
+          'hình vuông', 'hình thoi', 'đường tròn', 'hình học', 'vẽ hình', 'góc',
+          'đường cao', 'đường trung tuyến', 'đường phân giác', 'trung điểm',
+          'chứng minh', 'tia phân giác', 'vuông tại', 'cân tại', 'đều',
+          'song song', 'vuông góc', 'tiếp tuyến', 'dây cung', 'bán kính',
+          'triangle', 'circle', 'polygon', 'perpendicular',
+        ];
+        const lowerPrompt = userPrompt.toLowerCase();
+        const isGeometryProblem = GEOMETRY_KEYWORDS.some(kw => lowerPrompt.includes(kw));
+        const drawingInstruction = isGeometryProblem || imagePayload
+          ? ' (LƯU Ý QUAN TRỌNG: Đây là bài toán hình học. Thầy/cô BẮT BUỘC PHẢI VẼ HÌNH minh họa bằng thẻ <svg> RAW (KHÔNG bọc trong ```html hay code block) ngay sau phần tóm tắt đề bài, TRƯỚC khi giải. Tọa độ phải hợp lệ, ký hiệu tên điểm rõ ràng. TUYỆT ĐỐI không bỏ qua bước vẽ hình.)'
+          : '';
+
         const contentParts: any[] = [];
-        let textToSend = userPrompt.trim() || 'Em gửi hình ảnh bài toán / câu hỏi này, nhờ thầy cô hướng dẫn giải chi tiết từng bước ạ.';
-        if (imagePayload) {
-          textToSend += ' (LƯU Ý QUAN TRỌNG: Nếu đây là bài toán hình học, thầy cô BẮT BUỘC PHẢI VẼ HÌNH bằng thẻ <svg> trước khi giải chi tiết. TUYỆT ĐỐI KHÔNG ĐƯỢC BỎ QUA BƯỚC VẼ HÌNH).';
-        }
+        let textToSend = (userPrompt.trim() || 'Em gửi hình ảnh bài toán / câu hỏi này, nhờ thầy cô hướng dẫn giải chi tiết từng bước ạ.') + drawingInstruction;
         contentParts.push({ text: textToSend });
 
         if (imagePayload) {
@@ -206,10 +221,10 @@ const streamMessageWithKeyRotation = async (
           });
         }
 
-        // Timeout 25s bảo vệ: hỗ trợ các bài giải dài mà không bị ngắt kết nối oan
+        // Timeout 30s: đủ cho bài hình học phức tạp có SVG
         const streamPromise = chat.sendMessageStream(contentParts);
         const timeoutPromise = new Promise<never>((_, reject) =>
-          setTimeout(() => reject(new Error('TIMEOUT: Quá thời gian chờ phản hồi')), 25000)
+          setTimeout(() => reject(new Error('TIMEOUT: Quá thời gian chờ phản hồi')), 30000)
         );
 
         const resultStream = await Promise.race([streamPromise, timeoutPromise]);
@@ -221,7 +236,6 @@ const streamMessageWithKeyRotation = async (
           accumulated += chunkText;
           onChunk(accumulated);
 
-          // Phát hiện nếu mô hình bị chạm trần token (finishReason = MAX_TOKENS)
           const candidate = (chunk as any)?.candidates?.[0];
           if (candidate?.finishReason === 'MAX_TOKENS') {
             isTruncated = true;
@@ -232,16 +246,13 @@ const streamMessageWithKeyRotation = async (
           throw new Error('EMPTY_RESPONSE');
         }
 
-        // Kiểm tra bổ sung: nếu kết thúc bằng công thức chưa đóng ($$ hoặc $)
+        // Kiểm tra công thức chưa đóng
         if (!isTruncated) {
           const trimmed = accumulated.trim();
           const doubleDollars = (trimmed.match(/\$\$/g) || []).length;
-          if (doubleDollars % 2 !== 0) {
-            isTruncated = true;
-          }
+          if (doubleDollars % 2 !== 0) isTruncated = true;
         }
 
-        // Lưu lịch sử hội thoại dạng văn bản để các câu hỏi sau nhẹ nhàng và nhanh
         globalConversationHistory.push(
           { role: 'user', parts: [{ text: userPrompt ? `${userPrompt} [kèm ảnh]` : '[Hình ảnh câu hỏi bài tập]' }] },
           { role: 'model', parts: [{ text: accumulated }] }
@@ -251,7 +262,11 @@ const streamMessageWithKeyRotation = async (
         return { text: accumulated, isTruncated };
       } catch (err: any) {
         lastError = err;
-        console.warn(`[AI Pool] Key #${keyIndex + 1} (${modelName}) lỗi:`, err?.message || err);
+        const errMsg = err?.message || String(err);
+        const is503 = errMsg.includes('503') || errMsg.includes('high demand') || errMsg.includes('overloaded');
+        console.warn(`[AI Pool] Key #${keyIndex + 1} (${modelName}) lỗi${is503 ? ' [503-overload]' : ''}:`, errMsg);
+        // ★ Backoff 800ms cho lỗi 503 trước khi thử model tiếp theo (tránh rate-limit cascade)
+        if (is503) await new Promise(r => setTimeout(r, 800));
         continue;
       }
     }
@@ -281,7 +296,15 @@ const sanitizeSvg = (svgStr: string): string => {
 const markdownToHtml = (text: string): string => {
   if (!text) return '';
 
-  let sanitizedText = text;
+  // ★ Pre-process: AI đôi khi bọc SVG trong ```html ... ``` hoặc ```svg ...```
+  // Strip code fences để SVG được render thành hình thật
+  let sanitizedText = text
+    .replace(/```(?:html|svg|xml)?\s*(\s*<svg[\s\S]*?<\/svg>\s*)\s*```/gi, '$1')
+    .replace(/```(?:html|svg|xml)?\s*\n([\s\S]*?)\n```/gi, (_, inner) => {
+      // Chỉ strip fence nếu bên trong có SVG
+      if (/<svg[\s\S]*?<\/svg>/i.test(inner)) return inner;
+      return _; // giữ nguyên code block không phải SVG
+    });
   // Tự động đóng khối display math $$...$$ nếu câu trả lời bị dừng dở dang giữa chừng
   const doubleDollarCount = (sanitizedText.match(/\$\$/g) || []).length;
   if (doubleDollarCount % 2 !== 0) {
@@ -564,18 +587,19 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
         );
       }
     } catch (err: any) {
-      const isQuota =
-        err?.message?.includes('quota') ||
-        err?.message?.includes('429') ||
-        err?.message?.includes('RESOURCE_EXHAUSTED');
+      const errMsg = err?.message || String(err);
+      const isQuota = errMsg.includes('quota') || errMsg.includes('429') || errMsg.includes('RESOURCE_EXHAUSTED');
+      const is503 = errMsg.includes('503') || errMsg.includes('high demand') || errMsg.includes('overloaded');
 
       const errorMsg =
         '❌ **Có sự cố khi kết nối AI.**\n\n' +
         (isQuota
-          ? 'Tất cả các API key hiện đã đạt hạn ngạch tối đa trong phút này. Em vui lòng chờ 30 giây rồi hỏi lại nhé!'
-          : err?.message?.includes('API_KEY_INVALID')
-          ? 'API Key không hợp lệ. Vui lòng kiểm tra lại key.'
-          : `Chi tiết: ${err?.message || 'Không thể kết nối máy chủ'}`);
+          ? '🔄 Tất cả API key đã đạt hạn ngạch phút này. Em chờ **30 giây** rồi thử lại nhé!'
+          : is503
+          ? '🌐 Máy chủ Gemini đang quá tải (503). Em thử lại sau **10–20 giây** nhé! Thầy/cô đang dùng model dự phòng tự động.'
+          : errMsg.includes('API_KEY_INVALID')
+          ? '🔑 API Key không hợp lệ. Vui lòng kiểm tra lại key trong cài đặt.'
+          : `Chi tiết: ${errMsg || 'Không thể kết nối máy chủ'}`);
 
       setApiError(errorMsg);
       setMessages(prev =>
