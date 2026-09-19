@@ -250,6 +250,19 @@ const ArenaTeamSelector: React.FC<{
     setFormation(newFormation);
   };
 
+  const handleQuickLineup = () => {
+    const sortedHeroes = [...playerData.inventory].sort((a, b) => {
+      const powerA = (a.overall || 1) * (a.star || 1);
+      const powerB = (b.overall || 1) * (b.star || 1);
+      return powerB - powerA;
+    });
+    const newFormation: (string | null)[] = [null, null, null, null, null, null];
+    for (let i = 0; i < 6 && i < sortedHeroes.length; i++) {
+      newFormation[i] = sortedHeroes[i].id;
+    }
+    setFormation(newFormation);
+  };
+
   return (
     <div className="fixed inset-0 bg-slate-950 z-50 flex flex-col p-6 overflow-y-auto">
       <div className="max-w-5xl w-full mx-auto flex flex-col h-full">
@@ -257,16 +270,24 @@ const ArenaTeamSelector: React.FC<{
           <button onClick={onCancel} className="px-4 py-2 border border-slate-700 rounded-lg text-slate-400 hover:text-white flex gap-2">
             <ChevronLeft /> Quay lại
           </button>
-          <h2 className="text-2xl font-bold text-white uppercase tracking-widest font-cinzel">
+          <h2 className="text-2xl font-bold text-white uppercase tracking-widest font-cinzel text-center flex-1">
             {mode === 'SELECT_DEFENSE' ? 'Bố trí Đội hình Phòng thủ' : 'Bố trí Đội hình Tấn công'}
           </h2>
-          <button 
-            onClick={() => onConfirm(formation)} 
-            disabled={formation.every(id => id === null)}
-            className="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 text-white rounded-lg font-bold"
-          >
-            Xong
-          </button>
+          <div className="flex gap-3">
+            <button 
+              onClick={handleQuickLineup}
+              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-bold flex items-center gap-2 border border-indigo-400/50 shadow-[0_0_15px_rgba(79,70,229,0.3)] transition-all"
+            >
+              <Zap size={18} /> Xếp Nhanh
+            </button>
+            <button 
+              onClick={() => onConfirm(formation)} 
+              disabled={formation.every(id => id === null)}
+              className="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 text-white rounded-lg font-bold border border-emerald-400/50 shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all"
+            >
+              Xong
+            </button>
+          </div>
         </div>
 
         {/* Selected Slots */}
