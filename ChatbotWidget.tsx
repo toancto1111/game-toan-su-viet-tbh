@@ -189,7 +189,12 @@ const streamMessageWithKeyRotation = async (
         const chat = model.startChat({
           history: truncatedHistory.map(h => ({
             role: h.role,
-            parts: h.parts.map(p => ({ text: p.text })),
+            parts: h.parts.map(p => {
+              const newPart: any = {};
+              if (p.text) newPart.text = p.text;
+              if (p.inlineData) newPart.inlineData = p.inlineData;
+              return newPart;
+            }),
           })),
         });
 
@@ -253,8 +258,18 @@ const streamMessageWithKeyRotation = async (
           if (doubleDollars % 2 !== 0) isTruncated = true;
         }
 
+        const userParts: any[] = [{ text: userPrompt ? `${userPrompt} [kèm ảnh]` : '[Hình ảnh câu hỏi bài tập]' }];
+        if (imagePayload) {
+          userParts.push({
+            inlineData: {
+              data: imagePayload.data,
+              mimeType: imagePayload.mimeType,
+            },
+          });
+        }
+
         globalConversationHistory.push(
-          { role: 'user', parts: [{ text: userPrompt ? `${userPrompt} [kèm ảnh]` : '[Hình ảnh câu hỏi bài tập]' }] },
+          { role: 'user', parts: userParts },
           { role: 'model', parts: [{ text: accumulated }] }
         );
 
