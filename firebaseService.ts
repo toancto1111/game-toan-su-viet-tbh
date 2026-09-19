@@ -468,3 +468,77 @@ export const fetchAllStudentAnalytics = async (
   }
 };
 
+// ==================== ĐẤU TRƯỜNG BÁ VƯƠNG (ARENA) ====================
+
+/**
+ * Lấy danh sách đối thủ ngẫu nhiên từ BXH (có ELO gần với người chơi nhất)
+ */
+export const getArenaOpponents = async (currentElo: number = 1000, excludeUid: string): Promise<LeaderboardEntry[]> => {
+  if (!db) return [];
+  try {
+    const q = query(collection(db, "leaderboards"), orderBy("arenaScore", "desc"), limit(150));
+    const snapshot = await getDocs(q);
+    const allPlayers: LeaderboardEntry[] = [];
+    snapshot.forEach(docSnap => {
+      const data = docSnap.data() as LeaderboardEntry;
+      if (data.uid !== excludeUid && data.arenaDefenseFormation && data.arenaDefenseFormation.length > 0) {
+        allPlayers.push(data);
+      }
+    });
+
+    // Lọc lấy những người có ELO gần nhất (chênh lệch +- 400)
+    let candidates = allPlayers.filter(p => Math.abs((p.arenaScore || 1000) - currentElo) <= 400);
+    
+    // Nếu quá ít, nới lỏng điều kiện
+    if (candidates.length < 3) {
+      candidates = allPlayers;
+    }
+
+    // Chọn ngẫu nhiên 3 người
+    const shuffled = candidates.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 3);
+  } catch (error) {
+    console.error("Lỗi lấy đối thủ Đấu Trường:", error);
+    return [];
+  }
+};
+
+export const updateArenaScore = async (uid: string, newScore: number): Promise<boolean> => {
+  if (!db) return false;
+  if (uid.startsWith('guest_')) return false;
+
+  try {
+    const safeId = uid.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
+    const docRef = doc(db, "leaderboards", safeId);
+    await setDoc(docRef, {
+      arenaScore: newScore,
+      updatedAt: Date.now()
+    }, { merge: true });
+    
+    leaderboardMemoryCache = null;
+    return true;
+  } catch (error) {
+    console.error("Lỗi cập nhật điểm Đấu Trường:", error);
+    return false;
+  }
+};
+
+export const updateArenaDefenseFormation = async (uid: string, formation: any[]): Promise<boolean> => {
+  if (!db) return false;
+  if (uid.startsWith('guest_')) return false;
+
+  try {
+    const safeId = uid.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
+    const docRef = doc(db, "leaderboards", safeId);
+    await setDoc(docRef, {
+      arenaDefenseFormation: formation,
+      updatedAt: Date.now()
+    }, { merge: true });
+    
+    leaderboardMemoryCache = null;
+    return true;
+  } catch (error) {
+    console.error("Lỗi cập nhật đội hình phòng thủ:", error);
+    return false;
+  }
+};

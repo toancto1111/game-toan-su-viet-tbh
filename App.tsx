@@ -38,6 +38,7 @@ import { HERO_TRIAL_STAGES, generateTrialEnemies } from './heroTrialData';
 import { TuLuyenMenuView } from './TuLuyenMenuView';
 import { TuHaoSuVietView } from './TuHaoSuVietView';
 import { LeaderboardView } from './LeaderboardView';
+import { ArenaView } from './ArenaView';
 import { 
   ChevronLeft, Sparkles, ArrowRight, Book, RotateCcw, 
   Library, UserPlus, Swords, BookMarked, Map as MapIcon, Lock, 
@@ -2124,6 +2125,15 @@ const App: React.FC = () => {
                      <div className="text-xs text-stone-400 font-bold">Quà tặng đặc biệt</div>
                    </div>
                 </button>
+                <button onClick={() => setView('arena')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
+                   <div className="w-14 h-14 shrink-0 rounded-xl bg-orange-900/50 flex flex-col items-center justify-center border border-orange-500/50">
+                     <span className="text-2xl drop-shadow-md">⚔️</span>
+                   </div>
+                   <div className="text-left flex-1">
+                     <div className="font-cinzel font-black text-orange-400 text-lg uppercase tracking-wider">Đấu Trường PK</div>
+                     <div className="text-xs text-stone-400 font-bold">Tranh đoạt Ngôi Vương</div>
+                   </div>
+                </button>
              </div>
           </div>
 
@@ -2434,6 +2444,17 @@ const App: React.FC = () => {
               </div>
             </button>
 
+            {/* 10. ĐẤU TRƯỜNG PK - Cạnh giữa (trái) */}
+            <button 
+              onClick={() => setView('arena')}
+              className="absolute top-[50%] left-[25%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
+            >
+              <div className="bg-orange-900/85 hover:bg-orange-800 backdrop-blur-md border-2 border-orange-500/60 px-6 py-3 rounded-full shadow-[0_0_25px_rgba(249,115,22,0.7)] flex items-center gap-3 hover:shadow-[0_0_35px_rgba(249,115,22,0.9)] transition-shadow">
+                <Swords className="w-8 h-8 text-orange-300" />
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Đấu Trường PK</span>
+              </div>
+            </button>
+
 
             {/* ADMIN BUTTON (Chỉ hiển thị cho tài khoản tên 'Admin') */}
             {(player?.playerName?.toLowerCase() === 'admin' || player?.playerName?.toLowerCase() === 'tmt') && (
@@ -2512,6 +2533,7 @@ const App: React.FC = () => {
       case 'quoc-tu-giam': return <QuocTuGiamView setView={setView} activeChapter={activeChapter} />;
       case 'hero-trial': return <ErrorBoundary><HeroTrialView playerState={player} onBack={() => setView('chapter-hub')} onStartCombat={initTrialCombat} /></ErrorBoundary>;
       case 'tu-hao-su-viet': return <ErrorBoundary><TuHaoSuVietView playerState={player} setPlayer={setPlayer} onBack={() => setView('chapter-hub')} /></ErrorBoundary>;
+      case 'arena': return <ErrorBoundary><ArenaView playerData={player} setPlayerData={setPlayer} setView={setView} saveData={(data) => { savePlayerProgress(currentUser, data); updateStudentAnalytics(currentUser, data, data.combatPower); }} /></ErrorBoundary>;
       default: return null;
     }
   };

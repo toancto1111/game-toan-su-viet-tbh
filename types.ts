@@ -112,6 +112,10 @@ export interface PlayerState {
   grade?: number;                 // Khối lớp học sinh đang học (6, 7, 8, 9)
   customAvatar?: string;          // Ảnh đại diện tải lên từ máy tính (Data URL/Base64)
   username?: string;              // Tên tài khoản đăng nhập
+  arenaScore?: number;            // Điểm ELO Đấu Trường Bá Vương
+  arenaTickets?: number;          // Vé tham gia Đấu Trường
+  arenaDefenseFormation?: (string | null)[]; // Đội hình phòng thủ Đấu Trường
+  arenaLastRefreshDate?: string;  // Ngày reset vé (YYYY-MM-DD)
 
   // === HỆ THỐNG TIẾN TRÌNH MỞ KHÓA ===
   unlockedChapters?: number[];            // Danh sách chương đã mở (mặc định [1])
@@ -183,6 +187,20 @@ export interface LeaderboardEntry {
   grade: number; // 6, 7, 8, 9
   combatPower: number; // Tổng chiến lực 6 tướng mạnh nhất
   knowledgeScore: number; // Điểm Khoa Cử (Toán + Sử)
+  arenaScore?: number; // Điểm ELO Đấu Trường
+  arenaDefenseFormation?: {
+    id: string;
+    name: string;
+    image: string;
+    star: number;
+    rarity: string;
+    overall: number;
+    atk: number;
+    def: number;
+    hp: number;
+    spd: number;
+    skillEffect?: string;
+  }[]; // Lực lượng phòng thủ khi PvP offline
   trialStage: number; // Cấp ải Thí Luyện cao nhất
   questionsAnswered: number; // Số câu hỏi đã hoàn thành
   studyStreak: number; // Chuỗi ngày học
