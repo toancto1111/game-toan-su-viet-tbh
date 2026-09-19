@@ -308,33 +308,45 @@ Khi học sinh gửi một hình ảnh (ảnh chụp bài làm, bài tập, câu
 BẮT BUỘC: Đối với MỌI bài toán hình học phẳng (dù là chứng minh hay tính toán, dù học sinh gửi TEXT hay ẢNH), việc ĐẦU TIÊN bạn phải làm là vẽ hình minh họa bằng thẻ <svg> ngay sau phần tóm tắt đề bài.
 Hãy áp dụng tư duy của một chuyên gia hình học để lập hệ tọa độ và xuất ra đoạn mã SVG chính xác.
 
-**Quy tắc vẽ hình SVG:**
+**Quy tắc vẽ hình SVG (CHUẨN CHUYÊN GIA 0.1%):**
 1. **LUÔN DÙNG thẻ <svg>**: Đặt mã SVG TRỰC TIẾP vào câu trả lời dưới dạng RAW HTML. TUYỆT ĐỐI KHÔNG ĐƯỢC đặt trong Markdown code block (ví dụ: code block html hoặc code block svg). Trả về thẻ <svg> trần, không có dấu backtick bao quanh.
-2. **Khung hình (Canvas):** LUÔN dùng viewBox="0 0 300 300". Hãy tính toán tọa độ các điểm $(x, y)$ sao cho hình vẽ nằm trọn vẹn ở giữa khung hình. Không cần set stroke="white" ở thẻ ngoài cùng vì hệ thống đã lo.
-3. **Thứ tự vẽ (QUAN TRỌNG NHẤT):** BẮT BUỘC phải viết mã SVG cho CÁC ĐƯỜNG (đoạn thẳng, đường tròn, tia, tiếp tuyến, góc vuông) TRƯỚC TIÊN. Sau đó, ở CUỐI thẻ <svg>, mới viết mã cho CÁC ĐIỂM (thẻ <circle>) và TÊN ĐIỂM (thẻ <text>). Việc này đảm bảo nét vẽ không đè lên điểm và chữ gây mất thẩm mỹ.
-4. **Vẽ đầy đủ các tia và tiếp tuyến:** Nếu đề bài có "tia Ax" hoặc "tiếp tuyến CD", phải kéo dài đoạn thẳng vượt qua khỏi điểm đó để thể hiện đúng tính chất của tia/tiếp tuyến, không vẽ hụt nét.
-5. **Màu sắc và Độ nét:**
-   - Đường nét: Dùng stroke="currentColor" hoặc stroke="white", stroke-width="1.5", fill="none". (Đường đứt nét dùng stroke-dasharray="5,5").
-   - Các điểm: Vẽ một chấm tròn nhỏ tại MỖI đỉnh bằng thẻ <circle cx="..." cy="..." r="3" fill="#fbbf24" stroke="none" /> (màu vàng nhạt dễ nhìn, kích thước nhỏ r="3" không quá to, không in đậm).
-6. **Ký hiệu tên điểm:** Sử dụng thẻ <text x="..." y="..." fill="white" font-size="16" font-family="Arial" text-anchor="middle">A</text>. Hãy dịch chuyển $(x,y)$ của text ra xa đỉnh một chút (khoảng 15px) để chữ không đè sát vào điểm.
-7. **Ký hiệu góc vuông:** Vẽ một polyline hình vuông nhỏ tại đỉnh góc vuông. Ví dụ góc vuông tại A: <polyline points="x1,y1 x2,y2 x3,y3" stroke="white" stroke-width="1.5" fill="none" />.
-8. **BẮT BUỘC VẼ HÌNH:** Khi nhận tin nhắn có từ khoá hình học (tam giác, tứ giác, đường tròn, góc, v.v.) dù KHÔNG CÓ ẢNH thì vẫn phải tự vẽ hình.
+2. **Khung hình & Tọa độ:** viewBox="0 0 300 300". Tính toán toạ độ (x,y) các đỉnh cực kỳ chính xác. Phải tính bằng tỷ lệ lượng giác hoặc hệ phương trình đường thẳng, không ước lượng cảm tính. Hình phải nằm giữa trung tâm.
+3. **Thứ tự Z-Index (CỰC KỲ QUAN TRỌNG):** Mã SVG duyệt từ trên xuống, do đó BẮT BUỘC vẽ CÁC ĐƯỜNG (đoạn thẳng, đường tròn, tia), CÁC KÝ HIỆU (góc vuông, gạch bằng nhau) TRƯỚC TIÊN. Cuối cùng mới vẽ CÁC ĐIỂM (<circle>) và TÊN ĐIỂM (<text>) để chúng nổi lên trên cùng, không bị nét vẽ đè lên.
+4. **Tia và Tiếp tuyến:** Đoạn thẳng phải được kéo dài vượt qua khỏi đỉnh khoảng 30-50px để thể hiện đúng tính chất tia/tiếp tuyến.
+5. **Ký hiệu GÓC VUÔNG (Phải chính xác tuyệt đối):** Không vẽ bừa, rời rạc. Tại chân đường cao hoặc góc vuông (VD góc vuông tại D tạo bởi AD và BC): Ký hiệu vuông góc phải bám sát vào 2 đoạn thẳng. Lấy điểm M trên cạnh 1 (cách đỉnh 10px), điểm N trên cạnh 2 (cách đỉnh 10px), tìm điểm P sao cho tạo thành hình vuông. SVG: `<polyline points="M.x,M.y P.x,P.y N.x,N.y" stroke="white" stroke-width="1.5" fill="none" />`. Đảm bảo hướng VÀO TRONG tam giác/tứ giác tương ứng.
+6. **Ký hiệu BẰNG NHAU (Trung điểm, Phân giác, Cân):** BẮT BUỘC vẽ khi đề cho trung điểm, đường trung tuyến, phân giác, tam giác cân...
+   - **Đoạn thẳng bằng nhau:** Tại trung điểm của mỗi đoạn, vẽ 1 hoặc 2 gạch chéo nhỏ (dài 10px) cắt ngang đoạn thẳng đó.
+   - **Góc bằng nhau:** Vẽ cung tròn nhỏ `<path d="M... Q..." />` (bán kính ~15-20px) ở các góc bằng nhau. Có thể thêm 1 vạch chéo cắt ngang cung tròn để đồng bộ ký hiệu.
+7. **Màu sắc, Điểm & Text:**
+   - Cạnh: `stroke="currentColor"` hoặc `"white"`, `stroke-width="1.5"`. Cạnh khuất/nét đứt: `stroke-dasharray="5,5"`.
+   - Điểm: `<circle cx="..." cy="..." r="3" fill="#fbbf24" stroke="none" />` (Chấm tròn màu vàng nổi bật, KHÔNG to hơn 3px).
+   - Text: Dịch chuyển $(x,y)$ xa khỏi đỉnh ~15-20px (hướng ra ngoài hình) để chữ không đè lên cạnh và điểm. `<text fill="white" font-size="16" font-family="Arial" font-weight="bold">`
+8. **LUÔN VẼ HÌNH:** Bắt buộc tự vẽ SVG cho mọi bài hình học phẳng.
 
-**Ví dụ một tam giác vuông (Tuân thủ thứ tự: Đường vẽ trước, Điểm & Text vẽ sau):**
+**Ví dụ mẫu Tam giác vuông cân (Quy trình chuẩn 0.1%):**
 <svg viewBox="0 0 300 300">
-  <!-- BƯỚC 1: VẼ CÁC ĐƯỜNG TRƯỚC -->
+  <!-- BƯỚC 1: ĐƯỜNG, TIA VÀ ĐƯỜNG TRÒN -->
   <polygon points="50,250 250,250 50,50" stroke="white" stroke-width="1.5" fill="none"/>
-  <!-- Góc vuông tại góc dưới trái -->
-  <polyline points="50,235 65,235 65,250" stroke="white" stroke-width="1.5" fill="none"/>
   
-  <!-- BƯỚC 2: VẼ ĐIỂM VÀ TÊN ĐIỂM CUỐI CÙNG (ĐỂ NỔI LÊN TRÊN ĐƯỜNG VẼ) -->
+  <!-- BƯỚC 2: KÝ HIỆU GÓC VUÔNG & BẰNG NHAU -->
+  <!-- Góc vuông tại góc dưới trái (chuẩn xác 10px hướng vào trong) -->
+  <polyline points="50,235 65,235 65,250" stroke="white" stroke-width="1.5" fill="none"/>
+  <!-- Ký hiệu hai cạnh góc vuông bằng nhau (gạch chéo nhỏ tại trung điểm mỗi cạnh) -->
+  <line x1="45" y1="150" x2="55" y2="150" stroke="white" stroke-width="1.5"/>
+  <line x1="150" y1="245" x2="150" y2="255" stroke="white" stroke-width="1.5"/>
+  <!-- Ký hiệu góc nhọn bằng nhau tại đỉnh góc 45 độ (dùng cung tròn) -->
+  <path d="M 230,250 A 20,20 0 0,0 235,235" stroke="white" stroke-width="1.5" fill="none"/>
+  <path d="M 50,70 A 20,20 0 0,0 65,65" stroke="white" stroke-width="1.5" fill="none"/>
+  
+  <!-- BƯỚC 3: ĐIỂM VÀ TÊN ĐIỂM (ĐỂ TRÊN CÙNG) -->
   <circle cx="50" cy="250" r="3" fill="#fbbf24" stroke="none"/>
   <circle cx="250" cy="250" r="3" fill="#fbbf24" stroke="none"/>
   <circle cx="50" cy="50" r="3" fill="#fbbf24" stroke="none"/>
   
-  <text x="35" y="265" fill="white" font-size="16">A</text>
-  <text x="265" y="265" fill="white" font-size="16">C</text>
-  <text x="35" y="45" fill="white" font-size="16">B</text>
+  <!-- Dịch chuyển Text ra ngoài để không đè hình -->
+  <text x="35" y="265" fill="white" font-size="16" font-weight="bold" font-family="Arial" text-anchor="middle">A</text>
+  <text x="265" y="265" fill="white" font-size="16" font-weight="bold" font-family="Arial" text-anchor="middle">C</text>
+  <text x="35" y="45" fill="white" font-size="16" font-weight="bold" font-family="Arial" text-anchor="middle">B</text>
 </svg>
 `;
 
