@@ -8,11 +8,12 @@ interface ArenaViewProps {
   setPlayerData: (data: PlayerState) => void;
   setView: (view: any) => void;
   saveData: (newData: PlayerState) => void;
+  initArenaCombat?: (myLineup: any[], enemyLineup: any[], matchData: any) => void;
 }
 
 type ArenaScreen = 'LOBBY' | 'SELECT_DEFENSE' | 'SELECT_ATTACK' | 'COMBAT';
 
-export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData, setView, saveData }) => {
+export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData, setView, saveData, initArenaCombat }) => {
   const [screen, setScreen] = useState<ArenaScreen>('LOBBY');
   const [opponents, setOpponents] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(false);
@@ -91,7 +92,7 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
           </button>
           <div className="text-center">
             <h1 className="text-3xl md:text-4xl font-cinzel text-red-500 font-bold uppercase tracking-widest drop-shadow-[0_0_15px_rgba(239,68,68,0.5)] flex items-center justify-center gap-3">
-              <Swords /> Đấu Trường Bá Vương <Swords />
+              <Swords /> Đấu Trường <Swords />
             </h1>
             <p className="text-slate-400 text-sm mt-1">So tài đội hình - Tranh đoạt ngôi vương</p>
           </div>
@@ -194,11 +195,15 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
               opponentUid: selectedOpponent?.uid,
               opponentName: selectedOpponent?.playerName
           };
+          // Ưu tiên dùng CombatView chính của App nếu được truyền vào
           if (initArenaCombat) {
               const enemyLineup = selectedOpponent?.arenaDefenseFormation || [];
-              const myLineup = formation.map(id => playerData.inventory.find((h: any) => h.id === id));
+              const myLineup = formation
+                .map(id => playerData.inventory.find((h: any) => h.id === id))
+                .filter(Boolean);
               initArenaCombat(myLineup, enemyLineup, matchData);
           } else {
+              // Fallback: dùng ArenaCombat nội bộ
               setAttackFormation(formation);
               setScreen('COMBAT');
           }

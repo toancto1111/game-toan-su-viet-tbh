@@ -2601,7 +2601,7 @@ const App: React.FC = () => {
       case 'quoc-tu-giam': return <QuocTuGiamView setView={setView} activeChapter={activeChapter} />;
       case 'hero-trial': return <ErrorBoundary><HeroTrialView playerState={player} onBack={() => setView('chapter-hub')} onStartCombat={initTrialCombat} /></ErrorBoundary>;
       case 'tu-hao-su-viet': return <ErrorBoundary><TuHaoSuVietView playerState={player} setPlayer={setPlayer} onBack={() => setView('chapter-hub')} /></ErrorBoundary>;
-      case 'arena': return <ErrorBoundary><ArenaView playerData={player} setPlayerData={setPlayer} setView={setView} saveData={(data) => { savePlayerProgress(currentUser, data); updateStudentAnalytics(currentUser, data, data.combatPower); }} /></ErrorBoundary>;
+      case 'arena': return <ErrorBoundary><ArenaView playerData={player} setPlayerData={setPlayer} setView={setView} saveData={(data) => { savePlayerProgress(currentUser, data); updateStudentAnalytics(currentUser, data, data.combatPower); }} initArenaCombat={initArenaCombat} /></ErrorBoundary>;
       default: return null;
     }
   };
