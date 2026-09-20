@@ -3,7 +3,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -61,6 +61,9 @@
             background-color: #0c0a09;
             color: #e7e5e4;
             overflow-x: hidden;
+        }
+        @media (orientation: landscape) and (max-height: 600px) {
+            html, body { overflow: hidden !important; height: 100%; position: fixed; width: 100%; }
         }
         /* Override Tailwind utilities với !important */
         .font-cinzel { font-family: 'Playfair Display', 'Noto Serif', serif !important; }
@@ -590,12 +593,12 @@
         }
 
         @media screen and (max-width: 899px) and (orientation: portrait) {
-            #root {
+            /* #root {
                 display: none !important;
             }
             #rotate-overlay {
                 display: flex !important;
-            }
+            } */
         }
     </style>
 <script type="importmap">

@@ -1117,34 +1117,41 @@ const App: React.FC = () => {
   const viewportRef = useRef<HTMLDivElement>(null);
   const [hubScaleX, setHubScaleX] = useState(1);
   const [hubScaleY, setHubScaleY] = useState(1);
-  const [isPortrait, setIsPortrait] = useState(false);
+  // isLandscape = true khi màn hình ngang — bao gồm cả điện thoại xoay ngang
+  const [isLandscape, setIsLandscape] = useState(() => window.innerWidth > window.innerHeight);
 
   useEffect(() => {
     const checkOrientation = () => {
-      setIsPortrait(window.innerHeight > window.innerWidth);
+      setIsLandscape(window.innerWidth > window.innerHeight);
     };
     checkOrientation();
     window.addEventListener('resize', checkOrientation);
-    return () => window.removeEventListener('resize', checkOrientation);
+    window.addEventListener('orientationchange', () => setTimeout(checkOrientation, 150));
+    return () => {
+      window.removeEventListener('resize', checkOrientation);
+    };
   }, []);
 
   useEffect(() => {
     if (view !== 'chapter-hub') return;
     const updateLayout = () => {
-      if (!viewportRef.current) return;
-      const { clientWidth, clientHeight } = viewportRef.current;
-      const newScaleX = clientWidth / 1920;
-      const newScaleY = clientHeight / 1080;
-      setHubScaleX(newScaleX);
-      setHubScaleY(newScaleY);
+      // Dùng viewport container nếu có, fallback sang window dimensions
+      const w = viewportRef.current?.clientWidth ?? window.innerWidth;
+      const h = viewportRef.current?.clientHeight ?? Math.max(window.innerHeight - 56, 100);
+      setHubScaleX(w / 1920);
+      setHubScaleY(h / 1080);
     };
 
     updateLayout();
+    window.addEventListener('resize', updateLayout);
     const resizeObserver = new ResizeObserver(updateLayout);
     if (viewportRef.current) resizeObserver.observe(viewportRef.current);
     
-    return () => resizeObserver.disconnect();
-  }, [view]);
+    return () => {
+      window.removeEventListener('resize', updateLayout);
+      resizeObserver.disconnect();
+    };
+  }, [view, isLandscape]);
 
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   // Toast thông báo khi click chương bị khóa
@@ -2124,8 +2131,8 @@ const App: React.FC = () => {
       case 'chapter-hub': return (
         <div className="h-screen w-screen bg-black overflow-hidden relative flex">
           
-          {/* MOBILE VIEW */}
-          <div className="md:hidden w-full h-full bg-stone-900 flex flex-col items-center justify-start overflow-y-auto relative pb-20">
+          {/* MOBILE PORTRAIT VIEW – chỉ hiện khi portrait (dọc), ẩn khi landscape */}
+          <div className={`${isLandscape ? 'hidden' : 'flex'} w-full h-full bg-stone-900 flex-col items-center justify-start overflow-y-auto relative pb-20`}>
              <div className="w-full relative h-[45vh] shrink-0 bg-[url('/hub-bg.png?v=2')] bg-cover bg-center border-b-4 border-amber-900 shadow-xl overflow-hidden">
                  <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-stone-900/40 to-black/70"></div>
                  <div className="absolute top-8 left-4 z-30">
@@ -2207,7 +2214,7 @@ const App: React.FC = () => {
 
           {/* DESKTOP VIEW */}
           <div 
-            className="hidden md:flex absolute top-1/2 left-1/2 flex-col bg-black transition-transform duration-300 origin-center"
+            className={`${isLandscape ? 'flex' : 'hidden'} absolute top-1/2 left-1/2 flex-col bg-black transition-transform duration-300 origin-center`}
             style={{ width: '100vw', height: '100vh', transform: 'translate(-50%, -50%)' }}
           >
             <Header state={player} setView={setView} onLogout={handleLogout} onOpenProfile={() => setIsProfileOpen(true)} syncStatus={syncStatus} />
