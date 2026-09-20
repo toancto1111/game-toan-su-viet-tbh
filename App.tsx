@@ -1863,7 +1863,8 @@ const App: React.FC = () => {
             skillEffect: a.skillEffect || null,
             skillName: a.skillName,
             skillDmgMult: a.skillDmgMult,
-            targetScope: a.targetScope
+            targetScope: a.targetScope,
+            skillVideoUrl: a.skillVideoUrl
         };
     };
 

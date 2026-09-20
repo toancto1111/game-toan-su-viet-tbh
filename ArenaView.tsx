@@ -122,6 +122,13 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
               Thiết lập Đội hình Phòng thủ
             </button>
             <button 
+              onClick={() => setScreen('SELECT_ATTACK_LOBBY')}
+              className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center gap-2 border border-slate-600 transition-colors"
+            >
+              <Swords size={20} className="text-red-400" />
+              Thiết lập Đội hình Tấn công
+            </button>
+            <button 
               onClick={fetchOpponents}
               className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center gap-2 border border-slate-600 transition-colors"
             >
@@ -182,15 +189,23 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
     );
   }
 
-  if (screen === 'SELECT_DEFENSE' || screen === 'SELECT_ATTACK') {
+  if (screen === 'SELECT_DEFENSE' || screen === 'SELECT_ATTACK' || screen === 'SELECT_ATTACK_LOBBY') {
     return <ArenaTeamSelector 
       playerData={playerData}
-      mode={screen}
+      mode={screen === 'SELECT_DEFENSE' ? 'SELECT_DEFENSE' : 'SELECT_ATTACK'}
       onCancel={() => setScreen('LOBBY')}
       onConfirm={(formation) => {
         if (screen === 'SELECT_DEFENSE') {
           handleSaveDefense(formation);
+        } else if (screen === 'SELECT_ATTACK_LOBBY') {
+          const newData = { ...playerData, arenaAttackFormation: formation };
+          setPlayerData(newData);
+          saveData(newData);
+          setScreen('LOBBY');
         } else {
+          const newData = { ...playerData, arenaAttackFormation: formation };
+          setPlayerData(newData);
+          saveData(newData);
           const matchData = {
               opponentScore: selectedOpponent?.arenaScore || 1000,
               opponentUid: selectedOpponent?.uid,
@@ -242,17 +257,48 @@ const ArenaTeamSelector: React.FC<{
   onCancel: () => void;
   onConfirm: (formation: (string | null)[]) => void;
 }> = ({ playerData, mode, onCancel, onConfirm }) => {
-  const [formation, setFormation] = useState<(string | null)[]>(
-    mode === 'SELECT_DEFENSE' 
-      ? (playerData.arenaDefenseFormation || [null, null, null, null, null, null])
-      : (playerData.lineup || [null, null, null, null, null, null]) // Mặc định lấy lineup đang có khi đi PK
-  );
+  const [formation, setFormation] = useState<(string | null)[]>(() => {
+    if (mode === 'SELECT_DEFENSE') {
+      return playerData.arenaDefenseFormation || [null, null, null, null, null, null];
+    } else {
+      if (playerData.arenaAttackFormation && playerData.arenaAttackFormation.filter(Boolean).length > 0) {
+        return playerData.arenaAttackFormation;
+      }
+      // Tự động sắp 6 tướng mạnh nhất (không trùng tên) nếu chưa lưu
+      const uniqueTopHeroesMap = new Map();
+      const sortedHeroes = [...playerData.inventory].sort((a: any, b: any) => {
+        const powerA = (a.overall || 1) * (a.star || 1);
+        const powerB = (b.overall || 1) * (b.star || 1);
+        return powerB - powerA;
+      });
+      sortedHeroes.forEach((h: any) => {
+          if (!uniqueTopHeroesMap.has(h.name)) uniqueTopHeroesMap.set(h.name, h);
+      });
+      const top6Unique = Array.from(uniqueTopHeroesMap.values()).slice(0, 6);
+      const newFormation = [null, null, null, null, null, null] as any[];
+      top6Unique.forEach((h: any, i: number) => newFormation[i] = h.id);
+      return newFormation;
+    }
+  });
   
   const handleSelectHero = (heroId: string) => {
     // Nếu tướng đã có trong formation, remove nó
     if (formation.includes(heroId)) {
       setFormation(prev => prev.map(id => id === heroId ? null : id));
       return;
+    }
+    // Ngăn chặn duplicate name
+    const heroToSelect = playerData.inventory.find(h => h.id === heroId);
+    if (heroToSelect) {
+       const hasSameName = formation.some(id => {
+          if (!id) return false;
+          const h = playerData.inventory.find(x => x.id === id);
+          return h && h.name === heroToSelect.name;
+       });
+       if (hasSameName) {
+           alert("Bạn không thể chọn 2 tướng có cùng tên trong một đội hình!");
+           return;
+       }
     }
     // Nếu chưa có, tìm slot trống đầu tiên
     const emptySlot = formation.findIndex(id => id === null);
@@ -272,15 +318,19 @@ const ArenaTeamSelector: React.FC<{
   };
 
   const handleQuickLineup = () => {
+    const uniqueTopHeroesMap = new Map();
     const sortedHeroes = [...playerData.inventory].sort((a, b) => {
       const powerA = (a.overall || 1) * (a.star || 1);
       const powerB = (b.overall || 1) * (b.star || 1);
       return powerB - powerA;
     });
+    sortedHeroes.forEach((h: any) => {
+        if (!uniqueTopHeroesMap.has(h.name)) uniqueTopHeroesMap.set(h.name, h);
+    });
+    const top6Unique = Array.from(uniqueTopHeroesMap.values()).slice(0, 6);
+    
     const newFormation: (string | null)[] = [null, null, null, null, null, null];
-    for (let i = 0; i < 6 && i < sortedHeroes.length; i++) {
-      newFormation[i] = sortedHeroes[i].id;
-    }
+    top6Unique.forEach((h: any, i: number) => newFormation[i] = h.id);
     setFormation(newFormation);
   };
 
