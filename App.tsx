@@ -1850,8 +1850,8 @@ const App: React.FC = () => {
         return {
             id: isAlly ? `ally_${index}` : `enemy_${index}`,
             name: a.name,
-            hp: a.hp,
-            maxHp: a.hp,
+            hp: a.maxHp || a.hp || 1,
+            maxHp: a.maxHp || a.hp || 1,
             atk: a.atk,
             def: a.def,
             spd: a.spd,
@@ -3345,8 +3345,10 @@ const determineSkillEffect = (hero: Hero): string => {
 const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active, setActive, setView, speed, setSpeed, onWin, chapter, combatMode, arenaMatchData, onArenaEnd }: any) => {
     const [turnQueue, setTurnQueue] = useState<any[]>([]);
 
+    const arenaEndHandled = React.useRef(false);
     React.useEffect(() => {
-        if (combatMode === 'arena' && result && onArenaEnd) {
+        if (combatMode === 'arena' && result && onArenaEnd && !arenaEndHandled.current) {
+            arenaEndHandled.current = true;
             onArenaEnd(result);
         }
     }, [result, combatMode, onArenaEnd]);

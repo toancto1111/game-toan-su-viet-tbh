@@ -66,7 +66,8 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
         overall: h.overall,
         atk: h.atk,
         def: h.def,
-        hp: h.hp,
+        maxHp: h.maxHp || h.hp || 1,
+        hp: h.maxHp || h.hp || 1,
         spd: h.spd,
         skillEffect: h.skillEffect || null
       };
