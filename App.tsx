@@ -1822,14 +1822,29 @@ const App: React.FC = () => {
     
     const newScore = Math.max(0, (player.arenaScore || 1000) + pointChange);
 
+    // Update opponent's score
+    const opponentExpected = 1 - expectedScore;
+    const opponentScoreDiff = Math.round(kFactor * ((isWin ? 0 : 1) - opponentExpected));
+    // Opponent point change should be opposite
+    const opponentPointChange = isWin ? Math.min(-10, opponentScoreDiff) : Math.max(10, opponentScoreDiff);
+    const newOpponentScore = Math.max(0, (arenaMatchData.opponentScore || 1000) + opponentPointChange);
+
     // Save to Firebase
     await updateArenaScore(player.username || 'guest', newScore);
+    if (arenaMatchData.opponentUid) {
+        await updateArenaScore(arenaMatchData.opponentUid, newOpponentScore);
+    }
     
-    // Update local state
-    setPlayer(prev => ({
-        ...prev,
+    // Update local state and save to users collection
+    const newPlayer = {
+        ...player,
         arenaScore: newScore
-    }));
+    };
+    setPlayer(newPlayer);
+    
+    if (currentUser && !currentUser.startsWith('guest_')) {
+        savePlayerProgress(currentUser, newPlayer);
+    }
     
     // Pass info to UI by storing the change in arenaMatchData
     setArenaMatchData(prev => ({
