@@ -49,6 +49,7 @@ import {
   HeartCrack, Skull, Wind, Heart, Frown, Flame, Droplets, ShieldOff, Ban, TrendingDown, Target, ShieldCheck, Syringe, RefreshCw, Link2, ShieldAlert, Hourglass, HeartPulse, User, Maximize, Minimize
 } from 'lucide-react';
 import { ProfileModal } from './ProfileModal';
+import { DailyQuestsModal } from './DailyQuestsModal';
 import { ChatbotWidget } from './ChatbotWidget';
 
 const HeroStars = ({ starCount, size = 10, className = "" }: { starCount: number, size?: number, className?: string }) => {
@@ -1154,6 +1155,7 @@ const App: React.FC = () => {
   }, [view, isLandscape]);
 
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isDailyQuestsOpen, setIsDailyQuestsOpen] = useState(false);
   // Toast thông báo khi click chương bị khóa
   const [lockedChapterToast, setLockedChapterToast] = useState<{ chapterNum: number; reason?: string } | null>(null);
   // Lưu lessonId đang học trong Thí Luyện Đường
@@ -1181,9 +1183,21 @@ const App: React.FC = () => {
           pd.inventory = syncHeroInventoryStats(pd.inventory);
         }
         
+        const todayStr = new Date().toISOString().split('T')[0];
+        if (pd.lastLoginDate !== todayStr) {
+          pd.lastLoginDate = todayStr;
+          pd.dailyQuestProgress = { 'q_login': 1 };
+          pd.dailyQuestClaimed = [];
+          pd.consecutiveCorrectAnswers = 0;
+        } else {
+          if (!pd.dailyQuestProgress) pd.dailyQuestProgress = { 'q_login': 1 };
+          else pd.dailyQuestProgress['q_login'] = 1;
+        }
+        
         return pd;
       }
     }
+    const todayStr = new Date().toISOString().split('T')[0];
     return {
       playerName: '',
       legionName: '',
@@ -1201,6 +1215,10 @@ const App: React.FC = () => {
       progress: { 1: 1 },
       mathProgress: {}, 
       seenMathQuestions: [],
+      dailyQuestProgress: { 'q_login': 1 },
+      dailyQuestClaimed: [],
+      lastLoginDate: todayStr,
+      consecutiveCorrectAnswers: 0,
       unlockedChapters: [1],
       tuLuyenCorrectIds: {},
       tuLuyenUnlockedLessons: ['B1'],
@@ -1624,11 +1642,15 @@ const App: React.FC = () => {
               newResults.push(res);
               newHeroes.push(res);
            }
-           setPlayer(prev => ({ 
-             ...prev, 
-             legionTickets: (prev.legionTickets||0) - count, 
-             inventory: [...prev.inventory, ...newHeroes]
-           }));
+           setPlayer(prev => {
+             const p = prev.dailyQuestProgress || {};
+             return { 
+               ...prev, 
+               legionTickets: (prev.legionTickets||0) - count, 
+               inventory: [...prev.inventory, ...newHeroes],
+               dailyQuestProgress: { ...p, 'q_spin_3': (p['q_spin_3'] || 0) + count }
+             };
+           });
        } else {
            const pool = INITIAL_HEROES.filter(h => h.chapter === activeChapter);
            
@@ -1647,7 +1669,16 @@ const App: React.FC = () => {
                   const h = finalPool[Math.floor(Math.random() * finalPool.length)];
                   newResults.push({ ...h, id: "hero_" + Date.now() + "_" + i, fragments: 0, isPermanent: false });
               }
-              setPlayer(prev => ({ ...prev, [ticketKey]: (prev[ticketKey as keyof PlayerState] as number) - count, inventory: [...prev.inventory, ...newResults], ch9Faction: rolledFaction }));
+              setPlayer(prev => {
+                const p = prev.dailyQuestProgress || {};
+                return { 
+                  ...prev, 
+                  [ticketKey]: (prev[ticketKey as keyof PlayerState] as number) - count, 
+                  inventory: [...prev.inventory, ...newResults], 
+                  ch9Faction: rolledFaction,
+                  dailyQuestProgress: { ...p, 'q_spin_3': (p['q_spin_3'] || 0) + count }
+                };
+              });
            } else {
               for (let i = 0; i < count; i++) {
                   const rarity = getRolledRarity(type);
@@ -1656,7 +1687,15 @@ const App: React.FC = () => {
                   const h = finalPool[Math.floor(Math.random() * finalPool.length)];
                   newResults.push({ ...h, id: "hero_" + Date.now() + "_" + i, fragments: 0, isPermanent: false });
               }
-              setPlayer(prev => ({ ...prev, [ticketKey]: (prev[ticketKey as keyof PlayerState] as number) - count, inventory: [...prev.inventory, ...newResults] }));
+              setPlayer(prev => {
+                const p = prev.dailyQuestProgress || {};
+                return { 
+                  ...prev, 
+                  [ticketKey]: (prev[ticketKey as keyof PlayerState] as number) - count, 
+                  inventory: [...prev.inventory, ...newResults],
+                  dailyQuestProgress: { ...p, 'q_spin_3': (p['q_spin_3'] || 0) + count }
+                };
+              });
            }
        }
     }
@@ -1836,9 +1875,15 @@ const App: React.FC = () => {
     }
     
     // Update local state and save to users collection
+    const p = player.dailyQuestProgress || {};
     const newPlayer = {
         ...player,
-        arenaScore: newScore
+        arenaScore: newScore,
+        dailyQuestProgress: {
+            ...p,
+            'q_play_arena_1': (p['q_play_arena_1'] || 0) + 1,
+            'q_win_arena_1': isWin ? (p['q_win_arena_1'] || 0) + 1 : (p['q_win_arena_1'] || 0)
+        }
     };
     setPlayer(newPlayer);
     
@@ -1899,6 +1944,11 @@ const App: React.FC = () => {
     setCombatMode('hero-trial');
     if ((player.permLineup || []).filter(Boolean).length === 0) return alert("Không có Tướng vĩnh viễn nào trong Quân đoàn!");
     
+    setPlayer(prev => {
+      const p = prev.dailyQuestProgress || {};
+      return { ...prev, dailyQuestProgress: { ...p, 'q_play_trial_1': (p['q_play_trial_1'] || 0) + 1 } };
+    });
+
     const initialAllies = (player.permLineup || []).map((id, index) => {
         if (!id) return null;
         const raw = player.inventory.find(h => h.id === id);
@@ -2549,6 +2599,7 @@ const App: React.FC = () => {
             </button>
 
 
+
             {/* ADMIN BUTTON (Chỉ hiển thị cho tài khoản tên 'Admin') */}
             {(player?.playerName?.toLowerCase() === 'admin' || player?.playerName?.toLowerCase() === 'tmt') && (
               <button 
@@ -2678,10 +2729,28 @@ const App: React.FC = () => {
       }
       setLastReward({ gold, ticket: t as any, speedLabel });
       setSessionRewards(prev => ({ ...prev, gold: prev.gold + gold, normal: t === 'normal' ? prev.normal + 1 : prev.normal, premium: t === 'premium' ? prev.premium + 1 : prev.premium, artifact: t === 'artifact' ? (prev.artifact || 0) + 1 : (prev.artifact || 0) }));
-      setPlayer(prev => ({ ...prev, gold: prev.gold + gold, normalTickets: t === 'normal' ? prev.normalTickets + 1 : prev.normalTickets, premiumTickets: t === 'premium' ? prev.premiumTickets + 1 : prev.premiumTickets, artifactTickets: t === 'artifact' ? (prev.artifactTickets || 0) + 1 : (prev.artifactTickets || 0) }));
+      setPlayer(prev => {
+        const p = prev.dailyQuestProgress || {};
+        const c = (prev.consecutiveCorrectAnswers || 0) + 1;
+        return { 
+          ...prev, 
+          gold: prev.gold + gold, 
+          normalTickets: t === 'normal' ? prev.normalTickets + 1 : prev.normalTickets, 
+          premiumTickets: t === 'premium' ? prev.premiumTickets + 1 : prev.premiumTickets, 
+          artifactTickets: t === 'artifact' ? (prev.artifactTickets || 0) + 1 : (prev.artifactTickets || 0),
+          consecutiveCorrectAnswers: c,
+          dailyQuestProgress: {
+            ...p,
+            'q_answer_10': (p['q_answer_10'] || 0) + 1,
+            'q_answer_20': (p['q_answer_20'] || 0) + 1,
+            'q_answer_3_row': Math.max(p['q_answer_3_row'] || 0, c >= 3 ? 1 : 0)
+          }
+        };
+      });
     } else {
       new Audio('./audio/wrong.mp3').play().catch(e => console.log('Audio error:', e));
       setLastReward(null);
+      setPlayer(prev => ({ ...prev, consecutiveCorrectAnswers: 0 }));
     }
   };
 
@@ -2696,12 +2765,12 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className={`relative z-0 ${view !== 'auth' ? 'pb-[72px] md:pb-0' : ''}`}>
+      <div className={`relative z-0 has-bottom-nav ${view !== 'auth' ? 'pb-[72px] md:pb-0' : ''}`}>
         {renderView()}
       </div>
 
       {view !== 'auth' && (
-        <div className="md:hidden fixed bottom-0 left-0 right-0 z-[200] bg-stone-950 border-t-2 border-stone-800 flex items-center justify-around shadow-[0_-5px_20px_rgba(0,0,0,1)] px-2 py-1 h-[72px]">
+        <div className="mobile-bottom-nav md:hidden fixed bottom-0 left-0 right-0 z-[200] bg-stone-950 border-t-2 border-stone-800 flex items-center justify-around shadow-[0_-5px_20px_rgba(0,0,0,1)] px-2 py-1 h-[72px]">
           <button onClick={() => setView('chapter-hub')} className={`flex flex-col items-center justify-center p-1 flex-1 ${view === 'chapter-hub' ? 'text-amber-400' : 'text-stone-500'}`}>
             <Tent size={26} className={view === 'chapter-hub' ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
             <span className="text-[10px] font-black uppercase mt-1">Thành Chính</span>
@@ -2722,6 +2791,10 @@ const App: React.FC = () => {
             <User size={26} className={isProfileOpen ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
             <span className="text-[10px] font-black uppercase mt-1">Nhân Vật</span>
           </button>
+          <button onClick={() => setIsDailyQuestsOpen(true)} className={`flex flex-col items-center justify-center p-1 flex-1 ${isDailyQuestsOpen ? 'text-amber-400' : 'text-stone-500'}`}>
+            <Target size={26} className={isDailyQuestsOpen ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
+            <span className="text-[10px] font-black uppercase mt-1">Nhiệm Vụ</span>
+          </button>
         </div>
       )}
       {view !== 'auth' && <BGMPlayer />}
@@ -2732,6 +2805,38 @@ const App: React.FC = () => {
          setPlayer={setPlayer} 
          availableAvatars={player.inventory.filter(h => h.isPermanent === true)} 
       />}
+      {view !== 'auth' && <DailyQuestsModal 
+         isOpen={isDailyQuestsOpen} 
+         onClose={() => setIsDailyQuestsOpen(false)} 
+         player={player} 
+         setPlayer={setPlayer} 
+      />}
+      {/* NÚT NHIỆM VỤ HÀNG NGÀY - Fixed góc phải trên (thay thế vị trí cũ ChatbotAI) */}
+      {view !== 'auth' && (() => {
+        const prog = player.dailyQuestProgress || {};
+        const claimed = player.dailyQuestClaimed || [];
+        const QUEST_IDS = ['q_login','q_answer_3_row','q_answer_10','q_answer_20','q_spin_3','q_play_arena_1','q_win_arena_1','q_play_trial_1','q_upgrade_hero_1','q_play_suviet_1'];
+        const QUEST_TARGETS: Record<string,number> = { q_login:1, q_answer_3_row:1, q_answer_10:10, q_answer_20:20, q_spin_3:3, q_play_arena_1:1, q_win_arena_1:1, q_play_trial_1:1, q_upgrade_hero_1:1, q_play_suviet_1:1 };
+        const pendingCount = QUEST_IDS.filter(id => (prog[id] || 0) >= QUEST_TARGETS[id] && !claimed.includes(id)).length;
+        return (
+          <button
+            onClick={() => setIsDailyQuestsOpen(true)}
+            style={{ position: 'fixed', top: '90px', right: '24px', zIndex: 9997 }}
+            className="group flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
+            title="Nhiệm Vụ Hàng Ngày"
+          >
+            <div className="relative w-[68px] h-[68px] rounded-full bg-gradient-to-br from-amber-600 to-orange-700 flex items-center justify-center shadow-[0_8px_24px_-4px_rgba(245,158,11,0.6)] border-2 border-amber-400/70 hover:shadow-[0_12px_28px_-4px_rgba(245,158,11,0.8)] transition-all">
+              <Target size={28} className="text-white drop-shadow" />
+              {pendingCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-xs font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white animate-bounce shadow-lg">
+                  {pendingCount}
+                </span>
+              )}
+            </div>
+            <span className="text-[10px] font-black text-amber-300 uppercase mt-1 tracking-wide drop-shadow">Nhiệm Vụ</span>
+          </button>
+        );
+      })()}
       {showChatbot && <ChatbotWidget />}
     </>
   );
@@ -2999,11 +3104,13 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
       remaining -= fromStored;
       heroFragments[heroName] = (heroFragments[heroName] || 0) - fromStored;
 
+      const dp = p.dailyQuestProgress || {};
       return {
         ...p,
         jade: p.jade - req.jadeReq,
         pills: newPills,
         heroFragments,
+        dailyQuestProgress: { ...dp, 'q_upgrade_hero_1': (dp['q_upgrade_hero_1'] || 0) + 1 },
         inventory: p.inventory.map((h: Hero) => {
           if (h.id === selectedHero.id) {
              const updated = calculateHeroStatsWithStar(h, h.star + 1);

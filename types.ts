@@ -117,6 +117,12 @@ export interface PlayerState {
   arenaDefenseFormation?: (string | null)[]; // Đội hình phòng thủ Đấu Trường
   arenaLastRefreshDate?: string;  // Ngày reset vé (YYYY-MM-DD)
 
+  // === HỆ THỐNG NHIỆM VỤ HÀNG NGÀY ===
+  dailyQuestProgress?: Record<string, number>;
+  dailyQuestClaimed?: string[];
+  lastLoginDate?: string;
+  consecutiveCorrectAnswers?: number;
+
   // === HỆ THỐNG TIẾN TRÌNH MỞ KHÓA ===
   unlockedChapters?: number[];            // Danh sách chương đã mở (mặc định [1])
   tuLuyenCorrectIds?: Record<string, string[]>; // { lessonId: [questionId,...] } - câu đã trả lời đúng
@@ -136,6 +142,14 @@ export interface GiftCode {
   expiresAt?: number; // Timestamp hết hạn (ms)
   allowedPlayers?: string[]; // Danh sách playerName được phép dùng (nếu để trống = công khai)
   isPrivate?: boolean; // true = chỉ tài khoản trong allowedPlayers mới dùng được
+}
+
+export interface DailyQuest {
+  id: string;
+  desc: string;
+  target: number;
+  rewardType: 'gold' | 'jade' | 'premiumTickets' | 'normalTickets';
+  rewardAmount: number;
 }
 
 export interface TrialRecord {
