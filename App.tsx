@@ -2675,7 +2675,10 @@ const App: React.FC = () => {
       case 'combat-play': return <CombatView units={combatUnits} setUnits={setCombatUnits} logs={battleLogs} setLogs={setBattleLogs} result={combatResult} setResult={setCombatResult} active={battleActive} setActive={setBattleActive} setView={setView} speed={combatSpeed} setSpeed={setCombatSpeed} onWin={combatMode === 'hero-trial' ? advanceTrialStage : advanceChapter} chapter={combatMode === 'hero-trial' ? activeTrialStage : activeChapter} combatMode={combatMode} arenaMatchData={arenaMatchData} onArenaEnd={handleArenaEnd} />;
       case 'shop': return <ShopView player={player} setPlayer={setPlayer} setView={setView} />;
       case 'quoc-tu-giam': return <QuocTuGiamView setView={setView} activeChapter={activeChapter} />;
-      case 'hero-trial': return <ErrorBoundary><HeroTrialView playerState={player} onBack={() => setView('chapter-hub')} onStartCombat={initTrialCombat} /></ErrorBoundary>;
+      case 'hero-trial': return <ErrorBoundary><HeroTrialView playerState={player} onBack={() => setView('chapter-hub')} onStartCombat={(stageId, enemies) => {
+          setPlayer(prev => { const p = prev.dailyQuestProgress || {}; return { ...prev, dailyQuestProgress: { ...p, 'q_play_trial_1': Math.max((p['q_play_trial_1'] || 0), 1) } }; });
+          initTrialCombat(stageId, enemies);
+        }} /></ErrorBoundary>;
       case 'tu-hao-su-viet': return <ErrorBoundary><TuHaoSuVietView playerState={player} setPlayer={setPlayer} onBack={() => setView('chapter-hub')} /></ErrorBoundary>;
       case 'arena': return <ErrorBoundary><ArenaView playerData={player} setPlayerData={setPlayer} setView={setView} saveData={(data) => { savePlayerProgress(currentUser, data); updateStudentAnalytics(currentUser, data, data.combatPower); }} initArenaCombat={initArenaCombat} /></ErrorBoundary>;
       default: return null;

@@ -6,12 +6,12 @@ export const DAILY_QUESTS: DailyQuest[] = [
     desc: 'Đăng nhập hàng ngày',
     target: 1,
     rewardType: 'gold',
-    rewardAmount: 100
+    rewardAmount: 1000
   },
   {
     id: 'q_answer_3_row',
     desc: 'Trả lời đúng 3 câu liên tiếp',
-    target: 1, // Progress tracks how many times achieved, or just boolean
+    target: 1,
     rewardType: 'jade',
     rewardAmount: 1
   },
@@ -20,7 +20,7 @@ export const DAILY_QUESTS: DailyQuest[] = [
     desc: 'Trả lời đúng 10 câu',
     target: 10,
     rewardType: 'gold',
-    rewardAmount: 200
+    rewardAmount: 2000
   },
   {
     id: 'q_spin_3',
@@ -34,7 +34,7 @@ export const DAILY_QUESTS: DailyQuest[] = [
     desc: 'Tham gia Đấu Trường 1 lần',
     target: 1,
     rewardType: 'gold',
-    rewardAmount: 100
+    rewardAmount: 1000
   },
   {
     id: 'q_win_arena_1',
@@ -45,24 +45,24 @@ export const DAILY_QUESTS: DailyQuest[] = [
   },
   {
     id: 'q_play_trial_1',
-    desc: 'Tham gia Thí Luyện 1 lần',
+    desc: 'Tham gia Anh Hùng Quá Ải 1 lần',
     target: 1,
     rewardType: 'normalTickets',
     rewardAmount: 1
   },
   {
     id: 'q_upgrade_hero_1',
-    desc: 'Nâng cấp tướng 1 lần',
+    desc: 'Nâng sao tướng 1 lần',
     target: 1,
     rewardType: 'gold',
-    rewardAmount: 150
+    rewardAmount: 1500
   },
   {
     id: 'q_play_suviet_1',
     desc: 'Tham gia Tự Hào Sử Việt 1 lần',
     target: 1,
     rewardType: 'gold',
-    rewardAmount: 100
+    rewardAmount: 1000
   },
   {
     id: 'q_answer_20',
