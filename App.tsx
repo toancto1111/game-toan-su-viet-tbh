@@ -2828,15 +2828,16 @@ const App: React.FC = () => {
             className="group flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             title="Nhiệm Vụ Hàng Ngày"
           >
-            <div className="relative w-[68px] h-[68px] rounded-full bg-gradient-to-br from-amber-600 to-orange-700 flex items-center justify-center shadow-[0_8px_24px_-4px_rgba(245,158,11,0.6)] border-2 border-amber-400/70 hover:shadow-[0_12px_28px_-4px_rgba(245,158,11,0.8)] transition-all">
-              <Target size={28} className="text-white drop-shadow" />
+            <div className="relative w-[70px] h-[70px] rounded-2xl bg-gradient-to-br from-stone-800 to-stone-950 flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.5)] border-2 border-amber-500/80 hover:shadow-[0_0_25px_rgba(245,158,11,0.8)] hover:border-amber-400 overflow-hidden transition-all">
+              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-amber-500/10 to-transparent pointer-events-none"></div>
+              <ScrollText size={32} className="text-amber-400 drop-shadow-[0_2px_2px_rgba(0,0,0,1)] group-hover:text-amber-300 group-hover:scale-110 transition-all duration-300" />
               {pendingCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-xs font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white animate-bounce shadow-lg">
+                <span className="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[11px] font-black w-6 h-6 rounded-full flex items-center justify-center border-2 border-amber-200 animate-bounce shadow-[0_0_10px_rgba(220,38,38,0.8)]">
                   {pendingCount}
                 </span>
               )}
             </div>
-            <span className="text-[10px] font-black text-amber-300 uppercase mt-1 tracking-wide drop-shadow">Nhiệm Vụ</span>
+            <span className="mt-1.5 px-2.5 py-0.5 rounded-full bg-stone-900/90 border border-amber-700/50 text-[10px] font-black text-amber-400 uppercase tracking-widest drop-shadow whitespace-nowrap">Nhiệm Vụ</span>
           </button>
         );
       })()}
