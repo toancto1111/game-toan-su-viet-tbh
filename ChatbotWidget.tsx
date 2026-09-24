@@ -739,7 +739,7 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
 
     .cb-container {
       position: fixed;
-      top: 160px;
+      top: 220px;
       right: 24px;
       z-index: 9998;
       font-family: 'Inter', system-ui, sans-serif;
