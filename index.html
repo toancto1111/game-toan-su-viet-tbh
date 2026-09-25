@@ -210,6 +210,7 @@
         .overflow-y-auto, .overflow-x-auto, .custom-scrollbar {
             -webkit-overflow-scrolling: touch;
             will-change: scroll-position;
+            touch-action: pan-y; /* Cho phép scroll dọc bằng cảm ứng */
         }
         @keyframes petalFall {
             0%   { transform: translateY(-20px) translateX(0px) rotate(0deg); opacity: 0; }
