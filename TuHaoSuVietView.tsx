@@ -120,11 +120,15 @@ export const TuHaoSuVietView: React.FC<TuHaoSuVietViewProps> = ({
 
   // Tiêu thụ 1 lượt chơi
   const consumePlay = () => {
-    setPlayer(prev => ({
-      ...prev,
-      suVietDailyPlays: playsToday + 1,
-      suVietLastPlayDate: todayStr,
-    }));
+    setPlayer(prev => {
+      const p = prev.dailyQuestProgress || {};
+      return {
+        ...prev,
+        suVietDailyPlays: playsToday + 1,
+        suVietLastPlayDate: todayStr,
+        dailyQuestProgress: { ...p, 'q_play_suviet_1': (p['q_play_suviet_1'] || 0) + 1 }
+      };
+    });
   };
 
   // --- Danh hiệu dựa trên số câu đúng (cho luyện thi) ---

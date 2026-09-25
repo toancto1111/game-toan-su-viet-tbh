@@ -4,3 +4,6 @@ dist/
 .env
 *.cjs
 *.tex
+
+.vercel
+.env*

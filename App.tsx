@@ -2687,7 +2687,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className={`relative z-0 has-bottom-nav ${view !== 'auth' ? 'pb-[72px] md:pb-0' : ''}`} style={{ minheight: '100%' }}>
+      <div className={`relative z-0 has-bottom-nav ${view !== 'auth' ? 'pb-[72px] md:pb-0' : ''}`} style={{ height: '100%' }}>
         {renderView()}
       </div>
 
