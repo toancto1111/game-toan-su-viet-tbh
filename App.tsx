@@ -2197,7 +2197,7 @@ const App: React.FC = () => {
         </div>
       );
       case 'chapter-hub': return (
-        <div className="h-full w-full bg-black overflow-hidden relative flex">
+        <div className="w-full bg-black overflow-hidden relative flex" style={{ height: '100dvh' }}>
           
           {/* DESKTOP VIEW - Always visible, scaled by index.html */}
           <div 
@@ -2687,7 +2687,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className={`relative z-0 has-bottom-nav ${view !== 'auth' ? 'pb-[72px] md:pb-0' : ''}`}>
+      <div className={`relative z-0 has-bottom-nav ${view !== 'auth' ? 'pb-[72px] md:pb-0' : ''}`} style={{ minHeight: view === 'chapter-hub' ? '100dvh' : undefined }}>
         {renderView()}
       </div>
 
