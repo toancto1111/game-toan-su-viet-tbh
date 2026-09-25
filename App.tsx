@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useMemo, useEffect, useRef, Component, ErrorInfo, ReactNode } from 'react';
 
 class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean, error: Error | null }> {
@@ -104,35 +104,35 @@ const HeroStars = ({ starCount, size = 10, className = "" }: { starCount: number
 
 // ========= INNATE PASSIVE SYSTEM =========
 export const PASSIVE_POOL = [
-  { id: 'extra_turn', name: 'Liên Kích', desc: 'Có xác suất đánh thêm 1 lượt sau khi tấn công.' },
-  { id: 'lifesteal', name: 'Huyết Quỷ', desc: 'Hồi phục HP dựa trên lượng sát thương gây ra.' },
-  { id: 'stun_chance', name: 'Băng Phong', desc: 'Có xác suất gây choáng kẻ địch khi tấn công.' },
-  { id: 'true_damage', name: 'Phá Giáp', desc: 'Gây thêm sát thương chuẩn bỏ qua phòng thủ.' },
-  { id: 'revive', name: 'Niết Bàn', desc: 'Cải tử hoàn sinh 1 lần trong trận đấu.' },
-  { id: 'reflect', name: 'Phản Đòn', desc: 'Phản lại một phần sát thương nhận vào.' },
-  { id: 'speed_boost', name: 'Tiên Phong', desc: 'Tăng vĩnh viễn Tốc độ trong trận sau mỗi lượt.' },
-  { id: 'shield', name: 'Hộ Thể', desc: 'Tạo lá chắn hấp thụ sát thương ở đầu mỗi lượt.' },
-  { id: 'execute', name: 'Trảm Sát', desc: 'Tăng mạnh sát thương nếu Máu mục tiêu rơi xuống dưới 30%.' },
-  { id: 'berserk', name: 'Cuồng Bạo', desc: 'Máu bản thân càng thấp, Tỷ lệ Bạo kích càng được cộng dồn cao.' },
-  { id: 'block', name: 'Kiên Tấn', desc: 'Có tỷ lệ đỡ đòn, giảm 50% lượng sát thương nhận vào.' },
-  { id: 'endure', name: 'Bất Khuất', desc: '1 lần mỗi trận, khi nhận sát thương chí tử sẽ không chết mà giữ lại 1 HP.' },
-  { id: 'dodge', name: 'Né Tránh', desc: 'Tăng tỷ lệ hoàn toàn không nhận sát thương từ các đòn đánh.' },
-  { id: 'toughness', name: 'Dẻo Dai', desc: 'Giảm đáng kể lượng sát thương nhận vào nếu đòn đánh của địch là Bạo kích.' },
-  { id: 'heal_ally', name: 'Trị Liệu', desc: 'Hồi phục một lượng Máu cho đồng đội có tỷ lệ Máu thấp nhất sau mỗi lượt hành động.' }
+  { id: 'extra_turn', name: 'LiÃªn KÃ­ch', desc: 'CÃ³ xÃ¡c suáº¥t Ä‘Ã¡nh thÃªm 1 lÆ°á»£t sau khi táº¥n cÃ´ng.' },
+  { id: 'lifesteal', name: 'Huyáº¿t Quá»·', desc: 'Há»“i phá»¥c HP dá»±a trÃªn lÆ°á»£ng sÃ¡t thÆ°Æ¡ng gÃ¢y ra.' },
+  { id: 'stun_chance', name: 'BÄƒng Phong', desc: 'CÃ³ xÃ¡c suáº¥t gÃ¢y choÃ¡ng káº» Ä‘á»‹ch khi táº¥n cÃ´ng.' },
+  { id: 'true_damage', name: 'PhÃ¡ GiÃ¡p', desc: 'GÃ¢y thÃªm sÃ¡t thÆ°Æ¡ng chuáº©n bá» qua phÃ²ng thá»§.' },
+  { id: 'revive', name: 'Niáº¿t BÃ n', desc: 'Cáº£i tá»­ hoÃ n sinh 1 láº§n trong tráº­n Ä‘áº¥u.' },
+  { id: 'reflect', name: 'Pháº£n ÄÃ²n', desc: 'Pháº£n láº¡i má»™t pháº§n sÃ¡t thÆ°Æ¡ng nháº­n vÃ o.' },
+  { id: 'speed_boost', name: 'TiÃªn Phong', desc: 'TÄƒng vÄ©nh viá»…n Tá»‘c Ä‘á»™ trong tráº­n sau má»—i lÆ°á»£t.' },
+  { id: 'shield', name: 'Há»™ Thá»ƒ', desc: 'Táº¡o lÃ¡ cháº¯n háº¥p thá»¥ sÃ¡t thÆ°Æ¡ng á»Ÿ Ä‘áº§u má»—i lÆ°á»£t.' },
+  { id: 'execute', name: 'Tráº£m SÃ¡t', desc: 'TÄƒng máº¡nh sÃ¡t thÆ°Æ¡ng náº¿u MÃ¡u má»¥c tiÃªu rÆ¡i xuá»‘ng dÆ°á»›i 30%.' },
+  { id: 'berserk', name: 'Cuá»“ng Báº¡o', desc: 'MÃ¡u báº£n thÃ¢n cÃ ng tháº¥p, Tá»· lá»‡ Báº¡o kÃ­ch cÃ ng Ä‘Æ°á»£c cá»™ng dá»“n cao.' },
+  { id: 'block', name: 'KiÃªn Táº¥n', desc: 'CÃ³ tá»· lá»‡ Ä‘á»¡ Ä‘Ã²n, giáº£m 50% lÆ°á»£ng sÃ¡t thÆ°Æ¡ng nháº­n vÃ o.' },
+  { id: 'endure', name: 'Báº¥t Khuáº¥t', desc: '1 láº§n má»—i tráº­n, khi nháº­n sÃ¡t thÆ°Æ¡ng chÃ­ tá»­ sáº½ khÃ´ng cháº¿t mÃ  giá»¯ láº¡i 1 HP.' },
+  { id: 'dodge', name: 'NÃ© TrÃ¡nh', desc: 'TÄƒng tá»· lá»‡ hoÃ n toÃ n khÃ´ng nháº­n sÃ¡t thÆ°Æ¡ng tá»« cÃ¡c Ä‘Ã²n Ä‘Ã¡nh.' },
+  { id: 'toughness', name: 'Dáº»o Dai', desc: 'Giáº£m Ä‘Ã¡ng ká»ƒ lÆ°á»£ng sÃ¡t thÆ°Æ¡ng nháº­n vÃ o náº¿u Ä‘Ã²n Ä‘Ã¡nh cá»§a Ä‘á»‹ch lÃ  Báº¡o kÃ­ch.' },
+  { id: 'heal_ally', name: 'Trá»‹ Liá»‡u', desc: 'Há»“i phá»¥c má»™t lÆ°á»£ng MÃ¡u cho Ä‘á»“ng Ä‘á»™i cÃ³ tá»· lá»‡ MÃ¡u tháº¥p nháº¥t sau má»—i lÆ°á»£t hÃ nh Ä‘á»™ng.' }
 ];
 
 export const HERO_HISTORICAL_PASSIVES: Record<string, string[]> = {
   'h10_1': ['speed_boost', 'execute'], // Quang Trung
-  'h5_2': ['speed_boost', 'block'], // Lý Thường Kiệt
-  'h1_6': ['revive', 'block'], // Sơn Tinh
-  'h1_2': ['heal_ally'], // Thần Long Nữ
-  'h1_4': ['heal_ally'], // Âu Cơ
-  'h6_7': ['dodge', 'block'], // Trần Hưng Đạo
-  'h2_1': ['berserk', 'extra_turn'], // Trưng Trắc
-  'h2_2': ['berserk', 'extra_turn'], // Trưng Nhị
-  'h4_2': ['extra_turn', 'execute'], // Đinh Bộ Lĩnh
-  'h4_0': ['extra_turn', 'execute'], // Đinh Bộ Lĩnh (legacy)
-  'h8_1': ['endure', 'lifesteal'], // Lê Lợi
+  'h5_2': ['speed_boost', 'block'], // LÃ½ ThÆ°á»ng Kiá»‡t
+  'h1_6': ['revive', 'block'], // SÆ¡n Tinh
+  'h1_2': ['heal_ally'], // Tháº§n Long Ná»¯
+  'h1_4': ['heal_ally'], // Ã‚u CÆ¡
+  'h6_7': ['dodge', 'block'], // Tráº§n HÆ°ng Äáº¡o
+  'h2_1': ['berserk', 'extra_turn'], // TrÆ°ng Tráº¯c
+  'h2_2': ['berserk', 'extra_turn'], // TrÆ°ng Nhá»‹
+  'h4_2': ['extra_turn', 'execute'], // Äinh Bá»™ LÄ©nh
+  'h4_0': ['extra_turn', 'execute'], // Äinh Bá»™ LÄ©nh (legacy)
+  'h8_1': ['endure', 'lifesteal'], // LÃª Lá»£i
 };
 
 const hashString = (str: string) => {
@@ -185,11 +185,11 @@ export const getStarBorderClass = (star: number) => {
 };
 
 export const BREAKTHROUGH_PILLS = [
-  { id: 'pill1', name: 'Sơ Cấp Đột Phá Đan', icon: '💊', img: './items/pill1.png', color: 'text-red-400', reqStar: 6, desc: 'Nâng cấp mốc 6-10 Sao (Trăng Khuyết Red)' },
-  { id: 'pill2', name: 'Trung Cấp Phá Cảnh Đan', icon: '🔮', img: './items/pill2.png', color: 'text-purple-400', reqStar: 11, desc: 'Nâng cấp mốc 11-15 Sao (Kim Cương Tím)' },
-  { id: 'pill3', name: 'Cao Cấp Thông Thiên Đan', icon: '⚡', img: './items/pill3.png', color: 'text-sky-300', reqStar: 16, desc: 'Nâng cấp mốc 16-20 Sao (Bông Tuyết Trắng)' },
-  { id: 'pill4', name: 'Thần Cấp Hóa Thần Đan', icon: '🌌', img: './items/pill4.png', color: 'text-amber-400', reqStar: 21, desc: 'Nâng cấp mốc 21-25 Sao (Vương Miện Vàng)' },
-  { id: 'pill5', name: 'Tối Thượng Thái Sơ Đan', icon: '🚩', img: './items/pill5.png', color: 'text-rose-500 font-black', reqStar: 26, desc: 'Nâng cấp mốc 26-30 Sao (Cờ Trận Crimson)' },
+  { id: 'pill1', name: 'SÆ¡ Cáº¥p Äá»™t PhÃ¡ Äan', icon: 'ðŸ’Š', img: './items/pill1.png', color: 'text-red-400', reqStar: 6, desc: 'NÃ¢ng cáº¥p má»‘c 6-10 Sao (TrÄƒng Khuyáº¿t Red)' },
+  { id: 'pill2', name: 'Trung Cáº¥p PhÃ¡ Cáº£nh Äan', icon: 'ðŸ”®', img: './items/pill2.png', color: 'text-purple-400', reqStar: 11, desc: 'NÃ¢ng cáº¥p má»‘c 11-15 Sao (Kim CÆ°Æ¡ng TÃ­m)' },
+  { id: 'pill3', name: 'Cao Cáº¥p ThÃ´ng ThiÃªn Äan', icon: 'âš¡', img: './items/pill3.png', color: 'text-sky-300', reqStar: 16, desc: 'NÃ¢ng cáº¥p má»‘c 16-20 Sao (BÃ´ng Tuyáº¿t Tráº¯ng)' },
+  { id: 'pill4', name: 'Tháº§n Cáº¥p HÃ³a Tháº§n Äan', icon: 'ðŸŒŒ', img: './items/pill4.png', color: 'text-amber-400', reqStar: 21, desc: 'NÃ¢ng cáº¥p má»‘c 21-25 Sao (VÆ°Æ¡ng Miá»‡n VÃ ng)' },
+  { id: 'pill5', name: 'Tá»‘i ThÆ°á»£ng ThÃ¡i SÆ¡ Äan', icon: 'ðŸš©', img: './items/pill5.png', color: 'text-rose-500 font-black', reqStar: 26, desc: 'NÃ¢ng cáº¥p má»‘c 26-30 Sao (Cá» Tráº­n Crimson)' },
 ];
 
 export const getStarUpgradeReq = (currentStar: number) => {
@@ -233,55 +233,55 @@ export const getStarRoadmap = (hero: Hero) => {
     let passiveColor = "";
 
     if (s <= 5) {
-      title = `${s} Sao Vàng`;
-      effect = `+${s * 10}% Chỉ số Tấn Công, Phòng Thủ, Máu`;
-      iconName = "⭐";
+      title = `${s} Sao VÃ ng`;
+      effect = `+${s * 10}% Chá»‰ sá»‘ Táº¥n CÃ´ng, PhÃ²ng Thá»§, MÃ¡u`;
+      iconName = "â­";
       tierColor = "text-yellow-400";
     } else if (s <= 10) {
       const moons = s - 5;
       const power = moons * 20;
-      title = `${s} Sao (${moons} Trăng Khuyết Red)`;
+      title = `${s} Sao (${moons} TrÄƒng Khuyáº¿t Red)`;
       passiveName = passives[0].name;
       passiveDesc = passives[0].desc;
       passiveColor = "text-red-400";
-      effect = `Thức tỉnh/Tăng [${passiveName}] lên ${power}% (+${s * 10}% Chỉ số, Viền LED Đỏ)`;
-      iconName = "🌙";
+      effect = `Thá»©c tá»‰nh/TÄƒng [${passiveName}] lÃªn ${power}% (+${s * 10}% Chá»‰ sá»‘, Viá»n LED Äá»)`;
+      iconName = "ðŸŒ™";
       tierColor = "text-red-400";
     } else if (s <= 15) {
       const gems = s - 10;
       const power = gems * 20;
-      title = `${s} Sao (${gems} Kim Cương Tím)`;
+      title = `${s} Sao (${gems} Kim CÆ°Æ¡ng TÃ­m)`;
       passiveName = passives[1].name;
       passiveDesc = passives[1].desc;
       passiveColor = "text-purple-400";
-      effect = `Thức tỉnh/Tăng [${passiveName}] lên ${power}% (+${s * 10}% Chỉ số, Viền LED Tím)`;
-      iconName = "💎";
+      effect = `Thá»©c tá»‰nh/TÄƒng [${passiveName}] lÃªn ${power}% (+${s * 10}% Chá»‰ sá»‘, Viá»n LED TÃ­m)`;
+      iconName = "ðŸ’Ž";
       tierColor = "text-purple-400";
     } else if (s <= 20) {
       const flakes = s - 15;
       const power = flakes * 20;
-      title = `${s} Sao (${flakes} Bông Tuyết Trắng)`;
+      title = `${s} Sao (${flakes} BÃ´ng Tuyáº¿t Tráº¯ng)`;
       passiveName = passives[2].name;
       passiveDesc = passives[2].desc;
       passiveColor = "text-slate-200";
-      effect = `Thức tỉnh/Tăng [${passiveName}] lên ${power}% (+${s * 10}% Chỉ số, Viền LED Trắng)`;
-      iconName = "❄️";
+      effect = `Thá»©c tá»‰nh/TÄƒng [${passiveName}] lÃªn ${power}% (+${s * 10}% Chá»‰ sá»‘, Viá»n LED Tráº¯ng)`;
+      iconName = "â„ï¸";
       tierColor = "text-slate-200";
     } else if (s <= 25) {
       const crowns = s - 20;
       const power = crowns * 20;
-      title = `${s} Sao (${crowns} Vương Miện Vàng)`;
+      title = `${s} Sao (${crowns} VÆ°Æ¡ng Miá»‡n VÃ ng)`;
       passiveName = passives[3].name;
       passiveDesc = passives[3].desc;
       passiveColor = "text-amber-400";
-      effect = `Thức tỉnh/Tăng [${passiveName}] lên ${power}% (+${s * 10}% Chỉ số, Viền LED Vàng Hoàng Gia)`;
-      iconName = "👑";
+      effect = `Thá»©c tá»‰nh/TÄƒng [${passiveName}] lÃªn ${power}% (+${s * 10}% Chá»‰ sá»‘, Viá»n LED VÃ ng HoÃ ng Gia)`;
+      iconName = "ðŸ‘‘";
       tierColor = "text-amber-400";
     } else {
       const flags = s - 25;
-      title = `${s} Sao (${flags} Cờ Trận Crimson)`;
-      effect = `Cảnh Giới Tối Thượng: +${200 + (s - 25) * 20}% Chỉ Số Toàn Năng, Đột Phá Đại Thành!`;
-      iconName = "🚩";
+      title = `${s} Sao (${flags} Cá» Tráº­n Crimson)`;
+      effect = `Cáº£nh Giá»›i Tá»‘i ThÆ°á»£ng: +${200 + (s - 25) * 20}% Chá»‰ Sá»‘ ToÃ n NÄƒng, Äá»™t PhÃ¡ Äáº¡i ThÃ nh!`;
+      iconName = "ðŸš©";
       tierColor = "text-rose-500 font-black";
     }
 
@@ -336,11 +336,11 @@ export const calculateHeroStatsWithStar = (hero: Hero, targetStar: number) => {
 
   // Milestone breakthrough multiplier
   let milestoneMult = 0;
-  if (star >= 26) milestoneMult = 1.5;      // 26-30 stars: Cờ Trận Crimson (+150%)
-  else if (star >= 21) milestoneMult = 1.0; // 21-25 stars: Vương Miện Vàng (+100%)
-  else if (star >= 16) milestoneMult = 0.7; // 16-20 stars: Bông Tuyết Trắng (+70%)
-  else if (star >= 11) milestoneMult = 0.4; // 11-15 stars: Kim Cương Tím (+40%)
-  else if (star >= 6) milestoneMult = 0.2;  // 6-10 stars: Trăng Khuyết Red (+20%)
+  if (star >= 26) milestoneMult = 1.5;      // 26-30 stars: Cá» Tráº­n Crimson (+150%)
+  else if (star >= 21) milestoneMult = 1.0; // 21-25 stars: VÆ°Æ¡ng Miá»‡n VÃ ng (+100%)
+  else if (star >= 16) milestoneMult = 0.7; // 16-20 stars: BÃ´ng Tuyáº¿t Tráº¯ng (+70%)
+  else if (star >= 11) milestoneMult = 0.4; // 11-15 stars: Kim CÆ°Æ¡ng TÃ­m (+40%)
+  else if (star >= 6) milestoneMult = 0.2;  // 6-10 stars: TrÄƒng Khuyáº¿t Red (+20%)
 
   // Total stat scaling multiplier: +15% per star + milestone bonus
   const multiplier = 1 + (star - 1) * 0.15 + milestoneMult;
@@ -420,7 +420,7 @@ interface AccountRecord {
   playerData: PlayerState;
 }
 
-/** Hash mật khẩu đơn giản (client-side). Đủ để che mật khẩu trong localStorage. */
+/** Hash máº­t kháº©u Ä‘Æ¡n giáº£n (client-side). Äá»§ Ä‘á»ƒ che máº­t kháº©u trong localStorage. */
 const hashPassword = (password: string): string => {
   let hash = 5381;
   for (let i = 0; i < password.length; i++) {
@@ -518,7 +518,7 @@ const BGMPlayer: React.FC = () => {
 
   const currentSongName = currentSongIndex >= 0 
     ? audioList[currentSongIndex].split('/').pop()?.replace(/\.[^/.]+$/, "") 
-    : "Nhạc nền";
+    : "Nháº¡c ná»n";
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
@@ -528,7 +528,7 @@ const BGMPlayer: React.FC = () => {
         onEnded={handleNext}
       />
       
-      {/* Popover Bảng Điều Khiển Nhạc Nền */}
+      {/* Popover Báº£ng Äiá»u Khiá»ƒn Nháº¡c Ná»n */}
       {isOpen && (
         <div className="mb-3 bg-stone-900/95 border-2 border-amber-600/40 rounded-2xl p-3.5 shadow-[0_10px_30px_rgba(0,0,0,0.9)] backdrop-blur-xl flex flex-col gap-3 min-w-[240px] animate-in slide-in-from-bottom-3 duration-200">
           <div className="flex items-center justify-between border-b border-amber-900/40 pb-2">
@@ -547,7 +547,7 @@ const BGMPlayer: React.FC = () => {
             <button 
               onClick={() => setIsPlaying(!isPlaying)}
               className="w-10 h-10 rounded-full bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-stone-950 flex items-center justify-center shadow-lg transition-transform active:scale-95 border border-amber-300/40"
-              title={isPlaying ? "Tạm dừng" : "Phát nhạc"}
+              title={isPlaying ? "Táº¡m dá»«ng" : "PhÃ¡t nháº¡c"}
             >
               {isPlaying ? <Pause size={18} fill="black" /> : <Play size={18} fill="black" className="ml-0.5" />}
             </button>
@@ -555,7 +555,7 @@ const BGMPlayer: React.FC = () => {
             <button 
               onClick={handleNext}
               className="w-10 h-10 rounded-full bg-stone-800 hover:bg-stone-700 text-amber-400 border border-amber-900/40 flex items-center justify-center shadow-md transition-colors active:scale-95"
-              title="Đổi bài ngẫu nhiên"
+              title="Äá»•i bÃ i ngáº«u nhiÃªn"
             >
               <SkipForward size={18} />
             </button>
@@ -569,7 +569,7 @@ const BGMPlayer: React.FC = () => {
               value={volume}
               onChange={(e) => setVolume(parseFloat(e.target.value))}
               className="w-full h-1.5 bg-stone-700 rounded-lg appearance-none cursor-pointer accent-amber-500"
-              title="Âm lượng"
+              title="Ã‚m lÆ°á»£ng"
             />
             <span className="text-[10px] text-amber-400 font-mono font-bold w-7 text-right">
               {Math.round(volume * 100)}%
@@ -578,7 +578,7 @@ const BGMPlayer: React.FC = () => {
         </div>
       )}
 
-      {/* Nút Đĩa Nhạc Thu Nhỏ Chiêm Ngưỡng */}
+      {/* NÃºt ÄÄ©a Nháº¡c Thu Nhá» ChiÃªm NgÆ°á»¡ng */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`relative group flex items-center gap-2 px-3 py-2.5 rounded-full border-2 shadow-2xl backdrop-blur-md transition-all active:scale-95 ${
@@ -586,11 +586,11 @@ const BGMPlayer: React.FC = () => {
             ? 'bg-stone-900/90 border-amber-500 text-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.4)]' 
             : 'bg-stone-950/80 border-stone-700 text-stone-400 hover:border-amber-700 hover:text-amber-300'
         }`}
-        title="Bật/Tắt Bảng Nhạc Nền"
+        title="Báº­t/Táº¯t Báº£ng Nháº¡c Ná»n"
       >
         <Disc size={22} className={isPlaying ? "animate-spin text-amber-400 duration-3000" : "text-stone-500"} />
         <span className="text-xs font-bold font-cinzel tracking-wider hidden group-hover:inline transition-all">
-          {isPlaying ? "Phát Nhạc" : "Nhạc Nền"}
+          {isPlaying ? "PhÃ¡t Nháº¡c" : "Nháº¡c Ná»n"}
         </span>
         {isPlaying && (
           <span className="absolute -top-0.5 -right-0.5 flex h-3 w-3">
@@ -613,10 +613,10 @@ const SyncStatusBadge: React.FC<{ status: 'idle' | 'saving' | 'saved' | 'offline
         color: status === 'saving' ? '#60a5fa' : status === 'saved' ? '#34d399' : '#fbbf24'
       }}
     >
-      {status === 'saving' && <span className="animate-spin inline-block">↻</span>}
-      {status === 'saved' && <span>☁</span>}
-      {status === 'offline' && <span>📵</span>}
-      <span>{status === 'saving' ? 'Đang lưu...' : status === 'saved' ? 'Đã lưu Cloud' : 'Offline'}</span>
+      {status === 'saving' && <span className="animate-spin inline-block">â†»</span>}
+      {status === 'saved' && <span>â˜</span>}
+      {status === 'offline' && <span>ðŸ“µ</span>}
+      <span>{status === 'saving' ? 'Äang lÆ°u...' : status === 'saved' ? 'ÄÃ£ lÆ°u Cloud' : 'Offline'}</span>
     </div>
   );
 };
@@ -635,7 +635,7 @@ const Header: React.FC<{ state: PlayerState, setView: any, onLogout?: () => void
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(err => {
-        console.warn(`Lỗi Fullscreen: ${err.message}`);
+        console.warn(`Lá»—i Fullscreen: ${err.message}`);
       });
     } else {
       if (document.exitFullscreen) document.exitFullscreen();
@@ -648,38 +648,38 @@ const Header: React.FC<{ state: PlayerState, setView: any, onLogout?: () => void
       <div className="p-3 flex justify-between items-center">
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-2">
-            <span className="lantern text-xl">🏮</span>
-            <h1 onClick={() => setView('chapter-hub')} className="text-xl font-cinzel text-amber-500 font-bold tracking-widest uppercase cursor-pointer hover:text-amber-400 transition-colors drop-shadow-[0_0_8px_rgba(201,148,26,0.35)]">Sử Việt Anh Hùng</h1>
-            <span className="lantern text-xl" style={{animationDelay:'1.5s'}}>🏮</span>
+            <span className="lantern text-xl">ðŸ®</span>
+            <h1 onClick={() => setView('chapter-hub')} className="text-xl font-cinzel text-amber-500 font-bold tracking-widest uppercase cursor-pointer hover:text-amber-400 transition-colors drop-shadow-[0_0_8px_rgba(201,148,26,0.35)]">Sá»­ Viá»‡t Anh HÃ¹ng</h1>
+            <span className="lantern text-xl" style={{animationDelay:'1.5s'}}>ðŸ®</span>
           </div>
           <div className="flex gap-3 text-sm font-medium">
-            <span className="bg-stone-800/80 px-3 py-1 rounded-full border border-amber-900/40 flex items-center gap-1.5 text-yellow-500 text-xs font-bold">🪙 {(state.gold || 0).toLocaleString()}</span>
-            <span className="bg-stone-800/80 px-3 py-1 rounded-full border border-green-900/40 flex items-center gap-1.5 text-green-400 text-xs font-bold">💎 {(state.jade || 0).toLocaleString()}</span>
-            <span className="bg-stone-800/80 px-3 py-1 rounded-full border border-blue-900/40 flex items-center gap-1.5 text-blue-400 text-xs font-bold">🎫 {state.normalTickets || 0}</span>
+            <span className="bg-stone-800/80 px-3 py-1 rounded-full border border-amber-900/40 flex items-center gap-1.5 text-yellow-500 text-xs font-bold">ðŸª™ {(state.gold || 0).toLocaleString()}</span>
+            <span className="bg-stone-800/80 px-3 py-1 rounded-full border border-green-900/40 flex items-center gap-1.5 text-green-400 text-xs font-bold">ðŸ’Ž {(state.jade || 0).toLocaleString()}</span>
+            <span className="bg-stone-800/80 px-3 py-1 rounded-full border border-blue-900/40 flex items-center gap-1.5 text-blue-400 text-xs font-bold">ðŸŽ« {state.normalTickets || 0}</span>
           </div>
           <button 
-            onClick={() => alert("Chào mừng đến với Sử Việt Anh Hùng!\\n\\n1. Doanh Trại: Nơi vượt các ải cốt truyện, chiến đấu với quân thù.\\n2. Quốc Tử Giám: Nơi thu thập kiến thức, tu luyện và trả lời câu hỏi.\\n3. Danh Vọng Đài: Xem bảng xếp hạng anh tài.\\n4. Quân Đoàn: Nơi quản lý tướng lĩnh và đội hình xuất chiến.\\n5. Thí Luyện: Leo tháp thử thách cực hạn.\\n6. Tự Hào Sử Việt: Nhận phần thưởng đặc biệt.\\n7. AI Trạng Nguyên: Sẵn sàng giải đáp mọi thắc mắc của bạn (nút ở góc phải)!")} 
+            onClick={() => alert("ChÃ o má»«ng Ä‘áº¿n vá»›i Sá»­ Viá»‡t Anh HÃ¹ng!\\n\\n1. Doanh Tráº¡i: NÆ¡i vÆ°á»£t cÃ¡c áº£i cá»‘t truyá»‡n, chiáº¿n Ä‘áº¥u vá»›i quÃ¢n thÃ¹.\\n2. Quá»‘c Tá»­ GiÃ¡m: NÆ¡i thu tháº­p kiáº¿n thá»©c, tu luyá»‡n vÃ  tráº£ lá»i cÃ¢u há»i.\\n3. Danh Vá»ng ÄÃ i: Xem báº£ng xáº¿p háº¡ng anh tÃ i.\\n4. QuÃ¢n ÄoÃ n: NÆ¡i quáº£n lÃ½ tÆ°á»›ng lÄ©nh vÃ  Ä‘á»™i hÃ¬nh xuáº¥t chiáº¿n.\\n5. ThÃ­ Luyá»‡n: Leo thÃ¡p thá»­ thÃ¡ch cá»±c háº¡n.\\n6. Tá»± HÃ o Sá»­ Viá»‡t: Nháº­n pháº§n thÆ°á»Ÿng Ä‘áº·c biá»‡t.\\n7. AI Tráº¡ng NguyÃªn: Sáºµn sÃ ng giáº£i Ä‘Ã¡p má»i tháº¯c máº¯c cá»§a báº¡n (nÃºt á»Ÿ gÃ³c pháº£i)!")} 
             className="text-amber-400 hover:text-amber-300 transition-colors bg-stone-900 hover:bg-stone-800 p-2 rounded-xl border border-amber-900/40 ml-1 flex items-center gap-1.5"
-            title="Hướng dẫn trò chơi"
+            title="HÆ°á»›ng dáº«n trÃ² chÆ¡i"
           >
             <Info size={18} />
-            <span className="hidden md:inline text-xs font-bold uppercase whitespace-nowrap">Hướng Dẫn</span>
+            <span className="hidden md:inline text-xs font-bold uppercase whitespace-nowrap">HÆ°á»›ng Dáº«n</span>
           </button>
           <button 
             onClick={toggleFullscreen} 
             className="text-stone-400 hover:text-white transition-colors bg-stone-900 hover:bg-stone-800 p-2 rounded-xl border border-stone-700 ml-1"
-            title="Toàn Màn Hình"
+            title="ToÃ n MÃ n HÃ¬nh"
           >
             {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
           </button>
         </div>
 
-        {/* Khối Avatar & Thông tin học sinh góc phải */}
+        {/* Khá»‘i Avatar & ThÃ´ng tin há»c sinh gÃ³c pháº£i */}
         <div className="flex items-center gap-3">
           <div 
             onClick={onOpenProfile} 
             className="flex items-center gap-2.5 bg-stone-900/90 hover:bg-stone-800/90 border border-amber-500/50 hover:border-amber-400 px-3 py-1.5 rounded-2xl cursor-pointer transition-all shadow-md group"
-            title="Bấm để mở Hồ sơ & Đổi Avatar"
+            title="Báº¥m Ä‘á»ƒ má»Ÿ Há»“ sÆ¡ & Äá»•i Avatar"
           >
             <div className="relative">
               <div className="w-10 h-10 rounded-full border-2 border-amber-400 overflow-hidden bg-stone-950 shadow-[0_0_12px_rgba(245,158,11,0.5)] group-hover:scale-105 transition-transform">
@@ -702,19 +702,19 @@ const Header: React.FC<{ state: PlayerState, setView: any, onLogout?: () => void
                 )}
               </div>
               <span className="text-[10px] text-stone-400 truncate max-w-[130px]">
-                {state.fullName ? `${state.fullName} • ${state.legionName}` : state.legionName}
+                {state.fullName ? `${state.fullName} â€¢ ${state.legionName}` : state.legionName}
               </span>
             </div>
           </div>
 
           <div className="flex flex-col items-end gap-1">
             <div className="text-amber-600 font-cinzel text-[10px] uppercase tracking-widest bg-stone-800/80 px-2.5 py-0.5 rounded-full border border-amber-700/20 italic">
-              Chương {state.currentChapter}
+              ChÆ°Æ¡ng {state.currentChapter}
             </div>
             <SyncStatusBadge status={syncStatus} />
             {onLogout && (
-              <button onClick={onLogout} title="Đăng xuất" className="text-stone-500 hover:text-red-400 text-[9px] uppercase tracking-widest font-bold transition-colors flex items-center gap-1">
-                ⏻ Đăng xuất
+              <button onClick={onLogout} title="ÄÄƒng xuáº¥t" className="text-stone-500 hover:text-red-400 text-[9px] uppercase tracking-widest font-bold transition-colors flex items-center gap-1">
+                â» ÄÄƒng xuáº¥t
               </button>
             )}
           </div>
@@ -724,7 +724,7 @@ const Header: React.FC<{ state: PlayerState, setView: any, onLogout?: () => void
   );
 };
 
-// ========= MÀN HÌNH ĐĂNG NHẬP / ĐĂNG KÝ =========
+// ========= MÃ€N HÃŒNH ÄÄ‚NG NHáº¬P / ÄÄ‚NG KÃ =========
 const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) => void }> = ({ onLogin }) => {
   const [tab, setTab] = React.useState<'login' | 'register'>('login');
   const [username, setUsername] = React.useState('');
@@ -740,27 +740,27 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
 
   const handleLogin = async () => {
     setError('');
-    if (!username.trim() || !password) { setError('Vui lòng nhập đầy đủ tên tài khoản và mật khẩu.'); return; }
+    if (!username.trim() || !password) { setError('Vui lÃ²ng nháº­p Ä‘áº§y Ä‘á»§ tÃªn tÃ i khoáº£n vÃ  máº­t kháº©u.'); return; }
     const key = username.trim().toLowerCase();
     setLoading(true);
     
-    // 1. Lấy dữ liệu từ Local & Cloud
+    // 1. Láº¥y dá»¯ liá»‡u tá»« Local & Cloud
     const localAccounts = getAccounts();
     const localAccount = localAccounts[key];
     const cloudAccount = await getCloudAccount(key);
 
     if (cloudAccount || localAccount) {
-      // Bỏ qua kiểm tra mã băm cho tài khoản admin nếu đúng mật khẩu gốc
+      // Bá» qua kiá»ƒm tra mÃ£ bÄƒm cho tÃ i khoáº£n admin náº¿u Ä‘Ãºng máº­t kháº©u gá»‘c
       if (key === 'admin' && password === 'Toantrang2011@') {
-         // Cho phép đăng nhập
+         // Cho phÃ©p Ä‘Äƒng nháº­p
       } else {
         // Validate password if cloud account exists
         if (cloudAccount && cloudAccount.passwordHash !== hashPassword(password)) {
-          setError('Mật khẩu không đúng. Vui lòng thử lại.');
+          setError('Máº­t kháº©u khÃ´ng Ä‘Ãºng. Vui lÃ²ng thá»­ láº¡i.');
           setLoading(false);
           return;
         } else if (!cloudAccount && localAccount && localAccount.passwordHash !== hashPassword(password)) {
-          setError('Mật khẩu không đúng. Vui lòng thử lại (Offline mode).');
+          setError('Máº­t kháº©u khÃ´ng Ä‘Ãºng. Vui lÃ²ng thá»­ láº¡i (Offline mode).');
           setLoading(false);
           return;
         }
@@ -773,7 +773,7 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
         const localTime = localAccount.updatedAt || 0;
         const cloudTime = cloudAccount.updatedAt || 0;
         
-        // Nếu Local mới hơn Cloud (VD: do tắt tab đột ngột trước khi kịp sync Cloud)
+        // Náº¿u Local má»›i hÆ¡n Cloud (VD: do táº¯t tab Ä‘á»™t ngá»™t trÆ°á»›c khi ká»‹p sync Cloud)
         if (localTime > cloudTime) {
           console.log("Local data is newer than Cloud! Using Local.");
           bestPlayerData = localAccount.playerData;
@@ -789,7 +789,7 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
         needCloudSync = true;
       }
 
-      // Cập nhật lại localStorage
+      // Cáº­p nháº­t láº¡i localStorage
       if (cloudAccount) {
          localAccounts[key] = {
            passwordHash: cloudAccount.passwordHash,
@@ -809,20 +809,20 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
       return;
     }
 
-    // 2. Fallback: kiểm tra localStorage (tài khoản cũ chưa migrate)
+    // 2. Fallback: kiá»ƒm tra localStorage (tÃ i khoáº£n cÅ© chÆ°a migrate)
     const accounts = getAccounts();
     const account = accounts[key];
     if (!account) {
-      setError('Tài khoản không tồn tại. Hãy đăng ký mới.');
+      setError('TÃ i khoáº£n khÃ´ng tá»“n táº¡i. HÃ£y Ä‘Äƒng kÃ½ má»›i.');
       setLoading(false);
       return;
     }
     if (account.passwordHash !== hashPassword(password)) {
-      setError('Mật khẩu không đúng. Vui lòng thử lại.');
+      setError('Máº­t kháº©u khÃ´ng Ä‘Ãºng. Vui lÃ²ng thá»­ láº¡i.');
       setLoading(false);
       return;
     }
-    // Tự động migrate tài khoản cũ lên Cloud
+    // Tá»± Ä‘á»™ng migrate tÃ i khoáº£n cÅ© lÃªn Cloud
     saveCloudAccount(key, account.passwordHash, account.playerData).catch(() => {});
     setSession(key);
     onLogin(key, JSON.parse(JSON.stringify(account.playerData)));
@@ -831,23 +831,23 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
 
   const handleRegister = async () => {
     setError('');
-    if (!fullName.trim()) { setError('Vui lòng nhập họ và tên học sinh.'); return; }
-    if (!className.trim()) { setError('Vui lòng nhập tên lớp học (ví dụ: 6A1, 9B...).'); return; }
-    if (!playerName.trim()) { setError('Vui lòng nhập tên Chúa công (Tên ingame).'); return; }
-    if (!username.trim() || !password) { setError('Vui lòng nhập đầy đủ tên tài khoản và mật khẩu.'); return; }
-    if (username.trim().length < 3) { setError('Tên tài khoản phải có ít nhất 3 ký tự.'); return; }
-    if (password.length < 4) { setError('Mật khẩu phải có ít nhất 4 ký tự.'); return; }
-    if (password !== confirmPassword) { setError('Mật khẩu xác nhận không khớp. Vui lòng kiểm tra lại.'); return; }
+    if (!fullName.trim()) { setError('Vui lÃ²ng nháº­p há» vÃ  tÃªn há»c sinh.'); return; }
+    if (!className.trim()) { setError('Vui lÃ²ng nháº­p tÃªn lá»›p há»c (vÃ­ dá»¥: 6A1, 9B...).'); return; }
+    if (!playerName.trim()) { setError('Vui lÃ²ng nháº­p tÃªn ChÃºa cÃ´ng (TÃªn ingame).'); return; }
+    if (!username.trim() || !password) { setError('Vui lÃ²ng nháº­p Ä‘áº§y Ä‘á»§ tÃªn tÃ i khoáº£n vÃ  máº­t kháº©u.'); return; }
+    if (username.trim().length < 3) { setError('TÃªn tÃ i khoáº£n pháº£i cÃ³ Ã­t nháº¥t 3 kÃ½ tá»±.'); return; }
+    if (password.length < 4) { setError('Máº­t kháº©u pháº£i cÃ³ Ã­t nháº¥t 4 kÃ½ tá»±.'); return; }
+    if (password !== confirmPassword) { setError('Máº­t kháº©u xÃ¡c nháº­n khÃ´ng khá»›p. Vui lÃ²ng kiá»ƒm tra láº¡i.'); return; }
     const key = username.trim().toLowerCase();
     setLoading(true);
 
-    // Kiểm tra tên đã tồn tại trên Cloud
+    // Kiá»ƒm tra tÃªn Ä‘Ã£ tá»“n táº¡i trÃªn Cloud
     const existing = await getCloudAccount(key);
-    if (existing) { setError('Tên tài khoản đã tồn tại. Hãy chọn tên khác.'); setLoading(false); return; }
+    if (existing) { setError('TÃªn tÃ i khoáº£n Ä‘Ã£ tá»“n táº¡i. HÃ£y chá»n tÃªn khÃ¡c.'); setLoading(false); return; }
     
-    // Kiểm tra cả localStorage
+    // Kiá»ƒm tra cáº£ localStorage
     const accounts = getAccounts();
-    if (accounts[key]) { setError('Tên tài khoản đã tồn tại. Hãy chọn tên khác.'); setLoading(false); return; }
+    if (accounts[key]) { setError('TÃªn tÃ i khoáº£n Ä‘Ã£ tá»“n táº¡i. HÃ£y chá»n tÃªn khÃ¡c.'); setLoading(false); return; }
 
     const newPlayerData: PlayerState = {
       fullName: fullName.trim(),
@@ -855,7 +855,7 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
       className: className.trim().toUpperCase(),
       username: key,
       playerName: playerName.trim(),
-      legionName: legionName.trim() || `Quân Đoàn ${playerName.trim()}`,
+      legionName: legionName.trim() || `QuÃ¢n ÄoÃ n ${playerName.trim()}`,
       gold: 0,
       normalTickets: 0,
       premiumTickets: 0,
@@ -873,15 +873,15 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
     };
     const pwHash = hashPassword(password);
 
-    // Lưu lên Cloud Firebase (cách như ưu tiên)
+    // LÆ°u lÃªn Cloud Firebase (cÃ¡ch nhÆ° Æ°u tiÃªn)
     const cloudOk = await saveCloudAccount(key, pwHash, newPlayerData);
     
-    // Lưu backup vào localStorage
+    // LÆ°u backup vÃ o localStorage
     accounts[key] = { passwordHash: pwHash, playerData: newPlayerData };
     saveAccounts(accounts);
     
     if (!cloudOk) {
-      console.warn('Không lưu được lên Cloud, chỉ lưu local. Học sinh cần chơi trên cùng thiết bị/trình duyệt.');
+      console.warn('KhÃ´ng lÆ°u Ä‘Æ°á»£c lÃªn Cloud, chá»‰ lÆ°u local. Há»c sinh cáº§n chÆ¡i trÃªn cÃ¹ng thiáº¿t bá»‹/trÃ¬nh duyá»‡t.');
     }
     setSession(key);
     onLogin(key, newPlayerData);
@@ -891,8 +891,8 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
   const handleGuestLogin = () => {
     const guestKey = `guest_${Date.now()}`;
     const guestData: PlayerState = {
-      playerName: `Khách ${Math.floor(Math.random() * 10000)}`,
-      legionName: 'Lãng Khách',
+      playerName: `KhÃ¡ch ${Math.floor(Math.random() * 10000)}`,
+      legionName: 'LÃ£ng KhÃ¡ch',
       gold: 50000,
       normalTickets: 10,
       premiumTickets: 5,
@@ -921,9 +921,9 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
   };
 
   return (
-    <div className="min-h-screen viet-bg flex items-center justify-center p-6 text-stone-900 relative overflow-hidden">
+    <div className="min-h-full viet-bg flex items-center justify-center p-6 text-stone-900 relative overflow-hidden">
       <div className="absolute inset-0 bg-cover bg-center opacity-10 pointer-events-none" style={{ backgroundImage: `url('${import.meta.env.BASE_URL}images/vietnam_map.png')` }}></div>
-      {/* Cánh hoa sen rơi */}
+      {/* CÃ¡nh hoa sen rÆ¡i */}
       {[...Array(14)].map((_, i) => (
         <div key={i} className="petal" style={{
           left: `${4 + i * 7}%`,
@@ -938,11 +938,11 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
           borderRadius: i % 2 === 0 ? '50% 0 50% 0' : '0 50% 0 50%',
         }}/>
       ))}
-      {/* Đèn lồng trái */}
+      {/* ÄÃ¨n lá»“ng trÃ¡i */}
       <div className="absolute top-0 left-10 lantern opacity-75">
         <svg width="28" height="55" viewBox="0 0 28 55" fill="none"><line x1="14" y1="0" x2="14" y2="7" stroke="#C9941A" strokeWidth="2"/><ellipse cx="14" cy="12" rx="9" ry="5" fill="#B8860B"/><rect x="5" y="12" width="18" height="25" rx="3" fill="#CC1100"/><line x1="5" y1="19" x2="23" y2="19" stroke="#C9941A" strokeWidth="0.8" opacity="0.6"/><line x1="5" y1="26" x2="23" y2="26" stroke="#C9941A" strokeWidth="0.8" opacity="0.6"/><line x1="5" y1="33" x2="23" y2="33" stroke="#C9941A" strokeWidth="0.8" opacity="0.6"/><ellipse cx="14" cy="37" rx="9" ry="5" fill="#B8860B"/><line x1="10" y1="42" x2="8" y2="55" stroke="#C9941A" strokeWidth="1.5"/><line x1="14" y1="42" x2="14" y2="55" stroke="#C9941A" strokeWidth="1.5"/><line x1="18" y1="42" x2="20" y2="55" stroke="#C9941A" strokeWidth="1.5"/><circle cx="14" cy="24" r="5" fill="#FF8C00" opacity="0.4"/></svg>
       </div>
-      {/* Đèn lồng phải */}
+      {/* ÄÃ¨n lá»“ng pháº£i */}
       <div className="absolute top-0 right-10 opacity-75" style={{display:'inline-block', animation:'lanternSwing 3s ease-in-out infinite', animationDelay:'1.5s', transformOrigin:'top center', filter:'drop-shadow(0 0 8px rgba(255,150,30,0.7))'}}>
         <svg width="28" height="55" viewBox="0 0 28 55" fill="none"><line x1="14" y1="0" x2="14" y2="7" stroke="#C9941A" strokeWidth="2"/><ellipse cx="14" cy="12" rx="9" ry="5" fill="#B8860B"/><rect x="5" y="12" width="18" height="25" rx="3" fill="#CC1100"/><line x1="5" y1="19" x2="23" y2="19" stroke="#C9941A" strokeWidth="0.8" opacity="0.6"/><line x1="5" y1="26" x2="23" y2="26" stroke="#C9941A" strokeWidth="0.8" opacity="0.6"/><line x1="5" y1="33" x2="23" y2="33" stroke="#C9941A" strokeWidth="0.8" opacity="0.6"/><ellipse cx="14" cy="37" rx="9" ry="5" fill="#B8860B"/><line x1="10" y1="42" x2="8" y2="55" stroke="#C9941A" strokeWidth="1.5"/><line x1="14" y1="42" x2="14" y2="55" stroke="#C9941A" strokeWidth="1.5"/><line x1="18" y1="42" x2="20" y2="55" stroke="#C9941A" strokeWidth="1.5"/><circle cx="14" cy="24" r="5" fill="#FF8C00" opacity="0.4"/></svg>
       </div>
@@ -954,37 +954,37 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
           <ScrollText size={60} className="text-amber-900 float-up"/>
           <div className="h-px flex-1 bg-gradient-to-l from-transparent to-amber-900/40"/>
         </div>
-        <h2 className="text-3xl font-cinzel font-black uppercase tracking-widest text-amber-950 mb-1">Sử Việt Anh Hùng</h2>
-        <p className="text-[11px] text-amber-900/55 font-bold uppercase tracking-[0.3em] font-cinzel mb-7">⚔ Toán Học Kỳ Thư ⚔</p>
+        <h2 className="text-3xl font-cinzel font-black uppercase tracking-widest text-amber-950 mb-1">Sá»­ Viá»‡t Anh HÃ¹ng</h2>
+        <p className="text-[11px] text-amber-900/55 font-bold uppercase tracking-[0.3em] font-cinzel mb-7">âš” ToÃ¡n Há»c Ká»³ ThÆ° âš”</p>
 
-        {/* Tab Đăng Nhập / Đăng Ký */}
+        {/* Tab ÄÄƒng Nháº­p / ÄÄƒng KÃ½ */}
         <div className="flex rounded-2xl overflow-hidden border-2 border-amber-900/20 mb-6">
           <button id="auth-login-tab" onClick={() => { setTab('login'); setError(''); }}
             className={`flex-1 py-3 font-black uppercase text-sm transition-all ${
               tab === 'login' ? 'bg-amber-950 text-amber-200' : 'bg-white/40 text-amber-900 hover:bg-white/60'
             }`}>
-            🔑 Đăng Nhập
+            ðŸ”‘ ÄÄƒng Nháº­p
           </button>
           <button id="auth-register-tab" onClick={() => { setTab('register'); setError(''); }}
             className={`flex-1 py-3 font-black uppercase text-sm transition-all ${
               tab === 'register' ? 'bg-amber-950 text-amber-200' : 'bg-white/40 text-amber-900 hover:bg-white/60'
             }`}>
-            📜 Đăng Ký
+            ðŸ“œ ÄÄƒng KÃ½
           </button>
         </div>
 
         {tab === 'login' ? (
           <div className="space-y-4 text-left">
             <div>
-              <label className="text-[10px] font-black uppercase text-amber-900/60 mb-1.5 block tracking-widest">Tên tài khoản</label>
-              <input id="auth-username" type="text" placeholder="Nhập tên tài khoản..."
+              <label className="text-[10px] font-black uppercase text-amber-900/60 mb-1.5 block tracking-widest">TÃªn tÃ i khoáº£n</label>
+              <input id="auth-username" type="text" placeholder="Nháº­p tÃªn tÃ i khoáº£n..."
                 className="w-full bg-white/70 border-2 border-amber-900/30 p-3.5 rounded-xl font-bold outline-none focus:border-amber-900 transition-colors"
                 value={username} onChange={e => setUsername(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleLogin()} />
             </div>
             <div>
-              <label className="text-[10px] font-black uppercase text-amber-900/60 mb-1.5 block tracking-widest">Mật khẩu</label>
-              <input id="auth-password" type="password" placeholder="Nhập mật khẩu..."
+              <label className="text-[10px] font-black uppercase text-amber-900/60 mb-1.5 block tracking-widest">Máº­t kháº©u</label>
+              <input id="auth-password" type="password" placeholder="Nháº­p máº­t kháº©u..."
                 className="w-full bg-white/70 border-2 border-amber-900/30 p-3.5 rounded-xl font-bold outline-none focus:border-amber-900 transition-colors"
                 value={password} onChange={e => setPassword(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleLogin()} />
@@ -992,25 +992,25 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
             {error && <div className="bg-red-50 border border-red-200 text-red-700 font-bold text-sm py-2.5 px-4 rounded-xl">{error}</div>}
             <button id="auth-login-btn" onClick={handleLogin}
               className="gold-shimmer-btn px-10 py-4 rounded-2xl font-black uppercase w-full text-base shadow-xl transition-all active:scale-95 border border-amber-600/30 mt-2">
-              ⚔ Vào Đại Nghiệp
+              âš” VÃ o Äáº¡i Nghiá»‡p
             </button>
             <button onClick={handleGuestLogin}
               className="w-full bg-stone-800 hover:bg-stone-700 text-stone-300 font-bold py-3 rounded-2xl border border-stone-600 transition-colors uppercase text-sm mt-2">
-              Chơi Ngay Không Cần Đăng Ký
+              ChÆ¡i Ngay KhÃ´ng Cáº§n ÄÄƒng KÃ½
             </button>
           </div>
         ) : (
           <div className="space-y-3.5 text-left">
             <div>
-              <label className="text-[10px] font-black uppercase text-amber-900/70 mb-1 block tracking-wider">Họ & Tên học sinh (*)</label>
-              <input id="reg-fullname" type="text" placeholder="VD: Nguyễn Văn An..."
+              <label className="text-[10px] font-black uppercase text-amber-900/70 mb-1 block tracking-wider">Há» & TÃªn há»c sinh (*)</label>
+              <input id="reg-fullname" type="text" placeholder="VD: Nguyá»…n VÄƒn An..."
                 className="w-full bg-white/80 border-2 border-amber-900/30 p-2.5 rounded-xl font-bold text-sm outline-none focus:border-amber-900 transition-colors"
                 value={fullName} onChange={e => setFullName(e.target.value)} />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-[10px] font-black uppercase text-amber-900/70 mb-1 block tracking-wider">Khối Thí Luyện (*)</label>
+                <label className="text-[10px] font-black uppercase text-amber-900/70 mb-1 block tracking-wider">Khá»‘i ThÃ­ Luyá»‡n (*)</label>
                 <select 
                   value={grade} 
                   onChange={e => {
@@ -1022,14 +1022,14 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
                   }}
                   className="w-full bg-white/80 border-2 border-amber-900/30 p-2.5 rounded-xl font-bold text-sm outline-none focus:border-amber-900 transition-colors"
                 >
-                  <option value={6}>Khối 6</option>
-                  <option value={7}>Khối 7</option>
-                  <option value={8}>Khối 8</option>
-                  <option value={9}>Khối 9</option>
+                  <option value={6}>Khá»‘i 6</option>
+                  <option value={7}>Khá»‘i 7</option>
+                  <option value={8}>Khá»‘i 8</option>
+                  <option value={9}>Khá»‘i 9</option>
                 </select>
               </div>
               <div>
-                <label className="text-[10px] font-black uppercase text-amber-900/70 mb-1 block tracking-wider">Lớp (*)</label>
+                <label className="text-[10px] font-black uppercase text-amber-900/70 mb-1 block tracking-wider">Lá»›p (*)</label>
                 <input id="reg-classname" type="text" placeholder="VD: 6A1, 9B..."
                   className="w-full bg-white/80 border-2 border-amber-900/30 p-2.5 rounded-xl font-bold text-sm outline-none focus:border-amber-900 transition-colors uppercase"
                   value={className} onChange={e => setClassName(e.target.value.toUpperCase())} />
@@ -1038,36 +1038,36 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-[10px] font-black uppercase text-amber-900/70 mb-1 block tracking-wider">Tên Chúa công (In-game) (*)</label>
-                <input id="reg-playername" type="text" placeholder="VD: Hưng Đạo..."
+                <label className="text-[10px] font-black uppercase text-amber-900/70 mb-1 block tracking-wider">TÃªn ChÃºa cÃ´ng (In-game) (*)</label>
+                <input id="reg-playername" type="text" placeholder="VD: HÆ°ng Äáº¡o..."
                   className="w-full bg-white/80 border-2 border-amber-900/30 p-2.5 rounded-xl font-bold text-sm outline-none focus:border-amber-900 transition-colors"
                   value={playerName} onChange={e => setPlayerName(e.target.value)} />
               </div>
               <div>
-                <label className="text-[10px] font-black uppercase text-amber-900/70 mb-1 block tracking-wider">Tên Quân Đoàn (*)</label>
-                <input id="reg-legionname" type="text" placeholder="VD: Đông A..."
+                <label className="text-[10px] font-black uppercase text-amber-900/70 mb-1 block tracking-wider">TÃªn QuÃ¢n ÄoÃ n (*)</label>
+                <input id="reg-legionname" type="text" placeholder="VD: ÄÃ´ng A..."
                   className="w-full bg-white/80 border-2 border-amber-900/30 p-2.5 rounded-xl font-bold text-sm outline-none focus:border-amber-900 transition-colors"
                   value={legionName} onChange={e => setLegionName(e.target.value)} />
               </div>
             </div>
 
             <div>
-              <label className="text-[10px] font-black uppercase text-amber-900/70 mb-1 block tracking-wider">Tên tài khoản (đăng nhập) (*)</label>
-              <input id="reg-username" type="text" placeholder="Ít nhất 3 ký tự (viết liền không dấu)..."
+              <label className="text-[10px] font-black uppercase text-amber-900/70 mb-1 block tracking-wider">TÃªn tÃ i khoáº£n (Ä‘Äƒng nháº­p) (*)</label>
+              <input id="reg-username" type="text" placeholder="Ãt nháº¥t 3 kÃ½ tá»± (viáº¿t liá»n khÃ´ng dáº¥u)..."
                 className="w-full bg-white/80 border-2 border-amber-900/30 p-2.5 rounded-xl font-bold text-sm outline-none focus:border-amber-900 transition-colors"
                 value={username} onChange={e => setUsername(e.target.value)} />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-[10px] font-black uppercase text-amber-900/70 mb-1 block tracking-wider">Mật khẩu (*)</label>
-                <input id="reg-password" type="password" placeholder="Ít nhất 4 ký tự..."
+                <label className="text-[10px] font-black uppercase text-amber-900/70 mb-1 block tracking-wider">Máº­t kháº©u (*)</label>
+                <input id="reg-password" type="password" placeholder="Ãt nháº¥t 4 kÃ½ tá»±..."
                   className="w-full bg-white/80 border-2 border-amber-900/30 p-2.5 rounded-xl font-bold text-sm outline-none focus:border-amber-900 transition-colors"
                   value={password} onChange={e => setPassword(e.target.value)} />
               </div>
               <div>
-                <label className="text-[10px] font-black uppercase text-amber-900/70 mb-1 block tracking-wider">Xác nhận mật khẩu (*)</label>
-                <input id="reg-confirm" type="password" placeholder="Nhập lại mật khẩu..."
+                <label className="text-[10px] font-black uppercase text-amber-900/70 mb-1 block tracking-wider">XÃ¡c nháº­n máº­t kháº©u (*)</label>
+                <input id="reg-confirm" type="password" placeholder="Nháº­p láº¡i máº­t kháº©u..."
                   className="w-full bg-white/80 border-2 border-amber-900/30 p-2.5 rounded-xl font-bold text-sm outline-none focus:border-amber-900 transition-colors"
                   value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && handleRegister()} />
@@ -1076,11 +1076,11 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
             {error && <div className="bg-red-50 border border-red-200 text-red-700 font-bold text-sm py-2 px-3 rounded-xl">{error}</div>}
             <button id="reg-register-btn" onClick={handleRegister}
               className="gold-shimmer-btn px-10 py-3.5 rounded-2xl font-black uppercase w-full text-base shadow-xl transition-all active:scale-95 border border-amber-600/30 mt-1">
-              📜 Lập Đế Nghiệp Mới
+              ðŸ“œ Láº­p Äáº¿ Nghiá»‡p Má»›i
             </button>
           </div>
         )}
-        <p className="text-[10px] text-amber-900/35 italic font-cinzel tracking-widest mt-7">「 Nam quốc sơn hà Nam đế cư 」</p>
+        <p className="text-[10px] text-amber-900/35 italic font-cinzel tracking-widest mt-7">ã€Œ Nam quá»‘c sÆ¡n hÃ  Nam Ä‘áº¿ cÆ° ã€</p>
       </div>
     </div>
   );
@@ -1118,7 +1118,7 @@ const App: React.FC = () => {
   const viewportRef = useRef<HTMLDivElement>(null);
   const [hubScaleX, setHubScaleX] = useState(1);
   const [hubScaleY, setHubScaleY] = useState(1);
-  // isLandscape = true khi màn hình ngang — bao gồm cả điện thoại xoay ngang
+  // isLandscape = true khi mÃ n hÃ¬nh ngang â€” bao gá»“m cáº£ Ä‘iá»‡n thoáº¡i xoay ngang
   const [isLandscape, setIsLandscape] = useState(() => window.innerWidth > window.innerHeight);
 
   useEffect(() => {
@@ -1136,7 +1136,7 @@ const App: React.FC = () => {
   useEffect(() => {
     if (view !== 'chapter-hub') return;
     const updateLayout = () => {
-      // Dùng viewport container nếu có, fallback sang window dimensions
+      // DÃ¹ng viewport container náº¿u cÃ³, fallback sang window dimensions
       const w = viewportRef.current?.clientWidth ?? window.innerWidth;
       const h = viewportRef.current?.clientHeight ?? Math.max(window.innerHeight - 56, 100);
       setHubScaleX(w / 1920);
@@ -1156,13 +1156,13 @@ const App: React.FC = () => {
 
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isDailyQuestsOpen, setIsDailyQuestsOpen] = useState(false);
-  // Toast thông báo khi click chương bị khóa
+  // Toast thÃ´ng bÃ¡o khi click chÆ°Æ¡ng bá»‹ khÃ³a
   const [lockedChapterToast, setLockedChapterToast] = useState<{ chapterNum: number; reason?: string } | null>(null);
-  // Lưu lessonId đang học trong Thí Luyện Đường
+  // LÆ°u lessonId Ä‘ang há»c trong ThÃ­ Luyá»‡n ÄÆ°á»ng
   const [activeLessonId, setActiveLessonId] = useState<string | null>(null);
-  // Tổng số câu gốc của bài đang chơi (dùng để check hoàn thành)
+  // Tá»•ng sá»‘ cÃ¢u gá»‘c cá»§a bÃ i Ä‘ang chÆ¡i (dÃ¹ng Ä‘á»ƒ check hoÃ n thÃ nh)
   const [tuLuyenTotalQ, setTuLuyenTotalQ] = useState<number>(0);
-  // Đang ở chế độ ôn tập (tất cả câu đã làm) hay chơi thật
+  // Äang á»Ÿ cháº¿ Ä‘á»™ Ã´n táº­p (táº¥t cáº£ cÃ¢u Ä‘Ã£ lÃ m) hay chÆ¡i tháº­t
   const [tuLuyenIsReview, setTuLuyenIsReview] = useState<boolean>(false);
   
   const [player, setPlayer] = useState<PlayerState>(() => {
@@ -1173,7 +1173,7 @@ const App: React.FC = () => {
         const pd = JSON.parse(JSON.stringify(accts[sess].playerData));
         if (!pd.permLineup) pd.permLineup = [null, null, null, null, null, null];
         if (pd.legionTickets === undefined) pd.legionTickets = 0;
-        // Khởi tạo trường tiến trình mở khóa nếu chưa có (tài khoản cũ)
+        // Khá»Ÿi táº¡o trÆ°á»ng tiáº¿n trÃ¬nh má»Ÿ khÃ³a náº¿u chÆ°a cÃ³ (tÃ i khoáº£n cÅ©)
         if (!pd.unlockedChapters) pd.unlockedChapters = [1];
         if (!pd.tuLuyenCorrectIds) pd.tuLuyenCorrectIds = {};
         if (!pd.tuLuyenUnlockedLessons) pd.tuLuyenUnlockedLessons = ['B1'];
@@ -1229,9 +1229,9 @@ const App: React.FC = () => {
   const [syncStatus, setSyncStatus] = useState<'idle' | 'saving' | 'saved' | 'offline'>('idle');
   const syncTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Hàm lưu tiến độ: localStorage (backup offline) + Firebase Cloud (chính)
+  // HÃ m lÆ°u tiáº¿n Ä‘á»™: localStorage (backup offline) + Firebase Cloud (chÃ­nh)
   const persistPlayerData = React.useCallback(async (data: PlayerState, user: string, isForced = false) => {
-    // 1. Luôn lưu vào localStorage làm backup offline
+    // 1. LuÃ´n lÆ°u vÃ o localStorage lÃ m backup offline
     try {
       const accts = getAccounts();
       if (accts[user]) {
@@ -1240,10 +1240,10 @@ const App: React.FC = () => {
         saveAccounts(accts);
       }
     } catch (e) {
-      console.warn("Lỗi lưu localStorage:", e);
+      console.warn("Lá»—i lÆ°u localStorage:", e);
     }
 
-    // 2. Lưu lên Firebase Cloud
+    // 2. LÆ°u lÃªn Firebase Cloud
     if (!isFirebaseReady()) {
       setSyncStatus('offline');
       return;
@@ -1253,9 +1253,9 @@ const App: React.FC = () => {
       const ok = await savePlayerProgress(user, data);
       if (ok) {
         setSyncStatus('saved');
-        // Fire-and-forget analytics (không block)
+        // Fire-and-forget analytics (khÃ´ng block)
         updateStudentAnalytics(user, data).catch(() => {});
-        // Reset về idle sau 3 giây
+        // Reset vá» idle sau 3 giÃ¢y
         setTimeout(() => setSyncStatus('idle'), 3000);
       } else {
         setSyncStatus('offline');
@@ -1265,7 +1265,7 @@ const App: React.FC = () => {
     }
   }, []);
 
-  // Auto-save với debounce 3 giây khi player state thay đổi
+  // Auto-save vá»›i debounce 3 giÃ¢y khi player state thay Ä‘á»•i
   useEffect(() => {
     if (!currentUser) return;
     setSyncStatus('saving');
@@ -1278,7 +1278,7 @@ const App: React.FC = () => {
     };
   }, [player, currentUser, persistPlayerData]);
 
-  // Force-save ngay khi tab bị ẩn (người dùng chuyển tab hoặc đóng trình duyệt)
+  // Force-save ngay khi tab bá»‹ áº©n (ngÆ°á»i dÃ¹ng chuyá»ƒn tab hoáº·c Ä‘Ã³ng trÃ¬nh duyá»‡t)
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.hidden && currentUser) {
@@ -1330,12 +1330,12 @@ const App: React.FC = () => {
     });
   };
 
-  /** Đăng xuất: lưu tiến độ ngay lập tức → xóa session → về màn hình auth */
+  /** ÄÄƒng xuáº¥t: lÆ°u tiáº¿n Ä‘á»™ ngay láº­p tá»©c â†’ xÃ³a session â†’ vá» mÃ n hÃ¬nh auth */
   const handleLogout = async () => {
     if (currentUser) {
-      // Hủy debounce đang chờ
+      // Há»§y debounce Ä‘ang chá»
       if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
-      // Force-save ngay (không debounce)
+      // Force-save ngay (khÃ´ng debounce)
       await persistPlayerData(player, currentUser, true);
     }
     clearSession();
@@ -1348,11 +1348,11 @@ const App: React.FC = () => {
     const correctKey = `g${selectedGrade}-c${selectedMathChapterIdx}-l${selectedMathLessonIdx}`;
     const correctIds = player.mathCorrectQuestions?.[correctKey] || [];
     
-    // Lọc các câu CHƯA trả lời đúng
+    // Lá»c cÃ¡c cÃ¢u CHÆ¯A tráº£ lá»i Ä‘Ãºng
     const uncompleted = allQuestions.filter((q: any) => !correctIds.includes(q.id));
     
-    // Nếu còn câu chưa hoàn thành thì chỉ lấy các câu chưa làm
-    // Nếu đã hoàn thành toàn bộ (ôn tập) thì lấy từ allQuestions
+    // Náº¿u cÃ²n cÃ¢u chÆ°a hoÃ n thÃ nh thÃ¬ chá»‰ láº¥y cÃ¡c cÃ¢u chÆ°a lÃ m
+    // Náº¿u Ä‘Ã£ hoÃ n thÃ nh toÃ n bá»™ (Ã´n táº­p) thÃ¬ láº¥y tá»« allQuestions
     const pool = uncompleted.length > 0 
       ? uncompleted 
       : (allQuestions.length > 0 ? allQuestions : getMathQuestions(selectedGrade, selectedMathChapterIdx, selectedMathLessonIdx, count, []));
@@ -1374,7 +1374,7 @@ const App: React.FC = () => {
     setView('tu-luyen-menu');
   };
 
-  // Thứ tự mở bài trong Thí Luyện Đường
+  // Thá»© tá»± má»Ÿ bÃ i trong ThÃ­ Luyá»‡n ÄÆ°á»ng
   const TU_LUYEN_LESSON_ORDER = [
     'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7',
     'B8', 'B9_10', 'B11', 'B12', 'B13',
@@ -1384,10 +1384,10 @@ const App: React.FC = () => {
   const startLessonTuLuyen = (lessonId: string, allQuestions: any[]) => {
     setActiveLessonId(lessonId);
     setTuLuyenTotalQ(allQuestions.length);
-    // Lọc chỉ các câu chưa trả lời đúng trong bài này
+    // Lá»c chá»‰ cÃ¡c cÃ¢u chÆ°a tráº£ lá»i Ä‘Ãºng trong bÃ i nÃ y
     const correctIds = player.tuLuyenCorrectIds?.[lessonId] || [];
     const remaining = allQuestions.filter((q: any) => !correctIds.includes(q.id));
-    // Nếu tất cả câu đã đúng: cho xem lại toàn bộ (review mode)
+    // Náº¿u táº¥t cáº£ cÃ¢u Ä‘Ã£ Ä‘Ãºng: cho xem láº¡i toÃ n bá»™ (review mode)
     const isReview = remaining.length === 0;
     setTuLuyenIsReview(isReview);
     const questionsToPlay = isReview ? allQuestions : remaining;
@@ -1422,7 +1422,7 @@ const App: React.FC = () => {
     setPlayer(prev => {
        const newGold = prev.gold + gold;
        
-       // Cập nhật danh sách câu đã đúng trong bài này
+       // Cáº­p nháº­t danh sÃ¡ch cÃ¢u Ä‘Ã£ Ä‘Ãºng trong bÃ i nÃ y
        let newTuLuyenCorrectIds = { ...(prev.tuLuyenCorrectIds || {}) };
        let newUnlockedLessons = [...(prev.tuLuyenUnlockedLessons || ['B1'])];
        let lessonCompleted = false;
@@ -1430,7 +1430,7 @@ const App: React.FC = () => {
 
        if (activeLessonId) {
          const existingCorrect = new Set(newTuLuyenCorrectIds[activeLessonId] || []);
-         // Chỉ thêm câu đúng trong phiên này
+         // Chá»‰ thÃªm cÃ¢u Ä‘Ãºng trong phiÃªn nÃ y
          currentQuestions.forEach((q: any, idx: number) => {
            const ua = userAnswers[idx];
            const isCorrect = q.type === 'short_answer'
@@ -1440,9 +1440,9 @@ const App: React.FC = () => {
          });
          newTuLuyenCorrectIds[activeLessonId] = Array.from(existingCorrect);
 
-         // Chỉ check mở bài khi KHÔNG phải review mode
-         // Và phiên này đạt 100% (tất cả câu còn lại đều đúng)
-         // Và số câu đúng tích lũy >= tổng số câu bài gốc
+         // Chá»‰ check má»Ÿ bÃ i khi KHÃ”NG pháº£i review mode
+         // VÃ  phiÃªn nÃ y Ä‘áº¡t 100% (táº¥t cáº£ cÃ¢u cÃ²n láº¡i Ä‘á»u Ä‘Ãºng)
+         // VÃ  sá»‘ cÃ¢u Ä‘Ãºng tÃ­ch lÅ©y >= tá»•ng sá»‘ cÃ¢u bÃ i gá»‘c
          const accumulatedCorrect = newTuLuyenCorrectIds[activeLessonId].length;
          if (!tuLuyenIsReview && percent === 100 && accumulatedCorrect >= tuLuyenTotalQ) {
            const lessonIdx = TU_LUYEN_LESSON_ORDER.indexOf(activeLessonId);
@@ -1456,10 +1456,10 @@ const App: React.FC = () => {
          }
        }
 
-       // Thông báo mở bài mới sau khi state set
+       // ThÃ´ng bÃ¡o má»Ÿ bÃ i má»›i sau khi state set
        if (lessonCompleted && nextLessonId) {
          const nextIdx = TU_LUYEN_LESSON_ORDER.indexOf(nextLessonId);
-         setTimeout(() => alert(`🎉 Xuất sắc! Bạn đã hoàn thành ${activeLessonId}!\n✨ Bài ${nextIdx + 1} đã được mở khóa!`), 500);
+         setTimeout(() => alert(`ðŸŽ‰ Xuáº¥t sáº¯c! Báº¡n Ä‘Ã£ hoÃ n thÃ nh ${activeLessonId}!\nâœ¨ BÃ i ${nextIdx + 1} Ä‘Ã£ Ä‘Æ°á»£c má»Ÿ khÃ³a!`), 500);
        }
 
        return {
@@ -1490,7 +1490,7 @@ const App: React.FC = () => {
     
     const record: any = {
        id: Date.now().toString(),
-       username: player.playerName || 'Học sinh',
+       username: player.playerName || 'Há»c sinh',
        timestamp: Date.now(),
        grade: selectedGrade,
        packageSize: currentQuestions.length,
@@ -1511,7 +1511,7 @@ const App: React.FC = () => {
 
     saveTrialRecord(record);
 
-    // Thu thập ID các câu trả lời đúng trong phiên này
+    // Thu tháº­p ID cÃ¡c cÃ¢u tráº£ lá»i Ä‘Ãºng trong phiÃªn nÃ y
     const newlyCorrectIds: string[] = [];
     currentQuestions.forEach((q, i) => {
       const isCorrect = q.type === 'short_answer'
@@ -1553,7 +1553,7 @@ const App: React.FC = () => {
           justUnlockedNextLesson = true;
           const chapter = MATH_DATA[selectedGrade]?.[selectedMathChapterIdx];
           const nextLesson = chapter?.lessons?.[selectedMathLessonIdx + 1];
-          nextLessonName = nextLesson?.title || `Bài ${selectedMathLessonIdx + 2}`;
+          nextLessonName = nextLesson?.title || `BÃ i ${selectedMathLessonIdx + 2}`;
           normalTicketsEarned += 2;
           premiumTicketsEarned += 1;
        }
@@ -1573,7 +1573,7 @@ const App: React.FC = () => {
 
     if (justUnlockedNextLesson) {
        setTimeout(() => {
-          alert(`🎉 Chúc mừng Chúa công đã xuất sắc vượt qua tất cả câu hỏi!\n✨ Mở khóa: ${nextLessonName}\n🎁 Nhận thưởng vượt ải thành công!`);
+          alert(`ðŸŽ‰ ChÃºc má»«ng ChÃºa cÃ´ng Ä‘Ã£ xuáº¥t sáº¯c vÆ°á»£t qua táº¥t cáº£ cÃ¢u há»i!\nâœ¨ Má»Ÿ khÃ³a: ${nextLessonName}\nðŸŽ Nháº­n thÆ°á»Ÿng vÆ°á»£t áº£i thÃ nh cÃ´ng!`);
        }, 600);
     }
 
@@ -1585,13 +1585,13 @@ const App: React.FC = () => {
     if (type === 'legion') ticketKey = 'legionTickets';
     else ticketKey = type === 'normal' ? 'normalTickets' : (type === 'premium' ? 'premiumTickets' : 'artifactTickets');
     
-    if (((player[ticketKey as keyof PlayerState] as number) || 0) < count) return alert(`Lệnh bài đã hết!`);
+    if (((player[ticketKey as keyof PlayerState] as number) || 0) < count) return alert(`Lá»‡nh bÃ i Ä‘Ã£ háº¿t!`);
     
     const newResults: any[] = [];
     if (type === 'artifact') {
        for (let i = 0; i < count; i++) {
           const a = ARTIFACTS[Math.floor(Math.random() * ARTIFACTS.length)];
-          newResults.push({ ...a, rarity: 'SSR', star: 5, overall: 'Thần Khí', isArtifact: true, id: "artifact_" + Date.now() + "_" + i, baseId: a.id });
+          newResults.push({ ...a, rarity: 'SSR', star: 5, overall: 'Tháº§n KhÃ­', isArtifact: true, id: "artifact_" + Date.now() + "_" + i, baseId: a.id });
        }
        setPlayer(prev => ({ ...prev, [ticketKey]: (prev[ticketKey as keyof PlayerState] as number||0) - count, artifacts: [...(prev.artifacts||[]), ...newResults.map(r => r.baseId)] }));
     } else {
@@ -1619,7 +1619,7 @@ const App: React.FC = () => {
            }
         };
 
-        // Hàm fallback: nếu không có tướng nào ở rarity đó, xuống rarity thấp hơn
+        // HÃ m fallback: náº¿u khÃ´ng cÃ³ tÆ°á»›ng nÃ o á»Ÿ rarity Ä‘Ã³, xuá»‘ng rarity tháº¥p hÆ¡n
         const getHeroFromPool = (pool: any[], rarity: string) => {
            const rarityOrder = ['UR', 'SSR', 'SR', 'R', 'C'];
            let ri = rarityOrder.indexOf(rarity);
@@ -1704,7 +1704,7 @@ const App: React.FC = () => {
 
   const initCombat = () => {
     setCombatMode('campaign');
-    if (player.lineup.filter(Boolean).length === 0) return alert("Danh Trại trống không! Chúa công cần vào mục Kinh Luân để kiếm lệnh bài chiêu mộ quân đội.");
+    if (player.lineup.filter(Boolean).length === 0) return alert("Danh Tráº¡i trá»‘ng khÃ´ng! ChÃºa cÃ´ng cáº§n vÃ o má»¥c Kinh LuÃ¢n Ä‘á»ƒ kiáº¿m lá»‡nh bÃ i chiÃªu má»™ quÃ¢n Ä‘á»™i.");
 
     let initialAllies: any[] = player.lineup.map((id, index) => {
         if (!id) return null;
@@ -1735,7 +1735,7 @@ const App: React.FC = () => {
     let initialEnemies: any[] = [];
 
     if (activeChapter === 9) {
-      // Logic đặc biệt cho Chương 9: Nội chiến Nam Bắc Triều
+      // Logic Ä‘áº·c biá»‡t cho ChÆ°Æ¡ng 9: Ná»™i chiáº¿n Nam Báº¯c Triá»u
       const factions = ['mac', 'le_trinh', 'nguyen'];
       const playerFaction = player.ch9Faction || 'mac';
       const availableEnemyFactions = factions.filter(f => f !== playerFaction);
@@ -1756,9 +1756,9 @@ const App: React.FC = () => {
       }
 
       const factionNames: Record<string, string> = {
-        'mac': 'Bắc Triều (Nhà Mạc)',
-        'le_trinh': 'Nam Triều (Vua Lê - Chúa Trịnh)',
-        'nguyen': 'Đàng Trong (Chúa Nguyễn)'
+        'mac': 'Báº¯c Triá»u (NhÃ  Máº¡c)',
+        'le_trinh': 'Nam Triá»u (Vua LÃª - ChÃºa Trá»‹nh)',
+        'nguyen': 'ÄÃ ng Trong (ChÃºa Nguyá»…n)'
       };
 
       initialEnemies = selectedE.map((e, idx) => {
@@ -1769,7 +1769,7 @@ const App: React.FC = () => {
          return { ...e, faction: 'enemy', atk: buffedAtk, def: buffedDef, spd: buffedSpd, maxHp: buffedHp, hp: buffedHp, id: e.id + '_' + Math.random(), gridPosition: idx };
       });
       
-      alert(`CHƯƠNG 9 - NỘI CHIẾN TAM PHÂN: \nPhe bạn: ${factionNames[playerFaction] || playerFaction.toUpperCase()}\nĐối đầu với phe địch: ${factionNames[enemyFaction] || enemyFaction.toUpperCase()}`);
+      alert(`CHÆ¯Æ NG 9 - Ná»˜I CHIáº¾N TAM PHÃ‚N: \nPhe báº¡n: ${factionNames[playerFaction] || playerFaction.toUpperCase()}\nÄá»‘i Ä‘áº§u vá»›i phe Ä‘á»‹ch: ${factionNames[enemyFaction] || enemyFaction.toUpperCase()}`);
 
     } else {
       const enemyPool = ENEMY_HEROES.filter(h => h.chapter === activeChapter);
@@ -1796,7 +1796,7 @@ const App: React.FC = () => {
     }
 
     const allUnits = [...initialAllies, ...initialEnemies];
-    const newLogs = ["Hai bên giáp trận!"];
+    const newLogs = ["Hai bÃªn giÃ¡p tráº­n!"];
     
     SYNERGIES.forEach(syn => {
       const hasAll = syn.heroIds.every(reqId => allUnits.some(u => u.id.startsWith(reqId + '_')));
@@ -1812,7 +1812,7 @@ const App: React.FC = () => {
   const advanceChapter = () => {
     const nextChapter = activeChapter + 1;
     
-    // Kiểm tra điều kiện Học Toán cho chương tiếp theo
+    // Kiá»ƒm tra Ä‘iá»u kiá»‡n Há»c ToÃ¡n cho chÆ°Æ¡ng tiáº¿p theo
     let isMathDone = true;
     const unlockedLessons = player.tuLuyenUnlockedLessons || ['B1'];
     if (nextChapter === 2) isMathDone = unlockedLessons.includes('B8');
@@ -1822,7 +1822,7 @@ const App: React.FC = () => {
     setPlayer(prev => {
       const newState = { ...prev };
       newState.legionTickets = (newState.legionTickets || 0) + 1;
-      // Lưu lại tiến trình chinh phạt để biết đã hoàn thành combat chương này
+      // LÆ°u láº¡i tiáº¿n trÃ¬nh chinh pháº¡t Ä‘á»ƒ biáº¿t Ä‘Ã£ hoÃ n thÃ nh combat chÆ°Æ¡ng nÃ y
       const already = newState.unlockedChapters || [1];
       if (!already.includes(nextChapter) && nextChapter <= 10) {
         newState.unlockedChapters = [...already, nextChapter];
@@ -1834,7 +1834,7 @@ const App: React.FC = () => {
     });
 
     if (isMathDone) {
-      setTimeout(() => alert(`Chúc mừng Bệ hạ đã bình định thành công! Nhận được: 1 Vé Triệu Hồi Quân Đoàn (Vĩnh viễn)!\nChương ${nextChapter} đã được mở khóa trên Bản Đồ!`), 100);
+      setTimeout(() => alert(`ChÃºc má»«ng Bá»‡ háº¡ Ä‘Ã£ bÃ¬nh Ä‘á»‹nh thÃ nh cÃ´ng! Nháº­n Ä‘Æ°á»£c: 1 VÃ© Triá»‡u Há»“i QuÃ¢n ÄoÃ n (VÄ©nh viá»…n)!\nChÆ°Æ¡ng ${nextChapter} Ä‘Ã£ Ä‘Æ°á»£c má»Ÿ khÃ³a trÃªn Báº£n Äá»“!`), 100);
       if (nextChapter <= 10) {
         setActiveChapter(nextChapter);
         resetChapterAssets(nextChapter);
@@ -1843,7 +1843,7 @@ const App: React.FC = () => {
         setView('chapter-select');
       }
     } else {
-      setTimeout(() => alert(`Chúc mừng Bệ hạ đã bình định thành công! Nhận được: 1 Vé Triệu Hồi Quân Đoàn (Vĩnh viễn)!\n\n⚠️ Tướng địch đã bị tiêu diệt nhưng Bản Đồ Chương ${nextChapter} vẫn chưa mở.\nChúa công vui lòng hoàn thành "Toán Chương ${nextChapter - 1}" trong Thí Luyện Đường để có thể tiến quân!`), 100);
+      setTimeout(() => alert(`ChÃºc má»«ng Bá»‡ háº¡ Ä‘Ã£ bÃ¬nh Ä‘á»‹nh thÃ nh cÃ´ng! Nháº­n Ä‘Æ°á»£c: 1 VÃ© Triá»‡u Há»“i QuÃ¢n ÄoÃ n (VÄ©nh viá»…n)!\n\nâš ï¸ TÆ°á»›ng Ä‘á»‹ch Ä‘Ã£ bá»‹ tiÃªu diá»‡t nhÆ°ng Báº£n Äá»“ ChÆ°Æ¡ng ${nextChapter} váº«n chÆ°a má»Ÿ.\nChÃºa cÃ´ng vui lÃ²ng hoÃ n thÃ nh "ToÃ¡n ChÆ°Æ¡ng ${nextChapter - 1}" trong ThÃ­ Luyá»‡n ÄÆ°á»ng Ä‘á»ƒ cÃ³ thá»ƒ tiáº¿n quÃ¢n!`), 100);
       setView('chapter-select');
     }
   };
@@ -1932,7 +1932,7 @@ const App: React.FC = () => {
     const enemies = enemyLineup.map((h, i) => processHero(h, i, false)).filter(Boolean);
 
     setCombatUnits({ ally: allies, enemy: enemies });
-    setBattleLogs(["[ĐẤU TRƯỜNG BÁ VƯƠNG] Trận chiến bắt đầu!"]);
+    setBattleLogs(["[Äáº¤U TRÆ¯á»œNG BÃ VÆ¯Æ NG] Tráº­n chiáº¿n báº¯t Ä‘áº§u!"]);
     setCombatResult(null);
     setBattleActive(true);
     setCombatSpeed(1);
@@ -1942,7 +1942,7 @@ const App: React.FC = () => {
   const initTrialCombat = (stageId: number, trialEnemies: Hero[]) => {
     setActiveTrialStage(stageId);
     setCombatMode('hero-trial');
-    if ((player.permLineup || []).filter(Boolean).length === 0) return alert("Không có Tướng vĩnh viễn nào trong Quân đoàn!");
+    if ((player.permLineup || []).filter(Boolean).length === 0) return alert("KhÃ´ng cÃ³ TÆ°á»›ng vÄ©nh viá»…n nÃ o trong QuÃ¢n Ä‘oÃ n!");
     
     setPlayer(prev => {
       const p = prev.dailyQuestProgress || {};
@@ -1992,7 +1992,7 @@ const App: React.FC = () => {
 
     const initialEnemies = enemies;
     const allUnits = [...initialAllies, ...initialEnemies];
-    const newLogs = [`Bắt đầu khiêu chiến Thí Luyện ${stageId}!`];
+    const newLogs = [`Báº¯t Ä‘áº§u khiÃªu chiáº¿n ThÃ­ Luyá»‡n ${stageId}!`];
     
     SYNERGIES.forEach(syn => {
       const hasAll = syn.heroIds.every(reqId => allUnits.some(u => u.id.startsWith(reqId + '_')));
@@ -2020,13 +2020,13 @@ const App: React.FC = () => {
        };
     });
     
-    alert(`Chúc mừng Bệ hạ đã vượt qua Ải ${currentStage}! Thưởng: ${rewardJade} Bảo ngọc.`);
+    alert(`ChÃºc má»«ng Bá»‡ háº¡ Ä‘Ã£ vÆ°á»£t qua áº¢i ${currentStage}! ThÆ°á»Ÿng: ${rewardJade} Báº£o ngá»c.`);
     const maxStage = Math.max(...HERO_TRIAL_STAGES.map((s: any) => s.id));
     if (nextStageId <= maxStage) {
         const nextEnemies = generateTrialEnemies(nextStageId);
         initTrialCombat(nextStageId, nextEnemies);
     } else {
-        alert("Bệ hạ đã xuất sắc vượt qua toàn bộ Ải Thử Thách hiện tại!");
+        alert("Bá»‡ háº¡ Ä‘Ã£ xuáº¥t sáº¯c vÆ°á»£t qua toÃ n bá»™ áº¢i Thá»­ ThÃ¡ch hiá»‡n táº¡i!");
         setView('hero-trial');
     }
   };
@@ -2035,18 +2035,18 @@ const App: React.FC = () => {
     switch (view) {
       case 'auth': return (
         <AuthView onLogin={async (username: string, playerData: PlayerState) => {
-          // Khởi tạo các trường mặc định
+          // Khá»Ÿi táº¡o cÃ¡c trÆ°á»ng máº·c Ä‘á»‹nh
           if (!playerData.permLineup) playerData.permLineup = [null, null, null, null, null, null];
           if (playerData.legionTickets === undefined) playerData.legionTickets = 0;
           if (!playerData.unlockedChapters) playerData.unlockedChapters = [1];
           if (!playerData.tuLuyenCorrectIds) playerData.tuLuyenCorrectIds = {};
           if (!playerData.tuLuyenUnlockedLessons) playerData.tuLuyenUnlockedLessons = ['B1'];
 
-          // Thử tải dữ liệu mới nhất từ Cloud (Cloud luôn thắng nếu có)
+          // Thá»­ táº£i dá»¯ liá»‡u má»›i nháº¥t tá»« Cloud (Cloud luÃ´n tháº¯ng náº¿u cÃ³)
           try {
             const cloudData = await loadPlayerDataFromCloud(username);
             if (cloudData) {
-              // Merge: dùng cloud làm gốc nhưng giữ lại các trường mặc định nếu thiếu
+              // Merge: dÃ¹ng cloud lÃ m gá»‘c nhÆ°ng giá»¯ láº¡i cÃ¡c trÆ°á»ng máº·c Ä‘á»‹nh náº¿u thiáº¿u
               playerData = {
                 ...cloudData,
                 permLineup: cloudData.permLineup || [null, null, null, null, null, null],
@@ -2057,16 +2057,16 @@ const App: React.FC = () => {
               };
             }
           } catch (e) {
-            // Không load được cloud — dùng local data (offline fallback)
-            console.warn("Không tải được dữ liệu Cloud, dùng local backup:", e);
+            // KhÃ´ng load Ä‘Æ°á»£c cloud â€” dÃ¹ng local data (offline fallback)
+            console.warn("KhÃ´ng táº£i Ä‘Æ°á»£c dá»¯ liá»‡u Cloud, dÃ¹ng local backup:", e);
           }
 
-          // Sync hero stats từ game data mới nhất
+          // Sync hero stats tá»« game data má»›i nháº¥t
           if (playerData.inventory) {
             playerData.inventory = syncHeroInventoryStats(playerData.inventory);
           }
           
-          // Bắt buộc set username để ProfileModal có dữ liệu chính xác thay vì fallback về playerName
+          // Báº¯t buá»™c set username Ä‘á»ƒ ProfileModal cÃ³ dá»¯ liá»‡u chÃ­nh xÃ¡c thay vÃ¬ fallback vá» playerName
           playerData.username = username;
 
           if (playerData.grade) setSelectedGrade(playerData.grade);
@@ -2076,32 +2076,32 @@ const App: React.FC = () => {
         }} />
       );
       case 'chapter-select': return (
-        <div className="min-h-screen viet-bg flex flex-col p-8 items-center relative overflow-hidden">
-          {/* Toast thông báo chương bị khóa */}
+        <div className="min-h-full viet-bg flex flex-col p-8 items-center relative overflow-hidden">
+          {/* Toast thÃ´ng bÃ¡o chÆ°Æ¡ng bá»‹ khÃ³a */}
           {lockedChapterToast && (
             <div className="fixed top-8 left-1/2 -translate-x-1/2 z-[200] pointer-events-none">
               <div className="bg-stone-950/95 border border-amber-700/70 rounded-2xl px-6 py-4 shadow-[0_0_40px_rgba(0,0,0,0.8)] backdrop-blur-md flex items-center gap-4 max-w-md animate-bounce-once">
-                <span className="text-3xl">🏯</span>
+                <span className="text-3xl">ðŸ¯</span>
                 <div>
-                  <div className="text-amber-400 font-cinzel font-black text-sm uppercase tracking-widest mb-1">Chương {lockedChapterToast.chapterNum} — Chưa mở khóa</div>
+                  <div className="text-amber-400 font-cinzel font-black text-sm uppercase tracking-widest mb-1">ChÆ°Æ¡ng {lockedChapterToast.chapterNum} â€” ChÆ°a má»Ÿ khÃ³a</div>
                   <div className="text-stone-300 text-sm leading-snug">
                     {lockedChapterToast.reason === 'math' ? (
-                      <>Chúa công vui lòng <b>hoàn thành Toán Chương {lockedChapterToast.chapterNum - 1}</b> trong Thí Luyện Đường để mở khóa!</>
+                      <>ChÃºa cÃ´ng vui lÃ²ng <b>hoÃ n thÃ nh ToÃ¡n ChÆ°Æ¡ng {lockedChapterToast.chapterNum - 1}</b> trong ThÃ­ Luyá»‡n ÄÆ°á»ng Ä‘á»ƒ má»Ÿ khÃ³a!</>
                     ) : (
-                      <>Chúa công vui lòng <b>chinh phục Bản đồ Chương {lockedChapterToast.chapterNum - 1}</b> để mở khóa!</>
+                      <>ChÃºa cÃ´ng vui lÃ²ng <b>chinh phá»¥c Báº£n Ä‘á»“ ChÆ°Æ¡ng {lockedChapterToast.chapterNum - 1}</b> Ä‘á»ƒ má»Ÿ khÃ³a!</>
                     )}
                   </div>
                 </div>
               </div>
             </div>
           )}
-          {/* Nút Đăng Xuất góc phải */}
+          {/* NÃºt ÄÄƒng Xuáº¥t gÃ³c pháº£i */}
           <button 
             onClick={handleLogout}
             className="absolute top-6 right-6 z-50 flex items-center gap-2 bg-stone-900/50 hover:bg-red-900/50 text-stone-300 hover:text-white px-4 py-2 rounded-xl transition-all border border-stone-700 hover:border-red-500/50"
           >
             <LogOut size={16} />
-            <span className="text-xs font-bold uppercase tracking-widest">Đăng xuất</span>
+            <span className="text-xs font-bold uppercase tracking-widest">ÄÄƒng xuáº¥t</span>
           </button>
           
           <button 
@@ -2109,7 +2109,7 @@ const App: React.FC = () => {
             className="absolute top-6 right-72 z-50 flex items-center gap-2 bg-gradient-to-r from-red-950 via-amber-950 to-red-950 hover:from-red-900 hover:to-amber-900 text-yellow-300 hover:text-white px-4 py-2 rounded-xl transition-all border border-yellow-500/60 shadow-[0_0_15px_rgba(245,158,11,0.4)] cursor-pointer"
           >
             <ScrollText size={16} className="text-yellow-400" />
-            <span className="text-xs font-black uppercase tracking-widest">Tự Hào Sử Việt</span>
+            <span className="text-xs font-black uppercase tracking-widest">Tá»± HÃ o Sá»­ Viá»‡t</span>
           </button>
           
           <button 
@@ -2117,24 +2117,24 @@ const App: React.FC = () => {
             className="absolute top-6 right-40 z-50 flex items-center gap-2 bg-stone-900/50 hover:bg-amber-900/50 text-stone-300 hover:text-white px-4 py-2 rounded-xl transition-all border border-stone-700 hover:border-amber-500/50"
           >
             <User size={16} />
-            <span className="text-xs font-bold uppercase tracking-widest">Hồ sơ</span>
+            <span className="text-xs font-bold uppercase tracking-widest">Há»“ sÆ¡</span>
           </button>
           <div className="absolute inset-0 opacity-5 pointer-events-none" style={{backgroundImage:"repeating-linear-gradient(0deg, rgba(201,148,26,0.3) 0px, rgba(201,148,26,0.3) 1px, transparent 1px, transparent 60px), repeating-linear-gradient(90deg, rgba(201,148,26,0.3) 0px, rgba(201,148,26,0.3) 1px, transparent 1px, transparent 60px)"}}/>
           <div className="text-center mb-10 relative z-10">
             <div className="flex items-center justify-center gap-4 mb-3">
               <div className="h-px w-20 bg-gradient-to-r from-transparent to-amber-700/50"/>
-              <span className="text-amber-700/50 text-2xl">⚜</span>
+              <span className="text-amber-700/50 text-2xl">âšœ</span>
               <div className="h-px w-20 bg-gradient-to-l from-transparent to-amber-700/50"/>
             </div>
-            <h2 className="text-4xl font-cinzel text-amber-400 font-black uppercase drop-shadow-[0_0_15px_rgba(201,148,26,0.35)] tracking-widest">Bản Đồ Chinh Phạt</h2>
-            <p className="text-amber-800/50 text-[10px] uppercase tracking-[0.3em] mt-2 font-bold">Đại Việt · Giang Sơn Một Cõi</p>
+            <h2 className="text-4xl font-cinzel text-amber-400 font-black uppercase drop-shadow-[0_0_15px_rgba(201,148,26,0.35)] tracking-widest">Báº£n Äá»“ Chinh Pháº¡t</h2>
+            <p className="text-amber-800/50 text-[10px] uppercase tracking-[0.3em] mt-2 font-bold">Äáº¡i Viá»‡t Â· Giang SÆ¡n Má»™t CÃµi</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-5 max-w-7xl w-full relative z-10">
              {[1,2,3,4,5,6,7,8,9,10].map(c => {
-               // Kiểm tra điều kiện Combat cho chương này
+               // Kiá»ƒm tra Ä‘iá»u kiá»‡n Combat cho chÆ°Æ¡ng nÃ y
                const isCombatDone = (player.unlockedChapters || [1]).includes(c);
                
-               // Kiểm tra điều kiện Học Toán cho chương này
+               // Kiá»ƒm tra Ä‘iá»u kiá»‡n Há»c ToÃ¡n cho chÆ°Æ¡ng nÃ y
                let isMathDone = true;
                const unlockedLessons = player.tuLuyenUnlockedLessons || ['B1'];
                if (c === 2) isMathDone = unlockedLessons.includes('B8');
@@ -2147,7 +2147,7 @@ const App: React.FC = () => {
                  <button key={c}
                    onClick={() => {
                      if (!isUnlocked) {
-                       // Hiển toast thông báo, tự ẩn sau 3 giây
+                       // Hiá»ƒn toast thÃ´ng bÃ¡o, tá»± áº©n sau 3 giÃ¢y
                        setLockedChapterToast({ chapterNum: c, reason: !isCombatDone ? 'combat' : 'math' });
                        clearTimeout((window as any).__chapterToastTimer);
                        (window as any).__chapterToastTimer = setTimeout(() => setLockedChapterToast(null), 3200);
@@ -2197,84 +2197,84 @@ const App: React.FC = () => {
         </div>
       );
       case 'chapter-hub': return (
-        <div className="h-screen w-screen bg-black overflow-hidden relative flex">
+        <div className="h-full w-full bg-black overflow-hidden relative flex">
           
-          {/* MOBILE PORTRAIT VIEW – chỉ hiện khi portrait (dọc), ẩn khi landscape */}
+          {/* MOBILE PORTRAIT VIEW â€“ chá»‰ hiá»‡n khi portrait (dá»c), áº©n khi landscape */}
           <div className={`${isLandscape ? 'hidden' : 'flex'} w-full h-full bg-stone-900 flex-col items-center justify-start overflow-y-auto relative pb-20`}>
-             <div className="w-full relative h-[45vh] shrink-0 bg-[url('/hub-bg.png?v=2')] bg-cover bg-center border-b-4 border-amber-900 shadow-xl overflow-hidden">
+             <div className="w-full relative h-[45%] shrink-0 bg-[url('/hub-bg.png?v=2')] bg-cover bg-center border-b-4 border-amber-900 shadow-xl overflow-hidden">
                  <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-stone-900/40 to-black/70"></div>
                  <div className="absolute top-8 left-4 z-30">
-                    <h2 className="text-amber-400 font-cinzel font-black text-2xl md:text-3xl uppercase tracking-[0.25em] drop-shadow-[0_0_10px_rgba(201,148,26,0.8)]">Chương {activeChapter}</h2>
+                    <h2 className="text-amber-400 font-cinzel font-black text-2xl md:text-3xl uppercase tracking-[0.25em] drop-shadow-[0_0_10px_rgba(201,148,26,0.8)]">ChÆ°Æ¡ng {activeChapter}</h2>
                     <p className="text-amber-100 font-cinzel text-sm md:text-base mt-0.5 italic tracking-widest">{CHAPTER_NAMES[activeChapter]}</p>
                  </div>
                  {/* Floating character or icon to make it lively */}
                  <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 flex flex-col items-center">
-                    <span className="text-7xl md:text-8xl drop-shadow-lg filter sepia opacity-80">🏯</span>
+                    <span className="text-7xl md:text-8xl drop-shadow-lg filter sepia opacity-80">ðŸ¯</span>
                  </div>
              </div>
 
              <div className="w-full max-w-md mx-auto flex-1 px-5 py-8 flex flex-col gap-4 relative z-10 -mt-12">
                 <button onClick={() => setView('chapter-select')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
                    <div className="w-14 h-14 shrink-0 rounded-xl bg-amber-900/50 flex flex-col items-center justify-center border border-amber-500/50">
-                     <span className="text-2xl drop-shadow-md">🏕️</span>
+                     <span className="text-2xl drop-shadow-md">ðŸ•ï¸</span>
                    </div>
                    <div className="text-left flex-1">
-                     <div className="font-cinzel font-black text-amber-400 text-lg uppercase tracking-wider">Doanh Trại</div>
-                     <div className="text-xs text-stone-400 font-bold">Vượt Ải Cốt Truyện</div>
+                     <div className="font-cinzel font-black text-amber-400 text-lg uppercase tracking-wider">Doanh Tráº¡i</div>
+                     <div className="text-xs text-stone-400 font-bold">VÆ°á»£t áº¢i Cá»‘t Truyá»‡n</div>
                    </div>
                 </button>
                 <button onClick={() => setView('tu-luyen-menu')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
                    <div className="w-14 h-14 shrink-0 rounded-xl bg-blue-900/50 flex flex-col items-center justify-center border border-blue-500/50">
-                     <span className="text-2xl drop-shadow-md">📚</span>
+                     <span className="text-2xl drop-shadow-md">ðŸ“š</span>
                    </div>
                    <div className="text-left flex-1">
-                     <div className="font-cinzel font-black text-blue-400 text-lg uppercase tracking-wider">Quốc Tử Giám</div>
-                     <div className="text-xs text-stone-400 font-bold">Tu Luyện Môn Quy</div>
+                     <div className="font-cinzel font-black text-blue-400 text-lg uppercase tracking-wider">Quá»‘c Tá»­ GiÃ¡m</div>
+                     <div className="text-xs text-stone-400 font-bold">Tu Luyá»‡n MÃ´n Quy</div>
                    </div>
                 </button>
                 <button onClick={() => setView('danh-vong-dai')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
                    <div className="w-14 h-14 shrink-0 rounded-xl bg-purple-900/50 flex flex-col items-center justify-center border border-purple-500/50">
-                     <span className="text-2xl drop-shadow-md">🏆</span>
+                     <span className="text-2xl drop-shadow-md">ðŸ†</span>
                    </div>
                    <div className="text-left flex-1">
-                     <div className="font-cinzel font-black text-purple-400 text-lg uppercase tracking-wider">Danh Vọng Đài</div>
-                     <div className="text-xs text-stone-400 font-bold">Bảng Xếp Hạng Đỉnh Cao</div>
+                     <div className="font-cinzel font-black text-purple-400 text-lg uppercase tracking-wider">Danh Vá»ng ÄÃ i</div>
+                     <div className="text-xs text-stone-400 font-bold">Báº£ng Xáº¿p Háº¡ng Äá»‰nh Cao</div>
                    </div>
                 </button>
                 <button onClick={() => setView('quan-doan')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
                    <div className="w-14 h-14 shrink-0 rounded-xl bg-green-900/50 flex flex-col items-center justify-center border border-green-500/50">
-                     <span className="text-2xl drop-shadow-md">🎪</span>
+                     <span className="text-2xl drop-shadow-md">ðŸŽª</span>
                    </div>
                    <div className="text-left flex-1">
-                     <div className="font-cinzel font-black text-green-400 text-lg uppercase tracking-wider">Quân Đoàn</div>
-                     <div className="text-xs text-stone-400 font-bold">Gia nhập Thế Lực</div>
+                     <div className="font-cinzel font-black text-green-400 text-lg uppercase tracking-wider">QuÃ¢n ÄoÃ n</div>
+                     <div className="text-xs text-stone-400 font-bold">Gia nháº­p Tháº¿ Lá»±c</div>
                    </div>
                 </button>
                 <button onClick={() => setView('hero-trial')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
                    <div className="w-14 h-14 shrink-0 rounded-xl bg-red-900/50 flex flex-col items-center justify-center border border-red-500/50">
-                     <span className="text-2xl drop-shadow-md">⚔️</span>
+                     <span className="text-2xl drop-shadow-md">âš”ï¸</span>
                    </div>
                    <div className="text-left flex-1">
-                     <div className="font-cinzel font-black text-red-400 text-lg uppercase tracking-wider">Thí Luyện</div>
-                     <div className="text-xs text-stone-400 font-bold">Thử thách leo tháp</div>
+                     <div className="font-cinzel font-black text-red-400 text-lg uppercase tracking-wider">ThÃ­ Luyá»‡n</div>
+                     <div className="text-xs text-stone-400 font-bold">Thá»­ thÃ¡ch leo thÃ¡p</div>
                    </div>
                 </button>
                 <button onClick={() => setView('tu-hao-su-viet')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
                    <div className="w-14 h-14 shrink-0 rounded-xl bg-emerald-900/50 flex flex-col items-center justify-center border border-emerald-500/50">
-                     <span className="text-2xl drop-shadow-md">🐉</span>
+                     <span className="text-2xl drop-shadow-md">ðŸ‰</span>
                    </div>
                    <div className="text-left flex-1">
-                     <div className="font-cinzel font-black text-emerald-400 text-lg uppercase tracking-wider">Tự Hào Sử Việt</div>
-                     <div className="text-xs text-stone-400 font-bold">Quà tặng đặc biệt</div>
+                     <div className="font-cinzel font-black text-emerald-400 text-lg uppercase tracking-wider">Tá»± HÃ o Sá»­ Viá»‡t</div>
+                     <div className="text-xs text-stone-400 font-bold">QuÃ  táº·ng Ä‘áº·c biá»‡t</div>
                    </div>
                 </button>
                 <button onClick={() => setView('arena')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
                    <div className="w-14 h-14 shrink-0 rounded-xl bg-orange-900/50 flex flex-col items-center justify-center border border-orange-500/50">
-                     <span className="text-2xl drop-shadow-md">⚔️</span>
+                     <span className="text-2xl drop-shadow-md">âš”ï¸</span>
                    </div>
                    <div className="text-left flex-1">
-                     <div className="font-cinzel font-black text-orange-400 text-lg uppercase tracking-wider">Đấu Trường PK</div>
-                     <div className="text-xs text-stone-400 font-bold">Tranh đoạt Ngôi Vương</div>
+                     <div className="font-cinzel font-black text-orange-400 text-lg uppercase tracking-wider">Äáº¥u TrÆ°á»ng PK</div>
+                     <div className="text-xs text-stone-400 font-bold">Tranh Ä‘oáº¡t NgÃ´i VÆ°Æ¡ng</div>
                    </div>
                 </button>
              </div>
@@ -2283,28 +2283,28 @@ const App: React.FC = () => {
           {/* DESKTOP VIEW */}
           <div 
             className={`${isLandscape ? 'flex' : 'hidden'} absolute top-1/2 left-1/2 flex-col bg-black transition-transform duration-300 origin-center`}
-            style={{ width: '100vw', height: '100vh', transform: 'translate(-50%, -50%)' }}
+            style={{ width: '100%', height: '100%', transform: 'translate(-50%, -50%)' }}
           >
             <Header state={player} setView={setView} onLogout={handleLogout} onOpenProfile={() => setIsProfileOpen(true)} syncStatus={syncStatus} />
             <div 
               className="flex-1 relative w-full h-full overflow-hidden bg-stone-950 flex items-center justify-center min-h-0 min-w-0"
               ref={viewportRef}
             >
-              {/* Canvas chính chứa game */}
+              {/* Canvas chÃ­nh chá»©a game */}
               <div 
                 className="relative shrink-0 origin-center overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)]" 
                 style={{ width: 1920, height: 1080, transform: `scale(${hubScaleX}, ${hubScaleY})` }}
               >
-              {/* Ảnh nền Isometric */}
+              {/* áº¢nh ná»n Isometric */}
               <div 
                 className="absolute inset-0 bg-[length:100%_100%] bg-no-repeat"
                 style={{ backgroundImage: `url('${import.meta.env.BASE_URL}hub-bg.png?v=2')` }}
               />
-              {/* Lớp mờ (overlay) cho những viền ngoài để làm nổi bật */}
+              {/* Lá»›p má» (overlay) cho nhá»¯ng viá»n ngoÃ i Ä‘á»ƒ lÃ m ná»•i báº­t */}
               <div className="absolute inset-0 bg-black/10 pointer-events-none" />
 
 
-            {/* AMBIENT ANIMATIONS (Hiệu ứng môi trường làm sống động bức tranh) */}
+            {/* AMBIENT ANIMATIONS (Hiá»‡u á»©ng mÃ´i trÆ°á»ng lÃ m sá»‘ng Ä‘á»™ng bá»©c tranh) */}
             <style>
               {`
                 @keyframes float-cloud {
@@ -2365,64 +2365,64 @@ const App: React.FC = () => {
               `}
             </style>
             <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-              {/* Mây trôi */}
+              {/* MÃ¢y trÃ´i */}
               <div className="anim-cloud-1 absolute top-[10%] left-0 w-64 h-24 bg-white/40 rounded-full blur-3xl mix-blend-overlay"></div>
               <div className="anim-cloud-2 absolute top-[40%] left-0 w-96 h-32 bg-white/30 rounded-full blur-3xl mix-blend-overlay"></div>
               <div className="anim-cloud-3 absolute top-[70%] left-0 w-72 h-20 bg-white/35 rounded-full blur-3xl mix-blend-overlay"></div>
               
-              {/* Đàn chim bay (chữ V đơn giản) */}
+              {/* ÄÃ n chim bay (chá»¯ V Ä‘Æ¡n giáº£n) */}
               <div className="anim-bird-1 absolute text-black/70 text-xs font-bold drop-shadow-sm">v v</div>
               <div className="anim-bird-2 absolute text-black/60 text-[10px] font-bold drop-shadow-sm">v v v</div>
               
-              {/* Đom đóm / Phép thuật lấp lánh (dưới các tán cây) */}
+              {/* Äom Ä‘Ã³m / PhÃ©p thuáº­t láº¥p lÃ¡nh (dÆ°á»›i cÃ¡c tÃ¡n cÃ¢y) */}
               <div className="anim-sparkle absolute bottom-[30%] left-[25%] w-1.5 h-1.5 bg-yellow-300 rounded-full" style={{ animationDelay: '0s' }}></div>
               <div className="anim-sparkle absolute bottom-[40%] left-[28%] w-2 h-2 bg-yellow-200 rounded-full" style={{ animationDelay: '1.5s' }}></div>
               <div className="anim-sparkle absolute bottom-[25%] left-[75%] w-1.5 h-1.5 bg-yellow-300 rounded-full" style={{ animationDelay: '0.8s' }}></div>
               <div className="anim-sparkle absolute bottom-[45%] left-[80%] w-2 h-2 bg-yellow-100 rounded-full" style={{ animationDelay: '2.2s' }}></div>
               <div className="anim-sparkle absolute top-[30%] left-[10%] w-2 h-2 bg-yellow-200 rounded-full" style={{ animationDelay: '3s' }}></div>
 
-              {/* Lính gác đi tuần quanh các con đường */}
+              {/* LÃ­nh gÃ¡c Ä‘i tuáº§n quanh cÃ¡c con Ä‘Æ°á»ng */}
               {/* Path 1: near the stairs/gate */}
               <div className="anim-guard absolute top-[48%] left-[48%] flex flex-col items-center">
-                <span className="text-3xl drop-shadow-md">💂</span>
+                <span className="text-3xl drop-shadow-md">ðŸ’‚</span>
                 <div className="w-4 h-1 bg-black/40 blur-[2px] rounded-full mt-1"></div>
               </div>
               {/* Path 2: near shop */}
               <div className="anim-guard absolute bottom-[15%] left-[25%] flex flex-col items-center" style={{ animationDelay: '-5s', animationDuration: '18s' }}>
-                <span className="text-3xl drop-shadow-md">💂</span>
+                <span className="text-3xl drop-shadow-md">ðŸ’‚</span>
                 <div className="w-4 h-1 bg-black/40 blur-[2px] rounded-full mt-1"></div>
               </div>
               {/* Path 3: near bottom right */}
               <div className="anim-guard absolute bottom-[25%] right-[25%] flex flex-col items-center" style={{ animationDelay: '-2s', animationDuration: '12s' }}>
-                <span className="text-3xl drop-shadow-md">💂</span>
+                <span className="text-3xl drop-shadow-md">ðŸ’‚</span>
                 <div className="w-4 h-1 bg-black/40 blur-[2px] rounded-full mt-1"></div>
               </div>
 
-              {/* Đàn gà đi quanh bụi cây (bottom left) */}
+              {/* ÄÃ n gÃ  Ä‘i quanh bá»¥i cÃ¢y (bottom left) */}
               <div className="absolute bottom-[15%] left-[12%] flex gap-3 items-end">
-                <div className="anim-chicken text-2xl drop-shadow-md" style={{ animationDelay: '0s' }}>🐔</div>
-                <div className="anim-chicken text-lg drop-shadow-md" style={{ animationDelay: '0.5s' }}>🐥</div>
-                <div className="anim-chicken text-lg drop-shadow-md" style={{ animationDelay: '1.2s' }}>🐥</div>
+                <div className="anim-chicken text-2xl drop-shadow-md" style={{ animationDelay: '0s' }}>ðŸ”</div>
+                <div className="anim-chicken text-lg drop-shadow-md" style={{ animationDelay: '0.5s' }}>ðŸ¥</div>
+                <div className="anim-chicken text-lg drop-shadow-md" style={{ animationDelay: '1.2s' }}>ðŸ¥</div>
               </div>
               
-              {/* Lính gác cổng đứng yên (với hiệu ứng nhịp thở nhẹ) */}
+              {/* LÃ­nh gÃ¡c cá»•ng Ä‘á»©ng yÃªn (vá»›i hiá»‡u á»©ng nhá»‹p thá»Ÿ nháº¹) */}
               <div className="absolute top-[40%] left-[45%] flex flex-col items-center">
-                <span className="anim-idle text-3xl drop-shadow-md" style={{ animationDelay: '0s' }}>💂</span>
+                <span className="anim-idle text-3xl drop-shadow-md" style={{ animationDelay: '0s' }}>ðŸ’‚</span>
                 <div className="w-4 h-1 bg-black/40 blur-[2px] rounded-full mt-1"></div>
               </div>
               <div className="absolute top-[40%] left-[55%] flex flex-col items-center">
-                <span className="anim-idle text-3xl drop-shadow-md" style={{ animationDelay: '1.5s' }}>💂</span>
+                <span className="anim-idle text-3xl drop-shadow-md" style={{ animationDelay: '1.5s' }}>ðŸ’‚</span>
                 <div className="w-4 h-1 bg-black/40 blur-[2px] rounded-full mt-1"></div>
               </div>
             </div>
 
-            {/* Tiêu đề Chương góc trên */}
+            {/* TiÃªu Ä‘á» ChÆ°Æ¡ng gÃ³c trÃªn */}
             <div className="absolute top-6 left-6 z-30 text-left drop-shadow-2xl bg-black/60 px-6 py-3 rounded-2xl border border-amber-900/50 backdrop-blur-sm">
-              <h2 className="text-amber-400 font-cinzel font-black text-2xl uppercase tracking-[0.25em] drop-shadow-[0_0_10px_rgba(201,148,26,0.8)]">Chương {activeChapter}</h2>
+              <h2 className="text-amber-400 font-cinzel font-black text-2xl uppercase tracking-[0.25em] drop-shadow-[0_0_10px_rgba(201,148,26,0.8)]">ChÆ°Æ¡ng {activeChapter}</h2>
               <p className="text-amber-100 font-cinzel text-sm mt-0.5 italic tracking-widest">{CHAPTER_NAMES[activeChapter]}</p>
               {activeChapter === 9 && (
                 <div className="mt-2.5 flex items-center gap-2">
-                  <span className="text-[10px] uppercase font-bold text-stone-300">Phe tham chiến:</span>
+                  <span className="text-[10px] uppercase font-bold text-stone-300">Phe tham chiáº¿n:</span>
                   <button
                     onClick={() => setShowCh9FactionModal(true)}
                     className={`text-[10px] font-black uppercase px-3 py-1 rounded-full border transition-all cursor-pointer hover:scale-105 active:scale-95 ${
@@ -2432,9 +2432,9 @@ const App: React.FC = () => {
                       'bg-amber-900/80 text-amber-300 border-amber-400 animate-pulse shadow-[0_0_15px_rgba(245,158,11,0.6)]'
                     }`}
                   >
-                    {player.ch9Faction === 'mac' ? '👑 Bắc Triều (Nhà Mạc)' :
-                     player.ch9Faction === 'le_trinh' ? '🚩 Nam Triều (Lê - Trịnh)' :
-                     player.ch9Faction === 'nguyen' ? '🌊 Đàng Trong (Chúa Nguyễn)' : '⚡ Chọn Phe Phái (Chưa Chọn) ⚡'}
+                    {player.ch9Faction === 'mac' ? 'ðŸ‘‘ Báº¯c Triá»u (NhÃ  Máº¡c)' :
+                     player.ch9Faction === 'le_trinh' ? 'ðŸš© Nam Triá»u (LÃª - Trá»‹nh)' :
+                     player.ch9Faction === 'nguyen' ? 'ðŸŒŠ ÄÃ ng Trong (ChÃºa Nguyá»…n)' : 'âš¡ Chá»n Phe PhÃ¡i (ChÆ°a Chá»n) âš¡'}
                   </button>
                 </div>
               )}
@@ -2472,15 +2472,15 @@ const App: React.FC = () => {
                 `}
               </style>
               
-              <h1 className="title-glow text-[80px] font-cinzel font-black tracking-widest uppercase text-center whitespace-nowrap relative z-10 pt-4 pb-0">VIỆT SỬ ANH HÙNG</h1>
+              <h1 className="title-glow text-[80px] font-cinzel font-black tracking-widest uppercase text-center whitespace-nowrap relative z-10 pt-4 pb-0">VIá»†T Sá»¬ ANH HÃ™NG</h1>
               <div className="font-cinzel font-black uppercase text-[20px] tracking-[0.3em] rainbow-text-animate drop-shadow-[0_2px_2px_rgba(0,0,0,0.9)] relative z-20 mt-1">
-                Một sản phẩm được phát triển bởi Trần Minh Toàn
+                Má»™t sáº£n pháº©m Ä‘Æ°á»£c phÃ¡t triá»ƒn bá»Ÿi Tráº§n Minh ToÃ n
               </div>
             </div>
 
-            {/* CÁC ĐIỂM TƯƠNG TÁC (HOTSPOTS) - Bố cục vòng cung theo sơ đồ */}
+            {/* CÃC ÄIá»‚M TÆ¯Æ NG TÃC (HOTSPOTS) - Bá»‘ cá»¥c vÃ²ng cung theo sÆ¡ Ä‘á»“ */}
             
-            {/* 1. THÍ LUYỆN ĐƯỜNG - Cạnh trái (trên) -> Tòa nhà thác nước */}
+            {/* 1. THÃ LUYá»†N ÄÆ¯á»œNG - Cáº¡nh trÃ¡i (trÃªn) -> TÃ²a nhÃ  thÃ¡c nÆ°á»›c */}
             <button 
               onClick={() => {
                 if (player.grade) {
@@ -2495,112 +2495,112 @@ const App: React.FC = () => {
             >
               <div className="bg-blue-900/85 hover:bg-blue-800 backdrop-blur-md border-2 border-blue-400/60 px-6 py-3 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.6)] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] transition-shadow">
                 <BookOpen className="w-8 h-8 text-blue-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Thí Luyện Đường</span>
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>ThÃ­ Luyá»‡n ÄÆ°á»ng</span>
               </div>
             </button>
 
-            {/* 2. DOANH TRẠI - Cạnh trái (dưới) -> Tòa nhà gỗ giữa */}
+            {/* 2. DOANH TRáº I - Cáº¡nh trÃ¡i (dÆ°á»›i) -> TÃ²a nhÃ  gá»— giá»¯a */}
             <button 
               onClick={() => setView('danh-trai')}
               className="absolute top-[68%] left-[12%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
               <div className="bg-green-900/85 hover:bg-green-800 backdrop-blur-md border-2 border-green-400/60 px-6 py-3 rounded-full shadow-[0_0_20px_rgba(34,197,94,0.6)] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(34,197,94,0.8)] transition-shadow">
                 <Tent className="w-8 h-8 text-green-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Doanh Trại</span>
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Doanh Tráº¡i</span>
               </div>
             </button>
 
-            {/* 3. QUỐC TỬ GIÁM - Cạnh trên (trái) -> Tòa nhà chái trái cung điện */}
+            {/* 3. QUá»C Tá»¬ GIÃM - Cáº¡nh trÃªn (trÃ¡i) -> TÃ²a nhÃ  chÃ¡i trÃ¡i cung Ä‘iá»‡n */}
             <button 
               onClick={() => setView('quoc-tu-giam')}
               className="absolute top-[28%] left-[45%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
               <div className="bg-red-900/85 hover:bg-red-800 backdrop-blur-md border-2 border-red-400/60 px-6 py-3 rounded-full shadow-[0_0_20px_rgba(239,68,68,0.6)] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(239,68,68,0.8)] transition-shadow">
                 <School className="w-8 h-8 text-red-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Quốc Tử Giám</span>
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Quá»‘c Tá»­ GiÃ¡m</span>
               </div>
             </button>
 
-            {/* 4. DANH VỌNG ĐÀI - Cạnh trên (phải) -> Tòa cung điện chính */}
+            {/* 4. DANH Vá»ŒNG ÄÃ€I - Cáº¡nh trÃªn (pháº£i) -> TÃ²a cung Ä‘iá»‡n chÃ­nh */}
             <button 
               onClick={() => setView('danh-vong-dai')}
               className="absolute top-[28%] left-[68%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
               <div className="bg-indigo-900/85 hover:bg-indigo-800 backdrop-blur-md border-2 border-indigo-400/60 px-6 py-3 rounded-full shadow-[0_0_25px_rgba(99,102,241,0.7)] flex items-center gap-3 hover:shadow-[0_0_35px_rgba(99,102,241,0.9)] transition-shadow">
                 <Crown className="w-8 h-8 text-indigo-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>DANH VỌNG ĐÀI</span>
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>DANH Vá»ŒNG ÄÃ€I</span>
               </div>
             </button>
 
-            {/* 5. QUÂN ĐOÀN - Cạnh phải (trên) -> Tháp phải trên */}
+            {/* 5. QUÃ‚N ÄOÃ€N - Cáº¡nh pháº£i (trÃªn) -> ThÃ¡p pháº£i trÃªn */}
             <button 
               onClick={() => setView('quan-doan')}
               className="absolute top-[60%] left-[88%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
               <div className="bg-amber-900/85 hover:bg-amber-800 backdrop-blur-md border-2 border-amber-400/60 px-6 py-3 rounded-full shadow-[0_0_20px_rgba(217,119,6,0.6)] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(217,119,6,0.8)] transition-shadow">
                 <Shield className="w-8 h-8 text-amber-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Quân Đoàn</span>
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>QuÃ¢n ÄoÃ n</span>
               </div>
             </button>
 
-            {/* 6. ANH HÙNG QUÁ ẢI - Cạnh phải (dưới) -> Tháp phải dưới */}
+            {/* 6. ANH HÃ™NG QUÃ áº¢I - Cáº¡nh pháº£i (dÆ°á»›i) -> ThÃ¡p pháº£i dÆ°á»›i */}
             <button 
               onClick={() => setView('hero-trial')}
               className="absolute top-[90%] left-[86%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
               <div className="bg-red-900/85 hover:bg-red-800 backdrop-blur-md border-2 border-red-500/60 px-6 py-3 rounded-full shadow-[0_0_25px_rgba(239,68,68,0.7)] flex items-center gap-3 hover:shadow-[0_0_35px_rgba(239,68,68,0.9)] transition-shadow">
                 <Swords className="w-8 h-8 text-red-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Anh Hùng Quá Ải</span>
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Anh HÃ¹ng QuÃ¡ áº¢i</span>
               </div>
             </button>
 
-            {/* 7. KỲ TRÂN CÁC - Cạnh dưới (trái) -> Khu nhà dưới trái */}
+            {/* 7. Ká»² TRÃ‚N CÃC - Cáº¡nh dÆ°á»›i (trÃ¡i) -> Khu nhÃ  dÆ°á»›i trÃ¡i */}
             <button 
               onClick={() => setView('shop')}
               className="absolute top-[90%] left-[32%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
               <div className="bg-amber-900/85 hover:bg-amber-800 backdrop-blur-md border-2 border-amber-400/60 px-6 py-3 rounded-full shadow-[0_0_20px_rgba(251,191,36,0.6)] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(251,191,36,0.8)] transition-shadow">
                 <ShoppingBag className="w-8 h-8 text-amber-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Kỳ Trân Các</span>
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Ká»³ TrÃ¢n CÃ¡c</span>
               </div>
             </button>
 
-            {/* 8. CHIÊU HIỀN ĐÀI - Cạnh dưới (phải) -> Khu nhà gỗ giữa phải */}
+            {/* 8. CHIÃŠU HIá»€N ÄÃ€I - Cáº¡nh dÆ°á»›i (pháº£i) -> Khu nhÃ  gá»— giá»¯a pháº£i */}
             <button 
               onClick={() => setView('summon')}
               className="absolute top-[76%] left-[65%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
               <div className="bg-purple-900/85 hover:bg-purple-800 backdrop-blur-md border-2 border-purple-400/60 px-6 py-3 rounded-full shadow-[0_0_25px_rgba(168,85,247,0.7)] flex items-center gap-3 hover:shadow-[0_0_35px_rgba(168,85,247,0.9)] transition-shadow">
                 <UserPlus className="w-8 h-8 text-purple-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Chiêu Hiền Đài</span>
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>ChiÃªu Hiá»n ÄÃ i</span>
               </div>
             </button>
 
-            {/* 9. TỰ HÀO SỬ VIỆT - Vị trí Trung Tâm Hoàng Cung */}
+            {/* 9. Tá»° HÃ€O Sá»¬ VIá»†T - Vá»‹ trÃ­ Trung TÃ¢m HoÃ ng Cung */}
             <button 
               onClick={() => setView('tu-hao-su-viet')}
               className="absolute top-[48%] left-[50%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
               <div className="bg-gradient-to-r from-red-950/90 via-amber-900/90 to-red-950/90 hover:from-red-800 hover:to-amber-800 backdrop-blur-md border-2 border-amber-400/80 px-8 py-4 rounded-full shadow-[0_0_30px_rgba(245,158,11,0.8)] flex items-center gap-3 hover:shadow-[0_0_45px_rgba(245,158,11,1)] transition-all">
                 <ScrollText className="w-10 h-10 text-yellow-300 animate-pulse" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[32px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 12px rgba(255,215,0,0.8), 0 2px 4px rgba(0,0,0,1)' }}>Tự Hào Sử Việt</span>
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[32px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 12px rgba(255,215,0,0.8), 0 2px 4px rgba(0,0,0,1)' }}>Tá»± HÃ o Sá»­ Viá»‡t</span>
               </div>
             </button>
 
-            {/* 10. ĐẤU TRƯỜNG PK - Cạnh giữa (trái) */}
+            {/* 10. Äáº¤U TRÆ¯á»œNG PK - Cáº¡nh giá»¯a (trÃ¡i) */}
             <button 
               onClick={() => setView('arena')}
               className="absolute top-[50%] left-[25%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
               <div className="bg-orange-900/85 hover:bg-orange-800 backdrop-blur-md border-2 border-orange-500/60 px-6 py-3 rounded-full shadow-[0_0_25px_rgba(249,115,22,0.7)] flex items-center gap-3 hover:shadow-[0_0_35px_rgba(249,115,22,0.9)] transition-shadow">
                 <Swords className="w-8 h-8 text-orange-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Đấu Trường PK</span>
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Äáº¥u TrÆ°á»ng PK</span>
               </div>
             </button>
 
 
 
-            {/* ADMIN BUTTON (Chỉ hiển thị cho tài khoản tên 'Admin') */}
+            {/* ADMIN BUTTON (Chá»‰ hiá»ƒn thá»‹ cho tÃ i khoáº£n tÃªn 'Admin') */}
             {(player?.playerName?.toLowerCase() === 'admin' || player?.playerName?.toLowerCase() === 'tmt') && (
               <button 
                 onClick={() => setView('admin')}
@@ -2703,23 +2703,23 @@ const App: React.FC = () => {
       const rand = Math.random();
       const level = question.level ? question.level.toLowerCase() : '';
 
-      // Tính speed bonus dựa trên thời gian còn lại
+      // TÃ­nh speed bonus dá»±a trÃªn thá»i gian cÃ²n láº¡i
       let goldMult = 1.0;
       let artifactBonus = 0;
       let premiumBonus = 0;
       let speedLabel: string | undefined = undefined;
-      if (timeLeft >= 25) { // trả lời trong ≤5 giây
-        goldMult = 2.0; artifactBonus = 0.15; premiumBonus = 0.10; speedLabel = '⚡ Siêu Nhanh x2!';
-      } else if (timeLeft >= 15) { // trả lời trong 6–15 giây
-        goldMult = 1.5; premiumBonus = 0.05; speedLabel = '🔥 Nhanh x1.5!';
+      if (timeLeft >= 25) { // tráº£ lá»i trong â‰¤5 giÃ¢y
+        goldMult = 2.0; artifactBonus = 0.15; premiumBonus = 0.10; speedLabel = 'âš¡ SiÃªu Nhanh x2!';
+      } else if (timeLeft >= 15) { // tráº£ lá»i trong 6â€“15 giÃ¢y
+        goldMult = 1.5; premiumBonus = 0.05; speedLabel = 'ðŸ”¥ Nhanh x1.5!';
       }
 
-      if (level.includes('nhận biết')) {
+      if (level.includes('nháº­n biáº¿t')) {
         gold = Math.round((Math.floor(Math.random() * 5) + 1) * 100 * goldMult);
         if (rand < 0.05 + artifactBonus) t = 'artifact';
         else if (rand < 0.20 + artifactBonus + premiumBonus) t = 'premium';
         else t = 'normal';
-      } else if (level.includes('thông hiểu')) {
+      } else if (level.includes('thÃ´ng hiá»ƒu')) {
         gold = Math.round((Math.floor(Math.random() * 5) + 6) * 100 * goldMult);
         if (rand < 0.10 + artifactBonus) t = 'artifact';
         else if (rand < 0.40 + artifactBonus + premiumBonus) t = 'premium';
@@ -2757,8 +2757,8 @@ const App: React.FC = () => {
     }
   };
 
-  // Chatbot chỉ hiển thị ở các tính năng chính của game,
-  // KHÔNG hiển thị khi: đăng nhập, đang làm bài thi (quiz-play, tu-luyen-play), thí luyện đường (hero-trial)
+  // Chatbot chá»‰ hiá»ƒn thá»‹ á»Ÿ cÃ¡c tÃ­nh nÄƒng chÃ­nh cá»§a game,
+  // KHÃ”NG hiá»ƒn thá»‹ khi: Ä‘Äƒng nháº­p, Ä‘ang lÃ m bÃ i thi (quiz-play, tu-luyen-play), thÃ­ luyá»‡n Ä‘Æ°á»ng (hero-trial)
   const showChatbot =
     view !== 'auth' &&
     view !== 'quiz-play' &&
@@ -2776,27 +2776,27 @@ const App: React.FC = () => {
         <div className="mobile-bottom-nav md:hidden fixed bottom-0 left-0 right-0 z-[200] bg-stone-950 border-t-2 border-stone-800 flex items-center justify-around shadow-[0_-5px_20px_rgba(0,0,0,1)] px-2 py-1 h-[72px]">
           <button onClick={() => setView('chapter-hub')} className={`flex flex-col items-center justify-center p-1 flex-1 ${view === 'chapter-hub' ? 'text-amber-400' : 'text-stone-500'}`}>
             <Tent size={26} className={view === 'chapter-hub' ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
-            <span className="text-[10px] font-black uppercase mt-1">Thành Chính</span>
+            <span className="text-[10px] font-black uppercase mt-1">ThÃ nh ChÃ­nh</span>
           </button>
           <button onClick={() => setView('quan-doan')} className={`flex flex-col items-center justify-center p-1 flex-1 ${view === 'quan-doan' || view === 'danh-trai' ? 'text-amber-400' : 'text-stone-500'}`}>
             <Users size={26} className={view === 'quan-doan' || view === 'danh-trai' ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
-            <span className="text-[10px] font-black uppercase mt-1">Tướng</span>
+            <span className="text-[10px] font-black uppercase mt-1">TÆ°á»›ng</span>
           </button>
           <button onClick={() => setView('hero-trial')} className={`flex flex-col items-center justify-center p-1 flex-1 ${view === 'hero-trial' || view === 'chapter-select' ? 'text-amber-400' : 'text-stone-500'}`}>
             <Crosshair size={32} className={view === 'hero-trial' || view === 'chapter-select' ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)] animate-pulse' : ''}/>
-            <span className="text-[10px] font-black uppercase mt-1">Chinh Chiến</span>
+            <span className="text-[10px] font-black uppercase mt-1">Chinh Chiáº¿n</span>
           </button>
           <button onClick={() => setView('shop')} className={`flex flex-col items-center justify-center p-1 flex-1 ${view === 'shop' ? 'text-amber-400' : 'text-stone-500'}`}>
             <ShoppingBag size={26} className={view === 'shop' ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
-            <span className="text-[10px] font-black uppercase mt-1">Bồi Dưỡng</span>
+            <span className="text-[10px] font-black uppercase mt-1">Bá»“i DÆ°á»¡ng</span>
           </button>
           <button onClick={() => setIsProfileOpen(true)} className={`flex flex-col items-center justify-center p-1 flex-1 ${isProfileOpen ? 'text-amber-400' : 'text-stone-500'}`}>
             <User size={26} className={isProfileOpen ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
-            <span className="text-[10px] font-black uppercase mt-1">Nhân Vật</span>
+            <span className="text-[10px] font-black uppercase mt-1">NhÃ¢n Váº­t</span>
           </button>
           <button onClick={() => setIsDailyQuestsOpen(true)} className={`flex flex-col items-center justify-center p-1 flex-1 ${isDailyQuestsOpen ? 'text-amber-400' : 'text-stone-500'}`}>
             <Target size={26} className={isDailyQuestsOpen ? 'drop-shadow-[0_0_5px_rgba(251,191,36,0.8)]' : ''}/>
-            <span className="text-[10px] font-black uppercase mt-1">Nhiệm Vụ</span>
+            <span className="text-[10px] font-black uppercase mt-1">Nhiá»‡m Vá»¥</span>
           </button>
         </div>
       )}
@@ -2814,7 +2814,7 @@ const App: React.FC = () => {
          player={player} 
          setPlayer={setPlayer} 
       />}
-      {/* NÚT NHIỆM VỤ HÀNG NGÀY - Ẩn khi đang trong màn hình chiến đấu */}
+      {/* NÃšT NHIá»†M Vá»¤ HÃ€NG NGÃ€Y - áº¨n khi Ä‘ang trong mÃ n hÃ¬nh chiáº¿n Ä‘áº¥u */}
       {view !== 'auth' && view !== 'combat-play' && view !== 'arena' && (() => {
         const prog = player.dailyQuestProgress || {};
         const claimed = player.dailyQuestClaimed || [];
@@ -2826,7 +2826,7 @@ const App: React.FC = () => {
             onClick={() => setIsDailyQuestsOpen(true)}
             style={{ position: 'fixed', top: '90px', right: '24px', zIndex: 9997 }}
             className="group flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
-            title="Nhiệm Vụ Hàng Ngày"
+            title="Nhiá»‡m Vá»¥ HÃ ng NgÃ y"
           >
             <div className="relative w-[70px] h-[70px] rounded-2xl bg-gradient-to-br from-stone-800 to-stone-950 flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.5)] border-2 border-amber-500/80 hover:shadow-[0_0_25px_rgba(245,158,11,0.8)] hover:border-amber-400 overflow-hidden transition-all">
               <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-amber-500/10 to-transparent pointer-events-none"></div>
@@ -2837,11 +2837,11 @@ const App: React.FC = () => {
                 </span>
               )}
             </div>
-            <span className="mt-1.5 px-2.5 py-0.5 rounded-full bg-stone-900/90 border border-amber-700/50 text-[10px] font-black text-amber-400 uppercase tracking-widest drop-shadow whitespace-nowrap">Nhiệm Vụ</span>
+            <span className="mt-1.5 px-2.5 py-0.5 rounded-full bg-stone-900/90 border border-amber-700/50 text-[10px] font-black text-amber-400 uppercase tracking-widest drop-shadow whitespace-nowrap">Nhiá»‡m Vá»¥</span>
           </button>
         );
       })()}
-      {/* AI Chatbot - ẩn khi chiến đấu */}
+      {/* AI Chatbot - áº©n khi chiáº¿n Ä‘áº¥u */}
       {showChatbot && view !== 'combat-play' && view !== 'arena' && <ChatbotWidget />}
     </>
   );
@@ -2881,7 +2881,7 @@ const QuickDisassembleModal = ({ isOpen, onClose, inventory, lineup, setPlayer, 
   });
 
   const performDisassemble = (rewardType: 'fragments' | 'jade' | 'gold') => {
-     if (checkedHeroIds.length === 0) return alert("Vui lòng chọn ít nhất 1 tướng!");
+     if (checkedHeroIds.length === 0) return alert("Vui lÃ²ng chá»n Ã­t nháº¥t 1 tÆ°á»›ng!");
      
      setPlayer((p: any) => {
         let newInv = [...p.inventory];
@@ -2913,18 +2913,18 @@ const QuickDisassembleModal = ({ isOpen, onClose, inventory, lineup, setPlayer, 
         return { ...p, inventory: newInv, jade: newJade, gold: newGold, heroFragments: newHeroFragments };
      });
      
-     if (rewardType === 'jade') alert(`Tách tướng thành công! Nhận được ${totalJade} Ngọc Bích.`);
-     else if (rewardType === 'gold') alert(`Tách tướng thành công! Nhận được ${totalGold} Vàng.`);
-     else alert(`Tách tướng thành công! Nhận được ${checkedHeroes.length * 50} mảnh tướng.`);
+     if (rewardType === 'jade') alert(`TÃ¡ch tÆ°á»›ng thÃ nh cÃ´ng! Nháº­n Ä‘Æ°á»£c ${totalJade} Ngá»c BÃ­ch.`);
+     else if (rewardType === 'gold') alert(`TÃ¡ch tÆ°á»›ng thÃ nh cÃ´ng! Nháº­n Ä‘Æ°á»£c ${totalGold} VÃ ng.`);
+     else alert(`TÃ¡ch tÆ°á»›ng thÃ nh cÃ´ng! Nháº­n Ä‘Æ°á»£c ${checkedHeroes.length * 50} máº£nh tÆ°á»›ng.`);
 
      onClose();
   };
 
   return (
     <div className="fixed inset-0 z-[150] bg-black/90 flex flex-col items-center justify-center p-6 backdrop-blur-md animate-in fade-in duration-300">
-       <div className="scroll-bg max-w-4xl w-full p-8 rounded-[3rem] shadow-2xl border-red-900 border-4 flex flex-col max-h-[90vh]">
-          <h3 className="text-3xl font-cinzel font-black uppercase mb-4 text-red-500 text-center drop-shadow-md">Tách Tướng Nhanh</h3>
-          <p className="text-sm italic mb-6 text-stone-300 font-bold text-center">Chọn phẩm chất để lọc tướng và nhận tài nguyên bồi hoàn</p>
+       <div className="scroll-bg max-w-4xl w-full p-8 rounded-[3rem] shadow-2xl border-red-900 border-4 flex flex-col max-h-[90%]">
+          <h3 className="text-3xl font-cinzel font-black uppercase mb-4 text-red-500 text-center drop-shadow-md">TÃ¡ch TÆ°á»›ng Nhanh</h3>
+          <p className="text-sm italic mb-6 text-stone-300 font-bold text-center">Chá»n pháº©m cháº¥t Ä‘á»ƒ lá»c tÆ°á»›ng vÃ  nháº­n tÃ i nguyÃªn bá»“i hoÃ n</p>
           
           <div className="flex gap-2 justify-center mb-6 flex-wrap">
              {['C', 'R', 'SR', 'SSR', 'UR'].map(r => (
@@ -2942,35 +2942,35 @@ const QuickDisassembleModal = ({ isOpen, onClose, inventory, lineup, setPlayer, 
                    <div key={h.id} onClick={() => !inLineup && toggleCheck(h.id)} className={`relative p-2 rounded-xl border-2 cursor-pointer transition-all ${inLineup ? 'opacity-50 border-stone-800 grayscale' : isChecked ? 'border-green-500 bg-green-900/20 scale-105' : 'border-stone-700 bg-black/60 hover:border-red-500'}`}>
                       <img src={h.image || DEFAULT_ALLY_IMG} alt={h.name} className="w-full h-24 object-cover rounded-lg mb-2" onError={(e) => { e.currentTarget.src = DEFAULT_ALLY_IMG; }} />
                       <div className="text-[10px] font-bold text-center text-white truncate">{h.name}</div>
-                      {inLineup && <div className="absolute top-0 right-0 bg-red-600 text-[9px] px-1 rounded-bl-lg font-black text-white">TRÊN TRẬN</div>}
+                      {inLineup && <div className="absolute top-0 right-0 bg-red-600 text-[9px] px-1 rounded-bl-lg font-black text-white">TRÃŠN TRáº¬N</div>}
                       {isChecked && <div className="absolute top-1 left-1 bg-green-500 rounded-full p-1"><UserCheck size={12} className="text-white" /></div>}
                    </div>
                 );
              })}
              {selectedRarity && inventory.filter((h: any) => h.rarity === selectedRarity).length === 0 && (
-                <div className="col-span-full text-center text-stone-500 font-bold italic py-10">Không có tướng nào thuộc phẩm chất này.</div>
+                <div className="col-span-full text-center text-stone-500 font-bold italic py-10">KhÃ´ng cÃ³ tÆ°á»›ng nÃ o thuá»™c pháº©m cháº¥t nÃ y.</div>
              )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
              <button onClick={() => performDisassemble('fragments')} className="bg-gradient-to-br from-amber-900 to-black p-4 rounded-2xl border-2 border-amber-700 hover:border-amber-400 transition-all flex flex-col items-center justify-center group">
                 <UserCheck className="text-amber-500 mb-2 group-hover:scale-110 transition-transform" size={24} />
-                <span className="text-xs uppercase font-black text-amber-200">Nhận Mảnh Tướng</span>
-                <span className="text-[10px] text-stone-400 mt-1">50 mảnh / 1 tướng</span>
+                <span className="text-xs uppercase font-black text-amber-200">Nháº­n Máº£nh TÆ°á»›ng</span>
+                <span className="text-[10px] text-stone-400 mt-1">50 máº£nh / 1 tÆ°á»›ng</span>
              </button>
              <button onClick={() => performDisassemble('jade')} className="bg-gradient-to-br from-green-900 to-black p-4 rounded-2xl border-2 border-green-700 hover:border-green-400 transition-all flex flex-col items-center justify-center group">
                 <Star className="text-green-500 mb-2 group-hover:scale-110 transition-transform" size={24} />
-                <span className="text-xs uppercase font-black text-green-200">Nhận {totalJade} Ngọc Bích</span>
-                <span className="text-[10px] text-stone-400 mt-1">Dựa trên tỷ lệ quy đổi</span>
+                <span className="text-xs uppercase font-black text-green-200">Nháº­n {totalJade} Ngá»c BÃ­ch</span>
+                <span className="text-[10px] text-stone-400 mt-1">Dá»±a trÃªn tá»· lá»‡ quy Ä‘á»•i</span>
              </button>
              <button onClick={() => performDisassemble('gold')} className="bg-gradient-to-br from-yellow-900 to-black p-4 rounded-2xl border-2 border-yellow-700 hover:border-yellow-400 transition-all flex flex-col items-center justify-center group">
                 <Coins className="text-yellow-500 mb-2 group-hover:scale-110 transition-transform" size={24} />
-                <span className="text-xs uppercase font-black text-yellow-200">Nhận {totalGold} Vàng</span>
-                <span className="text-[10px] text-stone-400 mt-1">Dựa trên tỷ lệ quy đổi</span>
+                <span className="text-xs uppercase font-black text-yellow-200">Nháº­n {totalGold} VÃ ng</span>
+                <span className="text-[10px] text-stone-400 mt-1">Dá»±a trÃªn tá»· lá»‡ quy Ä‘á»•i</span>
              </button>
           </div>
 
-          <button onClick={onClose} className="w-full py-4 text-sm font-black uppercase text-stone-400 hover:text-white transition-colors underline">Thoát</button>
+          <button onClick={onClose} className="w-full py-4 text-sm font-black uppercase text-stone-400 hover:text-white transition-colors underline">ThoÃ¡t</button>
        </div>
     </div>
   );
@@ -3024,8 +3024,8 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
 
   const decompose = (rewardType: 'fragments' | 'jade' | 'gold') => {
     if (!selectedHero) return;
-    if (player.lineup.includes(selectedHero.id)) return alert("Anh hùng đang tham trận, không thể giải ngũ!");
-    if (selectedHero.isPermanent === true) return alert("Đây là Tướng Quân Đoàn vĩnh viễn! Hãy vào Quân Đoàn để giải ngũ.");
+    if (player.lineup.includes(selectedHero.id)) return alert("Anh hÃ¹ng Ä‘ang tham tráº­n, khÃ´ng thá»ƒ giáº£i ngÅ©!");
+    if (selectedHero.isPermanent === true) return alert("ÄÃ¢y lÃ  TÆ°á»›ng QuÃ¢n ÄoÃ n vÄ©nh viá»…n! HÃ£y vÃ o QuÃ¢n ÄoÃ n Ä‘á»ƒ giáº£i ngÅ©.");
 
     const heroRarity = selectedHero.rarity;
     const heroName = selectedHero.name;
@@ -3055,13 +3055,13 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
       };
     });
 
-    // Thông báo nhận thưởng
+    // ThÃ´ng bÃ¡o nháº­n thÆ°á»Ÿng
     const rewardMsg = rewardType === 'fragments'
-      ? `+50 Mảnh Tướng ${heroName}`
+      ? `+50 Máº£nh TÆ°á»›ng ${heroName}`
       : rewardType === 'jade'
-      ? `+${jadeGain} Ngọc Bích 💎`
-      : `+${goldGain} Vàng 🪙`;
-    setTimeout(() => alert(`Giải ngũ thành công!\n${rewardMsg}`), 100);
+      ? `+${jadeGain} Ngá»c BÃ­ch ðŸ’Ž`
+      : `+${goldGain} VÃ ng ðŸª™`;
+    setTimeout(() => alert(`Giáº£i ngÅ© thÃ nh cÃ´ng!\n${rewardMsg}`), 100);
 
     setSelectedHeroId(null);
     setShowDecomposeModal(false);
@@ -3070,11 +3070,11 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
   const upgradeStar = () => {
     if (!selectedHero) return;
     const maxStars = RARITY_MAX_STARS[selectedHero.rarity] || 30;
-    if (selectedHero.star >= maxStars) return alert(`Hào kiệt phẩm chất ${selectedHero.rarity} đã đạt tới giới hạn tối thượng ${maxStars} Sao!`);
+    if (selectedHero.star >= maxStars) return alert(`HÃ o kiá»‡t pháº©m cháº¥t ${selectedHero.rarity} Ä‘Ã£ Ä‘áº¡t tá»›i giá»›i háº¡n tá»‘i thÆ°á»£ng ${maxStars} Sao!`);
 
     const req = getStarUpgradeReq(selectedHero.star);
 
-    // Tổng mảnh = mảnh trên người + mảnh rời trong kho + mảnh trên các bản sao khác
+    // Tá»•ng máº£nh = máº£nh trÃªn ngÆ°á»i + máº£nh rá»i trong kho + máº£nh trÃªn cÃ¡c báº£n sao khÃ¡c
     const heroName = selectedHero.name;
     const storedFrags = (player.heroFragments || {})[heroName] || 0;
     
@@ -3087,12 +3087,12 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
     
     const totalFragments = (selectedHero.fragments || 0) + storedFrags + otherCopiesFrags;
 
-    if (totalFragments < req.fragReq) return alert(`Thiếu mảnh tướng! (Cần ${req.fragReq}, hiện có ${totalFragments})`);
-    if (player.jade < req.jadeReq) return alert(`Thiếu Ngọc Bích! (Cần ${req.jadeReq}, hiện có ${player.jade})`);
+    if (totalFragments < req.fragReq) return alert(`Thiáº¿u máº£nh tÆ°á»›ng! (Cáº§n ${req.fragReq}, hiá»‡n cÃ³ ${totalFragments})`);
+    if (player.jade < req.jadeReq) return alert(`Thiáº¿u Ngá»c BÃ­ch! (Cáº§n ${req.jadeReq}, hiá»‡n cÃ³ ${player.jade})`);
 
     if (req.requiredPill) {
        const hasCount = (player.pills && player.pills[req.requiredPill.id]) || 0;
-       if (hasCount < req.pillQty!) return alert(`Đột phá mốc ${req.nextStar} Sao cần ${req.pillQty} ${req.requiredPill.name}! (Hiện có ${hasCount}). Hãy dùng Lệnh Bài Chúa Công để lấy đan!`);
+       if (hasCount < req.pillQty!) return alert(`Äá»™t phÃ¡ má»‘c ${req.nextStar} Sao cáº§n ${req.pillQty} ${req.requiredPill.name}! (Hiá»‡n cÃ³ ${hasCount}). HÃ£y dÃ¹ng Lá»‡nh BÃ i ChÃºa CÃ´ng Ä‘á»ƒ láº¥y Ä‘an!`);
     }
 
     setPlayer((p: any) => {
@@ -3100,8 +3100,8 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
       if (req.requiredPill) {
          newPills[req.requiredPill.id] = Math.max(0, (newPills[req.requiredPill.id] || req.pillQty) - req.pillQty!);
       }
-      // Trừ mảnh: dùng mảnh rời trước, nếu còn thiếu thì trừ mảnh trên hero
-            // Trừ mảnh: ưu tiên mảnh rời -> mảnh trên bản sao khác -> mảnh trên tướng hiện tại
+      // Trá»« máº£nh: dÃ¹ng máº£nh rá»i trÆ°á»›c, náº¿u cÃ²n thiáº¿u thÃ¬ trá»« máº£nh trÃªn hero
+            // Trá»« máº£nh: Æ°u tiÃªn máº£nh rá»i -> máº£nh trÃªn báº£n sao khÃ¡c -> máº£nh trÃªn tÆ°á»›ng hiá»‡n táº¡i
       const heroFragments = { ...(p.heroFragments || {}) };
       let remaining = req.fragReq;
       
@@ -3141,17 +3141,17 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
   };
 
   return (
-    <div className="min-h-screen viet-bg flex flex-col h-screen overflow-hidden">
+    <div className="min-h-full viet-bg flex flex-col h-full overflow-hidden">
        <div className="p-4 flex justify-between items-center bg-gradient-to-r from-stone-950 via-stone-900 to-stone-950 border-b border-amber-900/50 shadow-[0_4px_20px_rgba(0,0,0,0.5)] z-30">
-          <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors"><ChevronLeft/> Trở về</button>
+          <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors"><ChevronLeft/> Trá»Ÿ vá»</button>
           <div className="flex flex-col items-center">
-             <h2 className="text-xl font-cinzel text-amber-400 font-black uppercase tracking-widest drop-shadow-[0_0_8px_rgba(201,148,26,0.3)]">⚔ Danh Trại · Binh Pháp ⚔</h2>
-             <div className="text-[10px] md:text-xs font-bold text-amber-500/80 uppercase tracking-widest mt-0.5 bg-black/40 px-3 py-0.5 rounded-full border border-amber-900/30">Lực chiến Thí luyện: <span className="text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.8)]">{(combatPower || 0).toLocaleString()}</span></div>
-              <div className="text-[9px] text-orange-400/70 italic mt-0.5 font-semibold">⚠ Tướng tạm thời — sẽ xóa khi qua chương mới</div>
+             <h2 className="text-xl font-cinzel text-amber-400 font-black uppercase tracking-widest drop-shadow-[0_0_8px_rgba(201,148,26,0.3)]">âš” Danh Tráº¡i Â· Binh PhÃ¡p âš”</h2>
+             <div className="text-[10px] md:text-xs font-bold text-amber-500/80 uppercase tracking-widest mt-0.5 bg-black/40 px-3 py-0.5 rounded-full border border-amber-900/30">Lá»±c chiáº¿n ThÃ­ luyá»‡n: <span className="text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.8)]">{(combatPower || 0).toLocaleString()}</span></div>
+              <div className="text-[9px] text-orange-400/70 italic mt-0.5 font-semibold">âš  TÆ°á»›ng táº¡m thá»i â€” sáº½ xÃ³a khi qua chÆ°Æ¡ng má»›i</div>
           </div>
           <div className="flex gap-3">
-             <button onClick={quickLineup} className="bg-amber-900/80 text-amber-200 px-5 py-2 rounded-xl font-black uppercase text-xs flex items-center gap-2 hover:bg-amber-800 shadow-lg transition-all border border-amber-800/40"><Zap size={16}/> Bày trận nhanh</button>
-             <button onClick={onCombat} className="bg-gradient-to-r from-red-800 to-red-700 text-white px-8 py-2 rounded-xl font-black uppercase text-xs flex items-center gap-2 hover:from-red-700 hover:to-red-600 shadow-[0_0_20px_rgba(239,68,68,0.4)] animate-pulse transition-all border border-red-600/30"><SwordIcon size={18}/> XUẤT QUÂN</button>
+             <button onClick={quickLineup} className="bg-amber-900/80 text-amber-200 px-5 py-2 rounded-xl font-black uppercase text-xs flex items-center gap-2 hover:bg-amber-800 shadow-lg transition-all border border-amber-800/40"><Zap size={16}/> BÃ y tráº­n nhanh</button>
+             <button onClick={onCombat} className="bg-gradient-to-r from-red-800 to-red-700 text-white px-8 py-2 rounded-xl font-black uppercase text-xs flex items-center gap-2 hover:from-red-700 hover:to-red-600 shadow-[0_0_20px_rgba(239,68,68,0.4)] animate-pulse transition-all border border-red-600/30"><SwordIcon size={18}/> XUáº¤T QUÃ‚N</button>
           </div>
        </div>
 
@@ -3164,20 +3164,20 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
                    onClick={() => setActiveTab('heroes')} 
                    className={`flex-1 py-3 rounded-xl font-black uppercase text-sm transition-all border ${activeTab === 'heroes' ? 'bg-amber-900/80 text-amber-200 border-amber-500 shadow-[0_0_15px_rgba(251,191,36,0.2)]' : 'bg-stone-900 text-stone-500 border-stone-800 hover:bg-stone-800'}`}
                 >
-                   <Tent size={18} className="inline-block mb-1 mr-1" /> Anh Hào ({allowedHeroes.length})
+                   <Tent size={18} className="inline-block mb-1 mr-1" /> Anh HÃ o ({allowedHeroes.length})
                 </button>
                 <button 
                    onClick={() => setActiveTab('items')} 
                    className={`flex-1 py-3 rounded-xl font-black uppercase text-sm transition-all border ${activeTab === 'items' ? 'bg-amber-900/80 text-amber-200 border-amber-500 shadow-[0_0_15px_rgba(251,191,36,0.2)]' : 'bg-stone-900 text-stone-500 border-stone-800 hover:bg-stone-800'}`}
                 >
-                   <Package size={18} className="inline-block mb-1 mr-1" /> Vật Phẩm
+                   <Package size={18} className="inline-block mb-1 mr-1" /> Váº­t Pháº©m
                 </button>
              </div>
              
              {activeTab === 'heroes' && (
                <>
                 <button onClick={() => setShowQuickDecomposeModal(true)} className="w-full mb-4 bg-red-900/40 text-red-400 border border-red-900/50 hover:bg-red-900/60 transition-all p-3 rounded-xl font-black uppercase text-xs flex items-center justify-center gap-2">
-                   <Recycle size={16}/> Tách Tướng Nhanh
+                   <Recycle size={16}/> TÃ¡ch TÆ°á»›ng Nhanh
                 </button>
                 <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-10">
                   {[...allowedHeroes].sort((a: Hero, b: Hero) => {
@@ -3206,44 +3206,44 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
                <div className="space-y-4">
                   <div className="bg-stone-900/80 p-4 rounded-2xl border border-stone-700 flex items-center gap-4">
                      <div className="w-12 h-12 bg-red-900/30 rounded-xl flex items-center justify-center border border-red-500/30 overflow-hidden relative">
-                        <img src="./items/premium_ticket.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Vé Quay Quân Đoàn"/>
+                        <img src="./items/premium_ticket.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="VÃ© Quay QuÃ¢n ÄoÃ n"/>
                      </div>
                      <div className="flex-1">
-                        <div className="text-white font-bold text-sm uppercase">Vé Quay Quân Đoàn</div>
-                        <div className="text-stone-400 text-xs">Dùng để chiêu mộ Hào Kiệt vĩnh viễn</div>
+                        <div className="text-white font-bold text-sm uppercase">VÃ© Quay QuÃ¢n ÄoÃ n</div>
+                        <div className="text-stone-400 text-xs">DÃ¹ng Ä‘á»ƒ chiÃªu má»™ HÃ o Kiá»‡t vÄ©nh viá»…n</div>
                      </div>
                      <div className="text-2xl font-black text-red-400">{player.legionTickets || 0}</div>
                   </div>
 
                   <div className="bg-stone-900/80 p-4 rounded-2xl border border-stone-700 flex items-center gap-4">
                      <div className="w-12 h-12 bg-yellow-900/30 rounded-xl flex items-center justify-center border border-yellow-500/30 overflow-hidden relative">
-                        <img src="./items/gold.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Ngân Lượng"/>
+                        <img src="./items/gold.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="NgÃ¢n LÆ°á»£ng"/>
                      </div>
                      <div className="flex-1">
-                        <div className="text-white font-bold text-sm uppercase">Ngân Lượng (Vàng)</div>
-                        <div className="text-stone-400 text-xs">Dùng để mua sắm trong Kỳ Trân Các</div>
+                        <div className="text-white font-bold text-sm uppercase">NgÃ¢n LÆ°á»£ng (VÃ ng)</div>
+                        <div className="text-stone-400 text-xs">DÃ¹ng Ä‘á»ƒ mua sáº¯m trong Ká»³ TrÃ¢n CÃ¡c</div>
                      </div>
                      <div className="text-2xl font-black text-yellow-500">{(player.gold || 0).toLocaleString()}</div>
                   </div>
 
                   <div className="bg-stone-900/80 p-4 rounded-2xl border border-stone-700 flex items-center gap-4">
                      <div className="w-12 h-12 bg-green-900/30 rounded-xl flex items-center justify-center border border-green-500/30 overflow-hidden relative">
-                        <img src="./items/jade.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Ngọc Bích"/>
+                        <img src="./items/jade.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Ngá»c BÃ­ch"/>
                      </div>
                      <div className="flex-1">
-                        <div className="text-white font-bold text-sm uppercase">Ngọc Bích</div>
-                        <div className="text-stone-400 text-xs">Dùng để kích hoạt sức mạnh</div>
+                        <div className="text-white font-bold text-sm uppercase">Ngá»c BÃ­ch</div>
+                        <div className="text-stone-400 text-xs">DÃ¹ng Ä‘á»ƒ kÃ­ch hoáº¡t sá»©c máº¡nh</div>
                      </div>
                      <div className="text-2xl font-black text-green-400">{player.jade}</div>
                   </div>
 
                   <div className="bg-stone-900/80 p-4 rounded-2xl border border-stone-700 flex items-center gap-4">
                      <div className="w-12 h-12 bg-purple-900/30 rounded-xl flex items-center justify-center border border-purple-500/30 overflow-hidden relative">
-                        <div className="text-3xl drop-shadow-md">💊</div>
+                        <div className="text-3xl drop-shadow-md">ðŸ’Š</div>
                      </div>
                      <div className="flex-1">
-                        <div className="text-white font-bold text-sm uppercase">Các Loại Đan</div>
-                        <div className="text-stone-400 text-xs">Đột Phá Đan dùng để Nâng sao tướng</div>
+                        <div className="text-white font-bold text-sm uppercase">CÃ¡c Loáº¡i Äan</div>
+                        <div className="text-stone-400 text-xs">Äá»™t PhÃ¡ Äan dÃ¹ng Ä‘á»ƒ NÃ¢ng sao tÆ°á»›ng</div>
                      </div>
                      <div className="text-2xl font-black text-purple-400">{player.upgradePills || 0}</div>
                   </div>
@@ -3253,7 +3253,7 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
 
           <div className="w-full h-[45%] md:h-auto md:flex-1 p-4 md:p-10 flex flex-col items-center justify-center relative bg-[url('/hub-bg.png')] bg-cover bg-center order-1 md:order-2 overflow-hidden">
              <div className="absolute inset-0 bg-stone-900/70"></div>
-             <div className="absolute top-2 md:top-10 text-amber-900/20 font-cinzel font-black uppercase tracking-[0.2em] md:tracking-[0.5em] text-xl md:text-4xl pointer-events-none select-none z-0">TRẬN ĐỒ QUÂN TA</div>
+             <div className="absolute top-2 md:top-10 text-amber-900/20 font-cinzel font-black uppercase tracking-[0.2em] md:tracking-[0.5em] text-xl md:text-4xl pointer-events-none select-none z-0">TRáº¬N Äá»’ QUÃ‚N TA</div>
              <div className="grid grid-cols-3 gap-4 md:gap-8 p-6 md:p-12 bg-black/40 rounded-[2rem] md:rounded-[4rem] border-2 md:border-4 border-dashed border-amber-900/40 shadow-inner relative z-10 transform scale-90 md:scale-100">
                 {[0, 1, 2, 3, 4, 5].map(idx => {
                    const hId = player.lineup[idx];
@@ -3275,18 +3275,18 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
                                 <div className="relative overflow-hidden rounded-xl w-full h-full z-10 bg-[#1c1917]">
                                    <img src={hero.image} className="w-full h-full object-cover contrast-110" onError={(e) => { (e.target as HTMLImageElement).src = hero.faction === 'enemy' ? DEFAULT_ENEMY_IMG : DEFAULT_ALLY_IMG; }} />
                                    
-                                   {/* Sao & Cảnh giới */}
+                                   {/* Sao & Cáº£nh giá»›i */}
                                    <div className="absolute top-1 left-1/2 -translate-x-1/2 z-20 bg-black/80 px-2 py-0.5 rounded-full border border-white/10 shadow-md">
                                       <HeroStars starCount={hero.star} size={8} />
                                    </div>
 
-                                   {/* Tên & Lực chiến */}
+                                   {/* TÃªn & Lá»±c chiáº¿n */}
                                    <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/90 to-transparent py-1.5 px-1 text-center z-20">
                                       <div className="text-[10px] text-amber-300 font-cinzel font-black uppercase truncate">{hero.name}</div>
                                       <div className="text-[8px] text-amber-500 font-bold">CL: {hero.overall ? hero.overall.toLocaleString() : ''}</div>
                                    </div>
 
-                                   {/* Nút Xóa khỏi trận */}
+                                   {/* NÃºt XÃ³a khá»i tráº­n */}
                                    <button onClick={(e) => { e.stopPropagation(); removeHeroFromLineup(idx); }} className="absolute -top-1 -right-1 bg-red-900 text-white p-1 rounded-full shadow-lg hover:bg-red-700 transition-colors z-30 opacity-0 group-hover:opacity-100">
                                       <XCircle size={16}/>
                                    </button>
@@ -3295,11 +3295,11 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
                            ) : (
                              <div className="text-center space-y-2 opacity-30 group-hover:opacity-100 transition-opacity">
                                 <Plus size={32} className="text-amber-900 mx-auto" />
-                                <div className="text-[8px] text-amber-900 font-black uppercase">Vị trí {idx+1}</div>
+                                <div className="text-[8px] text-amber-900 font-black uppercase">Vá»‹ trÃ­ {idx+1}</div>
                              </div>
                            )}
                         </button>
-                        {isSelected && !hero && <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-[10px] text-amber-500 font-black whitespace-nowrap animate-bounce">CHỌN TƯỚNG BÊN TRÁI</div>}
+                        {isSelected && !hero && <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-[10px] text-amber-500 font-black whitespace-nowrap animate-bounce">CHá»ŒN TÆ¯á»šNG BÃŠN TRÃI</div>}
                      </div>
                    );
                 })}
@@ -3321,28 +3321,28 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
           return (
            <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-6 backdrop-blur-sm animate-in fade-in duration-300">
               <div className="scroll-bg max-w-lg w-full p-10 rounded-[3rem] shadow-2xl border-amber-900 text-center">
-                 <h3 className="text-2xl font-cinzel font-black uppercase mb-6">Đột Phá Cảnh Giới</h3>
+                 <h3 className="text-2xl font-cinzel font-black uppercase mb-6">Äá»™t PhÃ¡ Cáº£nh Giá»›i</h3>
                  <div className="flex justify-center gap-10 items-center mb-10">
                     <div className="text-center">
                        <HeroStars starCount={selectedHero.star} size={14} className="justify-center mb-2" />
-                       <div className="text-xs font-bold uppercase text-stone-600">Hiện tại</div>
+                       <div className="text-xs font-bold uppercase text-stone-600">Hiá»‡n táº¡i</div>
                     </div>
                     <ArrowRight size={32} className="text-amber-900" />
                     <div className="text-center">
                        <HeroStars starCount={selectedHero.star + 1} size={14} className="justify-center mb-2 animate-pulse" />
-                       <div className="text-xs font-bold uppercase text-amber-900">Sao mới</div>
+                       <div className="text-xs font-bold uppercase text-amber-900">Sao má»›i</div>
                     </div>
                  </div>
                  <div className="bg-white/40 p-6 rounded-2xl mb-8 border border-amber-900/10 space-y-3 text-left">
                     <div className="flex justify-between items-center font-bold">
-                       <span className="text-xs uppercase">Mảnh tướng {selectedHero.name}:</span>
+                       <span className="text-xs uppercase">Máº£nh tÆ°á»›ng {selectedHero.name}:</span>
                         <span className={totalFrags >= req.fragReq ? 'text-green-700 font-black' : 'text-red-700 font-black'}>
                           {totalFrags} / {req.fragReq}
-                          {storedFrags > 0 && <span className="text-[10px] text-amber-600 ml-1">(+{storedFrags} kho rời)</span>}
+                          {storedFrags > 0 && <span className="text-[10px] text-amber-600 ml-1">(+{storedFrags} kho rá»i)</span>}
                         </span>
                     </div>
                     <div className="flex justify-between items-center font-bold">
-                       <span className="text-xs uppercase">Ngọc bích cần thiết:</span>
+                       <span className="text-xs uppercase">Ngá»c bÃ­ch cáº§n thiáº¿t:</span>
                        <span className={player.jade >= req.jadeReq ? 'text-green-700 font-black' : 'text-red-700 font-black'}>
                           {player.jade} / {req.jadeReq}
                        </span>
@@ -3357,11 +3357,11 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
                           </span>
                        </div>
                     )}
-                   <div className="pt-4 border-t border-amber-900/10 text-xs italic text-amber-900/70 text-center">Tăng điểm tiềm năng, lực chiến và mở khóa cảnh giới mới.</div>
+                   <div className="pt-4 border-t border-amber-900/10 text-xs italic text-amber-900/70 text-center">TÄƒng Ä‘iá»ƒm tiá»m nÄƒng, lá»±c chiáº¿n vÃ  má»Ÿ khÃ³a cáº£nh giá»›i má»›i.</div>
                 </div>
                 <div className="flex gap-4">
-                   <button onClick={() => setShowUpgradeModal(false)} className="flex-1 bg-stone-800 hover:bg-stone-700 py-3 rounded-xl font-bold uppercase transition-colors">Hủy</button>
-                   <button onClick={upgradeStar} className="flex-1 py-4 font-black uppercase text-xs bg-amber-950 text-white rounded-xl shadow-lg transition-all active:scale-95">Xác nhận nâng sao</button>
+                   <button onClick={() => setShowUpgradeModal(false)} className="flex-1 bg-stone-800 hover:bg-stone-700 py-3 rounded-xl font-bold uppercase transition-colors">Há»§y</button>
+                   <button onClick={upgradeStar} className="flex-1 py-4 font-black uppercase text-xs bg-amber-950 text-white rounded-xl shadow-lg transition-all active:scale-95">XÃ¡c nháº­n nÃ¢ng sao</button>
                 </div>
              </div>
           </div>
@@ -3371,23 +3371,23 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
        {showDecomposeModal && selectedHero && (
           <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-6 backdrop-blur-sm animate-in fade-in duration-300">
              <div className="scroll-bg max-w-lg w-full p-10 rounded-[3rem] shadow-2xl border-red-900 text-center">
-                <h3 className="text-2xl font-cinzel font-black uppercase mb-6 text-red-900">Giải Ngũ Hào Kiệt</h3>
-                <p className="text-sm italic mb-8 text-stone-700 font-bold">Lệnh bài giải ngũ sẽ thu hồi anh hùng, Chúa công muốn nhận bồi hoàn gì?</p>
+                <h3 className="text-2xl font-cinzel font-black uppercase mb-6 text-red-900">Giáº£i NgÅ© HÃ o Kiá»‡t</h3>
+                <p className="text-sm italic mb-8 text-stone-700 font-bold">Lá»‡nh bÃ i giáº£i ngÅ© sáº½ thu há»“i anh hÃ¹ng, ChÃºa cÃ´ng muá»‘n nháº­n bá»“i hoÃ n gÃ¬?</p>
                 <div className="grid grid-cols-1 gap-4 mb-10">
                    <button onClick={() => decompose('fragments')} className="bg-white/60 p-5 rounded-2xl border-2 border-amber-900/20 hover:border-amber-900 transition-all flex justify-between items-center font-black">
-                      <span className="text-xs uppercase">50 Mảnh tướng {selectedHero.name}</span>
+                      <span className="text-xs uppercase">50 Máº£nh tÆ°á»›ng {selectedHero.name}</span>
                       <UserCheck className="text-amber-900" />
                    </button>
                    <button onClick={() => decompose('jade')} className="bg-white/60 p-5 rounded-2xl border-2 border-amber-900/20 hover:border-amber-900 transition-all flex justify-between items-center font-black">
-                      <span className="text-xs uppercase">Ngọc Bích ({selectedHero.rarity === 'UR' ? 30 : selectedHero.rarity === 'SSR' ? 20 : selectedHero.rarity === 'SR' ? 10 : selectedHero.rarity === 'R' ? 5 : 2})</span>
+                      <span className="text-xs uppercase">Ngá»c BÃ­ch ({selectedHero.rarity === 'UR' ? 30 : selectedHero.rarity === 'SSR' ? 20 : selectedHero.rarity === 'SR' ? 10 : selectedHero.rarity === 'R' ? 5 : 2})</span>
                       <Star className="text-green-700" />
                    </button>
                    <button onClick={() => decompose('gold')} className="bg-white/60 p-5 rounded-2xl border-2 border-amber-900/20 hover:border-amber-900 transition-all flex justify-between items-center font-black">
-                      <span className="text-xs uppercase">Vàng ({selectedHero.rarity === 'UR' ? 15000 : selectedHero.rarity === 'SSR' ? 10000 : selectedHero.rarity === 'SR' ? 7500 : selectedHero.rarity === 'R' ? 3000 : 1000})</span>
+                      <span className="text-xs uppercase">VÃ ng ({selectedHero.rarity === 'UR' ? 15000 : selectedHero.rarity === 'SSR' ? 10000 : selectedHero.rarity === 'SR' ? 7500 : selectedHero.rarity === 'R' ? 3000 : 1000})</span>
                       <Coins className="text-yellow-600" />
                    </button>
                 </div>
-                <button onClick={() => setShowDecomposeModal(false)} className="w-full py-4 text-xs font-black uppercase text-stone-500 underline">Quay lại</button>
+                <button onClick={() => setShowDecomposeModal(false)} className="w-full py-4 text-xs font-black uppercase text-stone-500 underline">Quay láº¡i</button>
              </div>
           </div>
        )}
@@ -3396,9 +3396,9 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
 
        {showEquipModal && selectedHero && (
           <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-6 backdrop-blur-sm animate-in fade-in duration-300">
-             <div className="scroll-bg max-w-2xl w-full p-8 rounded-[3rem] shadow-2xl border-purple-900 text-center max-h-[80vh] flex flex-col">
-                <h3 className="text-2xl font-cinzel font-black uppercase mb-2 text-purple-400">Trang Bị Thần Khí</h3>
-                <p className="text-sm italic mb-6 text-stone-400 font-bold">Chọn thần khí phù hợp cho {selectedHero.name}</p>
+             <div className="scroll-bg max-w-2xl w-full p-8 rounded-[3rem] shadow-2xl border-purple-900 text-center max-h-[80%] flex flex-col">
+                <h3 className="text-2xl font-cinzel font-black uppercase mb-2 text-purple-400">Trang Bá»‹ Tháº§n KhÃ­</h3>
+                <p className="text-sm italic mb-6 text-stone-400 font-bold">Chá»n tháº§n khÃ­ phÃ¹ há»£p cho {selectedHero.name}</p>
                 <div className="flex-1 overflow-y-auto min-h-[300px] grid grid-cols-2 md:grid-cols-3 gap-4 mb-6 pr-2">
                    <button onClick={() => {
                       setPlayer((p: any) => ({
@@ -3407,8 +3407,8 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
                       }));
                       setShowEquipModal(false);
                    }} className="bg-red-900/20 p-4 rounded-xl border border-red-500/30 hover:bg-red-900/40 hover:border-red-400 transition-all font-black text-[10px] uppercase text-red-300 flex flex-col items-center justify-center gap-2">
-                      <div className="w-12 h-12 rounded-full border-2 border-red-500/50 flex items-center justify-center bg-red-950/50 text-xl">✖</div>
-                      Tháo Trang Bị
+                      <div className="w-12 h-12 rounded-full border-2 border-red-500/50 flex items-center justify-center bg-red-950/50 text-xl">âœ–</div>
+                      ThÃ¡o Trang Bá»‹
                    </button>
                    {player.artifacts && player.artifacts.filter((artId: string) => {
                           const art = ARTIFACTS.find(a => a.id === artId);
@@ -3431,15 +3431,15 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
                              }} className={`bg-purple-900/20 p-3 rounded-xl border ${isEquipped ? 'border-purple-400 bg-purple-900/40 shadow-[0_0_15px_rgba(168,85,247,0.4)]' : 'border-purple-500/30'} hover:border-purple-400 transition-all flex flex-col items-center gap-2 relative`}>
                                 <img src={art.image} className="w-12 h-12 rounded border border-purple-500/50 object-cover" />
                                 <div className="font-bold text-purple-200 text-[10px] uppercase truncate w-full">{art.name}</div>
-                                {isEquipped && <div className="absolute top-1 right-1 bg-purple-500 text-white text-[8px] px-1 rounded uppercase font-bold">Đang dùng</div>}
+                                {isEquipped && <div className="absolute top-1 right-1 bg-purple-500 text-white text-[8px] px-1 rounded uppercase font-bold">Äang dÃ¹ng</div>}
                              </button>
                           );
                        })
                    ) : (
-                       <div className="col-span-2 text-stone-500 text-xs italic mt-10">Chúa công chưa có Thần Khí bản mệnh nào phù hợp cho hào kiệt này. Hãy vào Chiêu Hiền Đài để tìm kiếm!</div>
+                       <div className="col-span-2 text-stone-500 text-xs italic mt-10">ChÃºa cÃ´ng chÆ°a cÃ³ Tháº§n KhÃ­ báº£n má»‡nh nÃ o phÃ¹ há»£p cho hÃ o kiá»‡t nÃ y. HÃ£y vÃ o ChiÃªu Hiá»n ÄÃ i Ä‘á»ƒ tÃ¬m kiáº¿m!</div>
                    )}
                 </div>
-                <button onClick={() => setShowEquipModal(false)} className="w-full py-4 text-xs font-black uppercase text-stone-500 underline mt-auto">Đóng</button>
+                <button onClick={() => setShowEquipModal(false)} className="w-full py-4 text-xs font-black uppercase text-stone-500 underline mt-auto">ÄÃ³ng</button>
              </div>
           </div>
        )}
@@ -3450,9 +3450,9 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
             onClose={() => setSelectedHeroId(null)}
             actions={
                <div className="flex gap-2 mt-4 w-full">
-                  <button onClick={() => setShowUpgradeModal(true)} className="flex-1 bg-gradient-to-r from-green-800 to-green-700 hover:from-green-700 hover:to-green-600 text-white py-3 rounded-xl text-[10px] font-black uppercase flex flex-col items-center justify-center gap-1 shadow-md transition-all border border-green-600/30"><ArrowUpCircle size={14}/> Nâng Sao</button>
-                  <button onClick={() => setShowEquipModal(true)} className="flex-1 bg-gradient-to-r from-purple-900 to-purple-800 hover:from-purple-800 hover:to-purple-700 text-white py-3 rounded-xl text-[10px] font-black uppercase flex flex-col items-center justify-center gap-1 shadow-md transition-all border border-purple-500/30"><ScrollText size={14}/> Thần Khí</button>
-                  <button onClick={() => setShowDecomposeModal(true)} className="flex-1 bg-gradient-to-r from-red-900 to-red-800 hover:from-red-800 hover:to-red-700 text-white py-3 rounded-xl text-[10px] font-black uppercase flex flex-col items-center justify-center gap-1 shadow-md transition-all border border-red-700/30"><Scissors size={14}/> Tách</button>
+                  <button onClick={() => setShowUpgradeModal(true)} className="flex-1 bg-gradient-to-r from-green-800 to-green-700 hover:from-green-700 hover:to-green-600 text-white py-3 rounded-xl text-[10px] font-black uppercase flex flex-col items-center justify-center gap-1 shadow-md transition-all border border-green-600/30"><ArrowUpCircle size={14}/> NÃ¢ng Sao</button>
+                  <button onClick={() => setShowEquipModal(true)} className="flex-1 bg-gradient-to-r from-purple-900 to-purple-800 hover:from-purple-800 hover:to-purple-700 text-white py-3 rounded-xl text-[10px] font-black uppercase flex flex-col items-center justify-center gap-1 shadow-md transition-all border border-purple-500/30"><ScrollText size={14}/> Tháº§n KhÃ­</button>
+                  <button onClick={() => setShowDecomposeModal(true)} className="flex-1 bg-gradient-to-r from-red-900 to-red-800 hover:from-red-800 hover:to-red-700 text-white py-3 rounded-xl text-[10px] font-black uppercase flex flex-col items-center justify-center gap-1 shadow-md transition-all border border-red-700/30"><Scissors size={14}/> TÃ¡ch</button>
                </div>
             }
           />
@@ -3464,9 +3464,9 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
 // Helper to determine skill effect based on text
 const determineSkillEffect = (hero: Hero): string => {
   const text = (hero.skillName + ' ' + hero.skillDesc).toLowerCase();
-  if (text.includes('lửa') || text.includes('hỏa') || text.includes('cháy') || text.includes('diệm')) return 'fire';
-  if (text.includes('băng') || text.includes('thủy') || text.includes('nước') || text.includes('sóng') || text.includes('hàn')) return 'ice';
-  if (text.includes('sấm') || text.includes('sét') || text.includes('lôi') || text.includes('điện')) return 'lightning';
+  if (text.includes('lá»­a') || text.includes('há»a') || text.includes('chÃ¡y') || text.includes('diá»‡m')) return 'fire';
+  if (text.includes('bÄƒng') || text.includes('thá»§y') || text.includes('nÆ°á»›c') || text.includes('sÃ³ng') || text.includes('hÃ n')) return 'ice';
+  if (text.includes('sáº¥m') || text.includes('sÃ©t') || text.includes('lÃ´i') || text.includes('Ä‘iá»‡n')) return 'lightning';
   return 'slash';
 };
 
@@ -3483,7 +3483,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
     
     
     const handleFlee = () => {
-        if (window.confirm("Nếu rời trận xem như phe ta đã bại. Bạn có chắc chắn muốn rời trận?")) {
+        if (window.confirm("Náº¿u rá»i tráº­n xem nhÆ° phe ta Ä‘Ã£ báº¡i. Báº¡n cÃ³ cháº¯c cháº¯n muá»‘n rá»i tráº­n?")) {
             setResult('lose');
             setActive(false);
         }
@@ -3495,7 +3495,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
     const [attackerOffset, setAttackerOffset] = useState<{ tx: number; ty: number }>({ tx: 0, ty: 0 });
     const [activeSkillVideo, setActiveSkillVideo] = useState<string | null>(null);
     const hitCallbackRef = React.useRef<(() => void) | null>(null);
-    // unitsRef: luôn giữ bản sao mới nhất của units để tránh stale closure trong async callbacks
+    // unitsRef: luÃ´n giá»¯ báº£n sao má»›i nháº¥t cá»§a units Ä‘á»ƒ trÃ¡nh stale closure trong async callbacks
     const unitsRef = React.useRef(units);
     React.useEffect(() => { unitsRef.current = units; }, [units]);
     
@@ -3507,10 +3507,10 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
     useEffect(() => {
         setRoundCount(0);
         setTurnQueue([]);
-    }, []); // Chỉ chạy 1 lần khi mount CombatView, không reset mỗi khi units thay đổi
+    }, []); // Chá»‰ cháº¡y 1 láº§n khi mount CombatView, khÃ´ng reset má»—i khi units thay Ä‘á»•i
 
     useEffect(() => {
-        // Chỉ rebuild queue khi queue đã hết VÀ trận chiến đang active VÀ chưa có kết quả
+        // Chá»‰ rebuild queue khi queue Ä‘Ã£ háº¿t VÃ€ tráº­n chiáº¿n Ä‘ang active VÃ€ chÆ°a cÃ³ káº¿t quáº£
         if (active && turnQueue.length === 0 && !result) {
             const allAllies = units.ally.filter((u: any) => u.hp > 0).map((u: any) => ({...u, isAlly: true}));
             const allEnemies = units.enemy.filter((u: any) => u.hp > 0).map((u: any) => ({...u, isAlly: false}));
@@ -3519,16 +3519,16 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
             if (allEnemies.length === 0) { setResult('win'); setActive(false); return; }
 
             if (roundCount >= 20) {
-                setLogs((prev: any) => [`[Hệ thống] Đã quá 20 hiệp (hiệp ${roundCount})! Quân ta kiệt sức, phải rút lui.`, ...prev].slice(0, 5));
+                setLogs((prev: any) => [`[Há»‡ thá»‘ng] ÄÃ£ quÃ¡ 20 hiá»‡p (hiá»‡p ${roundCount})! QuÃ¢n ta kiá»‡t sá»©c, pháº£i rÃºt lui.`, ...prev].slice(0, 5));
                 setTimeout(() => { setResult('lose'); setActive(false); }, 1500);
                 return;
             }
 
             if (roundCount > 0) {
-                // Sang hiệp mới
-                setLogs((prev: any) => [`[Hệ thống] --- Bắt đầu Hiệp ${roundCount + 1} ---`, ...prev].slice(0, 5));
+                // Sang hiá»‡p má»›i
+                setLogs((prev: any) => [`[Há»‡ thá»‘ng] --- Báº¯t Ä‘áº§u Hiá»‡p ${roundCount + 1} ---`, ...prev].slice(0, 5));
             } else {
-                // Hiệp đầu tiên: Khởi tạo nộ khí ban đầu
+                // Hiá»‡p Ä‘áº§u tiÃªn: Khá»Ÿi táº¡o ná»™ khÃ­ ban Ä‘áº§u
                 setUnits((prev: any) => ({
                     ally: prev.ally.map((u: any) => ({ ...u, morale: Math.min(100, u.initialMorale || 25) })),
                     enemy: prev.enemy.map((u: any) => ({ ...u, morale: Math.min(100, u.initialMorale || 25) })),
@@ -3548,17 +3548,17 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
 
     const getTargets = (actor: any, scope: string, isCharmed: boolean, allUnits: any, isSupportSkill: boolean = false) => {
         const isAlly = actor.faction === 'ally';
-        // Phe đồng minh thực tế của actor (kể cả khi bị charmed/mê hoặc)
+        // Phe Ä‘á»“ng minh thá»±c táº¿ cá»§a actor (ká»ƒ cáº£ khi bá»‹ charmed/mÃª hoáº·c)
         const friendlyTeam = isAlly ? (isCharmed ? allUnits.enemy : allUnits.ally) : (isCharmed ? allUnits.ally : allUnits.enemy);
-        // Phe đối thủ thực tế của actor
+        // Phe Ä‘á»‘i thá»§ thá»±c táº¿ cá»§a actor
         const opponentTeam = isAlly ? (isCharmed ? allUnits.ally : allUnits.enemy) : (isCharmed ? allUnits.enemy : allUnits.ally);
 
         const friendlyLiving = friendlyTeam.filter((u: any) => u.hp > 0);
         const opponentLiving = opponentTeam.filter((u: any) => u.hp > 0);
 
-        // ══════════════════════════════════════════════════════════════════════════
-        // 1. KỸ NĂNG HỖ TRỢ (Buff / Hồi máu / Hồi nộ / Hồi sinh)
-        // ══════════════════════════════════════════════════════════════════════════
+        // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+        // 1. Ká»¸ NÄ‚NG Há»– TRá»¢ (Buff / Há»“i mÃ¡u / Há»“i ná»™ / Há»“i sinh)
+        // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
         if (isSupportSkill) {
             if (scope === 'dead_ally') {
                 const deadAllies = friendlyTeam.filter((u: any) => u.hp <= 0);
@@ -3585,17 +3585,17 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                 const back = friendlyLiving.filter((u: any) => u.gridPosition >= 3);
                 return back.length > 0 ? back : friendlyLiving;
             }
-            // Mặc định hỗ trợ: chọn đồng minh có tỷ lệ % máu thấp nhất
+            // Máº·c Ä‘á»‹nh há»— trá»£: chá»n Ä‘á»“ng minh cÃ³ tá»· lá»‡ % mÃ¡u tháº¥p nháº¥t
             const lowestHpAllies = [...friendlyLiving].sort((a, b) => (a.hp / a.maxHp) - (b.hp / b.maxHp));
             return [lowestHpAllies[0]];
         }
 
-        // ══════════════════════════════════════════════════════════════════════════
-        // 2. KỸ NĂNG TẤN CÔNG / GÂY HẠI / ĐÁNH THƯỜNG
-        // ══════════════════════════════════════════════════════════════════════════
+        // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+        // 2. Ká»¸ NÄ‚NG Táº¤N CÃ”NG / GÃ‚Y Háº I / ÄÃNH THÆ¯á»œNG
+        // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
         if (opponentLiving.length === 0) return [];
 
-        // Kiểm tra Khiêu khích (Taunt)
+        // Kiá»ƒm tra KhiÃªu khÃ­ch (Taunt)
         if (actor.tauntedBy) {
             const taunter = opponentLiving.find((u: any) => u.id === actor.tauntedBy);
             if (taunter) return [taunter];
@@ -3604,7 +3604,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
         const frontRow = opponentLiving.filter((u: any) => u.gridPosition < 3);
         const backRow = opponentLiving.filter((u: any) => u.gridPosition >= 3);
         const activeFrontRow = frontRow.length > 0 ? frontRow : backRow;
-        const actorCol = (actor.gridPosition !== undefined ? actor.gridPosition : 0) % 3; // Cột 0, 1, 2
+        const actorCol = (actor.gridPosition !== undefined ? actor.gridPosition : 0) % 3; // Cá»™t 0, 1, 2
 
         switch (scope) {
             case 'all':
@@ -3617,10 +3617,10 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                 return backRow.length > 0 ? backRow : frontRow;
 
             case 'column': {
-                // Đánh hàng dọc: ưu tiên thẳng hàng với cột người đánh
+                // ÄÃ¡nh hÃ ng dá»c: Æ°u tiÃªn tháº³ng hÃ ng vá»›i cá»™t ngÆ°á»i Ä‘Ã¡nh
                 const colUnits = opponentLiving.filter((u: any) => (u.gridPosition % 3) === actorCol);
                 if (colUnits.length > 0) return colUnits;
-                // Nếu cột đối diện trống, tìm cột lân cận (cột 1 trước, sau đó 0, 2)
+                // Náº¿u cá»™t Ä‘á»‘i diá»‡n trá»‘ng, tÃ¬m cá»™t lÃ¢n cáº­n (cá»™t 1 trÆ°á»›c, sau Ä‘Ã³ 0, 2)
                 for (const col of [1, 0, 2]) {
                     const alt = opponentLiving.filter((u: any) => (u.gridPosition % 3) === col);
                     if (alt.length > 0) return alt;
@@ -3629,19 +3629,19 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
             }
 
             case 'lowest_hp': {
-                // Tướng địch có % HP thấp nhất (kết liễu)
+                // TÆ°á»›ng Ä‘á»‹ch cÃ³ % HP tháº¥p nháº¥t (káº¿t liá»…u)
                 const sorted = [...opponentLiving].sort((a, b) => (a.hp / a.maxHp) - (b.hp / b.maxHp));
                 return [sorted[0]];
             }
 
             case 'highest_hp': {
-                // Tướng địch có HP tuyệt đối cao nhất
+                // TÆ°á»›ng Ä‘á»‹ch cÃ³ HP tuyá»‡t Ä‘á»‘i cao nháº¥t
                 const sorted = [...opponentLiving].sort((a, b) => b.hp - a.hp);
                 return [sorted[0]];
             }
 
             case 'highest_atk': {
-                // Tướng địch có Tấn công mạnh nhất
+                // TÆ°á»›ng Ä‘á»‹ch cÃ³ Táº¥n cÃ´ng máº¡nh nháº¥t
                 const sorted = [...opponentLiving].sort((a, b) => b.atk - a.atk);
                 return [sorted[0]];
             }
@@ -3658,29 +3658,29 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
 
             case 'single':
             default: {
-                // CHIẾN THUẬT ĐÒN ĐÁNH THƯỜNG / ĐÁNH ĐƠN CHUẨN TOP 0.1% RPG:
+                // CHIáº¾N THUáº¬T ÄÃ’N ÄÃNH THÆ¯á»œNG / ÄÃNH ÄÆ N CHUáº¨N TOP 0.1% RPG:
                 
-                // 1. Sát thủ (Assassin): Săn lùng mục tiêu yếu máu nhất ở hàng sau hoặc hàng trước
-                if (actor.role === 'Sát thủ') {
+                // 1. SÃ¡t thá»§ (Assassin): SÄƒn lÃ¹ng má»¥c tiÃªu yáº¿u mÃ¡u nháº¥t á»Ÿ hÃ ng sau hoáº·c hÃ ng trÆ°á»›c
+                if (actor.role === 'SÃ¡t thá»§') {
                     const backLiving = backRow.length > 0 ? backRow : opponentLiving;
                     const sorted = [...backLiving].sort((a, b) => (a.hp / a.maxHp) - (b.hp / b.maxHp));
                     return [sorted[0]];
                 }
 
-                // 2. Cung thủ (Archer): Ưu tiên bắn tỉa mục tiêu đối diện thẳng hàng (cùng cột)
-                if (actor.role === 'Cung thủ' || actor.role === 'Xạ thủ') {
+                // 2. Cung thá»§ (Archer): Æ¯u tiÃªn báº¯n tá»‰a má»¥c tiÃªu Ä‘á»‘i diá»‡n tháº³ng hÃ ng (cÃ¹ng cá»™t)
+                if (actor.role === 'Cung thá»§' || actor.role === 'Xáº¡ thá»§') {
                     const directFront = frontRow.find((u: any) => (u.gridPosition % 3) === actorCol);
                     if (directFront) return [directFront];
                     const directBack = backRow.find((u: any) => (u.gridPosition % 3) === actorCol);
                     if (directBack) return [directBack];
                 }
 
-                // 3. Quy tắc Đối Diện Trực Tuyến (Direct Lane Facing) cho các hệ còn lại:
-                // Tìm địch ở hàng trước cùng cột
+                // 3. Quy táº¯c Äá»‘i Diá»‡n Trá»±c Tuyáº¿n (Direct Lane Facing) cho cÃ¡c há»‡ cÃ²n láº¡i:
+                // TÃ¬m Ä‘á»‹ch á»Ÿ hÃ ng trÆ°á»›c cÃ¹ng cá»™t
                 const directFront = frontRow.find((u: any) => (u.gridPosition % 3) === actorCol);
                 if (directFront) return [directFront];
 
-                // Nếu slot đối diện hàng trước trống: tìm địch gần nhất ở hàng trước (cột 1 trước, rồi cột 0, 2)
+                // Náº¿u slot Ä‘á»‘i diá»‡n hÃ ng trÆ°á»›c trá»‘ng: tÃ¬m Ä‘á»‹ch gáº§n nháº¥t á»Ÿ hÃ ng trÆ°á»›c (cá»™t 1 trÆ°á»›c, rá»“i cá»™t 0, 2)
                 if (frontRow.length > 0) {
                     const prefOrder = actorCol === 0 ? [1, 2] : (actorCol === 2 ? [1, 0] : [0, 2]);
                     for (const c of prefOrder) {
@@ -3690,11 +3690,11 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                     return [frontRow[0]];
                 }
 
-                // Khi toàn bộ hàng trước đã chết: đánh vào hàng sau cùng cột
+                // Khi toÃ n bá»™ hÃ ng trÆ°á»›c Ä‘Ã£ cháº¿t: Ä‘Ã¡nh vÃ o hÃ ng sau cÃ¹ng cá»™t
                 const directBack = backRow.find((u: any) => (u.gridPosition % 3) === actorCol);
                 if (directBack) return [directBack];
 
-                // Nếu không có, đánh địch hàng sau gần nhất
+                // Náº¿u khÃ´ng cÃ³, Ä‘Ã¡nh Ä‘á»‹ch hÃ ng sau gáº§n nháº¥t
                 if (backRow.length > 0) {
                     const prefOrder = actorCol === 0 ? [1, 2] : (actorCol === 2 ? [1, 0] : [0, 2]);
                     for (const c of prefOrder) {
@@ -3713,34 +3713,34 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
         if (!active || result || turnQueue.length === 0 || processingRef.current) return;
 
         const actor = turnQueue[0];
-        // Dùng unitsRef.current để luôn có state mới nhất, tránh stale closure
+        // DÃ¹ng unitsRef.current Ä‘á»ƒ luÃ´n cÃ³ state má»›i nháº¥t, trÃ¡nh stale closure
         const latestUnits = unitsRef.current;
         const currentActorState = actor.isAlly 
           ? latestUnits.ally.find((u: any) => u.id === actor.id)
           : latestUnits.enemy.find((u: any) => u.id === actor.id);
           
-        // Tướng đã chết (hp <= 0) hoặc không tồn tại → bỏ lượt, xóa khỏi queue
+        // TÆ°á»›ng Ä‘Ã£ cháº¿t (hp <= 0) hoáº·c khÃ´ng tá»“n táº¡i â†’ bá» lÆ°á»£t, xÃ³a khá»i queue
         if (!currentActorState || currentActorState.hp <= 0) {
             setTurnQueue(prev => prev.filter((u: any) => u.id !== actor.id));
             return;
         }
 
-        // Kiểm tra các CC (crowd control) làm mất lượt
+        // Kiá»ƒm tra cÃ¡c CC (crowd control) lÃ m máº¥t lÆ°á»£t
         const ccEffects = [
-            { flag: 'isStunned',    name: 'CHOÁNG',     clear: { isStunned: false } },
-            { flag: 'isFrozen',     name: 'ĐÓNG BĂNG',  clear: { isFrozen: false } },
-            { flag: 'isSilenced',   name: 'CÂM LẶNG',   clear: {}, skipUlt: true }, // chỉ chặn ult, không mất lượt
-            { flag: 'isPetrified',  name: 'HÓA ĐÁ',     clear: { isPetrified: false } },
-            { flag: 'isKnockedUp',  name: 'HẤT TUNG',   clear: { isKnockedUp: false } },
+            { flag: 'isStunned',    name: 'CHOÃNG',     clear: { isStunned: false } },
+            { flag: 'isFrozen',     name: 'ÄÃ“NG BÄ‚NG',  clear: { isFrozen: false } },
+            { flag: 'isSilenced',   name: 'CÃ‚M Láº¶NG',   clear: {}, skipUlt: true }, // chá»‰ cháº·n ult, khÃ´ng máº¥t lÆ°á»£t
+            { flag: 'isPetrified',  name: 'HÃ“A ÄÃ',     clear: { isPetrified: false } },
+            { flag: 'isKnockedUp',  name: 'Háº¤T TUNG',   clear: { isKnockedUp: false } },
         ];
-        // Silence chỉ chặn ult, không return - handled below
+        // Silence chá»‰ cháº·n ult, khÃ´ng return - handled below
         const silenced = currentActorState.isSilenced;
         const hardCC = currentActorState.isStunned || currentActorState.isFrozen || currentActorState.isPetrified || currentActorState.isKnockedUp;
         if (hardCC) {
             processingRef.current = true;
             const ccEffect = ccEffects.find(e => e.flag !== 'isSilenced' && currentActorState[e.flag]);
-            const statusName = ccEffect ? ccEffect.name : 'KHỐNG CHẾ';
-            setLogs((prev: any) => [`[Trạng thái] ${currentActorState.name} bị ${statusName}, mất lượt đánh!`, ...prev].slice(0, 5));
+            const statusName = ccEffect ? ccEffect.name : 'KHá»NG CHáº¾';
+            setLogs((prev: any) => [`[Tráº¡ng thÃ¡i] ${currentActorState.name} bá»‹ ${statusName}, máº¥t lÆ°á»£t Ä‘Ã¡nh!`, ...prev].slice(0, 5));
             setUnits((prev: any) => {
                const newUnits = { ...prev };
                const processUnit = (u: any) => u.id === actor.id ? { ...u, isStunned: false, isFrozen: false, isPetrified: false, isKnockedUp: false } : u;
@@ -3759,12 +3759,12 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
         const targetScope = isUltimate ? (currentActorState.targetScope || 'single') : 'single';
         const isCharmed = currentActorState.isCharmed;
 
-        // Phân định chính xác: Kỹ năng có nhắm vào phe ta (Hỗ trợ / Hồi máu / Hồi nộ) hay nhắm vào phe địch
+        // PhÃ¢n Ä‘á»‹nh chÃ­nh xÃ¡c: Ká»¹ nÄƒng cÃ³ nháº¯m vÃ o phe ta (Há»— trá»£ / Há»“i mÃ¡u / Há»“i ná»™) hay nháº¯m vÃ o phe Ä‘á»‹ch
         const heroSkillEffect = currentActorState.skillEffect;
         const heroSkillChance = currentActorState.skillEffectChance ?? 100;
         const heroSkillDmgMult = currentActorState.skillDmgMult ?? 12;
         const isSupportSkill = isUltimate && (
-            currentActorState.role === 'Hỗ trợ' ||
+            currentActorState.role === 'Há»— trá»£' ||
             ['heal', 'shield', 'cleanse', 'energy_regen', 'revive', 'immune_cc', 'undying', 'damage_share'].includes(heroSkillEffect) ||
             ['lowest_morale', 'dead_ally'].includes(targetScope)
         ) && ((currentActorState.skillDmgMult || 0) <= 0);
@@ -3781,7 +3781,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
 
         processingRef.current = true;
 
-        // Tính toán offset để bay vào giữa màn hình khi tung đòn
+        // TÃ­nh toÃ¡n offset Ä‘á»ƒ bay vÃ o giá»¯a mÃ n hÃ¬nh khi tung Ä‘Ã²n
         let attackTx = 0, attackTy = 0;
         const el = document.getElementById(`combat-card-${actor.id}`);
         if (el) {
@@ -3798,21 +3798,21 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
         setActiveEffect(null);
         setDamagePopups([]);
 
-        // ===== VIDEO CUT-IN: Nếu là Tuyệt chiêu và tướng có video =====
+        // ===== VIDEO CUT-IN: Náº¿u lÃ  Tuyá»‡t chiÃªu vÃ  tÆ°á»›ng cÃ³ video =====
         const hasSkillVideo = isUltimate && currentActorState.skillVideoUrl && speed < 99;
         if (hasSkillVideo) {
             setActiveSkillVideo(currentActorState.skillVideoUrl!);
         }
 
-        // Định nghĩa hàm chạy hit logic (được gọi sau hitAt ms, hoặc ngay khi video kết thúc)
+        // Äá»‹nh nghÄ©a hÃ m cháº¡y hit logic (Ä‘Æ°á»£c gá»i sau hitAt ms, hoáº·c ngay khi video káº¿t thÃºc)
         const runHitLogic = () => {
             const popups: any[] = [];
-            let logMsg = `[SPD ${actor.spd}] ${actor.name} ${isCharmed ? '(mê hoặc) ' : ''}${silenced ? '(câm lặng) ' : ''}`;
+            let logMsg = `[SPD ${actor.spd}] ${actor.name} ${isCharmed ? '(mÃª hoáº·c) ' : ''}${silenced ? '(cÃ¢m láº·ng) ' : ''}`;
             
-            if (isUltimate) logMsg += `tung tuyệt chiêu ${currentActorState.skillName || 'Sấm Sét'}! `;
-            else logMsg += `đánh thường. `;
+            if (isUltimate) logMsg += `tung tuyá»‡t chiÃªu ${currentActorState.skillName || 'Sáº¥m SÃ©t'}! `;
+            else logMsg += `Ä‘Ã¡nh thÆ°á»ng. `;
 
-            // Dùng unitsRef.current để lấy state mới nhất, tránh stale closure
+            // DÃ¹ng unitsRef.current Ä‘á»ƒ láº¥y state má»›i nháº¥t, trÃ¡nh stale closure
             let nextUnits = { ally: [...unitsRef.current.ally], enemy: [...unitsRef.current.enemy] };
             const selfFactionKey = actor.isAlly ? 'ally' : 'enemy';
             const enemyFactionKey = actor.isAlly ? 'enemy' : 'ally';
@@ -3827,7 +3827,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                 else nextUnits.enemy = nextUnits.enemy.map(processUnit);
             }
 
-            // ===== CƠ CHẾ KHIÊU KHÍCH CHO TIÊN PHONG CÓ KỸ NĂNG TAUNT =====
+            // ===== CÆ  CHáº¾ KHIÃŠU KHÃCH CHO TIÃŠN PHONG CÃ“ Ká»¸ NÄ‚NG TAUNT =====
             if (isUltimate && heroSkillEffect === 'taunt') {
                 nextUnits[enemyFactionKey] = nextUnits[enemyFactionKey].map((u: any) =>
                     u.hp > 0 ? { ...u, tauntedBy: actor.id } : u
@@ -3835,7 +3835,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                 nextUnits[selfFactionKey] = nextUnits[selfFactionKey].map((u: any) =>
                     u.id === actor.id ? { ...u, isInvincible: true, invincibleTurns: 1 } : u
                 );
-                logMsg += `Khiêu khích toàn bộ kẻ địch + Vô địch 1 lượt! `;
+                logMsg += `KhiÃªu khÃ­ch toÃ n bá»™ káº» Ä‘á»‹ch + VÃ´ Ä‘á»‹ch 1 lÆ°á»£t! `;
             }
 
             const skillEffectRolled = Math.random() * 100 < heroSkillChance;
@@ -3845,46 +3845,46 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
             } else if (isUltimate && !heroSkillEffect) {
                 const role = currentActorState.role;
                 const rnd = Math.random();
-                if (role === 'Khống chế') {
+                if (role === 'Khá»‘ng cháº¿') {
                     const cc = ['stun','freeze','petrify','knockup','silence'];
                     applyStatus = cc[Math.floor(rnd * cc.length)];
-                } else if (role === 'Sát thủ') {
+                } else if (role === 'SÃ¡t thá»§') {
                     applyStatus = rnd > 0.5 ? 'poison' : 'bleed';
-                } else if (role === 'Cung thủ') {
+                } else if (role === 'Cung thá»§') {
                     applyStatus = rnd > 0.6 ? 'slow' : (rnd > 0.3 ? 'armor_break' : 'anti_heal');
-                } else if (role === 'Pháp sư') {
+                } else if (role === 'PhÃ¡p sÆ°') {
                     applyStatus = rnd > 0.5 ? 'burn' : (rnd > 0.25 ? 'silence' : 'atk_down');
-                } else if (role === 'Tiên phong') {
+                } else if (role === 'TiÃªn phong') {
                     applyStatus = 'reflect';
                 }
             }
 
-            // ===== 1. BUFF TOÀN ĐỘI / BẢN THÂN DỰA THEO KỸ NĂNG =====
-            if (isUltimate && (heroSkillEffect === 'atk_up' || currentActorState.skillDesc?.toLowerCase().includes('tăng') && currentActorState.skillDesc?.toLowerCase().includes('tấn công'))) {
+            // ===== 1. BUFF TOÃ€N Äá»˜I / Báº¢N THÃ‚N Dá»°A THEO Ká»¸ NÄ‚NG =====
+            if (isUltimate && (heroSkillEffect === 'atk_up' || currentActorState.skillDesc?.toLowerCase().includes('tÄƒng') && currentActorState.skillDesc?.toLowerCase().includes('táº¥n cÃ´ng'))) {
                 nextUnits[selfFactionKey] = nextUnits[selfFactionKey].map((u: any) =>
                     u.hp > 0 ? { ...u, hasAtkUp: true, atkUpTurns: 3 } : u
                 );
-                logMsg += `Tăng 20% Tấn công toàn đội 3 lượt! `;
+                logMsg += `TÄƒng 20% Táº¥n cÃ´ng toÃ n Ä‘á»™i 3 lÆ°á»£t! `;
             }
-            if (isUltimate && (heroSkillEffect === 'def_up' || currentActorState.skillDesc?.toLowerCase().includes('tăng') && currentActorState.skillDesc?.toLowerCase().includes('phòng thủ'))) {
+            if (isUltimate && (heroSkillEffect === 'def_up' || currentActorState.skillDesc?.toLowerCase().includes('tÄƒng') && currentActorState.skillDesc?.toLowerCase().includes('phÃ²ng thá»§'))) {
                 nextUnits[selfFactionKey] = nextUnits[selfFactionKey].map((u: any) =>
                     u.hp > 0 ? { ...u, hasDefUp: true, defUpTurns: 3 } : u
                 );
-                logMsg += `Tăng 25% Phòng thủ toàn đội 3 lượt! `;
+                logMsg += `TÄƒng 25% PhÃ²ng thá»§ toÃ n Ä‘á»™i 3 lÆ°á»£t! `;
             }
             if (isUltimate && heroSkillEffect === 'spd_up') {
                 nextUnits[selfFactionKey] = nextUnits[selfFactionKey].map((u: any) =>
                     u.hp > 0 ? { ...u, hasSpdUp: true, slowTurns: 0 } : u
                 );
-                logMsg += `Tăng tốc toàn đội! `;
+                logMsg += `TÄƒng tá»‘c toÃ n Ä‘á»™i! `;
             }
             if (isUltimate && heroSkillEffect === 'crit_up') {
                 nextUnits[selfFactionKey] = nextUnits[selfFactionKey].map((u: any) =>
                     u.hp > 0 ? { ...u, hasCritUp: true, critUpTurns: 3 } : u
                 );
-                logMsg += `Tăng 35% Bạo kích toàn đội! `;
+                logMsg += `TÄƒng 35% Báº¡o kÃ­ch toÃ n Ä‘á»™i! `;
             }
-            if (isUltimate && (heroSkillEffect === 'cleanse' || currentActorState.skillDesc?.toLowerCase().includes('thanh tẩy') || currentActorState.skillDesc?.toLowerCase().includes('giải 1 trạng thái'))) {
+            if (isUltimate && (heroSkillEffect === 'cleanse' || currentActorState.skillDesc?.toLowerCase().includes('thanh táº©y') || currentActorState.skillDesc?.toLowerCase().includes('giáº£i 1 tráº¡ng thÃ¡i'))) {
                 nextUnits[selfFactionKey] = nextUnits[selfFactionKey].map((u: any) =>
                     u.hp > 0 ? {
                         ...u,
@@ -3895,9 +3895,9 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                     } : u
                 );
                 popups.push({ id: actor.id, dmg: 0, key: Date.now() + 666, isCrit: false, isCleanse: true });
-                logMsg += `Thanh tẩy toàn bộ trạng thái bất lợi cho toàn đội! `;
+                logMsg += `Thanh táº©y toÃ n bá»™ tráº¡ng thÃ¡i báº¥t lá»£i cho toÃ n Ä‘á»™i! `;
             }
-            if (isUltimate && (heroSkillEffect === 'shield' || currentActorState.skillDesc?.toLowerCase().includes('khiên ảo') || currentActorState.skillDesc?.toLowerCase().includes('tạo khiên'))) {
+            if (isUltimate && (heroSkillEffect === 'shield' || currentActorState.skillDesc?.toLowerCase().includes('khiÃªn áº£o') || currentActorState.skillDesc?.toLowerCase().includes('táº¡o khiÃªn'))) {
                 const shieldAmount = Math.max(Math.floor(currentActorState.maxHp * 0.18), Math.floor(currentActorState.atk * 12));
                 const shieldTargets = isSupportSkill ? targets : nextUnits[selfFactionKey].filter((u: any) => u.hp > 0);
                 nextUnits[selfFactionKey] = nextUnits[selfFactionKey].map((u: any) => {
@@ -3907,11 +3907,11 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                     }
                     return u;
                 });
-                logMsg += `Cấp lớp Khiên ảo ${shieldAmount} cho đồng minh! `;
+                logMsg += `Cáº¥p lá»›p KhiÃªn áº£o ${shieldAmount} cho Ä‘á»“ng minh! `;
             }
 
-            // ===== 2. HỒI NỘ (ENERGY REGEN) CHO ĐỒNG MINH =====
-            if (isUltimate && (heroSkillEffect === 'energy_regen' || currentActorState.skillDesc?.toLowerCase().includes('hồi 20% thanh nộ') || currentActorState.skillDesc?.toLowerCase().includes('hồi 25% thanh nộ') || currentActorState.skillDesc?.toLowerCase().includes('hồi 15% nộ') || currentActorState.skillDesc?.toLowerCase().includes('hồi nộ'))) {
+            // ===== 2. Há»’I Ná»˜ (ENERGY REGEN) CHO Äá»’NG MINH =====
+            if (isUltimate && (heroSkillEffect === 'energy_regen' || currentActorState.skillDesc?.toLowerCase().includes('há»“i 20% thanh ná»™') || currentActorState.skillDesc?.toLowerCase().includes('há»“i 25% thanh ná»™') || currentActorState.skillDesc?.toLowerCase().includes('há»“i 15% ná»™') || currentActorState.skillDesc?.toLowerCase().includes('há»“i ná»™'))) {
                 const addMorale = 25;
                 const moraleTargets = isSupportSkill ? targets : nextUnits[selfFactionKey].filter((u: any) => u.hp > 0);
                 nextUnits[selfFactionKey] = nextUnits[selfFactionKey].map((u: any) => {
@@ -3921,11 +3921,11 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                     }
                     return u;
                 });
-                logMsg += `Hồi ${addMorale} Nộ khí cho đồng minh mục tiêu! `;
+                logMsg += `Há»“i ${addMorale} Ná»™ khÃ­ cho Ä‘á»“ng minh má»¥c tiÃªu! `;
             }
 
-            // ===== 3. HÚT NỘ (RAGE DRAIN) TỪ KẺ ĐỊCH =====
-            if (isUltimate && (heroSkillEffect === 'rage_drain' || currentActorState.skillDesc?.toLowerCase().includes('hút 20% nộ') || currentActorState.skillDesc?.toLowerCase().includes('hút nộ'))) {
+            // ===== 3. HÃšT Ná»˜ (RAGE DRAIN) Tá»ª Káºº Äá»ŠCH =====
+            if (isUltimate && (heroSkillEffect === 'rage_drain' || currentActorState.skillDesc?.toLowerCase().includes('hÃºt 20% ná»™') || currentActorState.skillDesc?.toLowerCase().includes('hÃºt ná»™'))) {
                 let drainedTotal = 0;
                 targets.forEach((t: any) => {
                     const drain = 20;
@@ -3941,12 +3941,12 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                 nextUnits[selfFactionKey] = nextUnits[selfFactionKey].map((u: any) =>
                     u.id === actor.id ? { ...u, morale: Math.min(100, (u.morale || 0) + Math.min(60, drainedTotal)) } : u
                 );
-                logMsg += `Hút Nộ khí của địch và chuyển về bản thân! `;
+                logMsg += `HÃºt Ná»™ khÃ­ cá»§a Ä‘á»‹ch vÃ  chuyá»ƒn vá» báº£n thÃ¢n! `;
             }
 
-            // ===== 4. HỒI SINH (REVIVE) =====
+            // ===== 4. Há»’I SINH (REVIVE) =====
             let revivedHeroForQueue: any = null;
-            if (isUltimate && (heroSkillEffect === 'revive' || currentActorState.skillDesc?.toLowerCase().includes('hồi sinh'))) {
+            if (isUltimate && (heroSkillEffect === 'revive' || currentActorState.skillDesc?.toLowerCase().includes('há»“i sinh'))) {
                 const deadAllies = nextUnits[selfFactionKey].filter((u: any) => u.hp <= 0);
                 if (deadAllies.length > 0) {
                     const deadHero = deadAllies[0];
@@ -3954,35 +3954,35 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                     nextUnits[selfFactionKey] = nextUnits[selfFactionKey].map((u: any) =>
                         u.id === deadHero.id ? { ...u, hp: reviveHp, morale: 0, isStunned: false, isSilenced: false, isFrozen: false, isPetrified: false, isKnockedUp: false, isPoisoned: false, isBurning: false, isBleeding: false } : u
                     );
-                    // Lưu lại để thêm vào queue sau khi revive
+                    // LÆ°u láº¡i Ä‘á»ƒ thÃªm vÃ o queue sau khi revive
                     revivedHeroForQueue = { ...deadHero, hp: reviveHp, morale: 0, isAlly: actor.isAlly };
                     popups.push({ id: deadHero.id, dmg: reviveHp, key: Date.now() + 999, isCrit: true, isRevive: true });
-                    logMsg += `✨ HỒI SINH ${deadHero.name} với ${reviveHp} sinh lực! `;
+                    logMsg += `âœ¨ Há»’I SINH ${deadHero.name} vá»›i ${reviveHp} sinh lá»±c! `;
                 }
             }
 
-            // ===== 5. THỰC THI TRÊN TỪNG MỤC TIÊU (HEAL HOẶC DAMAGE) =====
+            // ===== 5. THá»°C THI TRÃŠN Tá»ªNG Má»¤C TIÃŠU (HEAL HOáº¶C DAMAGE) =====
             targets.forEach((target: any, idx: number) => {
                 const targetFaction = (actor.isAlly ? !isCharmed : isCharmed) ? (isSupportSkill ? 'ally' : 'enemy') : (isSupportSkill ? 'enemy' : 'ally');
                 const latestTarget = nextUnits[targetFaction]?.find((u: any) => u.id === target.id) || target;
 
                 if (isSupportSkill) {
-                    // HỒI MÁU CHO ĐỒNG MINH
+                    // Há»’I MÃU CHO Äá»’NG MINH
                     if (latestTarget.hasAntiHeal) {
-                        logMsg += `${target.name} bị cấm trị liệu! `;
+                        logMsg += `${target.name} bá»‹ cáº¥m trá»‹ liá»‡u! `;
                         return;
                     }
                     const healAmount = Math.max(Math.floor(currentActorState.atk * 8), Math.floor(latestTarget.maxHp * 0.18));
                     popups.push({ id: target.id, dmg: healAmount, key: Date.now() + idx, isCrit: false, isHeal: true });
-                    logMsg += `Hồi ${healAmount} máu cho ${target.name}. `;
+                    logMsg += `Há»“i ${healAmount} mÃ¡u cho ${target.name}. `;
                     nextUnits[targetFaction] = nextUnits[targetFaction].map((u: any) =>
                         u.id === target.id ? { ...u, hp: Math.min(u.maxHp, u.hp + healAmount) } : u
                     );
                 } else {
-                    // SÁT THƯƠNG LÊN KẺ ĐỊCH
+                    // SÃT THÆ¯Æ NG LÃŠN Káºº Äá»ŠCH
                     if (latestTarget.isInvincible) {
                         popups.push({ id: target.id, dmg: 0, key: Date.now() + idx, isCrit: false });
-                        logMsg += `${target.name} VÔ ĐỊCH - miễn sát thương! `;
+                        logMsg += `${target.name} VÃ” Äá»ŠCH - miá»…n sÃ¡t thÆ°Æ¡ng! `;
                         return;
                     }
 
@@ -3996,63 +3996,63 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
 
                     let critChance = 15;
                     if (actorLatest.hasCritUp) critChance = 50;
-                    if (currentActorState.role === 'Sát thủ') critChance += 20;
+                    if (currentActorState.role === 'SÃ¡t thá»§') critChance += 20;
                     const isCrit = Math.random() * 100 < critChance;
                     if (isCrit) damage = Math.floor(damage * 1.6);
 
-                    // Phá giáp & Tăng thủ
+                    // PhÃ¡ giÃ¡p & TÄƒng thá»§
                     const effectiveDef = latestTarget.hasArmorBreak ? (latestTarget.def * 0.35) : latestTarget.def;
                     const targetDefMult = latestTarget.hasDefUp ? 1.5 : 1;
                     const dmgReduction = Math.min(0.85, (effectiveDef * targetDefMult) / ((effectiveDef * targetDefMult) + currentActorState.atk * 2 + 400));
                     damage = Math.floor(damage * (1 - dmgReduction));
 
-                    // Xuyên giáp (Armor Pen): bỏ qua 50% thủ
+                    // XuyÃªn giÃ¡p (Armor Pen): bá» qua 50% thá»§
                     if (heroSkillEffect === 'armor_pen' && isUltimate) {
                         const armorPenReduction = Math.min(0.85, (effectiveDef * 0.3) / ((effectiveDef * 0.3) + currentActorState.atk * 2 + 400));
                         damage = Math.floor(baseDamage * (1 - armorPenReduction) + variance);
                     }
-                    // Sát thương chuẩn (True Damage): bỏ qua 100% DEF
+                    // SÃ¡t thÆ°Æ¡ng chuáº©n (True Damage): bá» qua 100% DEF
                     if (heroSkillEffect === 'true_damage' && isUltimate) {
                         damage = Math.floor(currentActorState.atk * (currentActorState.skillDmgMult ?? 11) + variance);
                     }
-                    // Sát thương theo máu tối đa (Max HP Dmg)
+                    // SÃ¡t thÆ°Æ¡ng theo mÃ¡u tá»‘i Ä‘a (Max HP Dmg)
                     if (heroSkillEffect === 'max_hp_dmg' && isUltimate) {
                         damage = Math.floor(latestTarget.maxHp * 0.22 + baseDamage * 0.5);
                     }
 
                     if (latestTarget.isPetrified) {
-                        damage = Math.floor(damage * 0.5); // Hóa đá giảm 50% ST nhận
+                        damage = Math.floor(damage * 0.5); // HÃ³a Ä‘Ã¡ giáº£m 50% ST nháº­n
                     }
 
                     if (damage < 1) damage = 1;
 
-                    // Lớp khiên ảo hấp thụ trước
+                    // Lá»›p khiÃªn áº£o háº¥p thá»¥ trÆ°á»›c
                     let shieldAbsorb = 0;
                     if (latestTarget.shield && latestTarget.shield > 0) {
                         shieldAbsorb = Math.min(latestTarget.shield, damage);
                         damage -= shieldAbsorb;
                         if (shieldAbsorb > 0) {
                             popups.push({ id: target.id, dmg: shieldAbsorb, key: Date.now() + idx + 1000, isCrit: false, isShield: true });
-                            logMsg += `[Khiên] ${target.name} chặn ${shieldAbsorb} ST. `;
+                            logMsg += `[KhiÃªn] ${target.name} cháº·n ${shieldAbsorb} ST. `;
                         }
                     }
 
                     if (damage > 0) {
                         popups.push({ id: target.id, dmg: damage, key: Date.now() + idx, isCrit });
-                        logMsg += `Gây ${damage} ST cho ${target.name}${isCrit ? ' (CRIT!)' : ''}. `;
-                        // Địch bị đánh trúng: +10 Nộ khí
+                        logMsg += `GÃ¢y ${damage} ST cho ${target.name}${isCrit ? ' (CRIT!)' : ''}. `;
+                        // Äá»‹ch bá»‹ Ä‘Ã¡nh trÃºng: +10 Ná»™ khÃ­
                         nextUnits[targetFaction] = nextUnits[targetFaction].map((u: any) =>
                             u.id === target.id ? { ...u, morale: Math.min(100, (u.morale || 0) + 10) } : u
                         );
                     }
 
-                    // Hút máu (Lifesteal)
+                    // HÃºt mÃ¡u (Lifesteal)
                     if ((actorLatest.hasLifesteal || heroSkillEffect === 'lifesteal') && damage > 0) {
                         const healBack = Math.floor(damage * 0.35);
                         nextUnits[selfFactionKey] = nextUnits[selfFactionKey].map((u: any) =>
                             u.id === actor.id ? { ...u, hp: Math.min(u.maxHp, u.hp + healBack) } : u
                         );
-                        logMsg += `Hút máu +${healBack}. `;
+                        logMsg += `HÃºt mÃ¡u +${healBack}. `;
                     }
 
                     const processTarget = (u: any) => {
@@ -4086,19 +4086,19 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
 
                     nextUnits[targetFaction] = nextUnits[targetFaction].map(processTarget);
 
-                    // Phản sát thương (Reflect)
+                    // Pháº£n sÃ¡t thÆ°Æ¡ng (Reflect)
                     if (latestTarget.hasReflect && damage > 0) {
                         const reflectDmg = Math.floor(damage * 0.25);
                         nextUnits[selfFactionKey] = nextUnits[selfFactionKey].map((u: any) =>
                             u.id === actor.id ? { ...u, hp: Math.max(0, u.hp - reflectDmg) } : u
                         );
                         popups.push({ id: actor.id, dmg: reflectDmg, key: Date.now() + idx + 2000, isCrit: false, isReflect: true });
-                        logMsg += `[Phản] ${target.name} phản ${reflectDmg} ST! `;
+                        logMsg += `[Pháº£n] ${target.name} pháº£n ${reflectDmg} ST! `;
                     }
                 }
             });
 
-            // Tăng 25 nộ khi đánh thường thành công
+            // TÄƒng 25 ná»™ khi Ä‘Ã¡nh thÆ°á»ng thÃ nh cÃ´ng
             if (!isUltimate && !isSupportSkill) {
                 nextUnits[selfFactionKey] = nextUnits[selfFactionKey].map((u: any) =>
                     u.id === actor.id ? { ...u, morale: Math.min(100, (u.morale || 0) + 25) } : u
@@ -4124,34 +4124,34 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                 else if (ef === 'max_hp_dmg') effectType = 'smash';
                 else {
                     const role = currentActorState.role;
-                    if (role === 'Pháp sư') effectType = 'dragon';
-                    else if (role === 'Cung thủ') effectType = 'arrow';
-                    else if (role === 'Khống chế') effectType = 'ice';
-                    else if (role === 'Sát thủ') effectType = 'bleed';
+                    if (role === 'PhÃ¡p sÆ°') effectType = 'dragon';
+                    else if (role === 'Cung thá»§') effectType = 'arrow';
+                    else if (role === 'Khá»‘ng cháº¿') effectType = 'ice';
+                    else if (role === 'SÃ¡t thá»§') effectType = 'bleed';
                     else effectType = 'smash';
                 }
             } else {
                 const role = currentActorState.role;
-                if (role === 'Pháp sư') effectType = 'normal_magic';
-                else if (role === 'Cung thủ' || role === 'Xạ thủ') effectType = 'arrow';
-                else if (role === 'Khống chế') effectType = 'normal_control';
-                else if (role === 'Sát thủ') effectType = 'normal_assassin';
-                else if (role === 'Tiên phong') effectType = 'normal_tank';
-                else if (role === 'Hỗ trợ') effectType = 'heal';
+                if (role === 'PhÃ¡p sÆ°') effectType = 'normal_magic';
+                else if (role === 'Cung thá»§' || role === 'Xáº¡ thá»§') effectType = 'arrow';
+                else if (role === 'Khá»‘ng cháº¿') effectType = 'normal_control';
+                else if (role === 'SÃ¡t thá»§') effectType = 'normal_assassin';
+                else if (role === 'TiÃªn phong') effectType = 'normal_tank';
+                else if (role === 'Há»— trá»£') effectType = 'heal';
                 else effectType = 'slash';
             }
 
             setActiveEffect(effectType);
             setDamagePopups(popups);
             setUnits(nextUnits);
-            // Cập nhật unitsRef ngay lập tức để các lượt sau không bị stale
+            // Cáº­p nháº­t unitsRef ngay láº­p tá»©c Ä‘á»ƒ cÃ¡c lÆ°á»£t sau khÃ´ng bá»‹ stale
             unitsRef.current = nextUnits;
             setActiveSkillVideo(null);
             
-            // Nếu có tướng vừa được hồi sinh → thêm vào cuối queue của hiệp này
+            // Náº¿u cÃ³ tÆ°á»›ng vá»«a Ä‘Æ°á»£c há»“i sinh â†’ thÃªm vÃ o cuá»‘i queue cá»§a hiá»‡p nÃ y
             if (revivedHeroForQueue) {
                 setTurnQueue(prev => {
-                    // Tránh thêm trùng nếu tướng đó vẫn còn trong queue (trường hợp edge case)
+                    // TrÃ¡nh thÃªm trÃ¹ng náº¿u tÆ°á»›ng Ä‘Ã³ váº«n cÃ²n trong queue (trÆ°á»ng há»£p edge case)
                     const alreadyInQueue = prev.some((u: any) => u.id === revivedHeroForQueue.id);
                     if (alreadyInQueue) return prev;
                     return [...prev, revivedHeroForQueue];
@@ -4170,12 +4170,12 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
         }; // end runHitLogic
 
         if (hasSkillVideo) {
-            // Lưu callback để video overlay gọi khi end/skip
+            // LÆ°u callback Ä‘á»ƒ video overlay gá»i khi end/skip
             hitCallbackRef.current = () => { runHitLogic(); };
-            // Fallback: nếu sau 30s video chưa kết thúc/bị skip thì tự chạy
+            // Fallback: náº¿u sau 30s video chÆ°a káº¿t thÃºc/bá»‹ skip thÃ¬ tá»± cháº¡y
             t1.current = setTimeout(() => { hitCallbackRef.current = null; runHitLogic(); }, 30000);
         } else {
-            // Không có video: chạy bình thường sau hitAt ms
+            // KhÃ´ng cÃ³ video: cháº¡y bÃ¬nh thÆ°á»ng sau hitAt ms
             t1.current = setTimeout(runHitLogic, hitAt);
         }
 
@@ -4192,103 +4192,103 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                 let dotLogs: string[] = [];
 
                 const applyDoT = (u: any) => {
-                    // Tướng đã chết KHÔNG nhận DoT và KHÔNG được update thêm
-                    if (u.hp <= 0) return { ...u, hp: 0 }; // Đảm bảo hp không bao giờ âm
+                    // TÆ°á»›ng Ä‘Ã£ cháº¿t KHÃ”NG nháº­n DoT vÃ  KHÃ”NG Ä‘Æ°á»£c update thÃªm
+                    if (u.hp <= 0) return { ...u, hp: 0 }; // Äáº£m báº£o hp khÃ´ng bao giá» Ã¢m
                     let newU = { ...u };
-                    // Độc: 5% maxHP
+                    // Äá»™c: 5% maxHP
                     if (u.isPoisoned) {
                         const pdmg = Math.floor(u.maxHp * 0.05);
-                        dotLogs.push(`☠️ [Độc] ${u.name} mất ${pdmg} HP.`);
+                        dotLogs.push(`â˜ ï¸ [Äá»™c] ${u.name} máº¥t ${pdmg} HP.`);
                         newU.hp = Math.max(0, newU.hp - pdmg);
                     }
-                    // Thiêu đốt: 4% maxHP
+                    // ThiÃªu Ä‘á»‘t: 4% maxHP
                     if (u.isBurning) {
                         const bdmg = Math.floor(u.maxHp * 0.04);
-                        dotLogs.push(`🔥 [Thiêu] ${u.name} mất ${bdmg} HP.`);
+                        dotLogs.push(`ðŸ”¥ [ThiÃªu] ${u.name} máº¥t ${bdmg} HP.`);
                         newU.hp = Math.max(0, newU.hp - bdmg);
-                        // Giảm dần sau 3 lượt (dùng burnStacks)
+                        // Giáº£m dáº§n sau 3 lÆ°á»£t (dÃ¹ng burnStacks)
                         newU.burnStacks = (newU.burnStacks || 3) - 1;
                         if (newU.burnStacks <= 0) newU.isBurning = false;
                     }
-                    // Chảy máu: 3% maxHP
+                    // Cháº£y mÃ¡u: 3% maxHP
                     if (u.isBleeding) {
                         const bldmg = Math.floor(u.maxHp * 0.03);
-                        dotLogs.push(`🩸 [Chảy máu] ${u.name} mất ${bldmg} HP.`);
+                        dotLogs.push(`ðŸ©¸ [Cháº£y mÃ¡u] ${u.name} máº¥t ${bldmg} HP.`);
                         newU.hp = Math.max(0, newU.hp - bldmg);
                         newU.bleedStacks = (newU.bleedStacks || 3) - 1;
                         if (newU.bleedStacks <= 0) newU.isBleeding = false;
                     }
-                    // Giảm tốc: tự hết sau 2 lượt
+                    // Giáº£m tá»‘c: tá»± háº¿t sau 2 lÆ°á»£t
                     if (u.hasSlowDebuff) {
                         newU.slowTurns = (newU.slowTurns || 2) - 1;
                         if (newU.slowTurns <= 0) newU.hasSlowDebuff = false;
                     }
-                    // Phá giáp: hết sau 3 lượt
+                    // PhÃ¡ giÃ¡p: háº¿t sau 3 lÆ°á»£t
                     if (u.hasArmorBreak) {
                         newU.armorBreakTurns = (newU.armorBreakTurns || 3) - 1;
                         if (newU.armorBreakTurns <= 0) newU.hasArmorBreak = false;
                     }
-                    // Cấm trị liệu: hết sau 2 lượt
+                    // Cáº¥m trá»‹ liá»‡u: háº¿t sau 2 lÆ°á»£t
                     if (u.hasAntiHeal) {
                         newU.antiHealTurns = (newU.antiHealTurns || 2) - 1;
                         if (newU.antiHealTurns <= 0) newU.hasAntiHeal = false;
                     }
-                    // Giảm công: hết sau 2 lượt
+                    // Giáº£m cÃ´ng: háº¿t sau 2 lÆ°á»£t
                     if (u.hasAtkDown) {
                         newU.atkDownTurns = (newU.atkDownTurns || 2) - 1;
                         if (newU.atkDownTurns <= 0) newU.hasAtkDown = false;
                     }
-                    // Vô địch: hết sau invincibleTurns
+                    // VÃ´ Ä‘á»‹ch: háº¿t sau invincibleTurns
                     if (u.isInvincible) {
                         newU.invincibleTurns = (newU.invincibleTurns || 1) - 1;
                         if (newU.invincibleTurns <= 0) newU.isInvincible = false;
                     }
-                    // Khiêu khích: hết sau 2 lượt
+                    // KhiÃªu khÃ­ch: háº¿t sau 2 lÆ°á»£t
                     if (u.tauntedBy) {
                         newU.tauntTurns = (newU.tauntTurns || 2) - 1;
                         if (newU.tauntTurns <= 0) { newU.tauntedBy = null; }
                     }
-                    // Phản sát thương: hết sau 2 lượt
+                    // Pháº£n sÃ¡t thÆ°Æ¡ng: háº¿t sau 2 lÆ°á»£t
                     if (u.hasReflect) {
                         newU.reflectTurns = (newU.reflectTurns || 2) - 1;
                         if (newU.reflectTurns <= 0) newU.hasReflect = false;
                     }
-                    // Hút máu: hết sau 3 lượt
+                    // HÃºt mÃ¡u: háº¿t sau 3 lÆ°á»£t
                     if (u.hasLifesteal) {
                         newU.lifestealTurns = (newU.lifestealTurns || 3) - 1;
                         if (newU.lifestealTurns <= 0) newU.hasLifesteal = false;
                     }
-                    // Tăng công
+                    // TÄƒng cÃ´ng
                     if (u.hasAtkUp) {
                         newU.atkUpTurns = (newU.atkUpTurns || 3) - 1;
                         if (newU.atkUpTurns <= 0) newU.hasAtkUp = false;
                     }
-                    // Tăng thủ
+                    // TÄƒng thá»§
                     if (u.hasDefUp) {
                         newU.defUpTurns = (newU.defUpTurns || 3) - 1;
                         if (newU.defUpTurns <= 0) newU.hasDefUp = false;
                     }
-                    // Tăng tỷ lệ bkích
+                    // TÄƒng tá»· lá»‡ bkÃ­ch
                     if (u.hasCritUp) {
                         newU.critUpTurns = (newU.critUpTurns || 3) - 1;
                         if (newU.critUpTurns <= 0) newU.hasCritUp = false;
                     }
-                    // Bất tử
+                    // Báº¥t tá»­
                     if (u.isUndying) {
                         newU.undyingTurns = (newU.undyingTurns || 2) - 1;
                         if (newU.undyingTurns <= 0) newU.isUndying = false;
                     }
-                    // Chia sẻ sát thương
+                    // Chia sáº» sÃ¡t thÆ°Æ¡ng
                     if (u.hasDamageShare) {
                         newU.damageShareTurns = (newU.damageShareTurns || 3) - 1;
                         if (newU.damageShareTurns <= 0) newU.hasDamageShare = false;
                     }
-                    // Miễn khống chế
+                    // Miá»…n khá»‘ng cháº¿
                     if (u.isImmuneCC) {
                         newU.immuneCCTurns = (newU.immuneCCTurns || 3) - 1;
                         if (newU.immuneCCTurns <= 0) newU.isImmuneCC = false;
                     }
-                    // Phản công
+                    // Pháº£n cÃ´ng
                     if (u.hasCounter) {
                         newU.counterTurns = (newU.counterTurns || 3) - 1;
                         if (newU.counterTurns <= 0) newU.hasCounter = false;
@@ -4296,19 +4296,19 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                     return newU;
                 };
 
-                // Áp DoT cho cả hai phe (effect của ai đó đánh xong thì enemy cũng chịu DoT nếu có)
+                // Ãp DoT cho cáº£ hai phe (effect cá»§a ai Ä‘Ã³ Ä‘Ã¡nh xong thÃ¬ enemy cÅ©ng chá»‹u DoT náº¿u cÃ³)
                 p.ally = p.ally.map(applyDoT);
                 p.enemy = p.enemy.map(applyDoT);
-                // Cập nhật unitsRef sau DoT
+                // Cáº­p nháº­t unitsRef sau DoT
                 unitsRef.current = p;
                 if (dotLogs.length > 0) setLogs((l:any) => [...dotLogs, ...l].slice(0,5));
                 return p;
             });
 
-            // Xóa actor vừa hành động khỏi queue VÀ lọc bỏ tướng đã chết (hp <= 0 theo unitsRef mới nhất)
+            // XÃ³a actor vá»«a hÃ nh Ä‘á»™ng khá»i queue VÃ€ lá»c bá» tÆ°á»›ng Ä‘Ã£ cháº¿t (hp <= 0 theo unitsRef má»›i nháº¥t)
             setTurnQueue(prev => {
                 const afterSlice = prev.slice(1);
-                // Lọc thêm tướng đã chết dựa trên unitsRef cập nhật sau DoT
+                // Lá»c thÃªm tÆ°á»›ng Ä‘Ã£ cháº¿t dá»±a trÃªn unitsRef cáº­p nháº­t sau DoT
                 return afterSlice.filter((u: any) => {
                     const liveUnits = unitsRef.current;
                     const found = u.isAlly
@@ -4318,7 +4318,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                 });
             });
         }, hasSkillVideo ? 33000 : resetAt);
-        // ^ Nếu có video: t2 chạy sau 33s (video 30s + 3s effect), đảm bảo luôn được reset
+        // ^ Náº¿u cÃ³ video: t2 cháº¡y sau 33s (video 30s + 3s effect), Ä‘áº£m báº£o luÃ´n Ä‘Æ°á»£c reset
 
     }, [turnQueue, active, result]);
 
@@ -4375,13 +4375,13 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
 
                     // Attacker visual enhancement
                     const roleAura: Record<string, string> = {
-                        'Pháp sư': 'rgba(220,38,38,0.8)',
-                        'Cung thủ': 'rgba(234,179,8,0.8)',
-                        'Xạ thủ': 'rgba(234,179,8,0.8)',
-                        'Khống chế': 'rgba(59,130,246,0.8)',
-                        'Tiên phong': 'rgba(251,146,60,0.8)',
-                        'Sát thủ': 'rgba(168,85,247,0.8)',
-                        'Hỗ trợ': 'rgba(34,197,94,0.8)',
+                        'PhÃ¡p sÆ°': 'rgba(220,38,38,0.8)',
+                        'Cung thá»§': 'rgba(234,179,8,0.8)',
+                        'Xáº¡ thá»§': 'rgba(234,179,8,0.8)',
+                        'Khá»‘ng cháº¿': 'rgba(59,130,246,0.8)',
+                        'TiÃªn phong': 'rgba(251,146,60,0.8)',
+                        'SÃ¡t thá»§': 'rgba(168,85,247,0.8)',
+                        'Há»— trá»£': 'rgba(34,197,94,0.8)',
                     };
                     const auraColor = isAttacker ? (roleAura[unit.role] || 'rgba(255,200,50,0.8)') : '';
                     const isUltimateActor = isAttacker && (unit.morale >= 100 || activeEffect !== null);
@@ -4406,7 +4406,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                                         animation: 'auraPulse 0.8s ease-in-out infinite',
                                         pointerEvents: 'none', zIndex: 299,
                                     }} />
-                                    {/* Particle sparks — 6 sparks flying out */}
+                                    {/* Particle sparks â€” 6 sparks flying out */}
                                     {[
                                         { sx: '40px',  sy: '-55px' },
                                         { sx: '-45px', sy: '-50px' },
@@ -4442,7 +4442,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                                         boxShadow: `0 0 10px ${auraColor}`,
                                         zIndex: 302, pointerEvents: 'none',
                                     }}>
-                                        ⚔ {unit.name}
+                                        âš” {unit.name}
                                     </div>
                                 </>
                             )}
@@ -4484,14 +4484,14 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                                               : popup.isCrit ? 'drop-shadow(0 0 10px rgba(234,179,8,1))'
                                               : 'drop-shadow(0 0 6px rgba(0,0,0,0.9))',
                                     }}>
-                                        {isRevive ? `✨ HỒI SINH (+${popup.dmg}) ✨`
-                                         : isDrain ? `⚡-${popup.dmg} NỘ`
-                                         : isMorale ? `⚡+${popup.dmg} NỘ`
-                                         : isCleanse ? `🌿 THANH TẨY`
+                                        {isRevive ? `âœ¨ Há»’I SINH (+${popup.dmg}) âœ¨`
+                                         : isDrain ? `âš¡-${popup.dmg} Ná»˜`
+                                         : isMorale ? `âš¡+${popup.dmg} Ná»˜`
+                                         : isCleanse ? `ðŸŒ¿ THANH Táº¨Y`
                                          : popup.isHeal ? `+${popup.dmg}`
-                                         : popup.isShield ? `🛡️-${popup.dmg}`
-                                         : popup.isReflect ? `🪞-${popup.dmg}`
-                                         : popup.dmg === 0 ? '⭐MIỄN⭐'
+                                         : popup.isShield ? `ðŸ›¡ï¸-${popup.dmg}`
+                                         : popup.isReflect ? `ðŸªž-${popup.dmg}`
+                                         : popup.dmg === 0 ? 'â­MIá»„Nâ­'
                                          : `-${popup.dmg}`}{' '}
                                         {popup.isCrit && !popup.isHeal && !popup.isShield && !popup.isReflect && !isMorale && !isRevive ? 'CRIT!' : ''}
                                     </div>
@@ -4516,20 +4516,20 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                                     )}
                                     {activeEffect === 'slash' && (
                                         <>
-                                            {/* Dao chém X đẹp với gradient */}
+                                            {/* Dao chÃ©m X Ä‘áº¹p vá»›i gradient */}
                                             <div style={{ position:'absolute', width:'140%', height:'6px', background:'linear-gradient(90deg, transparent, rgba(255,255,255,0.9), white, rgba(255,255,255,0.9), transparent)', transform:'rotate(40deg)', animation:'slashEffect 0.35s ease-out forwards', boxShadow:'0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(200,200,255,0.5)', borderRadius:'3px' }} />
                                             <div style={{ position:'absolute', width:'140%', height:'6px', background:'linear-gradient(90deg, transparent, rgba(200,220,255,0.9), white, rgba(200,220,255,0.9), transparent)', transform:'rotate(-40deg)', animation:'slashEffect 0.35s ease-out 0.06s forwards', boxShadow:'0 0 20px rgba(200,220,255,0.8)', borderRadius:'3px' }} />
                                             <div style={{ position:'absolute', inset:0, background:'radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%)', animation:'slashEffect 0.35s ease-out forwards', borderRadius:'10px' }} />
                                         </>
                                     )}
-                                    {/* Đòn thường: Pháp sư */}
+                                    {/* ÄÃ²n thÆ°á»ng: PhÃ¡p sÆ° */}
                                     {activeEffect === 'normal_magic' && (
                                         <>
                                             <div style={{ position:'absolute', width:'120%', height:'120%', background:'radial-gradient(circle, rgba(150,50,255,0.6) 0%, rgba(100,20,200,0.3) 40%, transparent 70%)', animation:'ping 0.5s ease-out forwards', borderRadius:'50%' }} />
                                             <div style={{ position:'absolute', width:'60%', height:'6px', background:'linear-gradient(90deg, transparent, rgba(180,100,255,1), transparent)', animation:'arrowStrike 0.4s ease-out', boxShadow:'0 0 15px rgba(150,50,255,0.9)' }} />
                                         </>
                                     )}
-                                    {/* Đòn thường: Sát thủ */}
+                                    {/* ÄÃ²n thÆ°á»ng: SÃ¡t thá»§ */}
                                     {activeEffect === 'normal_assassin' && (
                                         <>
                                             <div style={{ position:'absolute', width:'140%', height:'4px', background:'linear-gradient(90deg, transparent, rgba(200,0,50,0.9), rgba(255,50,80,1), rgba(200,0,50,0.9), transparent)', transform:'rotate(30deg)', animation:'slashEffect 0.3s ease-out forwards', boxShadow:'0 0 15px rgba(200,0,50,0.8)', borderRadius:'2px' }} />
@@ -4537,14 +4537,14 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                                             <div style={{ position:'absolute', width:'140%', height:'4px', background:'linear-gradient(90deg, transparent, rgba(180,0,100,0.8), transparent)', transform:'rotate(0deg)', animation:'slashEffect 0.3s ease-out 0.1s forwards', boxShadow:'0 0 10px rgba(200,0,50,0.6)', borderRadius:'2px' }} />
                                         </>
                                     )}
-                                    {/* Đòn thường: Tiên phong / Tank */}
+                                    {/* ÄÃ²n thÆ°á»ng: TiÃªn phong / Tank */}
                                     {activeEffect === 'normal_tank' && (
                                         <>
                                             <div style={{ position:'absolute', width:'180%', height:'180%', background:'radial-gradient(circle, rgba(255,120,0,0.7) 0%, rgba(255,80,0,0.3) 40%, transparent 70%)', animation:'ping 0.4s ease-out forwards', borderRadius:'50%' }} />
                                             <div style={{ position:'absolute', inset:'-4px', border:'4px solid rgba(255,140,0,0.8)', borderRadius:'12px', animation:'auraPulse 0.3s ease-out forwards', boxShadow:'0 0 25px rgba(255,140,0,0.8)' }} />
                                         </>
                                     )}
-                                    {/* Đòn thường: Khống chế */}
+                                    {/* ÄÃ²n thÆ°á»ng: Khá»‘ng cháº¿ */}
                                     {activeEffect === 'normal_control' && (
                                         <>
                                             <div style={{ position:'absolute', width:'100%', height:'100%', background:'rgba(80,120,255,0.3)', border:'3px solid rgba(100,150,255,0.8)', borderRadius:'10px', animation:'freezeOverlay 0.4s ease-in-out forwards', boxShadow:'0 0 20px rgba(80,120,255,0.6)' }} />
@@ -4576,32 +4576,32 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                                             <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)' }}><Frown size={32} color="orange" /></div>
                                         </div>
                                     )}
-                                    {/* Sát thương chuẩn - trắng xuyên thấu */}
+                                    {/* SÃ¡t thÆ°Æ¡ng chuáº©n - tráº¯ng xuyÃªn tháº¥u */}
                                     {activeEffect === 'true_dmg' && (
                                         <>
                                             <div style={{ width:'100%', height:'100%', background:'rgba(255,255,255,0.5)', borderRadius:'10px', border:'3px solid white', animation:'trueDmgFlash 0.3s ease-out', boxShadow:'0 0 30px white, inset 0 0 20px rgba(255,255,255,0.5)' }} />
                                             <div style={{ position:'absolute', width:'80%', height:'6px', background:'white', boxShadow:'0 0 15px white, 0 0 30px cyan', borderRadius:'3px', animation:'laserBeam 0.4s ease-out' }} />
                                         </>
                                     )}
-                                    {/* Xuyên giáp */}
+                                    {/* XuyÃªn giÃ¡p */}
                                     {activeEffect === 'armor_pen' && (
                                         <div style={{ width:'100%', height:'100%', background:'rgba(255,165,0,0.3)', borderRadius:'10px', border:'3px solid rgba(255,165,0,0.9)', boxShadow:'0 0 20px orange', animation:'armorPenFlash 0.4s ease-out' }}>
                                             <div style={{ position:'absolute', width:'40%', height:'110%', background:'linear-gradient(to bottom, transparent, rgba(255,165,0,0.8), transparent)', left:'30%', animation:'drillThrough 0.4s ease-in-out', filter:'blur(2px)' }} />
                                         </div>
                                     )}
-                                    {/* Máu tối đa */}
+                                    {/* MÃ¡u tá»‘i Ä‘a */}
                                     {activeEffect === 'max_hp' && (
                                         <div style={{ width:'100%', height:'100%', background:'rgba(180,0,50,0.4)', borderRadius:'10px', border:'3px solid rgba(255,50,100,0.9)', animation:'maxHpPulse 0.3s ease-in-out infinite alternate', boxShadow:'0 0 25px rgba(255,50,100,0.8)' }}>
                                             <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)' }}><HeartCrack size={32} color="#ff3264" /></div>
                                         </div>
                                     )}
-                                    {/* Kết liễu */}
+                                    {/* Káº¿t liá»…u */}
                                     {activeEffect === 'execute' && (
                                         <div style={{ width:'100%', height:'100%', background:'rgba(30,0,0,0.6)', borderRadius:'10px', border:'3px solid rgba(200,0,0,0.9)', animation:'executePulse 0.2s ease-in-out infinite alternate', boxShadow:'0 0 30px rgba(200,0,0,0.9)' }}>
                                             <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', animation:'spinStar 0.3s linear infinite' }}><Skull size={32} color="#c80000" /></div>
                                         </div>
                                     )}
-                                    {/* Buff overlay (tăng công/thủ/tốc/cleanse...) */}
+                                    {/* Buff overlay (tÄƒng cÃ´ng/thá»§/tá»‘c/cleanse...) */}
                                     {activeEffect === 'buff' && (
                                         <div style={{ width:'100%', height:'100%', background:'rgba(50,220,150,0.3)', borderRadius:'10px', border:'3px solid rgba(80,255,180,0.9)', animation:'buffGlow 0.4s ease-in-out infinite alternate', boxShadow:'0 0 25px rgba(50,220,150,0.8)' }}>
                                             <div style={{ position:'absolute', inset:0, backgroundImage:'repeating-linear-gradient(45deg, rgba(80,255,180,0.08) 0px, rgba(80,255,180,0.08) 2px, transparent 2px, transparent 8px)', borderRadius:'10px' }} />
@@ -4615,96 +4615,96 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                                 <img src={unit.image} className="w-full h-full object-cover" alt={unit.name} onError={(e) => { (e.target as HTMLImageElement).src = unit.faction === 'enemy' ? DEFAULT_ENEMY_IMG : DEFAULT_ALLY_IMG; }} />
                                 
                                 {/* ===== STATUS EFFECT OVERLAYS ===== */}
-                                {/* Đóng băng overlay */}
+                                {/* ÄÃ³ng bÄƒng overlay */}
                                 {unit.isFrozen && (
                                     <div style={{ position:'absolute', inset:0, borderRadius:'10px', background:'rgba(147,210,255,0.35)', border:'2px solid rgba(147,210,255,0.9)', animation:'freezeOverlay 1s ease-in-out infinite', pointerEvents:'none', zIndex:15 }}>
                                         <div style={{ position:'absolute', inset:0, backgroundImage:'repeating-linear-gradient(45deg, rgba(200,240,255,0.15) 0px, rgba(200,240,255,0.15) 2px, transparent 2px, transparent 8px)', borderRadius:'10px' }} />
                                     </div>
                                 )}
-                                {/* Thiêu đốt overlay */}
+                                {/* ThiÃªu Ä‘á»‘t overlay */}
                                 {unit.isBurning && (
                                     <div style={{ position:'absolute', inset:0, borderRadius:'10px', background:'rgba(255,80,0,0.25)', border:'2px solid rgba(255,120,0,0.8)', animation:'burnFlicker 0.4s ease-in-out infinite alternate', pointerEvents:'none', zIndex:15 }} />
                                 )}
-                                {/* Chảy máu overlay */}
+                                {/* Cháº£y mÃ¡u overlay */}
                                 {unit.isBleeding && (
                                     <div style={{ position:'absolute', inset:0, borderRadius:'10px', background:'rgba(180,0,0,0.2)', border:'2px solid rgba(220,30,30,0.7)', animation:'bleedDrip 0.8s ease-in-out infinite', pointerEvents:'none', zIndex:15 }} />
                                 )}
-                                {/* Hóa đá overlay */}
+                                {/* HÃ³a Ä‘Ã¡ overlay */}
                                 {unit.isPetrified && (
                                     <div style={{ position:'absolute', inset:0, borderRadius:'10px', background:'rgba(150,150,150,0.5)', border:'2px solid rgba(180,180,180,0.8)', pointerEvents:'none', zIndex:15, filter:'grayscale(0.8)' }} />
                                 )}
-                                {/* Vô địch overlay */}
+                                {/* VÃ´ Ä‘á»‹ch overlay */}
                                 {unit.isInvincible && (
                                     <div style={{ position:'absolute', inset:'-4px', borderRadius:'14px', border:'3px solid rgba(255,215,0,0.9)', animation:'invincibleGlow 0.5s ease-in-out infinite alternate', boxShadow:'0 0 20px rgba(255,215,0,0.8), inset 0 0 20px rgba(255,215,0,0.2)', pointerEvents:'none', zIndex:20 }} />
                                 )}
-                                {/* Tạo khiên overlay */}
+                                {/* Táº¡o khiÃªn overlay */}
                                 {unit.shield > 0 && (
                                     <div style={{ position:'absolute', inset:'-3px', borderRadius:'13px', border:'2px solid rgba(120,200,255,0.8)', animation:'shieldPulse 1s ease-in-out infinite', boxShadow:'0 0 12px rgba(120,200,255,0.6)', pointerEvents:'none', zIndex:18 }} />
                                 )}
-                                {/* Phản sát thương overlay */}
+                                {/* Pháº£n sÃ¡t thÆ°Æ¡ng overlay */}
                                 {unit.hasReflect && (
                                     <div style={{ position:'absolute', inset:0, borderRadius:'10px', background:'linear-gradient(135deg, rgba(168,85,247,0.15) 0%, rgba(236,72,153,0.15) 100%)', border:'2px solid rgba(168,85,247,0.7)', animation:'reflectShimmer 1.2s ease-in-out infinite', pointerEvents:'none', zIndex:15 }} />
                                 )}
-                                {/* Câm lặng overlay */}
+                                {/* CÃ¢m láº·ng overlay */}
                                 {unit.isSilenced && (
                                     <div style={{ position:'absolute', inset:0, borderRadius:'10px', background:'rgba(100,60,140,0.25)', border:'2px dashed rgba(168,85,247,0.7)', pointerEvents:'none', zIndex:15 }} />
                                 )}
-                                {/* Phá giáp overlay */}
+                                {/* PhÃ¡ giÃ¡p overlay */}
                                 {unit.hasArmorBreak && (
                                     <div style={{ position:'absolute', inset:0, borderRadius:'10px', border:'2px solid rgba(251,191,36,0.8)', background:'rgba(251,191,36,0.08)', animation:'armorBreakFlash 0.6s ease-in-out infinite alternate', pointerEvents:'none', zIndex:15 }} />
                                 )}
-                                {/* Tăng công overlay */}
+                                {/* TÄƒng cÃ´ng overlay */}
                                 {unit.hasAtkUp && (
                                     <div style={{ position:'absolute', inset:'-3px', borderRadius:'13px', border:'2px solid rgba(239,68,68,0.8)', animation:'atkUpGlow 0.8s ease-in-out infinite alternate', boxShadow:'0 0 12px rgba(239,68,68,0.6)', pointerEvents:'none', zIndex:16 }} />
                                 )}
-                                {/* Tăng thủ overlay */}
+                                {/* TÄƒng thá»§ overlay */}
                                 {unit.hasDefUp && (
                                     <div style={{ position:'absolute', inset:'-3px', borderRadius:'13px', border:'2px solid rgba(100,180,255,0.9)', animation:'defUpGlow 0.8s ease-in-out infinite alternate', boxShadow:'0 0 14px rgba(100,180,255,0.7)', background:'rgba(100,180,255,0.06)', pointerEvents:'none', zIndex:16 }} />
                                 )}
-                                {/* Bất tử overlay */}
+                                {/* Báº¥t tá»­ overlay */}
                                 {unit.isUndying && (
                                     <div style={{ position:'absolute', inset:0, borderRadius:'10px', background:'rgba(255,255,100,0.15)', border:'2px solid rgba(255,215,0,0.9)', animation:'undyingPulse 0.5s ease-in-out infinite alternate', boxShadow:'0 0 20px rgba(255,200,0,0.5)', pointerEvents:'none', zIndex:19 }}>
                                         <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', opacity:0.8 }}><HeartPulse size={20} color="gold" /></div>
                                     </div>
                                 )}
-                                {/* Chia sẻ sát thương overlay */}
+                                {/* Chia sáº» sÃ¡t thÆ°Æ¡ng overlay */}
                                 {unit.hasDamageShare && (
                                     <div style={{ position:'absolute', inset:0, borderRadius:'10px', border:'2px dashed rgba(100,220,200,0.7)', background:'rgba(100,220,200,0.08)', animation:'damageSharePulse 1s ease-in-out infinite', pointerEvents:'none', zIndex:15 }} />
                                 )}
-                                {/* Phản công overlay */}
+                                {/* Pháº£n cÃ´ng overlay */}
                                 {unit.hasCounter && (
                                     <div style={{ position:'absolute', inset:'-2px', borderRadius:'12px', border:'2px solid rgba(255,100,50,0.8)', animation:'counterGlow 0.6s ease-in-out infinite alternate', boxShadow:'0 0 10px rgba(255,100,50,0.5)', pointerEvents:'none', zIndex:16 }} />
                                 )}
 
                                 {/* ===== STATUS ICONS ===== */}
                                 <div className="absolute top-1 left-1 right-1 flex justify-start gap-0.5 flex-wrap z-30" style={{ lineHeight: 1 }}>
-                                    {unit.isStunned    && <span title="Choáng"        style={{ display:'inline-block', animation:'spinStar 0.6s linear infinite', filter:'drop-shadow(0 0 4px gold)' }}><Star size={14} color="gold" fill="gold" /></span>}
-                                    {unit.isFrozen     && <span title="Đóng băng"     style={{ filter:'drop-shadow(0 0 5px cyan)', animation:'pulse 1s ease-in-out infinite' }}><Snowflake size={14} color="cyan" /></span>}
-                                    {unit.isPetrified  && <span title="Hóa đá"        style={{ filter:'drop-shadow(0 0 4px gray)' }}><MountainSnow size={14} color="gray" /></span>}
-                                    {unit.isKnockedUp  && <span title="Hất tung"      style={{ animation:'bounce 0.5s ease-in-out infinite' }}><Wind size={14} color="white" /></span>}
-                                    {unit.isSilenced   && <span title="Câm lặng"      style={{ filter:'drop-shadow(0 0 4px purple)' }}><VolumeX size={14} color="violet" /></span>}
-                                    {unit.isCharmed    && <span title="Mê hoặc"       style={{ animation:'pulse 0.8s ease-in-out infinite', filter:'drop-shadow(0 0 5px hotpink)' }}><Heart size={14} color="hotpink" fill="hotpink" /></span>}
-                                    {unit.tauntedBy    && <span title="Khiêu khích"   style={{ animation:'pulse 0.7s ease-in-out infinite', filter:'drop-shadow(0 0 4px orange)' }}><Frown size={14} color="orange" /></span>}
-                                    {unit.isPoisoned   && <span title="Trúng độc"     style={{ filter:'drop-shadow(0 0 5px lime)' }}><Skull size={14} color="lime" /></span>}
-                                    {unit.isBurning    && <span title="Thiêu đốt"     style={{ animation:'burnFlicker 0.4s ease-in-out infinite alternate', filter:'drop-shadow(0 0 5px orangered)' }}><Flame size={14} color="orangered" /></span>}
-                                    {unit.isBleeding   && <span title="Chảy máu"      style={{ animation:'bleedDrip 0.8s ease-in-out infinite', filter:'drop-shadow(0 0 4px red)' }}><Droplets size={14} color="red" /></span>}
-                                    {unit.hasArmorBreak && <span title="Phá giáp"     style={{ filter:'drop-shadow(0 0 4px gold)' }}><ShieldOff size={14} color="gold" /></span>}
-                                    {unit.hasAntiHeal  && <span title="Cấm trị liệu" style={{ filter:'drop-shadow(0 0 4px red)' }}><Ban size={14} color="red" /></span>}
-                                    {unit.hasSlowDebuff && <span title="Giảm tốc"     style={{ filter:'drop-shadow(0 0 4px steelblue)' }}><Hourglass size={14} color="steelblue" /></span>}
-                                    {unit.hasAtkDown   && <span title="Giảm công"     style={{ filter:'drop-shadow(0 0 4px orange)' }}><TrendingDown size={14} color="orange" /></span>}
+                                    {unit.isStunned    && <span title="ChoÃ¡ng"        style={{ display:'inline-block', animation:'spinStar 0.6s linear infinite', filter:'drop-shadow(0 0 4px gold)' }}><Star size={14} color="gold" fill="gold" /></span>}
+                                    {unit.isFrozen     && <span title="ÄÃ³ng bÄƒng"     style={{ filter:'drop-shadow(0 0 5px cyan)', animation:'pulse 1s ease-in-out infinite' }}><Snowflake size={14} color="cyan" /></span>}
+                                    {unit.isPetrified  && <span title="HÃ³a Ä‘Ã¡"        style={{ filter:'drop-shadow(0 0 4px gray)' }}><MountainSnow size={14} color="gray" /></span>}
+                                    {unit.isKnockedUp  && <span title="Háº¥t tung"      style={{ animation:'bounce 0.5s ease-in-out infinite' }}><Wind size={14} color="white" /></span>}
+                                    {unit.isSilenced   && <span title="CÃ¢m láº·ng"      style={{ filter:'drop-shadow(0 0 4px purple)' }}><VolumeX size={14} color="violet" /></span>}
+                                    {unit.isCharmed    && <span title="MÃª hoáº·c"       style={{ animation:'pulse 0.8s ease-in-out infinite', filter:'drop-shadow(0 0 5px hotpink)' }}><Heart size={14} color="hotpink" fill="hotpink" /></span>}
+                                    {unit.tauntedBy    && <span title="KhiÃªu khÃ­ch"   style={{ animation:'pulse 0.7s ease-in-out infinite', filter:'drop-shadow(0 0 4px orange)' }}><Frown size={14} color="orange" /></span>}
+                                    {unit.isPoisoned   && <span title="TrÃºng Ä‘á»™c"     style={{ filter:'drop-shadow(0 0 5px lime)' }}><Skull size={14} color="lime" /></span>}
+                                    {unit.isBurning    && <span title="ThiÃªu Ä‘á»‘t"     style={{ animation:'burnFlicker 0.4s ease-in-out infinite alternate', filter:'drop-shadow(0 0 5px orangered)' }}><Flame size={14} color="orangered" /></span>}
+                                    {unit.isBleeding   && <span title="Cháº£y mÃ¡u"      style={{ animation:'bleedDrip 0.8s ease-in-out infinite', filter:'drop-shadow(0 0 4px red)' }}><Droplets size={14} color="red" /></span>}
+                                    {unit.hasArmorBreak && <span title="PhÃ¡ giÃ¡p"     style={{ filter:'drop-shadow(0 0 4px gold)' }}><ShieldOff size={14} color="gold" /></span>}
+                                    {unit.hasAntiHeal  && <span title="Cáº¥m trá»‹ liá»‡u" style={{ filter:'drop-shadow(0 0 4px red)' }}><Ban size={14} color="red" /></span>}
+                                    {unit.hasSlowDebuff && <span title="Giáº£m tá»‘c"     style={{ filter:'drop-shadow(0 0 4px steelblue)' }}><Hourglass size={14} color="steelblue" /></span>}
+                                    {unit.hasAtkDown   && <span title="Giáº£m cÃ´ng"     style={{ filter:'drop-shadow(0 0 4px orange)' }}><TrendingDown size={14} color="orange" /></span>}
                                     {/* Buff icons */}
-                                    {unit.hasAtkUp     && <span title="Tăng công"     style={{ animation:'atkUpGlow 0.8s ease-in-out infinite alternate', filter:'drop-shadow(0 0 5px red)' }}><SwordIcon size={14} color="#ff4444" /></span>}
-                                    {unit.hasDefUp     && <span title="Tăng thủ"     style={{ animation:'defUpGlow 0.8s ease-in-out infinite alternate', filter:'drop-shadow(0 0 5px royalblue)' }}><Shield size={14} color="#4488ff" /></span>}
-                                    {unit.hasSpdUp     && <span title="Tăng tốc"     style={{ filter:'drop-shadow(0 0 5px aqua)' }}><Zap size={14} color="aqua" fill="aqua" /></span>}
-                                    {unit.hasCritUp    && <span title="Tăng bạo kích" style={{ animation:'pulse 0.5s ease-in-out infinite', filter:'drop-shadow(0 0 6px yellow)' }}><Target size={14} color="yellow" /></span>}
-                                    {unit.shield > 0   && <span title="Tạo khiên"     style={{ animation:'shieldPulse 1s ease-in-out infinite', filter:'drop-shadow(0 0 6px skyblue)' }}><ShieldCheck size={14} color="skyblue" /></span>}
-                                    {unit.isInvincible && <span title="Vô địch"       style={{ animation:'invincibleGlow 0.5s ease-in-out infinite alternate', filter:'drop-shadow(0 0 8px gold)' }}><Crown size={14} color="gold" /></span>}
-                                    {unit.isUndying    && <span title="Bất tử"       style={{ animation:'undyingPulse 0.5s ease-in-out infinite alternate', filter:'drop-shadow(0 0 8px gold)' }}><HeartPulse size={14} color="gold" /></span>}
-                                    {unit.isImmuneCC   && <span title="Miễn khống"    style={{ filter:'drop-shadow(0 0 5px silver)' }}><ShieldAlert size={14} color="silver" /></span>}
-                                    {unit.hasLifesteal && <span title="Hút máu"       style={{ filter:'drop-shadow(0 0 5px crimson)' }}><Syringe size={14} color="crimson" /></span>}
-                                    {unit.hasReflect   && <span title="Phản sát thương" style={{ animation:'reflectShimmer 1.2s ease-in-out infinite', filter:'drop-shadow(0 0 5px violet)' }}><RefreshCw size={14} color="violet" /></span>}
-                                    {unit.hasCounter   && <span title="Phản công"     style={{ animation:'counterGlow 0.6s ease-in-out infinite alternate', filter:'drop-shadow(0 0 5px orangered)' }}><Crosshair size={14} color="orangered" /></span>}
-                                    {unit.hasDamageShare && <span title="Chia sẻ ST"  style={{ filter:'drop-shadow(0 0 5px teal)' }}><Link2 size={14} color="teal" /></span>}
+                                    {unit.hasAtkUp     && <span title="TÄƒng cÃ´ng"     style={{ animation:'atkUpGlow 0.8s ease-in-out infinite alternate', filter:'drop-shadow(0 0 5px red)' }}><SwordIcon size={14} color="#ff4444" /></span>}
+                                    {unit.hasDefUp     && <span title="TÄƒng thá»§"     style={{ animation:'defUpGlow 0.8s ease-in-out infinite alternate', filter:'drop-shadow(0 0 5px royalblue)' }}><Shield size={14} color="#4488ff" /></span>}
+                                    {unit.hasSpdUp     && <span title="TÄƒng tá»‘c"     style={{ filter:'drop-shadow(0 0 5px aqua)' }}><Zap size={14} color="aqua" fill="aqua" /></span>}
+                                    {unit.hasCritUp    && <span title="TÄƒng báº¡o kÃ­ch" style={{ animation:'pulse 0.5s ease-in-out infinite', filter:'drop-shadow(0 0 6px yellow)' }}><Target size={14} color="yellow" /></span>}
+                                    {unit.shield > 0   && <span title="Táº¡o khiÃªn"     style={{ animation:'shieldPulse 1s ease-in-out infinite', filter:'drop-shadow(0 0 6px skyblue)' }}><ShieldCheck size={14} color="skyblue" /></span>}
+                                    {unit.isInvincible && <span title="VÃ´ Ä‘á»‹ch"       style={{ animation:'invincibleGlow 0.5s ease-in-out infinite alternate', filter:'drop-shadow(0 0 8px gold)' }}><Crown size={14} color="gold" /></span>}
+                                    {unit.isUndying    && <span title="Báº¥t tá»­"       style={{ animation:'undyingPulse 0.5s ease-in-out infinite alternate', filter:'drop-shadow(0 0 8px gold)' }}><HeartPulse size={14} color="gold" /></span>}
+                                    {unit.isImmuneCC   && <span title="Miá»…n khá»‘ng"    style={{ filter:'drop-shadow(0 0 5px silver)' }}><ShieldAlert size={14} color="silver" /></span>}
+                                    {unit.hasLifesteal && <span title="HÃºt mÃ¡u"       style={{ filter:'drop-shadow(0 0 5px crimson)' }}><Syringe size={14} color="crimson" /></span>}
+                                    {unit.hasReflect   && <span title="Pháº£n sÃ¡t thÆ°Æ¡ng" style={{ animation:'reflectShimmer 1.2s ease-in-out infinite', filter:'drop-shadow(0 0 5px violet)' }}><RefreshCw size={14} color="violet" /></span>}
+                                    {unit.hasCounter   && <span title="Pháº£n cÃ´ng"     style={{ animation:'counterGlow 0.6s ease-in-out infinite alternate', filter:'drop-shadow(0 0 5px orangered)' }}><Crosshair size={14} color="orangered" /></span>}
+                                    {unit.hasDamageShare && <span title="Chia sáº» ST"  style={{ filter:'drop-shadow(0 0 5px teal)' }}><Link2 size={14} color="teal" /></span>}
                                 </div>
 
                                 <div className="absolute bottom-0 left-0 right-0 bg-black/85 px-1.5 py-1.5 z-20">
@@ -4795,61 +4795,61 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                     100% { opacity: 0; transform: rotate(45deg) scaleX(1.5); }
                 }
                 /* ===== STATUS EFFECT ANIMATIONS ===== */
-                /* Choáng: ngôi sao quay */
+                /* ChoÃ¡ng: ngÃ´i sao quay */
                 @keyframes spinStar {
                     from { transform: translate(-50%,-50%) rotate(0deg); }
                     to   { transform: translate(-50%,-50%) rotate(360deg); }
                 }
-                /* Đóng băng / Hóa đá overlay */
+                /* ÄÃ³ng bÄƒng / HÃ³a Ä‘Ã¡ overlay */
                 @keyframes freezeOverlay {
                     0%   { opacity: 0.6; box-shadow: 0 0 10px cyan; }
                     100% { opacity: 1;   box-shadow: 0 0 30px cyan, inset 0 0 15px rgba(200,240,255,0.4); }
                 }
-                /* Thiêu đốt nhấp nháy */
+                /* ThiÃªu Ä‘á»‘t nháº¥p nhÃ¡y */
                 @keyframes burnFlicker {
                     0%   { opacity: 0.7; box-shadow: 0 0 8px orangered; }
                     100% { opacity: 1;   box-shadow: 0 0 25px orangered, inset 0 0 12px rgba(255,80,0,0.5); }
                 }
-                /* Chảy máu nhỏ giọt */
+                /* Cháº£y mÃ¡u nhá» giá»t */
                 @keyframes bleedDrip {
                     0%   { opacity: 0.6; box-shadow: 0 0 8px crimson; }
                     50%  { opacity: 1;   box-shadow: 0 0 20px crimson; }
                     100% { opacity: 0.6; box-shadow: 0 0 8px crimson; }
                 }
-                /* Vô địch hào quang vàng */
+                /* VÃ´ Ä‘á»‹ch hÃ o quang vÃ ng */
                 @keyframes invincibleGlow {
                     0%   { box-shadow: 0 0 15px rgba(255,215,0,0.8), inset 0 0 10px rgba(255,215,0,0.2); border-color: rgba(255,215,0,0.7); }
                     100% { box-shadow: 0 0 40px rgba(255,215,0,1), inset 0 0 25px rgba(255,215,0,0.4); border-color: rgba(255,255,200,1); }
                 }
-                /* Khiên xanh sáng */
+                /* KhiÃªn xanh sÃ¡ng */
                 @keyframes shieldPulse {
                     0%   { box-shadow: 0 0 8px rgba(120,200,255,0.5); opacity: 0.7; }
                     50%  { box-shadow: 0 0 20px rgba(120,200,255,0.9); opacity: 1; }
                     100% { box-shadow: 0 0 8px rgba(120,200,255,0.5); opacity: 0.7; }
                 }
-                /* Phản sát thương lấp lánh */
+                /* Pháº£n sÃ¡t thÆ°Æ¡ng láº¥p lÃ¡nh */
                 @keyframes reflectShimmer {
                     0%   { border-color: rgba(168,85,247,0.5); box-shadow: 0 0 8px rgba(168,85,247,0.4); }
                     50%  { border-color: rgba(236,72,153,0.9); box-shadow: 0 0 20px rgba(236,72,153,0.7); }
                     100% { border-color: rgba(168,85,247,0.5); box-shadow: 0 0 8px rgba(168,85,247,0.4); }
                 }
-                /* Phá giáp flash vàng */
+                /* PhÃ¡ giÃ¡p flash vÃ ng */
                 @keyframes armorBreakFlash {
                     0%   { border-color: rgba(251,191,36,0.5); }
                     100% { border-color: rgba(251,191,36,1); box-shadow: 0 0 15px rgba(251,191,36,0.7); }
                 }
-                /* Câm lặng overlay */
+                /* CÃ¢m láº·ng overlay */
                 @keyframes silenceOverlay {
                     0%   { border-color: rgba(168,85,247,0.4); opacity: 0.7; }
                     100% { border-color: rgba(200,100,255,0.9); opacity: 1; }
                 }
-                /* Hất tung overlay */
+                /* Háº¥t tung overlay */
                 @keyframes knockupOverlay {
                     0%   { opacity: 1; transform: translateY(0); }
                     50%  { opacity: 0.6; transform: translateY(-10px); }
                     100% { opacity: 0; transform: translateY(-20px); }
                 }
-                /* Độc bong bóng */
+                /* Äá»™c bong bÃ³ng */
                 @keyframes poisonBubble {
                     0%   { box-shadow: 0 0 8px rgba(80,200,0,0.5); }
                     100% { box-shadow: 0 0 25px rgba(80,200,0,0.9), inset 0 0 10px rgba(80,200,0,0.3); }
@@ -4929,17 +4929,17 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                     0%   { top: -10%; opacity: 1; }
                     100% { top: 110%; opacity: 0; }
                 }
-                /* Sát thương theo máu tối đa */
+                /* SÃ¡t thÆ°Æ¡ng theo mÃ¡u tá»‘i Ä‘a */
                 @keyframes maxHpPulse {
                     0%   { box-shadow: 0 0 10px rgba(255,50,100,0.5); background: rgba(180,0,50,0.3); }
                     100% { box-shadow: 0 0 30px rgba(255,50,100,1); background: rgba(180,0,50,0.55); }
                 }
-                /* Kết liễu */
+                /* Káº¿t liá»…u */
                 @keyframes executePulse {
                     0%   { box-shadow: 0 0 15px rgba(200,0,0,0.7); }
                     100% { box-shadow: 0 0 35px rgba(255,0,0,1), inset 0 0 20px rgba(200,0,0,0.4); }
                 }
-                /* Buff glow xanh lá */
+                /* Buff glow xanh lÃ¡ */
                 @keyframes buffGlow {
                     0%   { box-shadow: 0 0 10px rgba(50,220,150,0.5); border-color: rgba(80,255,180,0.6); }
                     100% { box-shadow: 0 0 30px rgba(50,220,150,0.9), inset 0 0 15px rgba(80,255,180,0.2); border-color: rgba(80,255,180,1); }
@@ -4949,11 +4949,11 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
             {/* Header */}
             <div className="h-12 sm:h-14 bg-gradient-to-r from-stone-950 via-red-950/40 to-stone-950 border-b border-red-900/30 flex items-center justify-between px-2 sm:px-4 shrink-0 shadow-md z-[60]">
                 <button onClick={handleFlee} className="text-stone-400 hover:text-white transition-colors flex items-center gap-1 sm:gap-2 text-xs sm:text-sm font-bold bg-stone-900 px-2 sm:px-3 py-1 rounded-md border border-stone-700 relative z-[60]">
-                    <Flag size={14} className="text-red-500" /> Rút lui
+                    <Flag size={14} className="text-red-500" /> RÃºt lui
                 </button>
                 <div className="text-sm sm:text-base md:text-lg font-cinzel text-red-500 font-black tracking-widest uppercase drop-shadow-[0_0_8px_rgba(239,68,68,0.5)] flex items-center gap-2">
                     <SwordIcon size={18} className="animate-pulse" /> 
-                    {combatMode === 'hero-trial' ? `Ải ${chapter} - Quá Ải` : 'Giao Tranh'} 
+                    {combatMode === 'hero-trial' ? `áº¢i ${chapter} - QuÃ¡ áº¢i` : 'Giao Tranh'} 
                     <SwordIcon size={18} className="animate-pulse" />
                 </div>
                 <div className="flex gap-1 sm:gap-2">
@@ -4975,7 +4975,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                     }} />
                 )}
 
-                {/* ===== TOÀN MÀN HÌNH: HIỆU ỨNG TUYỆT CHIÊU ===== */}
+                {/* ===== TOÃ€N MÃ€N HÃŒNH: HIá»†U á»¨NG TUYá»†T CHIÃŠU ===== */}
                 {(() => {
                     const showFx = activeEffect && activeEffect !== 'slash' &&
                         activeEffect !== 'normal_magic' && activeEffect !== 'normal_assassin' &&
@@ -5078,7 +5078,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                     {/* Turn Queue at the top center */}
                     <div className="w-full flex justify-center mt-2 px-2">
                         <div className="bg-stone-950/80 border border-stone-800 rounded-full flex items-center px-4 py-2 overflow-x-auto custom-scrollbar gap-3 shadow-lg backdrop-blur-sm max-w-full">
-                            <div className="text-[10px] font-black text-stone-500 uppercase mr-2 whitespace-nowrap shrink-0">Hiệp {roundCount}</div>
+                            <div className="text-[10px] font-black text-stone-500 uppercase mr-2 whitespace-nowrap shrink-0">Hiá»‡p {roundCount}</div>
                             {turnQueue.map((u, i) => (
                                 <div key={i} className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border-2 overflow-hidden shrink-0 transition-all ${i === 0 ? 'border-yellow-400 scale-125 shadow-[0_0_15px_rgba(250,204,21,0.6)] z-10' : (u.isAlly ? 'border-blue-500/50 opacity-60' : 'border-red-500/50 opacity-60')}`}>
                                     <img src={u.image} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).src = !u.isAlly ? DEFAULT_ENEMY_IMG : DEFAULT_ALLY_IMG; }} />
@@ -5113,7 +5113,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                 <div
                     className="absolute inset-0 z-[500] flex items-center justify-center bg-black cursor-pointer"
                     onClick={() => {
-                        // Người chơi bỏ qua: gọi callback fire-hit ngay
+                        // NgÆ°á»i chÆ¡i bá» qua: gá»i callback fire-hit ngay
                         if (hitCallbackRef.current) {
                             hitCallbackRef.current();
                             hitCallbackRef.current = null;
@@ -5130,9 +5130,9 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                         autoPlay
                         playsInline
                         className="w-full h-full object-cover"
-                        style={{ maxHeight: '100vh', maxWidth: '100vw' }}
+                        style={{ maxHeight: '100%', maxWidth: '100%' }}
                         onEnded={() => {
-                            // Video kết thúc tự nhiên: fire hit ngay
+                            // Video káº¿t thÃºc tá»± nhiÃªn: fire hit ngay
                             if (hitCallbackRef.current) {
                                 hitCallbackRef.current();
                                 hitCallbackRef.current = null;
@@ -5142,7 +5142,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                             }
                         }}
                         onError={() => {
-                            // Lỗi load video: clear và tiếp tục bình thường
+                            // Lá»—i load video: clear vÃ  tiáº¿p tá»¥c bÃ¬nh thÆ°á»ng
                             if (hitCallbackRef.current) {
                                 hitCallbackRef.current();
                                 hitCallbackRef.current = null;
@@ -5167,9 +5167,9 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                         pointerEvents: 'none',
                         animation: 'pulse 2s ease-in-out infinite',
                     }}>
-                        ▶ Chạm để bỏ qua
+                        â–¶ Cháº¡m Ä‘á»ƒ bá» qua
                     </div>
-                    {/* Tên kỹ năng ở góc trên */}
+                    {/* TÃªn ká»¹ nÄƒng á»Ÿ gÃ³c trÃªn */}
                     <div style={{
                         position: 'absolute', top: '24px', left: '50%',
                         transform: 'translateX(-50%)',
@@ -5185,7 +5185,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                         pointerEvents: 'none',
                         whiteSpace: 'nowrap',
                     }}>
-                        ⚔ TUYỆT CHIÊU ⚔
+                        âš” TUYá»†T CHIÃŠU âš”
                     </div>
                 </div>
             )}
@@ -5196,10 +5196,10 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                         {combatMode === 'arena' && arenaMatchData ? (
                             <>
                                 <div className={`text-3xl sm:text-5xl font-cinzel font-black uppercase tracking-widest mb-2 sm:mb-4 drop-shadow-[0_0_15px_currentColor] ${result === 'win' ? 'text-yellow-500' : 'text-stone-500'}`}>
-                                    {result === 'win' ? 'CHIẾN THẮNG' : 'THẤT BẠI'}
+                                    {result === 'win' ? 'CHIáº¾N THáº®NG' : 'THáº¤T Báº I'}
                                 </div>
                                 <div className="text-xl sm:text-2xl font-bold text-white mb-6">
-                                    ĐIỂM ELO
+                                    ÄIá»‚M ELO
                                     <div className="mt-2 text-3xl flex items-center justify-center gap-4">
                                         <span className="text-slate-400">{arenaMatchData.oldScore}</span>
                                         <span className="text-slate-500 text-xl">&gt;</span>
@@ -5211,19 +5211,19 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                             </>
                         ) : (
                             <div className={`text-3xl sm:text-5xl font-cinzel font-black uppercase tracking-widest mb-2 sm:mb-4 drop-shadow-[0_0_15px_currentColor] ${result === 'win' ? 'text-yellow-500' : 'text-stone-500'}`}>
-                                {result === 'win' ? 'CHIẾN THẮNG' : 'THẤT BẠI'}
+                                {result === 'win' ? 'CHIáº¾N THáº®NG' : 'THáº¤T Báº I'}
                             </div>
                         )}
-                        <p className="text-stone-400 text-xs sm:text-sm mb-6 sm:mb-8 italic">{combatMode === 'arena' ? 'So tài hoàn tất!' : (result === 'win' ? 'Quân địch đã bị tiêu diệt hoàn toàn!' : 'Đội hình của bạn đã bị đập tan.')}</p>
+                        <p className="text-stone-400 text-xs sm:text-sm mb-6 sm:mb-8 italic">{combatMode === 'arena' ? 'So tÃ i hoÃ n táº¥t!' : (result === 'win' ? 'QuÃ¢n Ä‘á»‹ch Ä‘Ã£ bá»‹ tiÃªu diá»‡t hoÃ n toÃ n!' : 'Äá»™i hÃ¬nh cá»§a báº¡n Ä‘Ã£ bá»‹ Ä‘áº­p tan.')}</p>
                         
                         <div className="flex flex-col gap-3">
                             {result === 'win' && combatMode !== 'arena' && onWin && (
                                 <button onClick={() => { setActive(false); onWin(); }} className="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-black uppercase py-3 sm:py-4 rounded-xl shadow-[0_0_20px_rgba(217,119,6,0.4)] transition-all active:scale-95 text-xs sm:text-sm border border-amber-500/50">
-                                    Nhận Thưởng & Đi Tiếp
+                                    Nháº­n ThÆ°á»Ÿng & Äi Tiáº¿p
                                 </button>
                             )}
                             <button onClick={() => { setActive(false); setView(combatMode === 'hero-trial' ? 'hero-trial' : combatMode === 'arena' ? 'arena' : 'quan-doan'); }} className="bg-stone-800 hover:bg-stone-700 text-stone-300 font-black uppercase py-3 sm:py-4 rounded-xl shadow-lg transition-all active:scale-95 text-xs sm:text-sm border border-stone-600">
-                                {combatMode === 'hero-trial' ? 'Trở về Quỷ Ải' : combatMode === 'arena' ? 'Trở về Đấu Trường' : 'Trở về Quân Doanh'}
+                                {combatMode === 'hero-trial' ? 'Trá»Ÿ vá» Quá»· áº¢i' : combatMode === 'arena' ? 'Trá»Ÿ vá» Äáº¥u TrÆ°á»ng' : 'Trá»Ÿ vá» QuÃ¢n Doanh'}
                             </button>
                         </div>
                     </div>
@@ -5252,20 +5252,20 @@ const ArtifactDetailModal = ({ artifact, onClose }: any) => {
   let exclusiveHeroNames = '';
   if (artifact.exclusiveTo && artifact.exclusiveTo.length > 0) {
       const heroes = artifact.exclusiveTo.map((id: string) => INITIAL_HEROES.find(h => h.id === id) || ENEMY_HEROES.find(h => h.id === id)).filter(Boolean);
-      exclusiveHeroNames = heroes.map((h: any) => h.name).join(' và ');
+      exclusiveHeroNames = heroes.map((h: any) => h.name).join(' vÃ  ');
   }
 
   return (
     <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-6 backdrop-blur-sm animate-in fade-in duration-300" onClick={onClose}>
-      <div className="bg-gradient-to-b from-stone-900 to-stone-950 max-w-sm w-full p-8 rounded-[3rem] shadow-[0_0_50px_rgba(245,158,11,0.2)] border-2 border-amber-600/50 text-center relative max-h-[90vh] overflow-y-auto custom-scrollbar" onClick={e => e.stopPropagation()}>
-        <button onClick={onClose} className="absolute top-4 right-4 text-stone-400 hover:text-white transition-colors text-2xl font-black leading-none">✕</button>
-        <h3 className="text-2xl font-cinzel font-black uppercase mb-2 text-amber-500 drop-shadow-md">{artifact.name || 'Thần Khí'}</h3>
+      <div className="bg-gradient-to-b from-stone-900 to-stone-950 max-w-sm w-full p-8 rounded-[3rem] shadow-[0_0_50px_rgba(245,158,11,0.2)] border-2 border-amber-600/50 text-center relative max-h-[90%] overflow-y-auto custom-scrollbar" onClick={e => e.stopPropagation()}>
+        <button onClick={onClose} className="absolute top-4 right-4 text-stone-400 hover:text-white transition-colors text-2xl font-black leading-none">âœ•</button>
+        <h3 className="text-2xl font-cinzel font-black uppercase mb-2 text-amber-500 drop-shadow-md">{artifact.name || 'Tháº§n KhÃ­'}</h3>
         <p className="text-stone-300 text-sm mb-4 font-bold italic">{loreStr}</p>
         
         {exclusiveHeroNames && (
           <div className="bg-amber-900/20 text-amber-500 text-xs p-3 rounded-xl border border-amber-500/30 mb-6 text-left">
-             <span className="font-bold">Thần khí bản mệnh của {exclusiveHeroNames}</span>
-             <p className="mt-1 opacity-80 text-[10px]">(chỉ có tác dụng khi {exclusiveHeroNames} lên trận và người chơi sở hữu thần khí này)</p>
+             <span className="font-bold">Tháº§n khÃ­ báº£n má»‡nh cá»§a {exclusiveHeroNames}</span>
+             <p className="mt-1 opacity-80 text-[10px]">(chá»‰ cÃ³ tÃ¡c dá»¥ng khi {exclusiveHeroNames} lÃªn tráº­n vÃ  ngÆ°á»i chÆ¡i sá»Ÿ há»¯u tháº§n khÃ­ nÃ y)</p>
           </div>
         )}
 
@@ -5275,14 +5275,14 @@ const ArtifactDetailModal = ({ artifact, onClose }: any) => {
         
         {attributesStr && (
           <div className="bg-black/40 rounded-2xl p-4 border border-stone-700/50 mb-3 text-left">
-              <h4 className="text-stone-400 text-xs font-black uppercase tracking-wider mb-2">Thuộc tính</h4>
+              <h4 className="text-stone-400 text-xs font-black uppercase tracking-wider mb-2">Thuá»™c tÃ­nh</h4>
               <p className="text-white text-sm font-bold">{attributesStr}</p>
           </div>
         )}
 
         <div className="bg-black/40 rounded-2xl p-4 border border-stone-700/50 mb-2 text-left">
-            <h4 className="text-stone-400 text-xs font-black uppercase tracking-wider mb-2">Hiệu ứng đặc biệt</h4>
-            <p className="text-green-400 text-sm font-bold">{artifact.effectDesc || 'Tăng cường sức mạnh cho tướng sở hữu'}</p>
+            <h4 className="text-stone-400 text-xs font-black uppercase tracking-wider mb-2">Hiá»‡u á»©ng Ä‘áº·c biá»‡t</h4>
+            <p className="text-green-400 text-sm font-bold">{artifact.effectDesc || 'TÄƒng cÆ°á»ng sá»©c máº¡nh cho tÆ°á»›ng sá»Ÿ há»¯u'}</p>
         </div>
       </div>
     </div>
@@ -5297,7 +5297,7 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
   const videoSlug = hero.skillVideoUrl ? hero.skillVideoUrl.replace('/videos/', '').replace('.mp4', '') : '';
   const hasSkillVideo = Boolean(videoSlug && AVAILABLE_VIDEOS.includes(videoSlug));
 
-  // Nhấn Esc để đóng modal
+  // Nháº¥n Esc Ä‘á»ƒ Ä‘Ã³ng modal
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', handleKey);
@@ -5352,10 +5352,10 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
       onClick={onClose}
     >
       <div
-        className={`relative w-full max-w-3xl max-h-[92vh] bg-gradient-to-br ${cardGradient} border-2 rounded-[2rem] overflow-hidden animate-in zoom-in-90 duration-300 flex flex-col`}
+        className={`relative w-full max-w-3xl max-h-[92%] bg-gradient-to-br ${cardGradient} border-2 rounded-[2rem] overflow-hidden animate-in zoom-in-90 duration-300 flex flex-col`}
         onClick={e => e.stopPropagation()}
       >
-        {/* Nút đóng */}
+        {/* NÃºt Ä‘Ã³ng */}
         <button
           onClick={onClose}
           className="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-black/70 flex items-center justify-center text-stone-400 hover:text-white hover:bg-red-900/80 transition-all border border-white/10"
@@ -5363,9 +5363,9 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
           <XCircle size={20}/>
         </button>
 
-        {/* Layout: ảnh trái + info phải (desktop) / ảnh trên + info dưới (mobile) */}
+        {/* Layout: áº£nh trÃ¡i + info pháº£i (desktop) / áº£nh trÃªn + info dÆ°á»›i (mobile) */}
         <div className="flex flex-col md:flex-row flex-1 min-h-0">
-          {/* ===== CỘT ẢNH ===== */}
+          {/* ===== Cá»˜T áº¢NH ===== */}
           <div className="md:w-64 flex-shrink-0 relative bg-black/40 flex flex-col items-center justify-center p-3" style={{minHeight: '280px'}}>
              <div className={`relative w-full h-64 md:h-full max-h-[380px] rounded-xl ${getStarBorderClass(hero.star)}`}>
                <img
@@ -5375,30 +5375,30 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
                  alt={hero.name}
                />
              </div>
-             {/* Nút bấm Xem 30 Cảnh Giới ngay dưới ảnh tướng */}
+             {/* NÃºt báº¥m Xem 30 Cáº£nh Giá»›i ngay dÆ°á»›i áº£nh tÆ°á»›ng */}
              <button
                onClick={() => setShowRoadmapModal(true)}
                className="w-full mt-3 py-2.5 px-2 bg-gradient-to-r from-amber-950 via-stone-900 to-amber-950 hover:from-amber-900 hover:to-stone-800 text-amber-300 border border-amber-500/60 rounded-xl font-cinzel font-black text-[11px] uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-lg transition-all active:scale-95 z-20 cursor-pointer"
              >
                 <ScrollText size={16} className="text-amber-400 shrink-0" />
-                <span>Cảnh Giới Thiên Phú (1-30)</span>
+                <span>Cáº£nh Giá»›i ThiÃªn PhÃº (1-30)</span>
              </button>
-            {/* Gradient dưới ảnh (desktop) */}
+            {/* Gradient dÆ°á»›i áº£nh (desktop) */}
             <div className="hidden md:block absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"/>
-            {/* Badge phẩm */}
+            {/* Badge pháº©m */}
             <div className={`absolute top-2 left-2 text-[9px] font-black px-2 py-0.5 rounded-full bg-black/85 border border-white/10 ${textColor} tracking-widest uppercase`}>
               {hero.rarity}
             </div>
           </div>
 
-          {/* ===== CỘT THÔNG TIN ===== */}
-          <div className="flex-1 p-5 flex flex-col gap-3 overflow-y-auto min-h-0" style={{maxHeight: '92vh'}}>
-            {/* Tên & danh hiệu */}
+          {/* ===== Cá»˜T THÃ”NG TIN ===== */}
+          <div className="flex-1 p-5 flex flex-col gap-3 overflow-y-auto min-h-0" style={{maxHeight: '92%'}}>
+            {/* TÃªn & danh hiá»‡u */}
             <div>
               <h2 className={`text-2xl font-cinzel font-black uppercase tracking-wide ${textColor} leading-tight`}>{hero.name}</h2>
               <HeroStars starCount={hero.star} size={12} className="mt-1.5" />
               <div className="flex items-center gap-2 mt-1 flex-wrap">
-                <p className="text-stone-400 text-[11px] font-bold uppercase tracking-widest">✦ {hero.title} ✦</p>
+                <p className="text-stone-400 text-[11px] font-bold uppercase tracking-widest">âœ¦ {hero.title} âœ¦</p>
                 {hero.subFaction && (
                   <span className={`text-[9px] font-black uppercase px-2.5 py-0.5 rounded-full border ${
                     hero.subFaction === 'mac' ? 'bg-yellow-950/80 text-yellow-300 border-yellow-500/70 shadow-[0_0_8px_rgba(234,179,8,0.3)]' :
@@ -5406,48 +5406,48 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
                     hero.subFaction === 'nguyen' ? 'bg-blue-950/80 text-blue-300 border-blue-500/70 shadow-[0_0_8px_rgba(59,130,246,0.3)]' :
                     'bg-emerald-950/80 text-emerald-300 border-emerald-500/70 shadow-[0_0_8px_rgba(16,185,129,0.3)]'
                   }`}>
-                    {hero.subFaction === 'mac' ? '👑 Bắc Triều (Nhà Mạc)' :
-                     hero.subFaction === 'le_trinh' ? '🚩 Nam Triều (Vua Lê - Chúa Trịnh)' :
-                     hero.subFaction === 'nguyen' ? '🌊 Đàng Trong (Chúa Nguyễn)' : '📜 Trung Lập (Trạng Trình Bạch Vân)'}
+                    {hero.subFaction === 'mac' ? 'ðŸ‘‘ Báº¯c Triá»u (NhÃ  Máº¡c)' :
+                     hero.subFaction === 'le_trinh' ? 'ðŸš© Nam Triá»u (Vua LÃª - ChÃºa Trá»‹nh)' :
+                     hero.subFaction === 'nguyen' ? 'ðŸŒŠ ÄÃ ng Trong (ChÃºa Nguyá»…n)' : 'ðŸ“œ Trung Láº­p (Tráº¡ng TrÃ¬nh Báº¡ch VÃ¢n)'}
                   </span>
                 )}
               </div>
             </div>
 
-            {/* Chỉ số chiến đấu */}
+            {/* Chá»‰ sá»‘ chiáº¿n Ä‘áº¥u */}
             <div className="bg-black/40 rounded-2xl p-3.5 border border-white/5">
-              <p className="text-[9px] font-black uppercase text-stone-500 tracking-widest mb-2.5">Chỉ Số Chiến Đấu</p>
+              <p className="text-[9px] font-black uppercase text-stone-500 tracking-widest mb-2.5">Chá»‰ Sá»‘ Chiáº¿n Äáº¥u</p>
               <div className="grid grid-cols-2 gap-2.5">
-                <StatBar label="⚔ Tấn Công" value={hero.atk} bonus={bonusAtk} max={100} color="bg-red-500" />
-                <StatBar label="🛡 Phòng Thủ" value={hero.def} bonus={bonusDef} max={100} color="bg-blue-500" />
-                <StatBar label="⚡ Tốc Độ" value={hero.spd - 100} bonus={bonusSpd} max={40} color="bg-yellow-400" />
-                <StatBar label="💖 Máu" value={hero.maxHp} bonus={bonusHp} max={10000} color="bg-emerald-500" isHp />
+                <StatBar label="âš” Táº¥n CÃ´ng" value={hero.atk} bonus={bonusAtk} max={100} color="bg-red-500" />
+                <StatBar label="ðŸ›¡ PhÃ²ng Thá»§" value={hero.def} bonus={bonusDef} max={100} color="bg-blue-500" />
+                <StatBar label="âš¡ Tá»‘c Äá»™" value={hero.spd - 100} bonus={bonusSpd} max={40} color="bg-yellow-400" />
+                <StatBar label="ðŸ’– MÃ¡u" value={hero.maxHp} bonus={bonusHp} max={10000} color="bg-emerald-500" isHp />
               </div>
               <div className="mt-2.5 flex justify-between items-center border-t border-white/5 pt-2.5">
-                <span className="text-[9px] text-stone-500 font-bold uppercase tracking-widest">Lực chiến tổng</span>
+                <span className="text-[9px] text-stone-500 font-bold uppercase tracking-widest">Lá»±c chiáº¿n tá»•ng</span>
                 <span className={`text-lg font-black ${textColor}`}>{hero.overall}</span>
               </div>
             </div>
 
-            {/* Kỹ năng đánh thường */}
+            {/* Ká»¹ nÄƒng Ä‘Ã¡nh thÆ°á»ng */}
             <div className="bg-black/40 rounded-2xl p-3.5 border border-white/5">
-              <p className="text-[9px] font-black uppercase text-stone-500 tracking-widest mb-1.5">🗡 Kỹ Năng Đánh Thường</p>
-              <p className={`font-black text-sm ${textColor} mb-1`}>Công Kích Cơ Bản</p>
-              <p className="text-stone-400 text-[11px] leading-relaxed">Gây sát thương bằng 100% Tấn công lên 1 mục tiêu địch.</p>
+              <p className="text-[9px] font-black uppercase text-stone-500 tracking-widest mb-1.5">ðŸ—¡ Ká»¹ NÄƒng ÄÃ¡nh ThÆ°á»ng</p>
+              <p className={`font-black text-sm ${textColor} mb-1`}>CÃ´ng KÃ­ch CÆ¡ Báº£n</p>
+              <p className="text-stone-400 text-[11px] leading-relaxed">GÃ¢y sÃ¡t thÆ°Æ¡ng báº±ng 100% Táº¥n cÃ´ng lÃªn 1 má»¥c tiÃªu Ä‘á»‹ch.</p>
             </div>
 
-            {/* Kỹ năng nộ khí */}
+            {/* Ká»¹ nÄƒng ná»™ khÃ­ */}
             <div className="bg-black/40 rounded-2xl p-3.5 border border-white/5 border-l-4 border-l-amber-500/80">
               <div className="flex items-center justify-between mb-1.5 flex-wrap gap-2">
-                <p className="text-[9px] font-black uppercase text-amber-500/80 tracking-widest">⚡ Kỹ Năng Nộ Khí</p>
+                <p className="text-[9px] font-black uppercase text-amber-500/80 tracking-widest">âš¡ Ká»¹ NÄƒng Ná»™ KhÃ­</p>
                 {hasSkillVideo && (
                   <button
                     onClick={() => setShowSkillVideoModal(true)}
                     className="flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-red-950 via-amber-950 to-red-950 hover:from-red-900 hover:to-amber-900 border border-amber-500/60 rounded-xl text-amber-300 text-[10px] font-cinzel font-black uppercase tracking-wider shadow-[0_0_12px_rgba(245,158,11,0.25)] hover:scale-105 active:scale-95 transition-all cursor-pointer"
-                    title="Xem video thi triển tuyệt chiêu"
+                    title="Xem video thi triá»ƒn tuyá»‡t chiÃªu"
                   >
                     <Play size={11} className="fill-amber-400 text-amber-400" />
-                    <span>Xem Tuyệt Chiêu</span>
+                    <span>Xem Tuyá»‡t ChiÃªu</span>
                   </button>
                 )}
               </div>
@@ -5455,36 +5455,36 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
               <p className="text-stone-400 text-[11px] leading-relaxed">{hero.skillDesc}</p>
             </div>
 
-            {/* Thần Khí */}
+            {/* Tháº§n KhÃ­ */}
             {equippedArtifact && (
               <div className={`bg-black/40 rounded-2xl p-3.5 border flex gap-3 items-center relative overflow-hidden ${isSignature ? 'border-stone-700/50 opacity-60 grayscale-[0.8]' : 'border-amber-500/50 shadow-[0_0_15px_rgba(245,158,11,0.2)]'}`}>
                  <div className={`absolute inset-0 bg-gradient-to-r to-transparent pointer-events-none ${isSignature ? 'from-stone-900/30' : 'from-amber-900/20'}`}/>
                  <img src={equippedArtifact.image} alt={equippedArtifact.name} className={`w-12 h-12 object-cover rounded-lg border z-10 ${isSignature ? 'border-stone-600' : 'border-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.5)]'}`} />
                  <div className="z-10 flex-1">
                     <p className={`text-[9px] font-black uppercase tracking-widest mb-0.5 ${isSignature ? 'text-stone-400' : 'text-amber-500'}`}>
-                       ✨ Thần Khí Bản Mệnh {isSignature ? '(Chưa Trang Bị)' : '(Đã Kích Hoạt)'}
+                       âœ¨ Tháº§n KhÃ­ Báº£n Má»‡nh {isSignature ? '(ChÆ°a Trang Bá»‹)' : '(ÄÃ£ KÃ­ch Hoáº¡t)'}
                     </p>
                     <p className={`font-bold text-sm ${isSignature ? 'text-stone-400' : 'text-amber-200'}`}>{equippedArtifact.name}</p>
                     <p className={`text-[10px] leading-relaxed mt-0.5 ${isSignature ? 'text-stone-500' : 'text-amber-100/70'}`}>{equippedArtifact.description}</p>
                     {(!isCorrectHero && !isSignature) && (
                        <p className="text-red-400 text-[8px] font-black uppercase mt-1 bg-red-900/20 px-1 py-0.5 rounded inline-block">
-                          ⚠️ Lắp sai chủ nhân - Không có tác dụng
+                          âš ï¸ Láº¯p sai chá»§ nhÃ¢n - KhÃ´ng cÃ³ tÃ¡c dá»¥ng
                        </p>
                     )}
                  </div>
               </div>
             )}
 
-            {/* Mô tả lịch sử */}
+            {/* MÃ´ táº£ lá»‹ch sá»­ */}
             <div className="bg-black/40 rounded-2xl p-3.5 border border-white/5">
-              <p className="text-[9px] font-black uppercase text-stone-500 tracking-widest mb-1.5">📜 Lịch Sử</p>
+              <p className="text-[9px] font-black uppercase text-stone-500 tracking-widest mb-1.5">ðŸ“œ Lá»‹ch Sá»­</p>
               <p className="text-stone-300 text-[11px] leading-relaxed">{hero.description}</p>
             </div>
 
-            {/* Duyên Phận */}
+            {/* DuyÃªn Pháº­n */}
             {SYNERGIES.filter(s => s.heroIds.some(reqId => hero.id === reqId || hero.id.startsWith(reqId + '_'))).length > 0 && (
               <div className="bg-black/40 rounded-2xl p-3.5 border border-amber-500/20">
-                <p className="text-[9px] font-black uppercase text-amber-500 tracking-widest mb-2 flex items-center gap-1">🤝 Duyên Phận</p>
+                <p className="text-[9px] font-black uppercase text-amber-500 tracking-widest mb-2 flex items-center gap-1">ðŸ¤ DuyÃªn Pháº­n</p>
                 <div className="flex flex-col gap-2.5">
                   {SYNERGIES.filter(s => s.heroIds.some(reqId => hero.id === reqId || hero.id.startsWith(reqId + '_'))).map(syn => (
                      <div key={syn.id} className="border-l-2 border-amber-500/50 pl-2.5">
@@ -5496,21 +5496,21 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
               </div>
             )}
 
-            {/* Phe & Chương */}
+            {/* Phe & ChÆ°Æ¡ng */}
             <div className="flex gap-2">
               <div className="flex-1 bg-black/40 rounded-xl p-2.5 border border-white/5 text-center">
                 <p className="text-[8px] text-stone-600 font-bold uppercase tracking-widest mb-0.5">Phe</p>
                 <p className={`font-black text-xs ${hero.faction === 'ally' ? 'text-emerald-400' : 'text-red-400'}`}>
-                  {hero.faction === 'ally' ? '🟢 Ta' : '🔴 Địch'}
+                  {hero.faction === 'ally' ? 'ðŸŸ¢ Ta' : 'ðŸ”´ Äá»‹ch'}
                 </p>
               </div>
               <div className="flex-1 bg-black/40 rounded-xl p-2.5 border border-white/5 text-center">
-                <p className="text-[8px] text-stone-600 font-bold uppercase tracking-widest mb-0.5">Chương</p>
+                <p className="text-[8px] text-stone-600 font-bold uppercase tracking-widest mb-0.5">ChÆ°Æ¡ng</p>
                 <p className="font-black text-xs text-amber-400">{hero.chapter}</p>
               </div>
               {hero.initialMorale > 0 && (
                 <div className="flex-1 bg-black/40 rounded-xl p-2.5 border border-white/5 text-center">
-                  <p className="text-[8px] text-stone-600 font-bold uppercase tracking-widest mb-0.5">Nhuệ Đầu</p>
+                  <p className="text-[8px] text-stone-600 font-bold uppercase tracking-widest mb-0.5">Nhuá»‡ Äáº§u</p>
                   <p className="font-black text-xs text-purple-400">+{hero.initialMorale}</p>
                 </div>
               )}
@@ -5520,18 +5520,18 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
         </div>
       </div>
 
-      {/* Modal Popup Con Đường 30 Cảnh Giới */}
+      {/* Modal Popup Con ÄÆ°á»ng 30 Cáº£nh Giá»›i */}
       {showRoadmapModal && (
         <div className="fixed inset-0 z-[300] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in" onClick={() => setShowRoadmapModal(false)}>
-          <div className="bg-stone-950 border-2 border-amber-500 rounded-3xl p-6 max-w-xl w-full relative max-h-[85vh] flex flex-col shadow-2xl" onClick={e => e.stopPropagation()}>
+          <div className="bg-stone-950 border-2 border-amber-500 rounded-3xl p-6 max-w-xl w-full relative max-h-[85%] flex flex-col shadow-2xl" onClick={e => e.stopPropagation()}>
              <button onClick={() => setShowRoadmapModal(false)} className="absolute top-4 right-4 text-stone-400 hover:text-white transition-colors">
                 <XCircle size={24} />
              </button>
-             <h3 className="text-xl font-cinzel font-black text-amber-400 text-center mb-1">📜 Cảnh Giới Thiên Phú Tối Thượng</h3>
-             <p className="text-center text-xs text-stone-400 font-bold mb-4">{hero.name} · Cấp Cảnh Giới Hiện Tại: <span className="text-amber-400 font-black">{Math.min(RARITY_MAX_STARS[hero.rarity] || 30, hero.star)}/{RARITY_MAX_STARS[hero.rarity] || 30}</span></p>
+             <h3 className="text-xl font-cinzel font-black text-amber-400 text-center mb-1">ðŸ“œ Cáº£nh Giá»›i ThiÃªn PhÃº Tá»‘i ThÆ°á»£ng</h3>
+             <p className="text-center text-xs text-stone-400 font-bold mb-4">{hero.name} Â· Cáº¥p Cáº£nh Giá»›i Hiá»‡n Táº¡i: <span className="text-amber-400 font-black">{Math.min(RARITY_MAX_STARS[hero.rarity] || 30, hero.star)}/{RARITY_MAX_STARS[hero.rarity] || 30}</span></p>
 
              <div className="mb-4 bg-black/40 rounded-2xl p-3 border border-white/5 shrink-0">
-               <p className="text-[10px] font-black uppercase text-amber-500 tracking-widest mb-2 text-center">🌟 {RARITY_MAX_PASSIVES[hero.rarity] || 0} Thiên Phú Bẩm Sinh (Thức tỉnh theo mốc Sao)</p>
+               <p className="text-[10px] font-black uppercase text-amber-500 tracking-widest mb-2 text-center">ðŸŒŸ {RARITY_MAX_PASSIVES[hero.rarity] || 0} ThiÃªn PhÃº Báº©m Sinh (Thá»©c tá»‰nh theo má»‘c Sao)</p>
                <div className="grid grid-cols-2 gap-2">
                  {getHeroPassives(hero as any).length > 0 ? getHeroPassives(hero as any).map((passive, index) => {
                     const unlockStar = 6 + index * 5;
@@ -5544,14 +5544,14 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
                              <span 
                                className={`font-black text-xs ${color} uppercase drop-shadow-md flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity border-b border-dashed`}
                                title={passive.desc}
-                               onClick={(e) => { e.stopPropagation(); setActiveTooltip({ name: '✦ ' + passive.name, desc: passive.desc, x: e.clientX, y: e.clientY }); }}
+                               onClick={(e) => { e.stopPropagation(); setActiveTooltip({ name: 'âœ¦ ' + passive.name, desc: passive.desc, x: e.clientX, y: e.clientY }); }}
                              >
-                                ✦ {passive.name}
+                                âœ¦ {passive.name}
                              </span>
                              {isUnlocked ? (
-                               <span className="text-[8px] text-emerald-400 font-black bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-500/30">ĐÃ KÍCH HOẠT</span>
+                               <span className="text-[8px] text-emerald-400 font-black bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-500/30">ÄÃƒ KÃCH HOáº T</span>
                              ) : (
-                               <span className="text-[8px] text-stone-500 font-bold bg-stone-900 px-1.5 py-0.5 rounded border border-white/5">MỐC {unlockStar} SAO</span>
+                               <span className="text-[8px] text-stone-500 font-bold bg-stone-900 px-1.5 py-0.5 rounded border border-white/5">Má»C {unlockStar} SAO</span>
                              )}
                           </div>
                           <span className="text-[10px] text-stone-300 leading-relaxed">{passive.desc}</span>
@@ -5559,13 +5559,13 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
                     );
                  }) : (
                     <div className="col-span-2 text-center py-4 text-xs font-bold text-stone-500">
-                       Tướng phẩm chất {hero.rarity} không sở hữu Thiên Phú bẩm sinh.
+                       TÆ°á»›ng pháº©m cháº¥t {hero.rarity} khÃ´ng sá»Ÿ há»¯u ThiÃªn PhÃº báº©m sinh.
                     </div>
                  )}
                </div>
              </div>
 
-             <p className="text-[10px] font-black uppercase text-stone-500 tracking-widest mb-2 flex-shrink-0">📜 Trình tự nâng cấp {RARITY_MAX_STARS[hero.rarity] || 30} Cảnh Giới</p>
+             <p className="text-[10px] font-black uppercase text-stone-500 tracking-widest mb-2 flex-shrink-0">ðŸ“œ TrÃ¬nh tá»± nÃ¢ng cáº¥p {RARITY_MAX_STARS[hero.rarity] || 30} Cáº£nh Giá»›i</p>
              <div className="flex-1 overflow-y-auto space-y-2 pr-1 custom-scrollbar">
                 {getStarRoadmap(hero).map(item => (
                   <div key={item.star} className={`p-3 rounded-xl border text-xs flex flex-col gap-1 ${item.isUnlocked ? 'bg-amber-950/40 border-amber-500/40 text-stone-200' : 'bg-black/30 border-white/5 opacity-45 text-stone-500'}`}>
@@ -5575,9 +5575,9 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
                           <span className={item.isUnlocked ? item.tierColor : 'text-stone-500'}>{item.title}</span>
                        </span>
                        {item.isUnlocked ? (
-                          <span className="text-[9px] font-black text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-500/30">✓ ĐÃ ĐẠT</span>
+                          <span className="text-[9px] font-black text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-500/30">âœ“ ÄÃƒ Äáº T</span>
                        ) : (
-                          <span className="text-[9px] font-bold text-stone-600">CHƯA ĐẠT</span>
+                          <span className="text-[9px] font-bold text-stone-600">CHÆ¯A Äáº T</span>
                        )}
                     </div>
                     <p className="text-[11px] text-stone-300 leading-relaxed mt-0.5">
@@ -5587,7 +5587,7 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
                            <span 
                              className={`${item.passiveColor} font-black cursor-pointer border-b border-dashed hover:opacity-80 transition-opacity`}
                              title={item.passiveDesc}
-                             onClick={(e) => { e.stopPropagation(); setActiveTooltip({ name: '✦ ' + item.passiveName, desc: item.passiveDesc || '', x: e.clientX, y: e.clientY }); }}
+                             onClick={(e) => { e.stopPropagation(); setActiveTooltip({ name: 'âœ¦ ' + item.passiveName, desc: item.passiveDesc || '', x: e.clientX, y: e.clientY }); }}
                            >
                              [{item.passiveName}]
                            </span>
@@ -5604,7 +5604,7 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
         </div>
       )}
 
-      {/* Giao diện Tooltip Khám Phá */}
+      {/* Giao diá»‡n Tooltip KhÃ¡m PhÃ¡ */}
       {activeTooltip && (
          <div className="fixed inset-0 z-[600]" onClick={(e) => { e.stopPropagation(); setActiveTooltip(null); }}>
             <div 
@@ -5621,7 +5621,7 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
          </div>
       )}
 
-      {/* Modal Video Tuyệt Chiêu */}
+      {/* Modal Video Tuyá»‡t ChiÃªu */}
       {showSkillVideoModal && (
         <div 
           className="fixed inset-0 z-[400] bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200"
@@ -5633,7 +5633,7 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
           >
             <div className="p-3 sm:p-4 bg-gradient-to-r from-stone-950 via-stone-900 to-stone-950 border-b border-white/10 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="text-amber-400 font-cinzel font-black text-sm sm:text-base">⚡ Tuyệt Chiêu: {hero.skillName}</span>
+                <span className="text-amber-400 font-cinzel font-black text-sm sm:text-base">âš¡ Tuyá»‡t ChiÃªu: {hero.skillName}</span>
                 <span className="text-stone-400 text-xs hidden sm:inline">({hero.name})</span>
               </div>
               <button 
@@ -5643,7 +5643,7 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
                 <XCircle size={20} />
               </button>
             </div>
-            <div className="relative bg-black flex items-center justify-center aspect-video max-h-[75vh]">
+            <div className="relative bg-black flex items-center justify-center aspect-video max-h-[75%]">
               <video 
                 src={hero.skillVideoUrl} 
                 autoPlay 
@@ -5659,7 +5659,7 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
   );
 };
 
-/** Thanh chỉ số mini */
+/** Thanh chá»‰ sá»‘ mini */
 const StatBar = ({ label, value, max, color, isHp, bonus = 0 }: { label: string, value: number, max: number, color: string, isHp?: boolean, bonus?: number }) => {
   const pct = Math.min(100, Math.round(((value + bonus) / max) * 100));
   return (
@@ -5713,9 +5713,9 @@ const HeroGalleryCard = ({ hero, isEnemy, onClick }: { key?: React.Key, hero: He
                  hero.subFaction === 'nguyen' ? 'bg-blue-950/90 text-blue-300 border-blue-500/70' :
                  'bg-emerald-950/90 text-emerald-300 border-emerald-500/70'
                }`}>
-                 {hero.subFaction === 'mac' ? 'Mạc' :
-                  hero.subFaction === 'le_trinh' ? 'Lê-Trịnh' :
-                  hero.subFaction === 'nguyen' ? 'Nguyễn' : 'Trạng Trình'}
+                 {hero.subFaction === 'mac' ? 'Máº¡c' :
+                  hero.subFaction === 'le_trinh' ? 'LÃª-Trá»‹nh' :
+                  hero.subFaction === 'nguyen' ? 'Nguyá»…n' : 'Tráº¡ng TrÃ¬nh'}
                </span>
              </div>
            )}
@@ -5733,13 +5733,13 @@ const HeroGalleryCard = ({ hero, isEnemy, onClick }: { key?: React.Key, hero: He
           <div className="text-[10px] font-cinzel text-amber-400 font-black uppercase truncate">{hero.name}</div>
           {(hero as any).isArtifact ? (
             <div className="text-[8px] text-amber-300 font-bold mt-1 uppercase truncate px-1">
-              {hero.description || 'Thần Khí Bản Mệnh'}
+              {hero.description || 'Tháº§n KhÃ­ Báº£n Má»‡nh'}
             </div>
           ) : (
             <div className="text-[8px] text-stone-500 font-bold mt-1 uppercase flex justify-center gap-1">
-              <span>⚔️{hero.atk}{bonusAtk > 0 && <span className="text-emerald-400">+{bonusAtk}</span>}</span>
-              <span>·</span>
-              <span>⚡{hero.spd}{bonusSpd > 0 && <span className="text-emerald-400">+{bonusSpd}</span>}</span>
+              <span>âš”ï¸{hero.atk}{bonusAtk > 0 && <span className="text-emerald-400">+{bonusAtk}</span>}</span>
+              <span>Â·</span>
+              <span>âš¡{hero.spd}{bonusSpd > 0 && <span className="text-emerald-400">+{bonusSpd}</span>}</span>
             </div>
           )}
        </div>
@@ -5760,7 +5760,7 @@ const MainMenuItem = ({ icon, title, subtitle, onClick, color }: any) => (
 
 const GradeView = ({ setGrade, setView }: any) => (
   <div 
-    className="min-h-screen flex flex-col items-center justify-end pb-[10vh] p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
+    className="min-h-full flex flex-col items-center justify-end pb-[10%] p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
     style={{ backgroundImage: `url('${import.meta.env.BASE_URL}ancient_exam_bg.jpg')` }}
   >
      <div className="absolute inset-0 bg-black/40 pointer-events-none z-0" />
@@ -5770,25 +5770,25 @@ const GradeView = ({ setGrade, setView }: any) => (
         `}
      </style>
      
-     {/* Tiêu đề Kinh Luân Tu Luyện nằm ngay dưới chữ Quốc Tử Giám */}
+     {/* TiÃªu Ä‘á» Kinh LuÃ¢n Tu Luyá»‡n náº±m ngay dÆ°á»›i chá»¯ Quá»‘c Tá»­ GiÃ¡m */}
      <div className="absolute top-[26%] xl:top-[28%] left-1/2 -translate-x-1/2 z-20 pointer-events-none">
         <div className="bg-transparent border-[3px] border-[#FFD700] px-8 md:px-12 py-3 rounded-md shadow-[0_0_20px_rgba(255,215,0,0.5),inset_0_0_15px_rgba(255,215,0,0.3)]">
            <h2 className="text-3xl md:text-5xl xl:text-6xl font-cinzel font-black text-[#FFD700] uppercase tracking-wider text-center leading-none whitespace-nowrap" style={{ textShadow: '0 0 15px rgba(255,215,0,1), 0 0 30px rgba(255,215,0,0.8), 2px 2px 4px rgba(0,0,0,1)' }}>
-             Kinh Luân Tu Luyện
+             Kinh LuÃ¢n Tu Luyá»‡n
            </h2>
         </div>
      </div>
-     {/* 2 Câu thơ bên trái */}
+     {/* 2 CÃ¢u thÆ¡ bÃªn trÃ¡i */}
      <div className="hidden lg:flex absolute left-[2%] top-0 bottom-0 flex-row items-center justify-center gap-6 xl:gap-10 pointer-events-none opacity-100 py-10 z-10">
        <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
-         {["Nam", "Quốc", "Sơn", "Hà", "Nam", "Đế", "Cư"].map((word, i) => (
+         {["Nam", "Quá»‘c", "SÆ¡n", "HÃ ", "Nam", "Äáº¿", "CÆ°"].map((word, i) => (
            <div key={`l1-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
              {word}
            </div>
          ))}
        </div>
        <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
-         {["Tiệt", "Nhiên", "Định", "Phận", "Tại", "Thiên", "Thư"].map((word, i) => (
+         {["Tiá»‡t", "NhiÃªn", "Äá»‹nh", "Pháº­n", "Táº¡i", "ThiÃªn", "ThÆ°"].map((word, i) => (
            <div key={`l2-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
              {word}
            </div>
@@ -5796,17 +5796,17 @@ const GradeView = ({ setGrade, setView }: any) => (
        </div>
      </div>
 
-     {/* 2 Câu thơ bên phải */}
+     {/* 2 CÃ¢u thÆ¡ bÃªn pháº£i */}
      <div className="hidden lg:flex absolute right-[2%] top-0 bottom-0 flex-row items-center justify-center gap-6 xl:gap-10 pointer-events-none opacity-100 py-10 z-10">
        <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
-         {["Như", "Hà", "Nghịch", "Lỗ", "Lai", "Xâm", "Phạm"].map((word, i) => (
+         {["NhÆ°", "HÃ ", "Nghá»‹ch", "Lá»—", "Lai", "XÃ¢m", "Pháº¡m"].map((word, i) => (
            <div key={`r1-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
              {word}
            </div>
          ))}
        </div>
        <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
-         {["Nhữ", "Đẳng", "Hành", "Khan", "Thủ", "Bại", "Hư"].map((word, i) => (
+         {["Nhá»¯", "Äáº³ng", "HÃ nh", "Khan", "Thá»§", "Báº¡i", "HÆ°"].map((word, i) => (
            <div key={`r2-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
              {word}
            </div>
@@ -5817,11 +5817,11 @@ const GradeView = ({ setGrade, setView }: any) => (
      <div className="w-full max-w-4xl text-center relative z-20 flex flex-col items-center">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full px-4">
            {[6, 7, 8, 9].map(g => (
-             <button key={g} onClick={() => { setGrade(g); setView('kinh-luan-topic'); }} className="bg-stone-900/80 backdrop-blur-md text-[#FFD700] border-2 border-[#FFD700] py-8 rounded-2xl font-cinzel font-black text-3xl hover:bg-stone-800 hover:scale-105 shadow-[0_0_20px_rgba(255,215,0,0.3)] active:scale-95 transition-all">LỚP {g}</button>
+             <button key={g} onClick={() => { setGrade(g); setView('kinh-luan-topic'); }} className="bg-stone-900/80 backdrop-blur-md text-[#FFD700] border-2 border-[#FFD700] py-8 rounded-2xl font-cinzel font-black text-3xl hover:bg-stone-800 hover:scale-105 shadow-[0_0_20px_rgba(255,215,0,0.3)] active:scale-95 transition-all">Lá»šP {g}</button>
            ))}
         </div>
         <button onClick={() => setView('chapter-hub')} className="mt-12 text-[#c2a265] font-cinzel font-bold text-xl uppercase tracking-widest border-b-2 border-[#c2a265] hover:text-amber-400 hover:border-amber-400 transition-colors drop-shadow-md">
-           Quay lại HUB
+           Quay láº¡i HUB
         </button>
       </div>
   </div>
@@ -5832,9 +5832,9 @@ const TopicView = ({ grade, setChapterIdx, setView, player }: any) => {
   const mathProgress = player?.mathProgress || {};
   const [lockedModal, setLockedModal] = React.useState<{chapterIdx: number} | null>(null);
 
-  // Kiểm tra chương đã hoàn thành (mở khóa chương tiếp theo) khi số bài mở >= tổng số bài
+  // Kiá»ƒm tra chÆ°Æ¡ng Ä‘Ã£ hoÃ n thÃ nh (má»Ÿ khÃ³a chÆ°Æ¡ng tiáº¿p theo) khi sá»‘ bÃ i má»Ÿ >= tá»•ng sá»‘ bÃ i
   const isChapterUnlocked = (idx: number): boolean => {
-    if (idx === 0) return true; // Chương 1 luôn mở
+    if (idx === 0) return true; // ChÆ°Æ¡ng 1 luÃ´n má»Ÿ
     const prevChapter = chapters[idx - 1];
     if (!prevChapter) return false;
     const totalLessons = prevChapter.lessons?.length || 0;
@@ -5845,40 +5845,40 @@ const TopicView = ({ grade, setChapterIdx, setView, player }: any) => {
 
   return (
   <div 
-    className="min-h-screen flex items-center justify-center p-8 overflow-y-auto bg-cover bg-center bg-no-repeat relative"
+    className="min-h-full flex items-center justify-center p-8 overflow-y-auto bg-cover bg-center bg-no-repeat relative"
     style={{ backgroundImage: `url('${import.meta.env.BASE_URL}ancient_exam_bg.jpg')` }}
   >
      <div className="absolute inset-0 bg-black/60 pointer-events-none z-0" />
 
-     {/* Modal cảnh báo khi chạm chương bị khóa */}
+     {/* Modal cáº£nh bÃ¡o khi cháº¡m chÆ°Æ¡ng bá»‹ khÃ³a */}
      {lockedModal && (
        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/70" onClick={() => setLockedModal(null)}>
          <div className="bg-amber-950 border-2 border-amber-600 rounded-3xl p-8 max-w-md mx-4 text-center shadow-[0_0_50px_rgba(217,119,6,0.4)]" onClick={e => e.stopPropagation()}>
-           <div className="text-4xl mb-4">🏯</div>
+           <div className="text-4xl mb-4">ðŸ¯</div>
            <h3 className="text-xl font-cinzel font-black text-amber-300 uppercase mb-3">
-             {chapters[lockedModal.chapterIdx]?.title || `Chương ${lockedModal.chapterIdx + 1}`}
+             {chapters[lockedModal.chapterIdx]?.title || `ChÆ°Æ¡ng ${lockedModal.chapterIdx + 1}`}
            </h3>
            <p className="text-amber-200 text-sm leading-relaxed mb-2">
-             Chúa công chưa hoàn thành <b>{chapters[lockedModal.chapterIdx - 1]?.title}</b>.
+             ChÃºa cÃ´ng chÆ°a hoÃ n thÃ nh <b>{chapters[lockedModal.chapterIdx - 1]?.title}</b>.
            </p>
            <p className="text-amber-100 text-sm leading-relaxed mb-2">
-             Cần hoàn thành <b>tất cả {chapters[lockedModal.chapterIdx - 1]?.lessons?.length || 0} bài</b> của chương trước mới có thể tiến vào chương này.
+             Cáº§n hoÃ n thÃ nh <b>táº¥t cáº£ {chapters[lockedModal.chapterIdx - 1]?.lessons?.length || 0} bÃ i</b> cá»§a chÆ°Æ¡ng trÆ°á»›c má»›i cÃ³ thá»ƒ tiáº¿n vÃ o chÆ°Æ¡ng nÃ y.
            </p>
            <p className="text-amber-200/60 text-xs mb-5">
-             (Hiện đã mở: {mathProgress[`g${grade}-c${lockedModal.chapterIdx - 1}`] || 0}/{chapters[lockedModal.chapterIdx - 1]?.lessons?.length || 0} bài)
+             (Hiá»‡n Ä‘Ã£ má»Ÿ: {mathProgress[`g${grade}-c${lockedModal.chapterIdx - 1}`] || 0}/{chapters[lockedModal.chapterIdx - 1]?.lessons?.length || 0} bÃ i)
            </p>
            <button 
              onClick={() => setLockedModal(null)}
              className="bg-amber-600 hover:bg-amber-500 text-white font-black uppercase px-6 py-2 rounded-xl transition-colors"
            >
-             Hiểu rồi!
+             Hiá»ƒu rá»“i!
            </button>
          </div>
        </div>
      )}
 
      <div className="max-w-3xl w-full scroll-bg p-10 rounded-[3rem] text-center shadow-2xl border-blue-900 my-10 relative z-10">
-        <h2 className="text-2xl font-cinzel font-black text-blue-950 uppercase mb-8">LỚP {grade} - Chọn Chương</h2>
+        <h2 className="text-2xl font-cinzel font-black text-blue-950 uppercase mb-8">Lá»šP {grade} - Chá»n ChÆ°Æ¡ng</h2>
         <div className="grid grid-cols-1 gap-4 text-left">
            {chapters.map((ch: any, idx: number) => {
              const unlocked = isChapterUnlocked(idx);
@@ -5894,12 +5894,12 @@ const TopicView = ({ grade, setChapterIdx, setView, player }: any) => {
                  className="bg-white border-2 border-blue-900 p-6 rounded-2xl flex items-center gap-4 group hover:bg-blue-50 transition-all cursor-pointer"
                >
                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold group-hover:scale-110 transition-transform ${isCompleted ? 'bg-green-600 text-white' : 'bg-blue-900 text-white'}`}>
-                   {isCompleted ? '✓' : idx + 1}
+                   {isCompleted ? 'âœ“' : idx + 1}
                  </div>
                  <div className="flex-1">
                    <span className="font-bold text-blue-900 text-lg">{ch.title}</span>
                    <div className="text-xs text-slate-500 mt-0.5">
-                     {isCompleted ? 'Đã hoàn thành' : `${lessonsUnlocked}/${totalLessons} bài đã mở`}
+                     {isCompleted ? 'ÄÃ£ hoÃ n thÃ nh' : `${lessonsUnlocked}/${totalLessons} bÃ i Ä‘Ã£ má»Ÿ`}
                    </div>
                  </div>
                </button>
@@ -5910,17 +5910,17 @@ const TopicView = ({ grade, setChapterIdx, setView, player }: any) => {
                  className="bg-slate-100 border-2 border-slate-300 p-6 rounded-2xl flex items-center gap-4 cursor-pointer opacity-60 hover:opacity-80 transition-opacity"
                >
                  <div className="bg-slate-400 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">
-                   🔒
+                   ðŸ”’
                  </div>
                  <div className="flex-1">
                    <span className="font-bold text-slate-500 text-lg">{ch.title}</span>
-                   <div className="text-xs text-slate-400 mt-0.5">Hoàn thành chương trước để mở</div>
+                   <div className="text-xs text-slate-400 mt-0.5">HoÃ n thÃ nh chÆ°Æ¡ng trÆ°á»›c Ä‘á»ƒ má»Ÿ</div>
                  </div>
                </button>
              );
            })}
         </div>
-        <button onClick={() => setView('kinh-luan-grade')} className="mt-8 text-blue-900 font-bold uppercase cursor-pointer hover:underline">Quay lại</button>
+        <button onClick={() => setView('kinh-luan-grade')} className="mt-8 text-blue-900 font-bold uppercase cursor-pointer hover:underline">Quay láº¡i</button>
      </div>
   </div>
   );
@@ -5931,7 +5931,7 @@ const LessonListView = ({ grade, chapterIdx, setLessonIdx, setView, progress, pl
   const chapter = MATH_DATA[grade] && MATH_DATA[grade][chapterIdx];
   const unlockedCount = (progress && progress[`g${grade}-c${chapterIdx}`]) || 0;
 
-  // Modal thông báo bài bị khoá
+  // Modal thÃ´ng bÃ¡o bÃ i bá»‹ khoÃ¡
   const [lockedModal, setLockedModal] = React.useState<{
     lessonTitle: string;
     lessonIdx: number;
@@ -5942,7 +5942,7 @@ const LessonListView = ({ grade, chapterIdx, setLessonIdx, setView, progress, pl
     prevRemaining: number;
   } | null>(null);
 
-  // Modal chọn gói câu hỏi khi click bài đã mở
+  // Modal chá»n gÃ³i cÃ¢u há»i khi click bÃ i Ä‘Ã£ má»Ÿ
   const [packageModal, setPackageModal] = React.useState<{
     lessonIdx: number;
     lessonTitle: string;
@@ -5965,7 +5965,7 @@ const LessonListView = ({ grade, chapterIdx, setLessonIdx, setView, progress, pl
       setLockedModal({
         lessonTitle: lesson.title,
         lessonIdx: idx,
-        prevTitle: prevLesson ? prevLesson.title : `Bài ${idx}`,
+        prevTitle: prevLesson ? prevLesson.title : `BÃ i ${idx}`,
         prevIdx: prevIdx,
         prevTotal: prevTotal,
         prevCorrect: prevCorrect,
@@ -5990,59 +5990,59 @@ const LessonListView = ({ grade, chapterIdx, setLessonIdx, setView, progress, pl
 
   return (
     <div 
-      className="min-h-screen flex items-center justify-center p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
+      className="min-h-full flex items-center justify-center p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url('${import.meta.env.BASE_URL}ancient_exam_bg.jpg')` }}
     >
        <div className="absolute inset-0 bg-black/60 pointer-events-none z-0" />
        
-       {/* Trái - Nguyễn Ánh */}
+       {/* TrÃ¡i - Nguyá»…n Ãnh */}
        <div className="hidden lg:flex absolute left-[2%] top-0 bottom-0 flex-row items-center justify-center gap-4 xl:gap-8 pointer-events-none opacity-100 py-4 z-10">
          <div className="flex flex-col justify-center gap-2 xl:gap-4 h-full">
-           {["Ta", "Và", "Nguyễn", "Huệ", "Ai", "Hơn?"].map((word, i) => (
+           {["Ta", "VÃ ", "Nguyá»…n", "Huá»‡", "Ai", "HÆ¡n?"].map((word, i) => (
              <div key={`l1-${i}`} className="text-[1.8rem] xl:text-[2.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
                {word}
              </div>
            ))}
-           <div className="text-[1.2rem] xl:text-[1.5rem] font-bold text-[#c2a265] text-center mt-6 leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Nguyễn</div>
-           <div className="text-[1.2rem] xl:text-[1.5rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Ánh</div>
+           <div className="text-[1.2rem] xl:text-[1.5rem] font-bold text-[#c2a265] text-center mt-6 leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Nguyá»…n</div>
+           <div className="text-[1.2rem] xl:text-[1.5rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Ãnh</div>
          </div>
        </div>
 
-       {/* Phải - Bùi Thị Xuân */}
+       {/* Pháº£i - BÃ¹i Thá»‹ XuÃ¢n */}
        <div className="hidden lg:flex absolute right-[2%] top-0 bottom-0 flex-row items-center justify-center gap-4 xl:gap-6 pointer-events-none opacity-100 py-4 z-10">
          <div className="flex flex-col justify-center gap-1 xl:gap-2 h-full">
-           {["Chúa", "Công", "Ta", "Tay", "Kiếm", "Tay", "Cờ", "Mà", "Làm", "Nên", "Sự", "Nghiệp"].map((word, i) => (
+           {["ChÃºa", "CÃ´ng", "Ta", "Tay", "Kiáº¿m", "Tay", "Cá»", "MÃ ", "LÃ m", "NÃªn", "Sá»±", "Nghiá»‡p"].map((word, i) => (
              <div key={`r1-${i}`} className="text-[1rem] xl:text-[1.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
                {word}
              </div>
            ))}
          </div>
          <div className="flex flex-col justify-center gap-1 xl:gap-2 h-full">
-           {["Trong", "Khi", "Nhà", "Ngươi", "Đi", "Cầu", "Viện", "Ngoại", "Bang", "Làm", "Tan", "Nát", "Cả", "Sơn", "Hà"].map((word, i) => (
+           {["Trong", "Khi", "NhÃ ", "NgÆ°Æ¡i", "Äi", "Cáº§u", "Viá»‡n", "Ngoáº¡i", "Bang", "LÃ m", "Tan", "NÃ¡t", "Cáº£", "SÆ¡n", "HÃ "].map((word, i) => (
              <div key={`r2-${i}`} className="text-[1rem] xl:text-[1.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
                {word}
              </div>
            ))}
          </div>
          <div className="flex flex-col justify-center gap-1 xl:gap-2 h-full">
-           {["Đem", "So", "Với", "Chúa", "Công", "Ta", "Ngươi", "Chỉ", "Là", "Nước", "Vũng", "So", "Với", "Ao", "Trời"].map((word, i) => (
+           {["Äem", "So", "Vá»›i", "ChÃºa", "CÃ´ng", "Ta", "NgÆ°Æ¡i", "Chá»‰", "LÃ ", "NÆ°á»›c", "VÅ©ng", "So", "Vá»›i", "Ao", "Trá»i"].map((word, i) => (
              <div key={`r3-${i}`} className="text-[1rem] xl:text-[1.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
                {word}
              </div>
            ))}
-           <div className="text-[0.9rem] xl:text-[1.1rem] font-bold text-[#c2a265] text-center mt-2 leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Bùi</div>
-           <div className="text-[0.9rem] xl:text-[1.1rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Thị</div>
-           <div className="text-[0.9rem] xl:text-[1.1rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Xuân</div>
+           <div className="text-[0.9rem] xl:text-[1.1rem] font-bold text-[#c2a265] text-center mt-2 leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>BÃ¹i</div>
+           <div className="text-[0.9rem] xl:text-[1.1rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Thá»‹</div>
+           <div className="text-[0.9rem] xl:text-[1.1rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>XuÃ¢n</div>
          </div>
        </div>
 
        <div className="max-w-3xl w-full scroll-bg p-8 md:p-10 rounded-[3rem] text-center shadow-2xl border-blue-900 my-10 relative z-20">
-          <h2 className="text-2xl md:text-3xl font-cinzel font-black text-blue-950 mb-2 uppercase tracking-wider drop-shadow-sm">Bài Học (Tuần Tự)</h2>
+          <h2 className="text-2xl md:text-3xl font-cinzel font-black text-blue-950 mb-2 uppercase tracking-wider drop-shadow-sm">BÃ i Há»c (Tuáº§n Tá»±)</h2>
           <p className="text-amber-900/80 font-bold text-sm uppercase tracking-widest mb-6">
-            LỚP {grade} &middot; {chapter.title}
+            Lá»šP {grade} &middot; {chapter.title}
           </p>
 
-          <div className="grid grid-cols-1 gap-3 max-h-[60vh] overflow-y-auto custom-scrollbar pr-1">
+          <div className="grid grid-cols-1 gap-3 max-h-[60%] overflow-y-auto custom-scrollbar pr-1">
              {chapter.lessons.map((lesson: any, idx: number) => {
                const isUnlocked = idx <= unlockedCount;
                const isDone = idx < unlockedCount;
@@ -6076,11 +6076,11 @@ const LessonListView = ({ grade, chapterIdx, setLessonIdx, setView, progress, pl
                         </div>
                         {isUnlocked && (
                           <div className="text-xs text-stone-500 font-normal flex items-center gap-2 mt-0.5">
-                            <span>Tiến độ: <strong className={isDone ? 'text-emerald-600' : 'text-blue-700'}>{correctCount}/{totalQ}</strong> câu</span>
+                            <span>Tiáº¿n Ä‘á»™: <strong className={isDone ? 'text-emerald-600' : 'text-blue-700'}>{correctCount}/{totalQ}</strong> cÃ¢u</span>
                             {isDone ? (
-                              <span className="text-emerald-700 font-bold text-[10px] bg-emerald-100 px-2 py-0.5 rounded-full">✅ Đã xong</span>
+                              <span className="text-emerald-700 font-bold text-[10px] bg-emerald-100 px-2 py-0.5 rounded-full">âœ… ÄÃ£ xong</span>
                             ) : (
-                              <span className="text-amber-700 font-medium text-[10px] bg-amber-100 px-2 py-0.5 rounded-full">Còn {remainingQ} câu</span>
+                              <span className="text-amber-700 font-medium text-[10px] bg-amber-100 px-2 py-0.5 rounded-full">CÃ²n {remainingQ} cÃ¢u</span>
                             )}
                           </div>
                         )}
@@ -6100,28 +6100,28 @@ const LessonListView = ({ grade, chapterIdx, setLessonIdx, setView, progress, pl
                );
              })}
           </div>
-          <button onClick={() => setView('kinh-luan-topic')} className="mt-8 text-blue-900 font-bold uppercase hover:underline cursor-pointer">Quay lại</button>
+          <button onClick={() => setView('kinh-luan-topic')} className="mt-8 text-blue-900 font-bold uppercase hover:underline cursor-pointer">Quay láº¡i</button>
        </div>
 
-       {/* ===== MODAL: BÀI BỊ KHOÁ ===== */}
+       {/* ===== MODAL: BÃ€I Bá»Š KHOÃ ===== */}
        {lockedModal && (
          <div className="fixed inset-0 z-[300] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fade-in" onClick={() => setLockedModal(null)}>
            <div className="bg-gradient-to-b from-stone-900 via-amber-950/95 to-stone-950 border-2 border-amber-600/80 rounded-3xl p-6 md:p-8 max-w-lg w-full shadow-[0_0_60px_rgba(245,158,11,0.3)] text-center relative" onClick={e => e.stopPropagation()}>
              <div className="w-16 h-16 rounded-full bg-amber-950/80 border-2 border-amber-500/60 flex items-center justify-center mx-auto mb-4 text-3xl shadow-[0_0_20px_rgba(245,158,11,0.4)]">
-               🔒
+               ðŸ”’
              </div>
-             <div className="text-xs text-amber-500 font-bold uppercase tracking-[0.2em] mb-1">Chưa Mở Khóa</div>
+             <div className="text-xs text-amber-500 font-bold uppercase tracking-[0.2em] mb-1">ChÆ°a Má»Ÿ KhÃ³a</div>
              <h3 className="text-amber-300 font-cinzel font-black text-xl md:text-2xl uppercase tracking-wider mb-4 drop-shadow">
                {lockedModal.lessonTitle}
              </h3>
              
              <div className="bg-stone-950/80 border border-amber-800/50 rounded-2xl p-4 md:p-5 mb-6 text-stone-200 text-sm md:text-base leading-relaxed text-left">
                <p className="mb-2">
-                 Bạn phải vượt qua <span className="text-amber-400 font-bold">{lockedModal.prevTotal} câu</span> thì mới mở khóa được <span className="text-amber-300 font-bold">{lockedModal.lessonTitle}</span>, hiện chúa công đã vượt qua <span className="text-emerald-400 font-bold">{lockedModal.prevCorrect} câu</span>, còn <span className="text-red-400 font-bold">{lockedModal.prevRemaining} câu</span>.
+                 Báº¡n pháº£i vÆ°á»£t qua <span className="text-amber-400 font-bold">{lockedModal.prevTotal} cÃ¢u</span> thÃ¬ má»›i má»Ÿ khÃ³a Ä‘Æ°á»£c <span className="text-amber-300 font-bold">{lockedModal.lessonTitle}</span>, hiá»‡n chÃºa cÃ´ng Ä‘Ã£ vÆ°á»£t qua <span className="text-emerald-400 font-bold">{lockedModal.prevCorrect} cÃ¢u</span>, cÃ²n <span className="text-red-400 font-bold">{lockedModal.prevRemaining} cÃ¢u</span>.
                </p>
                <p className="text-amber-300 font-medium italic mt-3 pt-3 border-t border-stone-800 flex items-center gap-2">
-                 <span>⚔️</span>
-                 <span>Mời chúa công tiếp tục thí luyện để nhận các phần thưởng nhằm tăng cường quân lực phe ta.</span>
+                 <span>âš”ï¸</span>
+                 <span>Má»i chÃºa cÃ´ng tiáº¿p tá»¥c thÃ­ luyá»‡n Ä‘á»ƒ nháº­n cÃ¡c pháº§n thÆ°á»Ÿng nháº±m tÄƒng cÆ°á»ng quÃ¢n lá»±c phe ta.</span>
                </p>
              </div>
 
@@ -6134,42 +6134,42 @@ const LessonListView = ({ grade, chapterIdx, setLessonIdx, setView, progress, pl
                  }}
                  className="flex-1 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-lg active:scale-95 cursor-pointer"
                >
-                 Đến làm {lockedModal.prevTitle} ngay
+                 Äáº¿n lÃ m {lockedModal.prevTitle} ngay
                </button>
                <button
                  onClick={() => setLockedModal(null)}
                  className="bg-stone-800 hover:bg-stone-700 text-stone-300 font-bold py-3 px-6 rounded-xl transition-all active:scale-95 cursor-pointer"
                >
-                 Đã hiểu
+                 ÄÃ£ hiá»ƒu
                </button>
              </div>
            </div>
          </div>
        )}
 
-       {/* ===== MODAL: CHỌN GÓI CÂU HỎI KHI VÀO BÀI ===== */}
+       {/* ===== MODAL: CHá»ŒN GÃ“I CÃ‚U Há»ŽI KHI VÃ€O BÃ€I ===== */}
        {packageModal && (
          <div className="fixed inset-0 z-[300] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fade-in" onClick={() => setPackageModal(null)}>
            <div className="bg-gradient-to-b from-blue-950 via-slate-900 to-stone-950 border-2 border-blue-500/70 rounded-3xl p-6 md:p-8 max-w-lg w-full shadow-[0_0_60px_rgba(59,130,246,0.3)] text-center relative" onClick={e => e.stopPropagation()}>
              <div className="w-16 h-16 rounded-full bg-blue-950/80 border-2 border-blue-500/60 flex items-center justify-center mx-auto mb-3 text-3xl shadow-[0_0_20px_rgba(59,130,246,0.4)]">
-               📚
+               ðŸ“š
              </div>
              <h3 className="text-blue-300 font-cinzel font-black text-xl uppercase tracking-wider mb-2 drop-shadow">
                {packageModal.lessonTitle}
              </h3>
              <div className="bg-blue-950/50 border border-blue-800/50 rounded-2xl p-4 mb-5 text-stone-300 text-sm leading-relaxed">
                <p className="mb-1">
-                 Bài này có <span className="text-blue-400 font-bold">{packageModal.totalQ} câu hỏi</span>.
+                 BÃ i nÃ y cÃ³ <span className="text-blue-400 font-bold">{packageModal.totalQ} cÃ¢u há»i</span>.
                </p>
                <p>
-                 Đã vượt qua: <span className="text-emerald-400 font-bold">{packageModal.correctCount}/{packageModal.totalQ} câu</span>
+                 ÄÃ£ vÆ°á»£t qua: <span className="text-emerald-400 font-bold">{packageModal.correctCount}/{packageModal.totalQ} cÃ¢u</span>
                  {packageModal.remainingQ > 0 ? (
-                   <span> (còn <span className="text-amber-400 font-bold">{packageModal.remainingQ} câu</span>).</span>
+                   <span> (cÃ²n <span className="text-amber-400 font-bold">{packageModal.remainingQ} cÃ¢u</span>).</span>
                  ) : (
-                   <span className="text-emerald-300 font-bold"> (Đã hoàn thành 100%!).</span>
+                   <span className="text-emerald-300 font-bold"> (ÄÃ£ hoÃ n thÃ nh 100%!).</span>
                  )}
                </p>
-               <p className="text-blue-200 text-xs mt-2 italic">Vui lòng chọn nội dung học hoặc gói câu hỏi để bắt đầu:</p>
+               <p className="text-blue-200 text-xs mt-2 italic">Vui lÃ²ng chá»n ná»™i dung há»c hoáº·c gÃ³i cÃ¢u há»i Ä‘á»ƒ báº¯t Ä‘áº§u:</p>
              </div>
 
              <div className="space-y-3 mb-6">
@@ -6181,8 +6181,8 @@ const LessonListView = ({ grade, chapterIdx, setLessonIdx, setView, progress, pl
                  }}
                  className="w-full bg-gradient-to-r from-amber-800 to-amber-700 hover:from-amber-700 hover:to-amber-600 text-white font-bold p-3.5 rounded-xl border border-amber-500/60 transition-all flex items-center justify-center gap-2 shadow-md active:scale-95 cursor-pointer"
                >
-                 <span>📖</span>
-                 <span>Xem Kiến Thức Trọng Tâm</span>
+                 <span>ðŸ“–</span>
+                 <span>Xem Kiáº¿n Thá»©c Trá»ng TÃ¢m</span>
                </button>
 
                <div className="grid grid-cols-2 gap-2.5">
@@ -6196,8 +6196,8 @@ const LessonListView = ({ grade, chapterIdx, setLessonIdx, setView, progress, pl
                      }}
                      className="bg-stone-900/90 hover:bg-blue-900/80 border border-stone-700 hover:border-blue-500 text-white font-bold p-3 rounded-xl transition-all active:scale-95 cursor-pointer text-left flex items-center justify-between"
                    >
-                     <span>Gói {cnt} câu</span>
-                     <span className="text-xs text-blue-400">⚡</span>
+                     <span>GÃ³i {cnt} cÃ¢u</span>
+                     <span className="text-xs text-blue-400">âš¡</span>
                    </button>
                  ))}
 
@@ -6209,14 +6209,14 @@ const LessonListView = ({ grade, chapterIdx, setLessonIdx, setView, progress, pl
                    }}
                    className="bg-gradient-to-r from-blue-900 to-indigo-900 hover:from-blue-800 hover:to-indigo-800 border border-blue-500 text-white font-bold p-3 rounded-xl transition-all active:scale-95 cursor-pointer text-left flex items-center justify-between"
                  >
-                   <span>Tất cả {packageModal.remainingQ > 0 ? `(${packageModal.remainingQ} câu)` : `(${packageModal.totalQ} câu)`}</span>
-                   <span className="text-xs text-amber-300">👑</span>
+                   <span>Táº¥t cáº£ {packageModal.remainingQ > 0 ? `(${packageModal.remainingQ} cÃ¢u)` : `(${packageModal.totalQ} cÃ¢u)`}</span>
+                   <span className="text-xs text-amber-300">ðŸ‘‘</span>
                  </button>
                </div>
              </div>
 
              <button onClick={() => setPackageModal(null)} className="text-stone-400 hover:text-white text-sm transition-colors cursor-pointer">
-               Đóng
+               ÄÃ³ng
              </button>
            </div>
          </div>
@@ -6263,11 +6263,11 @@ const LessonSummaryView = ({ grade, chapterIdx, lessonIdx, setView }: any) => {
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       // Headers h4
-      .replace(/#### (.*)/g, '<h4 class="text-lg font-bold mt-5 mb-2 text-amber-900 flex items-center gap-2">🔹 $1</h4>')
-      // Headers (Kiến thức trọng tâm)
-      .replace(/### (.*)/g, '<h3 class="text-xl font-black mt-8 mb-4 bg-amber-100/80 p-3 rounded-xl border-l-4 border-amber-600 text-amber-950 shadow-sm uppercase tracking-wide">✨ $1</h3>')
+      .replace(/#### (.*)/g, '<h4 class="text-lg font-bold mt-5 mb-2 text-amber-900 flex items-center gap-2">ðŸ”¹ $1</h4>')
+      // Headers (Kiáº¿n thá»©c trá»ng tÃ¢m)
+      .replace(/### (.*)/g, '<h3 class="text-xl font-black mt-8 mb-4 bg-amber-100/80 p-3 rounded-xl border-l-4 border-amber-600 text-amber-950 shadow-sm uppercase tracking-wide">âœ¨ $1</h3>')
       // Blockquotes (Notes)
-      .replace(/&gt; \[\!NOTE\][\s\S]*?&gt; \*\*(.*?)\*\*([\s\S]*)/g, '<div class="bg-gradient-to-br from-red-50 to-orange-50 border-l-[8px] border-red-600 p-6 md:p-8 my-10 rounded-r-3xl shadow-xl relative overflow-hidden ring-1 ring-red-900/10"><strong class="text-red-700 block mb-4 text-xl md:text-2xl font-black uppercase flex items-center gap-3 tracking-wide drop-shadow-sm">⚠️ $1</strong><div class="text-red-950/90 font-medium leading-relaxed text-lg z-10 relative">$2</div><div class="absolute -bottom-10 -right-10 text-9xl opacity-5">⚠️</div></div>')
+      .replace(/&gt; \[\!NOTE\][\s\S]*?&gt; \*\*(.*?)\*\*([\s\S]*)/g, '<div class="bg-gradient-to-br from-red-50 to-orange-50 border-l-[8px] border-red-600 p-6 md:p-8 my-10 rounded-r-3xl shadow-xl relative overflow-hidden ring-1 ring-red-900/10"><strong class="text-red-700 block mb-4 text-xl md:text-2xl font-black uppercase flex items-center gap-3 tracking-wide drop-shadow-sm">âš ï¸ $1</strong><div class="text-red-950/90 font-medium leading-relaxed text-lg z-10 relative">$2</div><div class="absolute -bottom-10 -right-10 text-9xl opacity-5">âš ï¸</div></div>')
       // Bold
       .replace(/\*\*(.*?)\*\*/g, '<strong class="text-amber-900 font-bold">$1</strong>')
       // Images
@@ -6292,22 +6292,22 @@ const LessonSummaryView = ({ grade, chapterIdx, lessonIdx, setView }: any) => {
 
   return (
     <div 
-      className="min-h-screen flex items-center justify-center p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
+      className="min-h-full flex items-center justify-center p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url('${import.meta.env.BASE_URL}ancient_exam_bg.jpg')` }}
     >
        <div className="absolute inset-0 bg-black/60 pointer-events-none z-0" />
        
-       {/* 2 Câu thơ bên trái - Bình Ngô Đại Cáo */}
+       {/* 2 CÃ¢u thÆ¡ bÃªn trÃ¡i - BÃ¬nh NgÃ´ Äáº¡i CÃ¡o */}
        <div className="hidden lg:flex absolute left-[2%] top-0 bottom-0 flex-row items-center justify-center gap-6 xl:gap-10 pointer-events-none opacity-100 py-10 z-10">
          <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
-           {["Việc", "Nhân", "Nghĩa", "Cốt", "Ở", "Yên", "Dân"].map((word, i) => (
+           {["Viá»‡c", "NhÃ¢n", "NghÄ©a", "Cá»‘t", "á»ž", "YÃªn", "DÃ¢n"].map((word, i) => (
              <div key={`l1-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
                {word}
              </div>
            ))}
          </div>
          <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
-           {["Quân", "Điếu", "Phạt", "Trước", "Lo", "Trừ", "Bạo"].map((word, i) => (
+           {["QuÃ¢n", "Äiáº¿u", "Pháº¡t", "TrÆ°á»›c", "Lo", "Trá»«", "Báº¡o"].map((word, i) => (
              <div key={`l2-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
                {word}
              </div>
@@ -6315,17 +6315,17 @@ const LessonSummaryView = ({ grade, chapterIdx, lessonIdx, setView }: any) => {
          </div>
        </div>
 
-       {/* 2 Câu thơ bên phải */}
+       {/* 2 CÃ¢u thÆ¡ bÃªn pháº£i */}
        <div className="hidden lg:flex absolute right-[2%] top-0 bottom-0 flex-row items-center justify-center gap-6 xl:gap-10 pointer-events-none opacity-100 py-10 z-10">
          <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
-           {["Như", "Nước", "Đại", "Việt", "Ta", "Từ", "Trước"].map((word, i) => (
+           {["NhÆ°", "NÆ°á»›c", "Äáº¡i", "Viá»‡t", "Ta", "Tá»«", "TrÆ°á»›c"].map((word, i) => (
              <div key={`r1-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
                {word}
              </div>
            ))}
          </div>
          <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
-           {["Vốn", "Xưng", "Nền", "Văn", "Hiến", "Đã", "Lâu"].map((word, i) => (
+           {["Vá»‘n", "XÆ°ng", "Ná»n", "VÄƒn", "Hiáº¿n", "ÄÃ£", "LÃ¢u"].map((word, i) => (
              <div key={`r2-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
                {word}
              </div>
@@ -6333,10 +6333,10 @@ const LessonSummaryView = ({ grade, chapterIdx, lessonIdx, setView }: any) => {
          </div>
        </div>
 
-       <div className="max-w-4xl w-full scroll-bg p-12 rounded-[3rem] shadow-2xl flex flex-col max-h-[90vh] relative z-20">
-         <h2 className="text-3xl font-cinzel font-black mb-6 text-amber-950 flex items-center gap-3"><BookOpen size={36}/> Kiến Thức Trọng Tâm</h2>
+       <div className="max-w-4xl w-full scroll-bg p-12 rounded-[3rem] shadow-2xl flex flex-col max-h-[90%] relative z-20">
+         <h2 className="text-3xl font-cinzel font-black mb-6 text-amber-950 flex items-center gap-3"><BookOpen size={36}/> Kiáº¿n Thá»©c Trá»ng TÃ¢m</h2>
          <MathJaxText id="lesson-summary-content" className="flex-1 overflow-y-auto custom-scrollbar text-left prose prose-amber" html={renderMarkdown(lesson.summary).__html} tag="div" />
-        <button onClick={() => setView('quiz-setup')} className="mt-8 bg-amber-950 text-white py-5 rounded-2xl font-black uppercase text-xl shadow-lg active:scale-95 transition-all">Vào Tu Luyện</button>
+        <button onClick={() => setView('quiz-setup')} className="mt-8 bg-amber-950 text-white py-5 rounded-2xl font-black uppercase text-xl shadow-lg active:scale-95 transition-all">VÃ o Tu Luyá»‡n</button>
       </div>
     </div>
   );
@@ -6353,31 +6353,31 @@ const QuizSetupView = ({ startQuiz, setView, grade, chapterIdx, lessonIdx, playe
 
   return (
     <div 
-      className="min-h-screen flex items-center justify-center p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
+      className="min-h-full flex items-center justify-center p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: "url('/ancient_exam_bg.jpg?v=1')" }}
     >
        <div className="absolute inset-0 bg-black/60 pointer-events-none z-0" />
        
-       {/* 3 Câu thơ bên trái */}
+       {/* 3 CÃ¢u thÆ¡ bÃªn trÃ¡i */}
        <div className="hidden lg:flex absolute left-[2%] top-0 bottom-0 flex-row items-center justify-center gap-4 xl:gap-8 pointer-events-none opacity-100 py-4 z-10">
          <div className="flex flex-col justify-center gap-2 xl:gap-4 h-full">
-           {["Đánh", "Cho", "Sử", "Tri", "Nam", "Quốc", "Anh", "Hùng", "Chi", "Hữu", "Chủ"].map((word, i) => (
+           {["ÄÃ¡nh", "Cho", "Sá»­", "Tri", "Nam", "Quá»‘c", "Anh", "HÃ¹ng", "Chi", "Há»¯u", "Chá»§"].map((word, i) => (
              <div key={`l1-${i}`} className="text-[1.6rem] xl:text-[2rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
                {word}
              </div>
            ))}
-           <div className="text-[1.2rem] xl:text-[1.5rem] font-bold text-[#c2a265] text-center mt-2 leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Nguyễn</div>
-           <div className="text-[1.2rem] xl:text-[1.5rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Huệ</div>
+           <div className="text-[1.2rem] xl:text-[1.5rem] font-bold text-[#c2a265] text-center mt-2 leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Nguyá»…n</div>
+           <div className="text-[1.2rem] xl:text-[1.5rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Huá»‡</div>
          </div>
          <div className="flex flex-col justify-center gap-2 xl:gap-4 h-full">
-           {["Đánh", "Cho", "Họ", "Phiến", "Giáp", "Bất", "Hoàn"].map((word, i) => (
+           {["ÄÃ¡nh", "Cho", "Há»", "Phiáº¿n", "GiÃ¡p", "Báº¥t", "HoÃ n"].map((word, i) => (
              <div key={`l2-${i}`} className="text-[1.8rem] xl:text-[2.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
                {word}
              </div>
            ))}
          </div>
          <div className="flex flex-col justify-center gap-2 xl:gap-4 h-full">
-           {["Đánh", "Cho", "Họ", "Chích", "Luân", "Bất", "Phản"].map((word, i) => (
+           {["ÄÃ¡nh", "Cho", "Há»", "ChÃ­ch", "LuÃ¢n", "Báº¥t", "Pháº£n"].map((word, i) => (
              <div key={`l3-${i}`} className="text-[1.8rem] xl:text-[2.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
                {word}
              </div>
@@ -6385,17 +6385,17 @@ const QuizSetupView = ({ startQuiz, setView, grade, chapterIdx, lessonIdx, playe
          </div>
        </div>
 
-       {/* 2 Câu thơ bên phải */}
+       {/* 2 CÃ¢u thÆ¡ bÃªn pháº£i */}
        <div className="hidden lg:flex absolute right-[2%] top-0 bottom-0 flex-row items-center justify-center gap-4 xl:gap-8 pointer-events-none opacity-100 py-4 z-10">
          <div className="flex flex-col justify-center gap-2 xl:gap-4 h-full">
-           {["Đánh", "Cho", "Để", "Đen", "Răng"].map((word, i) => (
+           {["ÄÃ¡nh", "Cho", "Äá»ƒ", "Äen", "RÄƒng"].map((word, i) => (
              <div key={`r1-${i}`} className="text-[1.8rem] xl:text-[2.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
                {word}
              </div>
            ))}
          </div>
          <div className="flex flex-col justify-center gap-2 xl:gap-4 h-full">
-           {["Đánh", "Cho", "Để", "Dài", "Tóc"].map((word, i) => (
+           {["ÄÃ¡nh", "Cho", "Äá»ƒ", "DÃ i", "TÃ³c"].map((word, i) => (
              <div key={`r2-${i}`} className="text-[1.8rem] xl:text-[2.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
                {word}
              </div>
@@ -6405,22 +6405,22 @@ const QuizSetupView = ({ startQuiz, setView, grade, chapterIdx, lessonIdx, playe
 
        <div className="max-w-2xl w-full scroll-bg p-8 md:p-12 rounded-[3rem] text-center shadow-2xl border-amber-900 relative z-20">
           <Trophy className="mx-auto mb-3 text-amber-600" size={56}/>
-          <h2 className="text-2xl md:text-3xl font-cinzel font-black text-blue-950 uppercase mb-4">Thiết Lập Tu Luyện</h2>
+          <h2 className="text-2xl md:text-3xl font-cinzel font-black text-blue-950 uppercase mb-4">Thiáº¿t Láº­p Tu Luyá»‡n</h2>
           
-          {/* Thông báo số câu bài học theo yêu cầu của Chúa công */}
+          {/* ThÃ´ng bÃ¡o sá»‘ cÃ¢u bÃ i há»c theo yÃªu cáº§u cá»§a ChÃºa cÃ´ng */}
           <div className="bg-gradient-to-r from-blue-950/80 to-stone-900/90 border border-amber-500/50 rounded-2xl p-5 mb-6 text-stone-200 text-left shadow-lg">
-             <div className="text-amber-400 font-cinzel font-black text-lg mb-1">{lesson?.title || 'Bài học'}</div>
+             <div className="text-amber-400 font-cinzel font-black text-lg mb-1">{lesson?.title || 'BÃ i há»c'}</div>
              <div className="text-sm md:text-base leading-relaxed text-stone-300">
-               Bài này có <span className="text-amber-300 font-bold">{totalQ} câu hỏi</span>.
-               Hiện chúa công đã vượt qua: <span className="text-emerald-400 font-bold">{correctCount}/{totalQ} câu</span>
+               BÃ i nÃ y cÃ³ <span className="text-amber-300 font-bold">{totalQ} cÃ¢u há»i</span>.
+               Hiá»‡n chÃºa cÃ´ng Ä‘Ã£ vÆ°á»£t qua: <span className="text-emerald-400 font-bold">{correctCount}/{totalQ} cÃ¢u</span>
                {remainingQ > 0 ? (
-                 <span> (còn <span className="text-amber-300 font-bold">{remainingQ} câu</span> chưa vượt qua).</span>
+                 <span> (cÃ²n <span className="text-amber-300 font-bold">{remainingQ} cÃ¢u</span> chÆ°a vÆ°á»£t qua).</span>
                ) : (
-                 <span className="text-emerald-300 font-bold"> (Đã vượt qua toàn bộ!).</span>
+                 <span className="text-emerald-300 font-bold"> (ÄÃ£ vÆ°á»£t qua toÃ n bá»™!).</span>
                )}
              </div>
              <div className="text-xs text-amber-400/90 mt-2 font-medium italic">
-               ⚡ Vui lòng chọn gói câu hỏi bên dưới để bắt đầu thí luyện:
+               âš¡ Vui lÃ²ng chá»n gÃ³i cÃ¢u há»i bÃªn dÆ°á»›i Ä‘á»ƒ báº¯t Ä‘áº§u thÃ­ luyá»‡n:
              </div>
           </div>
 
@@ -6431,18 +6431,18 @@ const QuizSetupView = ({ startQuiz, setView, grade, chapterIdx, lessonIdx, playe
                  onClick={() => startQuiz(cnt)} 
                  className="bg-gradient-to-r from-blue-900 to-blue-800 hover:from-blue-800 hover:to-blue-700 text-white py-4 px-4 rounded-xl font-black uppercase text-base shadow-md active:scale-95 transition-all cursor-pointer border border-blue-600/50 flex items-center justify-between"
                >
-                 <span>Gói {cnt} Câu Hỏi</span>
-                 <span className="text-amber-400 text-xs">⚔️</span>
+                 <span>GÃ³i {cnt} CÃ¢u Há»i</span>
+                 <span className="text-amber-400 text-xs">âš”ï¸</span>
                </button>
              ))}
              <button 
                onClick={() => startQuiz(remainingQ > 0 ? remainingQ : totalQ)} 
                className="sm:col-span-2 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-white py-4 px-6 rounded-xl font-black uppercase text-base shadow-lg active:scale-95 transition-all cursor-pointer border border-amber-400/60 flex items-center justify-center gap-2"
              >
-               <span>👑 Gói Tất Cả {remainingQ > 0 ? `Còn Lại (${remainingQ} câu)` : `(${totalQ} câu)`}</span>
+               <span>ðŸ‘‘ GÃ³i Táº¥t Cáº£ {remainingQ > 0 ? `CÃ²n Láº¡i (${remainingQ} cÃ¢u)` : `(${totalQ} cÃ¢u)`}</span>
              </button>
           </div>
-          <button onClick={() => setView('kinh-luan-lesson')} className="text-blue-900 font-bold uppercase border-b border-blue-900 hover:text-blue-700 transition-colors cursor-pointer text-sm">Xem lại danh mục bài</button>
+          <button onClick={() => setView('kinh-luan-lesson')} className="text-blue-900 font-bold uppercase border-b border-blue-900 hover:text-blue-700 transition-colors cursor-pointer text-sm">Xem láº¡i danh má»¥c bÃ i</button>
        </div>
     </div>
   );
@@ -6450,21 +6450,21 @@ const QuizSetupView = ({ startQuiz, setView, grade, chapterIdx, lessonIdx, playe
 const QuizResultView = ({ correct, total, rewards, setView, player }: any) => {
   const handleExportExcel = () => {
     if (!player || !player.trialHistory || player.trialHistory.length === 0) {
-      alert("Không có dữ liệu để xuất!");
+      alert("KhÃ´ng cÃ³ dá»¯ liá»‡u Ä‘á»ƒ xuáº¥t!");
       return;
     }
     const lastRecord = player.trialHistory[player.trialHistory.length - 1];
     
     const rows = lastRecord.questions.map((q: any, index: number) => ({
-      "Tên người chơi": lastRecord.username,
-      "Gói câu hỏi": lastRecord.packageSize,
-      "Lớp": lastRecord.grade,
-      "Câu số": index + 1,
-      "Nội dung câu hỏi": q.questionText,
-      "Đáp án của người chơi": q.options && q.options.length > 0 && typeof q.userAnswer === 'number' ? q.options[q.userAnswer] : (q.userAnswer !== null ? q.userAnswer : "Chưa trả lời"),
-      "Đáp án đúng": q.options && q.options.length > 0 && typeof q.correctAnswer === 'number' ? q.options[q.correctAnswer] : q.correctAnswer,
-      "Kết quả": q.isCorrect ? "Đúng" : "Sai",
-      "Thời gian trả lời (giây)": q.timeTakenSeconds
+      "TÃªn ngÆ°á»i chÆ¡i": lastRecord.username,
+      "GÃ³i cÃ¢u há»i": lastRecord.packageSize,
+      "Lá»›p": lastRecord.grade,
+      "CÃ¢u sá»‘": index + 1,
+      "Ná»™i dung cÃ¢u há»i": q.questionText,
+      "ÄÃ¡p Ã¡n cá»§a ngÆ°á»i chÆ¡i": q.options && q.options.length > 0 && typeof q.userAnswer === 'number' ? q.options[q.userAnswer] : (q.userAnswer !== null ? q.userAnswer : "ChÆ°a tráº£ lá»i"),
+      "ÄÃ¡p Ã¡n Ä‘Ãºng": q.options && q.options.length > 0 && typeof q.correctAnswer === 'number' ? q.options[q.correctAnswer] : q.correctAnswer,
+      "Káº¿t quáº£": q.isCorrect ? "ÄÃºng" : "Sai",
+      "Thá»i gian tráº£ lá»i (giÃ¢y)": q.timeTakenSeconds
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(rows);
@@ -6474,36 +6474,36 @@ const QuizResultView = ({ correct, total, rewards, setView, player }: any) => {
   };
 
   return (
-  <div className="min-h-screen ancient-bg flex items-center justify-center p-8">
+  <div className="min-h-full ancient-bg flex items-center justify-center p-8">
      <div className="max-w-3xl w-full scroll-bg p-12 rounded-[3rem] text-center shadow-2xl border-amber-900">
         <Trophy className="mx-auto text-amber-500 mb-6" size={100}/>
-        <h2 className="text-3xl font-cinzel font-black uppercase mb-2 text-amber-950">Tổng Kết Tu Luyện</h2>
+        <h2 className="text-3xl font-cinzel font-black uppercase mb-2 text-amber-950">Tá»•ng Káº¿t Tu Luyá»‡n</h2>
         <div className="text-6xl font-black mb-2 text-stone-700">{correct} <span className="text-2xl text-stone-400">/ {total}</span></div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 mt-10 text-center">
            <div className="group relative bg-stone-900 p-4 rounded-2xl border border-amber-500/20 shadow-lg flex flex-col items-center justify-center cursor-pointer">
-              <img src="/items/gold.png" alt="Vàng" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2 drop-shadow-md group-hover:scale-110 transition-transform" />
+              <img src="/items/gold.png" alt="VÃ ng" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2 drop-shadow-md group-hover:scale-110 transition-transform" />
               <div className="text-yellow-500 font-black text-2xl">+{(rewards.gold || 0).toLocaleString()}</div>
-              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-xl border border-amber-500/30">Vàng</div>
+              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-xl border border-amber-500/30">VÃ ng</div>
            </div>
            <div className="group relative bg-stone-900 p-4 rounded-2xl border border-blue-500/20 shadow-lg flex flex-col items-center justify-center cursor-pointer">
-              <img src="/items/normal_ticket.png" alt="Lệnh bài" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2 drop-shadow-md group-hover:scale-110 transition-transform" />
+              <img src="/items/normal_ticket.png" alt="Lá»‡nh bÃ i" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2 drop-shadow-md group-hover:scale-110 transition-transform" />
               <div className="text-blue-400 font-black text-2xl">+{rewards.normal}</div>
-              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-xl border border-blue-500/30">Lệnh Bài</div>
+              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-xl border border-blue-500/30">Lá»‡nh BÃ i</div>
            </div>
            <div className="group relative bg-stone-900 p-4 rounded-2xl border border-purple-500/20 shadow-lg flex flex-col items-center justify-center cursor-pointer">
-              <img src="/items/premium_ticket.png" alt="Danh tướng" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2 drop-shadow-md group-hover:scale-110 transition-transform" />
+              <img src="/items/premium_ticket.png" alt="Danh tÆ°á»›ng" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2 drop-shadow-md group-hover:scale-110 transition-transform" />
               <div className="text-purple-400 font-black text-2xl">+{rewards.premium}</div>
-              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-xl border border-purple-500/30">Lệnh Bài Danh Tướng</div>
+              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-xl border border-purple-500/30">Lá»‡nh BÃ i Danh TÆ°á»›ng</div>
            </div>
            <div className="group relative bg-stone-900 p-4 rounded-2xl border border-amber-500/40 shadow-lg flex flex-col items-center justify-center cursor-pointer">
-              <img src="/items/artifact_ticket.png" alt="Thần Khí" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2 drop-shadow-md group-hover:scale-110 transition-transform" />
+              <img src="/items/artifact_ticket.png" alt="Tháº§n KhÃ­" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2 drop-shadow-md group-hover:scale-110 transition-transform" />
               <div className="text-amber-400 font-black text-2xl">+{rewards.artifact || 0}</div>
-              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-xl border border-amber-500/50">Mảnh Thần Khí</div>
+              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-xl border border-amber-500/50">Máº£nh Tháº§n KhÃ­</div>
            </div>
         </div>
         <div className="flex flex-col gap-4">
-           <button onClick={handleExportExcel} className="bg-green-700 hover:bg-green-600 text-white px-20 py-5 rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 transition-all">Xuất Kết Quả Excel</button>
-           <button onClick={() => setView('chapter-hub')} className="bg-stone-900 text-amber-500 px-20 py-5 rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 hover:bg-stone-800 transition-all">Về Doanh Trại</button>
+           <button onClick={handleExportExcel} className="bg-green-700 hover:bg-green-600 text-white px-20 py-5 rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 transition-all">Xuáº¥t Káº¿t Quáº£ Excel</button>
+           <button onClick={() => setView('chapter-hub')} className="bg-stone-900 text-amber-500 px-20 py-5 rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 hover:bg-stone-800 transition-all">Vá» Doanh Tráº¡i</button>
         </div>
      </div>
   </div>
@@ -6513,23 +6513,23 @@ const QuizResultView = ({ correct, total, rewards, setView, player }: any) => {
 const QuizPlayView = ({ question, idx, total, showFeedback, userAnswers, setUserAnswers, onAnswer, lastReward, onNext, setView, autoNext, onAutoNextChange }: any) => {
   const [timeLeft, setTimeLeft] = useState(30);
 
-  // Reset timer khi chuyển câu
+  // Reset timer khi chuyá»ƒn cÃ¢u
   useEffect(() => {
     setTimeLeft(30);
   }, [idx]);
 
-  // Đồng hồ đếm ngược
+  // Äá»“ng há»“ Ä‘áº¿m ngÆ°á»£c
   useEffect(() => {
-    if (showFeedback) return; // Dừng khi đã có đáp án
+    if (showFeedback) return; // Dá»«ng khi Ä‘Ã£ cÃ³ Ä‘Ã¡p Ã¡n
     if (timeLeft <= 0) {
-      onAnswer(-1, 0); // Hết giờ → tính sai
+      onAnswer(-1, 0); // Háº¿t giá» â†’ tÃ­nh sai
       return;
     }
     const timer = setTimeout(() => setTimeLeft(t => t - 1), 1000);
     return () => clearTimeout(timer);
   }, [timeLeft, showFeedback]);
 
-  // Tự chuyển câu sau 2.5s nếu bật autoNext
+  // Tá»± chuyá»ƒn cÃ¢u sau 2.5s náº¿u báº­t autoNext
   useEffect(() => {
     if (showFeedback && autoNext) {
       const t = setTimeout(() => onNext(), 2500);
@@ -6539,37 +6539,37 @@ const QuizPlayView = ({ question, idx, total, showFeedback, userAnswers, setUser
 
   if (!question) {
      return (
-       <div className="min-h-screen ancient-bg flex items-center justify-center p-8">
+       <div className="min-h-full ancient-bg flex items-center justify-center p-8">
          <div className="max-w-2xl w-full scroll-bg p-12 rounded-[3rem] text-center shadow-2xl border-amber-900">
-           <h2 className="text-2xl font-cinzel font-black text-amber-950 uppercase mb-4">Không tìm thấy câu hỏi</h2>
-           <p className="text-amber-900/70 mb-8 font-bold">Chưa có dữ liệu bài tập cho phần này hoặc dữ liệu đang cập nhật. Xin vui lòng thử lại sau.</p>
-           <button onClick={() => setView && setView('kinh-luan-lesson')} className="bg-amber-950 text-white py-4 px-8 rounded-xl font-black uppercase shadow-lg transition-all active:scale-95">Quay Lại</button>
+           <h2 className="text-2xl font-cinzel font-black text-amber-950 uppercase mb-4">KhÃ´ng tÃ¬m tháº¥y cÃ¢u há»i</h2>
+           <p className="text-amber-900/70 mb-8 font-bold">ChÆ°a cÃ³ dá»¯ liá»‡u bÃ i táº­p cho pháº§n nÃ y hoáº·c dá»¯ liá»‡u Ä‘ang cáº­p nháº­t. Xin vui lÃ²ng thá»­ láº¡i sau.</p>
+           <button onClick={() => setView && setView('kinh-luan-lesson')} className="bg-amber-950 text-white py-4 px-8 rounded-xl font-black uppercase shadow-lg transition-all active:scale-95">Quay Láº¡i</button>
          </div>
        </div>
      );
   }
   const uAns = userAnswers[idx];
 
-  // Màu timer theo thời gian
+  // MÃ u timer theo thá»i gian
   const timerColor = timeLeft <= 5 ? 'text-red-600' : timeLeft <= 10 ? 'text-orange-500' : 'text-amber-800';
   const timerBg = timeLeft <= 5 ? 'bg-red-100 border-red-400' : timeLeft <= 10 ? 'bg-orange-100 border-orange-400' : 'bg-amber-50 border-amber-300';
   const timerBarColor = timeLeft <= 5 ? 'bg-red-500' : timeLeft <= 10 ? 'bg-orange-400' : 'bg-amber-600';
 
   return (
-    <div className="min-h-screen ancient-bg flex items-center justify-center p-4">
-      <div id="quiz-container-inner" className="max-w-5xl w-[95vw] scroll-bg p-10 md:p-16 rounded-[3rem] shadow-2xl min-h-[85vh] flex flex-col relative">
-        {/* Header: Thoát | Câu số | Timer | AutoNext | Cấp độ */}
+    <div className="min-h-full ancient-bg flex items-center justify-center p-4">
+      <div id="quiz-container-inner" className="max-w-5xl w-[95%] scroll-bg p-10 md:p-16 rounded-[3rem] shadow-2xl min-h-[85%] flex flex-col relative">
+        {/* Header: ThoÃ¡t | CÃ¢u sá»‘ | Timer | AutoNext | Cáº¥p Ä‘á»™ */}
         <div className="flex justify-between items-center mb-4 text-xs font-black uppercase text-amber-900/40">
           <div className="flex gap-4 items-center">
              <button onClick={() => {
-                if (window.confirm('Bạn có chắc chắn muốn thoát? Toàn bộ kết quả thi luyện hiện tại sẽ bị hủy bỏ!')) {
+                if (window.confirm('Báº¡n cÃ³ cháº¯c cháº¯n muá»‘n thoÃ¡t? ToÃ n bá»™ káº¿t quáº£ thi luyá»‡n hiá»‡n táº¡i sáº½ bá»‹ há»§y bá»!')) {
                    setView('chapter-hub');
                 }
-             }} className="bg-red-900/10 text-red-700 px-4 py-2 rounded-xl hover:bg-red-900/20 active:scale-95 transition-all">THOÁT</button>
-             <span>Câu {idx + 1} / {total}</span>
+             }} className="bg-red-900/10 text-red-700 px-4 py-2 rounded-xl hover:bg-red-900/20 active:scale-95 transition-all">THOÃT</button>
+             <span>CÃ¢u {idx + 1} / {total}</span>
           </div>
           <div className="flex items-center gap-3">
-            {/* Toggle tự động chuyển câu */}
+            {/* Toggle tá»± Ä‘á»™ng chuyá»ƒn cÃ¢u */}
             {onAutoNextChange && (
               <label className="flex items-center gap-1.5 cursor-pointer select-none text-amber-800/70 hover:text-amber-700 transition-colors">
                 <div
@@ -6578,17 +6578,17 @@ const QuizPlayView = ({ question, idx, total, showFeedback, userAnswers, setUser
                 >
                   <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${autoNext ? 'translate-x-5' : 'translate-x-0.5'}`} />
                 </div>
-                <span className="text-[10px]">Tự chuyển câu</span>
+                <span className="text-[10px]">Tá»± chuyá»ƒn cÃ¢u</span>
               </label>
             )}
-            {/* Timer tròn */}
+            {/* Timer trÃ²n */}
             {!showFeedback && (
               <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border-2 font-black text-base transition-all ${timerBg} ${timerColor}`}>
-                ⏱ {timeLeft}s
+                â± {timeLeft}s
               </div>
             )}
           </div>
-          <span className="bg-amber-900/10 px-3 py-1 rounded-full border border-amber-900/20">Cấp độ: {question.level}</span>
+          <span className="bg-amber-900/10 px-3 py-1 rounded-full border border-amber-900/20">Cáº¥p Ä‘á»™: {question.level}</span>
         </div>
 
         {/* Thanh progress timer */}
@@ -6604,20 +6604,20 @@ const QuizPlayView = ({ question, idx, total, showFeedback, userAnswers, setUser
         <MathJaxText className="text-3xl md:text-4xl font-bold mb-12 text-center text-amber-950 leading-relaxed quiz-content" html={question.question.replace(/\\,/g, '.').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\*\*(.*?)\*\*/g, '<strong class="text-amber-900 bg-amber-200/50 px-2 py-1 rounded shadow-sm">$1</strong>')} tag="div" />
         {question.imageUrl && (
           <div className="flex justify-center mb-12">
-            <img src={question.imageUrl} alt="Hình ảnh bài toán" className="max-w-full h-auto max-h-96 rounded-xl border-4 border-amber-900/20 shadow-lg object-contain bg-white" />
+            <img src={question.imageUrl} alt="HÃ¬nh áº£nh bÃ i toÃ¡n" className="max-w-full h-auto max-h-96 rounded-xl border-4 border-amber-900/20 shadow-lg object-contain bg-white" />
           </div>
         )}
         <div className="flex-1">
           {question.type === 'short_answer' ? (
             <div className="space-y-4">
-              <input type="text" className="w-full p-6 border-4 border-amber-900/50 rounded-2xl text-center text-3xl font-black outline-none bg-white text-black shadow-xl" placeholder="Đáp số..." value={uAns || ''} onChange={(e) => setUserAnswers((p: any) => ({...p, [idx]: e.target.value}))} disabled={showFeedback} />
-              {!showFeedback && <button onClick={() => onAnswer(uAns, timeLeft)} className="w-full bg-amber-950 text-white py-5 rounded-2xl font-black uppercase text-xl shadow-lg transition-all active:scale-95">Xác Nhận</button>}
+              <input type="text" className="w-full p-6 border-4 border-amber-900/50 rounded-2xl text-center text-3xl font-black outline-none bg-white text-black shadow-xl" placeholder="ÄÃ¡p sá»‘..." value={uAns || ''} onChange={(e) => setUserAnswers((p: any) => ({...p, [idx]: e.target.value}))} disabled={showFeedback} />
+              {!showFeedback && <button onClick={() => onAnswer(uAns, timeLeft)} className="w-full bg-amber-950 text-white py-5 rounded-2xl font-black uppercase text-xl shadow-lg transition-all active:scale-95">XÃ¡c Nháº­n</button>}
             </div>
           ) : (
             <div className={`grid grid-cols-1 ${(question.options || []).some((opt: any) => opt.length > 40) ? 'md:grid-cols-1' : 'md:grid-cols-2'} gap-4 md:gap-6`}>
-              {(question.options?.length > 0 ? question.options : (question.type === 'true_false' ? ['Đúng', 'Sai'] : [])).map((opt: any, i: number) => (
+              {(question.options?.length > 0 ? question.options : (question.type === 'true_false' ? ['ÄÃºng', 'Sai'] : [])).map((opt: any, i: number) => (
                 <button key={i} onClick={() => onAnswer(i, timeLeft)} disabled={showFeedback} className={`p-6 rounded-2xl border-2 font-bold text-left transition-all text-xl md:text-2xl flex items-center ${showFeedback ? (i === question.correctAnswer ? 'bg-green-600 text-white border-green-800 scale-105 z-10' : (uAns === i ? 'bg-red-600 text-white border-red-800' : 'bg-stone-200 opacity-40')) : 'bg-white/90 border-amber-900/20 hover:border-amber-900 hover:bg-white hover:shadow-md'}`}>
-                  <span className="inline-block bg-amber-950/10 w-10 h-10 text-center leading-10 rounded-lg mr-4 text-amber-900 font-black">{question.type === 'true_false' ? (i === 0 ? 'Đ' : 'S') : String.fromCharCode(65 + i)}</span>
+                  <span className="inline-block bg-amber-950/10 w-10 h-10 text-center leading-10 rounded-lg mr-4 text-amber-900 font-black">{question.type === 'true_false' ? (i === 0 ? 'Ä' : 'S') : String.fromCharCode(65 + i)}</span>
                   <MathJaxText html={opt.replace(/^[A-Z]\.\s*/, '').replace(/\\,/g, '.').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')} tag="span" />
                 </button>
               ))}
@@ -6630,7 +6630,7 @@ const QuizPlayView = ({ question, idx, total, showFeedback, userAnswers, setUser
                <div className="flex flex-col items-center gap-1 mb-4 bg-green-900/10 py-3 rounded-2xl border border-green-900/20 text-green-800 font-black uppercase text-sm">
                  <div className="flex items-center gap-2">
                    <Sparkles className="text-yellow-500" size={20}/>
-                   <span>+ {lastReward.gold.toLocaleString()} 💰 {lastReward.ticket ? ` & 1 ${lastReward.ticket === 'premium' ? '💎' : lastReward.ticket === 'artifact' ? '⚗️' : '🎫'}` : ""}</span>
+                   <span>+ {lastReward.gold.toLocaleString()} ðŸ’° {lastReward.ticket ? ` & 1 ${lastReward.ticket === 'premium' ? 'ðŸ’Ž' : lastReward.ticket === 'artifact' ? 'âš—ï¸' : 'ðŸŽ«'}` : ""}</span>
                  </div>
                  {lastReward.speedLabel && (
                    <span className="text-xs px-3 py-0.5 rounded-full bg-amber-200/60 text-amber-800 font-black">{lastReward.speedLabel}</span>
@@ -6640,13 +6640,13 @@ const QuizPlayView = ({ question, idx, total, showFeedback, userAnswers, setUser
              <MathJaxText className="bg-amber-50 p-6 md:p-8 rounded-xl border border-amber-900/10 text-lg md:text-xl italic font-bold text-amber-950 leading-relaxed" html={question.explanation.replace(/\\,/g, '.').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\*\*(.*?)\*\*/g, '<strong class="text-amber-900">$1</strong>')} tag="div" />
              {question.explanationImageUrl && (
                <div className="flex justify-center mt-4">
-                 <img src={question.explanationImageUrl} alt="Giải thích" className="max-w-full h-auto max-h-64 rounded-xl border-4 border-amber-900/20 shadow-sm object-contain bg-white" />
+                 <img src={question.explanationImageUrl} alt="Giáº£i thÃ­ch" className="max-w-full h-auto max-h-64 rounded-xl border-4 border-amber-900/20 shadow-sm object-contain bg-white" />
                </div>
              )}
              {autoNext ? (
-               <div className="mt-4 text-center text-xs text-amber-600 font-bold animate-pulse">Tự chuyển câu sau 2.5 giây...</div>
+               <div className="mt-4 text-center text-xs text-amber-600 font-bold animate-pulse">Tá»± chuyá»ƒn cÃ¢u sau 2.5 giÃ¢y...</div>
              ) : (
-               <button onClick={onNext} className="mt-6 w-full bg-stone-900 text-amber-500 py-4 rounded-xl font-black uppercase tracking-widest shadow-lg active:scale-95">Tiếp Tục</button>
+               <button onClick={onNext} className="mt-6 w-full bg-stone-900 text-amber-500 py-4 rounded-xl font-black uppercase tracking-widest shadow-lg active:scale-95">Tiáº¿p Tá»¥c</button>
              )}
           </div>
         )}
@@ -6672,7 +6672,7 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
       setRevealIndices([]);
       setFlash(false);
       
-      // Chỉ lấy tướng UR/SSR có chỉ số cao nhất để phát video giới thiệu
+      // Chá»‰ láº¥y tÆ°á»›ng UR/SSR cÃ³ chá»‰ sá»‘ cao nháº¥t Ä‘á»ƒ phÃ¡t video giá»›i thiá»‡u
       const allWithVideo = [...results]
         .filter(r => r && r.skillVideoUrl && AVAILABLE_VIDEOS.includes(r.skillVideoUrl.replace('/videos/', '').replace('.mp4', ''))
                   && (r.rarity === 'UR' || r.rarity === 'SSR'))
@@ -6720,7 +6720,7 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
   }, [animState, results]);
 
   return (
-    <div className="min-h-screen viet-bg flex flex-col items-center justify-start pt-12 pb-24 p-6 relative overflow-y-auto custom-scrollbar">
+    <div className="min-h-full viet-bg flex flex-col items-center justify-start pt-12 pb-24 p-6 relative overflow-y-auto custom-scrollbar">
       {flash && <div className="ssr-flash-overlay" />}
       {animState === 'playing_videos' && videoQueue.length > 0 && (
         <div
@@ -6732,7 +6732,7 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
             autoPlay
             playsInline
             preload="auto"
-            className="w-full max-w-4xl h-auto max-h-[70vh] object-contain border-2 border-amber-500/50 rounded-xl shadow-[0_0_50px_rgba(245,158,11,0.3)] pointer-events-none"
+            className="w-full max-w-4xl h-auto max-h-[70%] object-contain border-2 border-amber-500/50 rounded-xl shadow-[0_0_50px_rgba(245,158,11,0.3)] pointer-events-none"
             onEnded={() => {
               if (currentVideoIndex < videoQueue.length - 1) {
                 setCurrentVideoIndex(currentVideoIndex + 1);
@@ -6757,16 +6757,16 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
                </span>
                <p className="text-amber-200 font-medium text-lg tracking-wide">{videoQueue[currentVideoIndex].title}</p>
              </div>
-             <p className="text-amber-500/80 italic mt-2">Chỉ số: {videoQueue[currentVideoIndex].overall}</p>
+             <p className="text-amber-500/80 italic mt-2">Chá»‰ sá»‘: {videoQueue[currentVideoIndex].overall}</p>
           </div>
-          {/* Gợi ý bỏ qua */}
+          {/* Gá»£i Ã½ bá» qua */}
           <p className="absolute bottom-6 text-stone-500 text-xs tracking-widest animate-pulse pointer-events-none">
-            Nhấn vào khoảng trống để bỏ qua ⏭
+            Nháº¥n vÃ o khoáº£ng trá»‘ng Ä‘á»ƒ bá» qua â­
           </p>
         </div>
       )}
 
-      {/* Sao lấp lánh nền huyền bí */}
+      {/* Sao láº¥p lÃ¡nh ná»n huyá»n bÃ­ */}
       {[...Array(18)].map((_, i) => (
         <div key={i} className="absolute w-1 h-1 bg-amber-400/25 rounded-full pointer-events-none" style={{
           left: `${(Math.sin(i * 1.5) * 45 + 50)}%`,
@@ -6776,28 +6776,28 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
         }}/>
       ))}
       <div className="absolute inset-0 pointer-events-none" style={{background:'radial-gradient(ellipse at 50% 30%, rgba(124,58,237,0.07) 0%, transparent 60%)'}}/>
-      <button onClick={() => { setView('chapter-hub'); clearResults(); }} className="absolute top-6 left-6 text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors z-10"><ChevronLeft/> Trở về</button>
+      <button onClick={() => { setView('chapter-hub'); clearResults(); }} className="absolute top-6 left-6 text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors z-10"><ChevronLeft/> Trá»Ÿ vá»</button>
 
-      {/* Nút tắt đường sang Doanh Trại & Quân Đoàn */}
+      {/* NÃºt táº¯t Ä‘Æ°á»ng sang Doanh Tráº¡i & QuÃ¢n ÄoÃ n */}
       <div className="absolute top-5 right-6 z-10 flex items-center gap-2">
         <button
           onClick={() => { clearResults(); setView('danh-trai'); }}
           className="flex items-center gap-1.5 bg-stone-900/80 hover:bg-amber-900/60 border border-amber-700/50 hover:border-amber-500 text-amber-300 hover:text-amber-200 px-3 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-md backdrop-blur-md"
-          title="Đến Doanh Trại để bày trận"
+          title="Äáº¿n Doanh Tráº¡i Ä‘á»ƒ bÃ y tráº­n"
         >
-          <Tent size={14} /> Doanh Trại
+          <Tent size={14} /> Doanh Tráº¡i
         </button>
         <button
           onClick={() => { clearResults(); setView('quan-doan'); }}
           className="flex items-center gap-1.5 bg-stone-900/80 hover:bg-emerald-900/60 border border-emerald-700/50 hover:border-emerald-500 text-emerald-300 hover:text-emerald-200 px-3 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-md backdrop-blur-md"
-          title="Đến Quân Đoàn để bày trận vĩnh viễn"
+          title="Äáº¿n QuÃ¢n ÄoÃ n Ä‘á»ƒ bÃ y tráº­n vÄ©nh viá»…n"
         >
-          <Users size={14} /> Quân Đoàn
+          <Users size={14} /> QuÃ¢n ÄoÃ n
         </button>
       </div>
 
-      <h2 className="text-4xl font-cinzel text-amber-400 mb-3 tracking-widest uppercase drop-shadow-[0_0_15px_rgba(201,148,26,0.45)] relative z-10">✦ Tiên Hiền Trận ✦</h2>
-      <p className="text-amber-800/55 font-black uppercase text-[10px] mb-10 tracking-widest italic border-b border-amber-900/20 pb-2 relative z-10">Hào kiệt Chương {chapter}: {CHAPTER_NAMES[chapter]}</p>
+      <h2 className="text-4xl font-cinzel text-amber-400 mb-3 tracking-widest uppercase drop-shadow-[0_0_15px_rgba(201,148,26,0.45)] relative z-10">âœ¦ TiÃªn Hiá»n Tráº­n âœ¦</h2>
+      <p className="text-amber-800/55 font-black uppercase text-[10px] mb-10 tracking-widest italic border-b border-amber-900/20 pb-2 relative z-10">HÃ o kiá»‡t ChÆ°Æ¡ng {chapter}: {CHAPTER_NAMES[chapter]}</p>
       
       {results.length > 0 ? (
         <div className="flex flex-col items-center justify-start w-full max-w-[1080px] px-2 relative z-10 mt-4 mb-auto">
@@ -6823,20 +6823,20 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
                 <div key={idx} className={`w-[120px] md:w-[180px] h-[180px] md:h-[270px] gacha-card-container relative`}>
                   <div className={`gacha-card ${isRevealed ? 'flipped' : ''} ${isRolling ? 'animate-gacha-spin' : ''}`}>
                     
-                    {/* MẶT TRƯỚC (Bí ẩn - Lưng thẻ 3D) */}
+                    {/* Máº¶T TRÆ¯á»šC (BÃ­ áº©n - LÆ°ng tháº» 3D) */}
                     {!isRevealed && (
 <div className="gacha-face gacha-front flex flex-col items-center justify-center relative overflow-hidden">
                         <div className="absolute inset-2 border-2 border-amber-700/40 rounded-xl"></div>
                         <div className="w-14 h-14 md:w-20 md:h-20 rounded-full border-[3px] border-amber-600/60 flex items-center justify-center bg-black/60 mb-3 shadow-[0_0_20px_rgba(201,148,26,0.5)] z-10">
-                           <span className="text-4xl text-amber-500 font-cinzel font-black drop-shadow-md">✦</span>
+                           <span className="text-4xl text-amber-500 font-cinzel font-black drop-shadow-md">âœ¦</span>
                         </div>
-                        <div className="text-lg md:text-xl font-black uppercase text-amber-500 tracking-[0.1em] font-cinzel text-center leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] z-10">Sử Việt<br/>Anh Hùng</div>
+                        <div className="text-lg md:text-xl font-black uppercase text-amber-500 tracking-[0.1em] font-cinzel text-center leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] z-10">Sá»­ Viá»‡t<br/>Anh HÃ¹ng</div>
                         <div className="absolute inset-0 bg-cover bg-center opacity-50 pointer-events-none mix-blend-screen" style={{ backgroundImage: `url('${import.meta.env.BASE_URL}images/vietnam_map.png')` }}></div>
                           <div className="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay" style={{ backgroundImage: `url('${import.meta.env.BASE_URL}images/texture_noise.png')` }}></div>
                     </div>
 )}
 
-                    {/* MẶT SAU (Kết quả) */}
+                    {/* Máº¶T SAU (Káº¿t quáº£) */}
                     <div className={`gacha-face gacha-back bg-gradient-to-b from-stone-900 to-stone-950 p-2 md:p-4 rounded-[2rem] border-2 ${rClass} shadow-[-4px_4px_0_#1a0f07,-6px_6px_20px_rgba(0,0,0,0.9)] flex flex-col items-center cursor-pointer`} onClick={() => isRevealed && setSelectedHero(res)}>
                         <div className={`relative w-full overflow-hidden rounded-xl mb-2 md:mb-3 ${getStarBorderClass(res.star)}`}>
                           <img src={res.image} className="w-full aspect-[2/3] object-cover contrast-125 shadow-xl border border-white/5" onError={(e) => { (e.target as HTMLImageElement).src = res.faction === 'enemy' ? DEFAULT_ENEMY_IMG : DEFAULT_ALLY_IMG; }} />
@@ -6854,19 +6854,19 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
             })}
           </div>
           {animState === 'done' && (
-            <button onClick={clearResults} className="mt-12 gold-shimmer-btn px-20 py-5 rounded-2xl font-black uppercase text-xl shadow-xl transition-all active:scale-95 border border-amber-600/30 animate-in slide-in-from-bottom-4">Thu Quân!</button>
+            <button onClick={clearResults} className="mt-12 gold-shimmer-btn px-20 py-5 rounded-2xl font-black uppercase text-xl shadow-xl transition-all active:scale-95 border border-amber-600/30 animate-in slide-in-from-bottom-4">Thu QuÃ¢n!</button>
           )}
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center w-full z-10 h-full flex-1">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8 w-full max-w-[1400px] px-4 text-center relative z-10 h-full items-center pb-8">
-            <SummonBox type="normal" title="Chiêu Mộ Anh Hào" desc="Tỉ lệ cao C, R, SR" ticketCount={player.normalTickets} onSummon={(cnt: number) => summon('normal', cnt)} color="border-blue-500/80" glow="shadow-[0_0_70px_rgba(59,130,246,0.5)]" icon={<Ticket className="text-blue-300 drop-shadow-[0_0_20px_rgba(59,130,246,1)] mb-4" size={56}/>} titleColor="text-blue-100 drop-shadow-[0_0_12px_rgba(59,130,246,1)]" btnColor="bg-blue-900/80 hover:bg-blue-800 border-blue-400/50 text-blue-100 hover:text-white" bgImage="./images/black_tortoise_pillar.png" bgClass="brightness-[0.85]" />
+            <SummonBox type="normal" title="ChiÃªu Má»™ Anh HÃ o" desc="Tá»‰ lá»‡ cao C, R, SR" ticketCount={player.normalTickets} onSummon={(cnt: number) => summon('normal', cnt)} color="border-blue-500/80" glow="shadow-[0_0_70px_rgba(59,130,246,0.5)]" icon={<Ticket className="text-blue-300 drop-shadow-[0_0_20px_rgba(59,130,246,1)] mb-4" size={56}/>} titleColor="text-blue-100 drop-shadow-[0_0_12px_rgba(59,130,246,1)]" btnColor="bg-blue-900/80 hover:bg-blue-800 border-blue-400/50 text-blue-100 hover:text-white" bgImage="./images/black_tortoise_pillar.png" bgClass="brightness-[0.85]" />
             
-            <SummonBox type="premium" title="Chiêu Mộ Danh Tướng" desc="Tỉ lệ cao SR, SSR, UR" ticketCount={player.premiumTickets} onSummon={(cnt: number) => summon('premium', cnt)} color="border-purple-500/80" glow="shadow-[0_0_70px_rgba(168,85,247,0.4)]" icon={<Ticket className="text-purple-300 drop-shadow-[0_0_20px_rgba(168,85,247,0.9)] mb-4" size={56}/>} titleColor="text-purple-100 drop-shadow-[0_0_10px_rgba(168,85,247,0.8)]" btnColor="bg-purple-900/80 hover:bg-purple-800 border-purple-400/50 text-purple-100 hover:text-white" bgImage="./images/vermilion_bird_pillar.png" />
+            <SummonBox type="premium" title="ChiÃªu Má»™ Danh TÆ°á»›ng" desc="Tá»‰ lá»‡ cao SR, SSR, UR" ticketCount={player.premiumTickets} onSummon={(cnt: number) => summon('premium', cnt)} color="border-purple-500/80" glow="shadow-[0_0_70px_rgba(168,85,247,0.4)]" icon={<Ticket className="text-purple-300 drop-shadow-[0_0_20px_rgba(168,85,247,0.9)] mb-4" size={56}/>} titleColor="text-purple-100 drop-shadow-[0_0_10px_rgba(168,85,247,0.8)]" btnColor="bg-purple-900/80 hover:bg-purple-800 border-purple-400/50 text-purple-100 hover:text-white" bgImage="./images/vermilion_bird_pillar.png" />
             
-            <SummonBox type="artifact" title="Chiêu Mộ Thần Khí" desc="Rơi Thần Khí Bản Mệnh" ticketCount={player.artifactTickets || 0} onSummon={(cnt: number) => summon('artifact', cnt)} color="border-amber-500/80" glow="shadow-[0_0_70px_rgba(245,158,11,0.5)]" icon={<ScrollText className="text-amber-300 drop-shadow-[0_0_20px_rgba(245,158,11,1)] mb-4" size={56}/>} titleColor="text-amber-100 drop-shadow-[0_0_12px_rgba(245,158,11,1)]" btnColor="bg-amber-900/80 hover:bg-amber-800 border-amber-400/50 text-amber-100 hover:text-white" bgImage="./images/white_tiger_pillar.png" bgClass="brightness-[0.85]" />
+            <SummonBox type="artifact" title="ChiÃªu Má»™ Tháº§n KhÃ­" desc="RÆ¡i Tháº§n KhÃ­ Báº£n Má»‡nh" ticketCount={player.artifactTickets || 0} onSummon={(cnt: number) => summon('artifact', cnt)} color="border-amber-500/80" glow="shadow-[0_0_70px_rgba(245,158,11,0.5)]" icon={<ScrollText className="text-amber-300 drop-shadow-[0_0_20px_rgba(245,158,11,1)] mb-4" size={56}/>} titleColor="text-amber-100 drop-shadow-[0_0_12px_rgba(245,158,11,1)]" btnColor="bg-amber-900/80 hover:bg-amber-800 border-amber-400/50 text-amber-100 hover:text-white" bgImage="./images/white_tiger_pillar.png" bgClass="brightness-[0.85]" />
             
-            <SummonBox type="legion" title="Chiêu Mộ Quân Đoàn" desc="Anh Hào & Thần Khí Toàn Cõi" ticketCount={player.legionTickets || 0} onSummon={(cnt: number) => summon('legion', cnt)} color="border-emerald-500/80" glow="shadow-[0_0_70px_rgba(16,185,129,0.4)]" icon={<Ticket className="text-emerald-300 drop-shadow-[0_0_20px_rgba(16,185,129,0.9)] mb-4" size={56}/>} titleColor="text-emerald-100 drop-shadow-[0_0_10px_rgba(16,185,129,0.8)]" btnColor="bg-emerald-900/80 hover:bg-emerald-800 border-emerald-400/50 text-emerald-100 hover:text-white" bgImage="./images/azure_dragon_pillar.png" />
+            <SummonBox type="legion" title="ChiÃªu Má»™ QuÃ¢n ÄoÃ n" desc="Anh HÃ o & Tháº§n KhÃ­ ToÃ n CÃµi" ticketCount={player.legionTickets || 0} onSummon={(cnt: number) => summon('legion', cnt)} color="border-emerald-500/80" glow="shadow-[0_0_70px_rgba(16,185,129,0.4)]" icon={<Ticket className="text-emerald-300 drop-shadow-[0_0_20px_rgba(16,185,129,0.9)] mb-4" size={56}/>} titleColor="text-emerald-100 drop-shadow-[0_0_10px_rgba(16,185,129,0.8)]" btnColor="bg-emerald-900/80 hover:bg-emerald-800 border-emerald-400/50 text-emerald-100 hover:text-white" bgImage="./images/azure_dragon_pillar.png" />
           </div>
         </div>
         )}
@@ -6904,10 +6904,10 @@ const SummonBox = ({ type, title, desc, ticketCount, onSummon, color, glow, icon
       {/* BOTTOM: Actions */}
       <div className="flex flex-col w-full">
         <div className="bg-black/60 backdrop-blur-md py-4 rounded-3xl border border-white/20 flex flex-col items-center justify-center gap-1 mb-6 shadow-inner">
-           <span className="text-stone-300 text-[10px] font-black uppercase tracking-widest">Đang sở hữu</span>
+           <span className="text-stone-300 text-[10px] font-black uppercase tracking-widest">Äang sá»Ÿ há»¯u</span>
            <div className="flex items-center gap-2">
               <span className="text-amber-400 font-black text-3xl drop-shadow-[0_0_10px_rgba(251,191,36,0.8)]">{ticketCount}</span>
-              <span className="text-amber-500/90 text-xs font-bold uppercase">Lệnh bài</span>
+              <span className="text-amber-500/90 text-xs font-bold uppercase">Lá»‡nh bÃ i</span>
            </div>
         </div>
         
@@ -6950,7 +6950,7 @@ const AdminPanel = ({ player, setPlayer, onClose }: any) => {
        } else if (selectedType === 'legionTickets') {
           setPlayer({ ...player, legionTickets: (player.legionTickets || 0) + amount });
      } else if (selectedType === 'pills') {
-        if (!selectedItem) return alert("Chưa chọn Đột Phá Đan");
+        if (!selectedItem) return alert("ChÆ°a chá»n Äá»™t PhÃ¡ Äan");
         setPlayer({
           ...player,
           pills: {
@@ -6959,10 +6959,10 @@ const AdminPanel = ({ player, setPlayer, onClose }: any) => {
           }
         });
      } else if (selectedType === 'hero') {
-        if (!selectedItem) return alert("Chưa chọn tướng");
+        if (!selectedItem) return alert("ChÆ°a chá»n tÆ°á»›ng");
         let heroData = INITIAL_HEROES.find(h => h.id === selectedItem);
         if (!heroData) heroData = ENEMY_HEROES.find(h => h.id === selectedItem);
-        if (!heroData) return alert("Không tìm thấy tướng");
+        if (!heroData) return alert("KhÃ´ng tÃ¬m tháº¥y tÆ°á»›ng");
         
         const newInventory = [...player.inventory];
         for(let i = 0; i < amount; i++) {
@@ -6970,10 +6970,10 @@ const AdminPanel = ({ player, setPlayer, onClose }: any) => {
         }
         setPlayer({ ...player, inventory: newInventory });
      } else if (selectedType === 'fragment') {
-        if (!selectedItem) return alert("Chưa chọn tướng");
+        if (!selectedItem) return alert("ChÆ°a chá»n tÆ°á»›ng");
         let heroData = INITIAL_HEROES.find(h => h.id === selectedItem);
         if (!heroData) heroData = ENEMY_HEROES.find(h => h.id === selectedItem);
-        if (!heroData) return alert("Không tìm thấy tướng");
+        if (!heroData) return alert("KhÃ´ng tÃ¬m tháº¥y tÆ°á»›ng");
 
         const newInventory = [...player.inventory];
         const existingHeroes = newInventory.filter(h => h.name === heroData!.name && h.isPermanent === true);
@@ -6981,17 +6981,17 @@ const AdminPanel = ({ player, setPlayer, onClose }: any) => {
             existingHeroes.forEach(h => { h.fragments = (h.fragments || 0) + amount; });
             setPlayer({ ...player, inventory: newInventory });
         } else {
-            return alert("Chúa công phải sở hữu tướng này trong Quân Đoàn trước mới có chỗ chứa mảnh!");
+            return alert("ChÃºa cÃ´ng pháº£i sá»Ÿ há»¯u tÆ°á»›ng nÃ y trong QuÃ¢n ÄoÃ n trÆ°á»›c má»›i cÃ³ chá»— chá»©a máº£nh!");
         }
      } else if (selectedType === 'artifact') {
-        if (!selectedItem) return alert("Chưa chọn thần khí");
+        if (!selectedItem) return alert("ChÆ°a chá»n tháº§n khÃ­");
         const artData = ARTIFACTS.find(a => a.id === selectedItem);
-        if (!artData) return alert("Không tìm thấy thần khí");
+        if (!artData) return alert("KhÃ´ng tÃ¬m tháº¥y tháº§n khÃ­");
         const newArtifacts = [...(player.artifacts || [])];
         for(let i = 0; i < amount; i++) newArtifacts.push(artData.id);
         setPlayer({ ...player, artifacts: newArtifacts });
      }
-     alert("Chúa công đã nhận vật phẩm thành công!");
+     alert("ChÃºa cÃ´ng Ä‘Ã£ nháº­n váº­t pháº©m thÃ nh cÃ´ng!");
   };
 
   const handleFileUpload = (itemId: string, e: React.ChangeEvent<HTMLInputElement>) => {
@@ -7011,7 +7011,7 @@ const AdminPanel = ({ player, setPlayer, onClose }: any) => {
       ...prev,
       customItemImages: customImages
     }));
-    alert("Đã lưu bộ ảnh vật phẩm mới thành công!");
+    alert("ÄÃ£ lÆ°u bá»™ áº£nh váº­t pháº©m má»›i thÃ nh cÃ´ng!");
   };
 
   const resetCustomImages = () => {
@@ -7020,90 +7020,90 @@ const AdminPanel = ({ player, setPlayer, onClose }: any) => {
       ...prev,
       customItemImages: {}
     }));
-    alert("Đã đặt lại bộ ảnh vật phẩm về mặc định!");
+    alert("ÄÃ£ Ä‘áº·t láº¡i bá»™ áº£nh váº­t pháº©m vá» máº·c Ä‘á»‹nh!");
   };
 
   const ITEM_LIST = [
-    { id: 'normal', name: 'Lệnh Bài Thường', defaultImg: './items/normal_ticket.png', icon: '🎫' },
-    { id: 'premium', name: 'Lệnh Bài Danh Tướng', defaultImg: './items/premium_ticket.png', icon: '📜' },
-    { id: 'artifact', name: 'Tầm Bảo Thần Khí', defaultImg: './items/artifact_ticket.png', icon: '🔮' },
-    { id: 'jade', name: 'Ngọc Bích', defaultImg: './items/jade.png', icon: '💎' },
-    { id: 'pill1', name: 'Sơ Cấp Đột Phá Đan (6-10★)', defaultImg: './items/pill1.png', icon: '💊' },
-    { id: 'pill2', name: 'Trung Cấp Phá Cảnh Đan (11-15★)', defaultImg: './items/pill2.png', icon: '🔮' },
-    { id: 'pill3', name: 'Cao Cấp Thông Thiên Đan (16-20★)', defaultImg: './items/pill3.png', icon: '⚡' },
-    { id: 'pill4', name: 'Thần Cấp Hóa Thần Đan (21-25★)', defaultImg: './items/pill4.png', icon: '🌌' },
-    { id: 'pill5', name: 'Tối Thượng Thái Sơ Đan (26-30★)', defaultImg: './items/pill5.png', icon: '🚩' },
+    { id: 'normal', name: 'Lá»‡nh BÃ i ThÆ°á»ng', defaultImg: './items/normal_ticket.png', icon: 'ðŸŽ«' },
+    { id: 'premium', name: 'Lá»‡nh BÃ i Danh TÆ°á»›ng', defaultImg: './items/premium_ticket.png', icon: 'ðŸ“œ' },
+    { id: 'artifact', name: 'Táº§m Báº£o Tháº§n KhÃ­', defaultImg: './items/artifact_ticket.png', icon: 'ðŸ”®' },
+    { id: 'jade', name: 'Ngá»c BÃ­ch', defaultImg: './items/jade.png', icon: 'ðŸ’Ž' },
+    { id: 'pill1', name: 'SÆ¡ Cáº¥p Äá»™t PhÃ¡ Äan (6-10â˜…)', defaultImg: './items/pill1.png', icon: 'ðŸ’Š' },
+    { id: 'pill2', name: 'Trung Cáº¥p PhÃ¡ Cáº£nh Äan (11-15â˜…)', defaultImg: './items/pill2.png', icon: 'ðŸ”®' },
+    { id: 'pill3', name: 'Cao Cáº¥p ThÃ´ng ThiÃªn Äan (16-20â˜…)', defaultImg: './items/pill3.png', icon: 'âš¡' },
+    { id: 'pill4', name: 'Tháº§n Cáº¥p HÃ³a Tháº§n Äan (21-25â˜…)', defaultImg: './items/pill4.png', icon: 'ðŸŒŒ' },
+    { id: 'pill5', name: 'Tá»‘i ThÆ°á»£ng ThÃ¡i SÆ¡ Äan (26-30â˜…)', defaultImg: './items/pill5.png', icon: 'ðŸš©' },
   ];
 
   return (
      <div className="fixed inset-0 z-[999] bg-black/80 flex items-center justify-center p-4 md:p-6 animate-in fade-in" onClick={onClose}>
-        <div className="bg-stone-900 border-2 border-amber-500 rounded-3xl p-6 md:p-8 max-w-2xl w-full relative max-h-[90vh] flex flex-col shadow-2xl" onClick={e => e.stopPropagation()}>
+        <div className="bg-stone-900 border-2 border-amber-500 rounded-3xl p-6 md:p-8 max-w-2xl w-full relative max-h-[90%] flex flex-col shadow-2xl" onClick={e => e.stopPropagation()}>
            <button onClick={onClose} className="absolute top-4 right-4 text-amber-500 hover:text-amber-300 transition-colors">
               <XCircle size={28} />
            </button>
            
-           <h2 className="text-xl md:text-2xl font-cinzel font-black text-amber-400 text-center mb-4">Lệnh Bài Chúa Công (Admin)</h2>
+           <h2 className="text-xl md:text-2xl font-cinzel font-black text-amber-400 text-center mb-4">Lá»‡nh BÃ i ChÃºa CÃ´ng (Admin)</h2>
            
            {/* Navigation Tabs */}
            <div className="flex border-b border-amber-900/50 mb-6 gap-2">
               <button onClick={() => setActiveTab('claim')} className={`flex-1 py-2.5 rounded-t-xl font-bold text-xs md:text-sm uppercase tracking-wider transition-all ${activeTab === 'claim' ? 'bg-amber-700/40 text-amber-300 border-t-2 border-x-2 border-amber-500' : 'text-stone-400 hover:text-white'}`}>
-                 🎁 Nhận Vật Phẩm
+                 ðŸŽ Nháº­n Váº­t Pháº©m
               </button>
               <button onClick={() => setActiveTab('images')} className={`flex-1 py-2.5 rounded-t-xl font-bold text-xs md:text-sm uppercase tracking-wider transition-all ${activeTab === 'images' ? 'bg-amber-700/40 text-amber-300 border-t-2 border-x-2 border-amber-500' : 'text-stone-400 hover:text-white'}`}>
-                 🖼️ Tự Thay Ảnh Vật Phẩm
+                 ðŸ–¼ï¸ Tá»± Thay áº¢nh Váº­t Pháº©m
               </button>
            </div>
 
            {activeTab === 'claim' ? (
               <div className="flex flex-col gap-4 overflow-y-auto pr-1">
                  <select className="bg-black border border-amber-900 p-3 rounded-xl text-amber-200 outline-none" value={selectedType} onChange={e => {setSelectedType(e.target.value); setSelectedItem('');}}>
-                    <option value="gold">Ngân Lượng</option>
-                    <option value="jade">Ngọc Bích</option>
-                    <option value="pills">Các Loại Đột Phá Đan</option>
-                    <option value="normalTickets">Vé Anh Hào</option>
-                      <option value="premiumTickets">Vé Danh Tướng</option>
-                      <option value="artifactTickets">Vé Thần Khí</option>
-                      <option value="legionTickets">Vé Quân Đoàn</option>
-                    <option value="hero">Tướng</option>
-                    <option value="fragment">Mảnh Tướng</option>
-                    <option value="artifact">Thần Khí</option>
+                    <option value="gold">NgÃ¢n LÆ°á»£ng</option>
+                    <option value="jade">Ngá»c BÃ­ch</option>
+                    <option value="pills">CÃ¡c Loáº¡i Äá»™t PhÃ¡ Äan</option>
+                    <option value="normalTickets">VÃ© Anh HÃ o</option>
+                      <option value="premiumTickets">VÃ© Danh TÆ°á»›ng</option>
+                      <option value="artifactTickets">VÃ© Tháº§n KhÃ­</option>
+                      <option value="legionTickets">VÃ© QuÃ¢n ÄoÃ n</option>
+                    <option value="hero">TÆ°á»›ng</option>
+                    <option value="fragment">Máº£nh TÆ°á»›ng</option>
+                    <option value="artifact">Tháº§n KhÃ­</option>
                  </select>
 
                  {selectedType === 'pills' && (
                     <select className="bg-black border border-amber-900 p-3 rounded-xl text-amber-200 outline-none" value={selectedItem} onChange={e => setSelectedItem(e.target.value)}>
-                       <option value="">-- Chọn Đột Phá Đan --</option>
+                       <option value="">-- Chá»n Äá»™t PhÃ¡ Äan --</option>
                        {BREAKTHROUGH_PILLS.map(p => <option key={p.id} value={p.id}>{p.icon} {p.name} ({p.desc})</option>)}
                     </select>
                  )}
 
                  {(selectedType === 'hero' || selectedType === 'fragment') && (
                     <select className="bg-black border border-amber-900 p-3 rounded-xl text-amber-200 outline-none" value={selectedItem} onChange={e => setSelectedItem(e.target.value)}>
-                       <option value="">-- Chọn Tướng --</option>
+                       <option value="">-- Chá»n TÆ°á»›ng --</option>
                        <optgroup label="Ta">
                          {INITIAL_HEROES.map(h => <option key={h.id} value={h.id}>{h.name}</option>)}
                        </optgroup>
-                       <optgroup label="Địch">
+                       <optgroup label="Äá»‹ch">
                          {ENEMY_HEROES.map(h => <option key={h.id} value={h.id}>{h.name}</option>)}
                        </optgroup>
                     </select>
                  )}
                  {selectedType === 'artifact' && (
                     <select className="bg-black border border-amber-900 p-3 rounded-xl text-amber-200 outline-none" value={selectedItem} onChange={e => setSelectedItem(e.target.value)}>
-                       <option value="">-- Chọn Thần Khí --</option>
+                       <option value="">-- Chá»n Tháº§n KhÃ­ --</option>
                        {ARTIFACTS.map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
                     </select>
                  )}
 
-                 <input type="number" min="1" className="bg-black border border-amber-900 p-3 rounded-xl text-amber-200 outline-none" value={amount} onChange={e => setAmount(Number(e.target.value))} placeholder="Số lượng" />
+                 <input type="number" min="1" className="bg-black border border-amber-900 p-3 rounded-xl text-amber-200 outline-none" value={amount} onChange={e => setAmount(Number(e.target.value))} placeholder="Sá»‘ lÆ°á»£ng" />
                  
                  <button onClick={handleClaim} className="bg-amber-600 text-white font-black py-3.5 rounded-xl hover:bg-amber-500 mt-2 tracking-widest uppercase">
-                    NHẬN VẬT PHẨM
+                    NHáº¬N Váº¬T PHáº¨M
                  </button>
               </div>
            ) : (
               <div className="flex flex-col gap-4 overflow-y-auto custom-scrollbar pr-2 flex-1">
                  <div className="bg-amber-950/40 p-3 rounded-xl border border-amber-800/40 text-xs text-amber-200 leading-relaxed">
-                    💡 <b>Tự thêm ảnh của Chúa công:</b> Chọn file ảnh từ máy tính hoặc dán URL ảnh trực tiếp bên dưới. Ảnh sẽ lập tức thay thế hiển thị trong Kỳ Trân Các và Nâng Sao!
+                    ðŸ’¡ <b>Tá»± thÃªm áº£nh cá»§a ChÃºa cÃ´ng:</b> Chá»n file áº£nh tá»« mÃ¡y tÃ­nh hoáº·c dÃ¡n URL áº£nh trá»±c tiáº¿p bÃªn dÆ°á»›i. áº¢nh sáº½ láº­p tá»©c thay tháº¿ hiá»ƒn thá»‹ trong Ká»³ TrÃ¢n CÃ¡c vÃ  NÃ¢ng Sao!
                  </div>
 
                  <div className="flex flex-col gap-3">
@@ -7123,7 +7123,7 @@ const AdminPanel = ({ player, setPlayer, onClose }: any) => {
                                 <span className="text-xs font-bold text-amber-300">{item.name}</span>
                                 <input
                                    type="text"
-                                   placeholder="Dán URL link ảnh tại đây..."
+                                   placeholder="DÃ¡n URL link áº£nh táº¡i Ä‘Ã¢y..."
                                    value={currentVal}
                                    onChange={e => setCustomImages(prev => ({ ...prev, [item.id]: e.target.value }))}
                                    className="bg-stone-950 border border-stone-800 text-xs p-2 rounded-lg text-stone-200 outline-none focus:border-amber-500 w-full"
@@ -7131,7 +7131,7 @@ const AdminPanel = ({ player, setPlayer, onClose }: any) => {
                              </div>
 
                              <label className="bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs px-3 py-2 rounded-lg cursor-pointer font-bold border border-white/10 shrink-0 text-center">
-                                📁 Chọn ảnh từ máy
+                                ðŸ“ Chá»n áº£nh tá»« mÃ¡y
                                 <input
                                    type="file"
                                    accept="image/*"
@@ -7146,10 +7146,10 @@ const AdminPanel = ({ player, setPlayer, onClose }: any) => {
 
                  <div className="flex gap-2 mt-4 pt-2 border-t border-white/10">
                     <button onClick={saveCustomImages} className="flex-1 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-white font-black py-3 rounded-xl text-xs uppercase tracking-wider shadow-lg">
-                       💾 Lưu Bộ Ảnh Custom
+                       ðŸ’¾ LÆ°u Bá»™ áº¢nh Custom
                     </button>
                     <button onClick={resetCustomImages} className="bg-stone-800 hover:bg-stone-700 text-stone-300 font-bold px-4 py-3 rounded-xl text-xs uppercase">
-                       🔄 Đặt Lại Mặc Định
+                       ðŸ”„ Äáº·t Láº¡i Máº·c Äá»‹nh
                     </button>
                  </div>
               </div>
@@ -7169,74 +7169,74 @@ const ShopView = ({ player, setPlayer, setView }: any) => {
   const buyWithGold = (type: string, price: number, name: string) => {
     const qty = Math.max(1, quantities[type] || 1);
     const totalCost = price * qty;
-    if (player.gold < totalCost) return alert(`Ngân lượng không đủ! Cần ${totalCost.toLocaleString()} Vàng.`);
+    if (player.gold < totalCost) return alert(`NgÃ¢n lÆ°á»£ng khÃ´ng Ä‘á»§! Cáº§n ${totalCost.toLocaleString()} VÃ ng.`);
     setPlayer((prev: any) => {
       const keyMap: Record<string, string> = { normal: 'normalTickets', premium: 'premiumTickets', artifact: 'artifactTickets', legion: 'legionTickets' };
       const key = keyMap[type];
       return { ...prev, gold: prev.gold - totalCost, [key]: (prev[key] || 0) + qty };
     });
-    alert(`Đã mua thành công ${qty.toLocaleString()}x ${name}!`);
+    alert(`ÄÃ£ mua thÃ nh cÃ´ng ${qty.toLocaleString()}x ${name}!`);
   };
 
   const buyWithJade = (type: string, price: number, name: string) => {
     const qty = Math.max(1, quantities[type] || 1);
     const totalCost = price * qty;
-    if ((player.jade || 0) < totalCost) return alert(`Ngọc Bích không đủ! Cần ${totalCost.toLocaleString()} Ngọc Bích.`);
+    if ((player.jade || 0) < totalCost) return alert(`Ngá»c BÃ­ch khÃ´ng Ä‘á»§! Cáº§n ${totalCost.toLocaleString()} Ngá»c BÃ­ch.`);
     setPlayer((prev: any) => {
       const newPills = { ...(prev.pills || {}) };
       newPills[type] = (newPills[type] || 0) + qty;
       return { ...prev, jade: (prev.jade || 0) - totalCost, pills: newPills };
     });
-    alert(`Đã mua thành công ${qty.toLocaleString()}x ${name}!`);
+    alert(`ÄÃ£ mua thÃ nh cÃ´ng ${qty.toLocaleString()}x ${name}!`);
   };
 
   return (
-    <div className="min-h-screen ancient-bg flex flex-col">
+    <div className="min-h-full ancient-bg flex flex-col">
        <div className="p-4 md:p-6 flex justify-between items-center bg-stone-900/95 border-b border-amber-900/50 shadow-xl z-10 backdrop-blur-md">
-         <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors bg-stone-800 px-4 py-2 rounded-xl border border-amber-900/30 font-sans"><ChevronLeft/> Trở về</button>
-         <div className="text-amber-400 font-black font-cinzel text-xl md:text-2xl tracking-widest uppercase drop-shadow-[0_0_10px_rgba(251,191,36,0.3)]">✦ Kỳ Trân Các ✦</div>
+         <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors bg-stone-800 px-4 py-2 rounded-xl border border-amber-900/30 font-sans"><ChevronLeft/> Trá»Ÿ vá»</button>
+         <div className="text-amber-400 font-black font-cinzel text-xl md:text-2xl tracking-widest uppercase drop-shadow-[0_0_10px_rgba(251,191,36,0.3)]">âœ¦ Ká»³ TrÃ¢n CÃ¡c âœ¦</div>
          <div className="flex items-center gap-3 font-sans">
-           <div className="bg-stone-950 px-3 py-1.5 rounded-xl border border-yellow-700/50 flex items-center gap-1.5"><span className="text-yellow-500">🪙</span><span className="text-yellow-400 font-black text-sm">{(player.gold || 0).toLocaleString()}</span></div>
-           <div className="bg-stone-950 px-3 py-1.5 rounded-xl border border-green-700/50 flex items-center gap-1.5"><span className="text-green-400 text-base">💚</span><span className="text-green-400 font-black text-sm">{(player.jade || 0).toLocaleString()}</span></div>
+           <div className="bg-stone-950 px-3 py-1.5 rounded-xl border border-yellow-700/50 flex items-center gap-1.5"><span className="text-yellow-500">ðŸª™</span><span className="text-yellow-400 font-black text-sm">{(player.gold || 0).toLocaleString()}</span></div>
+           <div className="bg-stone-950 px-3 py-1.5 rounded-xl border border-green-700/50 flex items-center gap-1.5"><span className="text-green-400 text-base">ðŸ’š</span><span className="text-green-400 font-black text-sm">{(player.jade || 0).toLocaleString()}</span></div>
          </div>
        </div>
        <div className="flex border-b border-amber-900/30 bg-stone-950/60 font-sans">
-         <button onClick={() => setActiveTab('gold')} className={`flex-1 py-4 font-black uppercase tracking-widest text-sm flex items-center justify-center gap-2 transition-all ${activeTab === 'gold' ? 'text-yellow-400 border-b-2 border-yellow-500 bg-yellow-950/20' : 'text-stone-500 hover:text-yellow-600'}`}>🪙 Kho Vàng — Lệnh Bài</button>
-         <button onClick={() => setActiveTab('jade')} className={`flex-1 py-4 font-black uppercase tracking-widest text-sm flex items-center justify-center gap-2 transition-all ${activeTab === 'jade' ? 'text-green-400 border-b-2 border-green-500 bg-green-950/20' : 'text-stone-500 hover:text-green-600'}`}>💚 Ngọc Bích — Đột Phá Đan</button>
+         <button onClick={() => setActiveTab('gold')} className={`flex-1 py-4 font-black uppercase tracking-widest text-sm flex items-center justify-center gap-2 transition-all ${activeTab === 'gold' ? 'text-yellow-400 border-b-2 border-yellow-500 bg-yellow-950/20' : 'text-stone-500 hover:text-yellow-600'}`}>ðŸª™ Kho VÃ ng â€” Lá»‡nh BÃ i</button>
+         <button onClick={() => setActiveTab('jade')} className={`flex-1 py-4 font-black uppercase tracking-widest text-sm flex items-center justify-center gap-2 transition-all ${activeTab === 'jade' ? 'text-green-400 border-b-2 border-green-500 bg-green-950/20' : 'text-stone-500 hover:text-green-600'}`}>ðŸ’š Ngá»c BÃ­ch â€” Äá»™t PhÃ¡ Äan</button>
        </div>
        <div className="flex-1 p-6 md:p-10 max-w-7xl mx-auto w-full overflow-y-auto pb-20 custom-scrollbar font-sans">
          {activeTab === 'gold' && (
            <div className="animate-in fade-in duration-300">
-             <div className="text-center mb-8"><h2 className="text-amber-400 font-cinzel font-black text-2xl uppercase tracking-widest mb-1">Lệnh Bài Triệu Hồi</h2><p className="text-stone-500 text-sm font-bold">Dùng Vàng để mua Lệnh Bài triệu hồi anh hùng</p></div>
+             <div className="text-center mb-8"><h2 className="text-amber-400 font-cinzel font-black text-2xl uppercase tracking-widest mb-1">Lá»‡nh BÃ i Triá»‡u Há»“i</h2><p className="text-stone-500 text-sm font-bold">DÃ¹ng VÃ ng Ä‘á»ƒ mua Lá»‡nh BÃ i triá»‡u há»“i anh hÃ¹ng</p></div>
              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-               <ShopItem itemId="normal" player={player} title="Lệnh Bài Anh Hào" desc="Tỉ lệ: C → SR" price={2000} currency="gold" qty={quantities.normal} setQty={(q: number) => setQuantities(p => ({...p, normal: q}))} onBuy={() => buyWithGold('normal', 2000, 'Lệnh Bài Anh Hào')} img="./items/normal_ticket.png" color="blue" />
-               <ShopItem itemId="premium" player={player} title="Lệnh Bài Danh Tướng" desc="Tỉ lệ cao SR → UR" price={10000} currency="gold" qty={quantities.premium} setQty={(q: number) => setQuantities(p => ({...p, premium: q}))} onBuy={() => buyWithGold('premium', 10000, 'Lệnh Bài Danh Tướng')} img="./items/premium_ticket.png" color="purple" />
-               <ShopItem itemId="artifact" player={player} title="Thẻ Tầm Bảo Thần Khí" desc="Rơi Thần Khí Bản Mệnh" price={20000} currency="gold" qty={quantities.artifact} setQty={(q: number) => setQuantities(p => ({...p, artifact: q}))} onBuy={() => buyWithGold('artifact', 20000, 'Thẻ Tầm Bảo Thần Khí')} img="./items/artifact_ticket.png" color="amber" />
-               <ShopItem itemId="legion" player={player} title="Lệnh Bài Quân Đoàn" desc="Anh Hào & Thần Khí Toàn Cõi" price={50000} currency="gold" qty={quantities.legion} setQty={(q: number) => setQuantities(p => ({...p, legion: q}))} onBuy={() => buyWithGold('legion', 50000, 'Lệnh Bài Quân Đoàn')} img="./items/legion_ticket.png" icon="🏯" color="emerald" />
+               <ShopItem itemId="normal" player={player} title="Lá»‡nh BÃ i Anh HÃ o" desc="Tá»‰ lá»‡: C â†’ SR" price={2000} currency="gold" qty={quantities.normal} setQty={(q: number) => setQuantities(p => ({...p, normal: q}))} onBuy={() => buyWithGold('normal', 2000, 'Lá»‡nh BÃ i Anh HÃ o')} img="./items/normal_ticket.png" color="blue" />
+               <ShopItem itemId="premium" player={player} title="Lá»‡nh BÃ i Danh TÆ°á»›ng" desc="Tá»‰ lá»‡ cao SR â†’ UR" price={10000} currency="gold" qty={quantities.premium} setQty={(q: number) => setQuantities(p => ({...p, premium: q}))} onBuy={() => buyWithGold('premium', 10000, 'Lá»‡nh BÃ i Danh TÆ°á»›ng')} img="./items/premium_ticket.png" color="purple" />
+               <ShopItem itemId="artifact" player={player} title="Tháº» Táº§m Báº£o Tháº§n KhÃ­" desc="RÆ¡i Tháº§n KhÃ­ Báº£n Má»‡nh" price={20000} currency="gold" qty={quantities.artifact} setQty={(q: number) => setQuantities(p => ({...p, artifact: q}))} onBuy={() => buyWithGold('artifact', 20000, 'Tháº» Táº§m Báº£o Tháº§n KhÃ­')} img="./items/artifact_ticket.png" color="amber" />
+               <ShopItem itemId="legion" player={player} title="Lá»‡nh BÃ i QuÃ¢n ÄoÃ n" desc="Anh HÃ o & Tháº§n KhÃ­ ToÃ n CÃµi" price={50000} currency="gold" qty={quantities.legion} setQty={(q: number) => setQuantities(p => ({...p, legion: q}))} onBuy={() => buyWithGold('legion', 50000, 'Lá»‡nh BÃ i QuÃ¢n ÄoÃ n')} img="./items/legion_ticket.png" icon="ðŸ¯" color="emerald" />
              </div>
            </div>
          )}
          {activeTab === 'jade' && (
            <div className="animate-in fade-in duration-300">
              <div className="text-center mb-8">
-               <h2 className="text-green-400 font-cinzel font-black text-2xl uppercase tracking-widest mb-1">Đột Phá Đan Thần Dược</h2>
-               <p className="text-stone-500 text-sm font-bold">Dùng Ngọc Bích để mua Đan Dược nâng cấp mốc Sao tướng</p>
-               <div className="inline-flex items-center gap-2 mt-2 bg-green-950/50 px-4 py-1.5 rounded-full border border-green-800/50"><span className="text-green-400">💚</span><span className="text-green-400 font-black text-sm">Ngọc Bích hiện có: {(player.jade || 0).toLocaleString()}</span></div>
+               <h2 className="text-green-400 font-cinzel font-black text-2xl uppercase tracking-widest mb-1">Äá»™t PhÃ¡ Äan Tháº§n DÆ°á»£c</h2>
+               <p className="text-stone-500 text-sm font-bold">DÃ¹ng Ngá»c BÃ­ch Ä‘á»ƒ mua Äan DÆ°á»£c nÃ¢ng cáº¥p má»‘c Sao tÆ°á»›ng</p>
+               <div className="inline-flex items-center gap-2 mt-2 bg-green-950/50 px-4 py-1.5 rounded-full border border-green-800/50"><span className="text-green-400">ðŸ’š</span><span className="text-green-400 font-black text-sm">Ngá»c BÃ­ch hiá»‡n cÃ³: {(player.jade || 0).toLocaleString()}</span></div>
              </div>
-             <div className="flex items-center justify-between border-b border-rose-900/40 pb-2 mb-6"><h3 className="text-rose-400 font-cinzel font-black text-lg uppercase tracking-widest flex items-center gap-2">💊 5 Cấp Bậc Đan Dược</h3><span className="text-xs bg-rose-950 text-rose-300 px-3 py-1 rounded-full border border-rose-800/50 font-bold">Hàng Độc Quyền Quý Hiếm</span></div>
+             <div className="flex items-center justify-between border-b border-rose-900/40 pb-2 mb-6"><h3 className="text-rose-400 font-cinzel font-black text-lg uppercase tracking-widest flex items-center gap-2">ðŸ’Š 5 Cáº¥p Báº­c Äan DÆ°á»£c</h3><span className="text-xs bg-rose-950 text-rose-300 px-3 py-1 rounded-full border border-rose-800/50 font-bold">HÃ ng Äá»™c Quyá»n QuÃ½ Hiáº¿m</span></div>
              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-               <ShopItem itemId="pill1" player={player} title="Sơ Cấp Đột Phá Đan" desc="Mốc 6-10★" price={20} currency="jade" qty={quantities.pill1} setQty={(q: number) => setQuantities(p => ({...p, pill1: q}))} onBuy={() => buyWithJade('pill1', 20, 'Sơ Cấp Đột Phá Đan')} img="./items/pill1.png" icon="💊" color="red" />
-               <ShopItem itemId="pill2" player={player} title="Trung Cấp Phá Cảnh Đan" desc="Mốc 11-15★" price={60} currency="jade" qty={quantities.pill2} setQty={(q: number) => setQuantities(p => ({...p, pill2: q}))} onBuy={() => buyWithJade('pill2', 60, 'Trung Cấp Phá Cảnh Đan')} img="./items/pill2.png" icon="🔮" color="purple" />
-               <ShopItem itemId="pill3" player={player} title="Cao Cấp Thông Thiên Đan" desc="Mốc 16-20★" price={150} currency="jade" qty={quantities.pill3} setQty={(q: number) => setQuantities(p => ({...p, pill3: q}))} onBuy={() => buyWithJade('pill3', 150, 'Cao Cấp Thông Thiên Đan')} img="./items/pill3.png" icon="⚡" color="sky" />
-               <ShopItem itemId="pill4" player={player} title="Thần Cấp Hóa Thần Đan" desc="Mốc 21-25★" price={400} currency="jade" qty={quantities.pill4} setQty={(q: number) => setQuantities(p => ({...p, pill4: q}))} onBuy={() => buyWithJade('pill4', 400, 'Thần Cấp Hóa Thần Đan')} img="./items/pill4.png" icon="🌌" color="amber" />
-               <ShopItem itemId="pill5" player={player} title="Tối Thượng Thái Sơ Đan" desc="Mốc 26-30★" price={1000} currency="jade" qty={quantities.pill5} setQty={(q: number) => setQuantities(p => ({...p, pill5: q}))} onBuy={() => buyWithJade('pill5', 1000, 'Tối Thượng Thái Sơ Đan')} img="./items/pill5.png" icon="🚩" color="rose" />
+               <ShopItem itemId="pill1" player={player} title="SÆ¡ Cáº¥p Äá»™t PhÃ¡ Äan" desc="Má»‘c 6-10â˜…" price={20} currency="jade" qty={quantities.pill1} setQty={(q: number) => setQuantities(p => ({...p, pill1: q}))} onBuy={() => buyWithJade('pill1', 20, 'SÆ¡ Cáº¥p Äá»™t PhÃ¡ Äan')} img="./items/pill1.png" icon="ðŸ’Š" color="red" />
+               <ShopItem itemId="pill2" player={player} title="Trung Cáº¥p PhÃ¡ Cáº£nh Äan" desc="Má»‘c 11-15â˜…" price={60} currency="jade" qty={quantities.pill2} setQty={(q: number) => setQuantities(p => ({...p, pill2: q}))} onBuy={() => buyWithJade('pill2', 60, 'Trung Cáº¥p PhÃ¡ Cáº£nh Äan')} img="./items/pill2.png" icon="ðŸ”®" color="purple" />
+               <ShopItem itemId="pill3" player={player} title="Cao Cáº¥p ThÃ´ng ThiÃªn Äan" desc="Má»‘c 16-20â˜…" price={150} currency="jade" qty={quantities.pill3} setQty={(q: number) => setQuantities(p => ({...p, pill3: q}))} onBuy={() => buyWithJade('pill3', 150, 'Cao Cáº¥p ThÃ´ng ThiÃªn Äan')} img="./items/pill3.png" icon="âš¡" color="sky" />
+               <ShopItem itemId="pill4" player={player} title="Tháº§n Cáº¥p HÃ³a Tháº§n Äan" desc="Má»‘c 21-25â˜…" price={400} currency="jade" qty={quantities.pill4} setQty={(q: number) => setQuantities(p => ({...p, pill4: q}))} onBuy={() => buyWithJade('pill4', 400, 'Tháº§n Cáº¥p HÃ³a Tháº§n Äan')} img="./items/pill4.png" icon="ðŸŒŒ" color="amber" />
+               <ShopItem itemId="pill5" player={player} title="Tá»‘i ThÆ°á»£ng ThÃ¡i SÆ¡ Äan" desc="Má»‘c 26-30â˜…" price={1000} currency="jade" qty={quantities.pill5} setQty={(q: number) => setQuantities(p => ({...p, pill5: q}))} onBuy={() => buyWithJade('pill5', 1000, 'Tá»‘i ThÆ°á»£ng ThÃ¡i SÆ¡ Äan')} img="./items/pill5.png" icon="ðŸš©" color="rose" />
              </div>
              <div className="mt-10 bg-green-950/20 rounded-2xl border border-green-800/30 p-6">
-               <h3 className="text-green-400 font-cinzel font-black uppercase tracking-widest text-sm mb-3">💡 Cách Kiếm Ngọc Bích</h3>
+               <h3 className="text-green-400 font-cinzel font-black uppercase tracking-widest text-sm mb-3">ðŸ’¡ CÃ¡ch Kiáº¿m Ngá»c BÃ­ch</h3>
                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-stone-400 font-bold">
-                 <div className="bg-stone-900/60 rounded-xl p-3 border border-green-900/30"><div className="text-green-300 mb-1">🏆 Tự Hào Sử Việt</div><div>Thám Hoa: 20/câu đúng | Bảng Nhãn: 25/câu | Trạng Nguyên: 30/câu</div></div>
-                 <div className="bg-stone-900/60 rounded-xl p-3 border border-green-900/30"><div className="text-green-300 mb-1">⚔️ Thí Luyện Đường</div><div>Vượt ải: 50 ngọc/ải</div></div>
-                 <div className="bg-stone-900/60 rounded-xl p-3 border border-green-900/30"><div className="text-green-300 mb-1">🔧 Tháo Dỡ Tướng</div><div>UR: 30 | SSR: 20 | SR: 10 | R: 5 | C: 2</div></div>
+                 <div className="bg-stone-900/60 rounded-xl p-3 border border-green-900/30"><div className="text-green-300 mb-1">ðŸ† Tá»± HÃ o Sá»­ Viá»‡t</div><div>ThÃ¡m Hoa: 20/cÃ¢u Ä‘Ãºng | Báº£ng NhÃ£n: 25/cÃ¢u | Tráº¡ng NguyÃªn: 30/cÃ¢u</div></div>
+                 <div className="bg-stone-900/60 rounded-xl p-3 border border-green-900/30"><div className="text-green-300 mb-1">âš”ï¸ ThÃ­ Luyá»‡n ÄÆ°á»ng</div><div>VÆ°á»£t áº£i: 50 ngá»c/áº£i</div></div>
+                 <div className="bg-stone-900/60 rounded-xl p-3 border border-green-900/30"><div className="text-green-300 mb-1">ðŸ”§ ThÃ¡o Dá»¡ TÆ°á»›ng</div><div>UR: 30 | SSR: 20 | SR: 10 | R: 5 | C: 2</div></div>
                </div>
              </div>
            </div>
@@ -7302,27 +7302,27 @@ const ShopItem = ({ title, price, qty, setQty, onBuy, img, icon, color, desc, it
             className="w-full h-full object-cover scale-110" 
           />
         ) : (
-          <span className="text-5xl md:text-6xl drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] animate-pulse">{icon || '🏯'}</span>
+          <span className="text-5xl md:text-6xl drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] animate-pulse">{icon || 'ðŸ¯'}</span>
         )}
       </div>
       <h3 className={`font-black uppercase text-center text-sm md:text-base tracking-wide ${theme.text} min-h-[2.5rem] flex items-center leading-tight font-sans`}>{title}</h3>
       
       <div className={`flex items-center gap-1.5 bg-stone-950/70 px-4 py-1.5 rounded-xl border border-white/5`}>
         {isJade ? (
-          <><span className="text-green-400 text-base">💚</span><span className="text-green-400 font-black text-sm md:text-base">{(price || 0).toLocaleString()}</span></>
+          <><span className="text-green-400 text-base">ðŸ’š</span><span className="text-green-400 font-black text-sm md:text-base">{(price || 0).toLocaleString()}</span></>
         ) : (
-          <><span className="text-yellow-500 text-base">🪙</span><span className="text-yellow-400 font-black text-sm md:text-base">{(price || 0).toLocaleString()}</span></>
+          <><span className="text-yellow-500 text-base">ðŸª™</span><span className="text-yellow-400 font-black text-sm md:text-base">{(price || 0).toLocaleString()}</span></>
         )}
       </div>
       
-      {/* Bộ điều khiển số lượng: Nhập tự do + Nút Tăng/Giảm + Phím tắt +10 và MAX */}
+      {/* Bá»™ Ä‘iá»u khiá»ƒn sá»‘ lÆ°á»£ng: Nháº­p tá»± do + NÃºt TÄƒng/Giáº£m + PhÃ­m táº¯t +10 vÃ  MAX */}
       <div className="flex items-center gap-1.5 w-full">
         <div className="flex items-center bg-stone-950/90 px-2 py-1.5 rounded-xl border border-amber-900/40 flex-1 justify-between shadow-inner focus-within:border-amber-500/80 transition-colors">
           <button 
             type="button"
             onClick={() => setQty(Math.max(1, (currentQty || 1) - 1))} 
             className="text-amber-500 hover:text-white hover:bg-amber-600/20 active:scale-90 transition-all p-1 rounded-lg cursor-pointer"
-            title="Giảm 1"
+            title="Giáº£m 1"
           >
             <Minus size={15}/>
           </button>
@@ -7336,13 +7336,13 @@ const ShopItem = ({ title, price, qty, setQty, onBuy, img, icon, color, desc, it
             onBlur={handleBlur}
             onFocus={(e) => e.target.select()}
             placeholder="1"
-            title="Nhập số lượng tự do"
+            title="Nháº­p sá»‘ lÆ°á»£ng tá»± do"
           />
           <button 
             type="button"
             onClick={() => setQty((currentQty || 0) + 1)} 
             className="text-amber-500 hover:text-white hover:bg-amber-600/20 active:scale-90 transition-all p-1 rounded-lg cursor-pointer"
-            title="Tăng 1"
+            title="TÄƒng 1"
           >
             <Plus size={15}/>
           </button>
@@ -7352,7 +7352,7 @@ const ShopItem = ({ title, price, qty, setQty, onBuy, img, icon, color, desc, it
           type="button"
           onClick={() => setQty((currentQty || 0) + 10)} 
           className="bg-stone-900 hover:bg-stone-800 text-stone-300 hover:text-amber-300 px-2.5 py-2 rounded-xl border border-stone-700/50 text-[11px] font-black transition-all active:scale-95 cursor-pointer whitespace-nowrap"
-          title="Thêm nhanh 10"
+          title="ThÃªm nhanh 10"
         >
           +10
         </button>
@@ -7361,7 +7361,7 @@ const ShopItem = ({ title, price, qty, setQty, onBuy, img, icon, color, desc, it
           type="button"
           onClick={() => setQty(Math.max(1, maxAffordable))} 
           className="bg-amber-950/60 hover:bg-amber-900/80 text-amber-300 hover:text-yellow-200 px-2.5 py-2 rounded-xl border border-amber-600/40 text-[11px] font-black transition-all active:scale-95 cursor-pointer whitespace-nowrap"
-          title={`Mua tối đa (${maxAffordable.toLocaleString()})`}
+          title={`Mua tá»‘i Ä‘a (${maxAffordable.toLocaleString()})`}
         >
           MAX
         </button>
@@ -7379,16 +7379,16 @@ const ShopItem = ({ title, price, qty, setQty, onBuy, img, icon, color, desc, it
         }`}
       >
         <span>Mua {Math.max(1, currentQty).toLocaleString()}</span>
-        <span className="opacity-60">•</span>
-        <span>{totalCost.toLocaleString()} {isJade ? '💚' : '🪙'}</span>
+        <span className="opacity-60">â€¢</span>
+        <span>{totalCost.toLocaleString()} {isJade ? 'ðŸ’š' : 'ðŸª™'}</span>
       </button>
     </div>
   );
 };
 
 const MOCK_LEGIONS = [
-  "Đại Việt Hùng Binh", "Giao Chỉ Thiết Kỵ", "Vạn Xuân Bất Diệt", "Lĩnh Nam Uy Vũ", "Lam Sơn Tụ Nghĩa", 
-  "Tây Sơn Thần Tốc", "Mê Linh Khởi Nghĩa", "Hoa Lư Vạn Thắng", "Bình Ngô Đại Quân", "Sát Thát Dũng Sĩ"
+  "Äáº¡i Viá»‡t HÃ¹ng Binh", "Giao Chá»‰ Thiáº¿t Ká»µ", "Váº¡n XuÃ¢n Báº¥t Diá»‡t", "LÄ©nh Nam Uy VÅ©", "Lam SÆ¡n Tá»¥ NghÄ©a", 
+  "TÃ¢y SÆ¡n Tháº§n Tá»‘c", "MÃª Linh Khá»Ÿi NghÄ©a", "Hoa LÆ° Váº¡n Tháº¯ng", "BÃ¬nh NgÃ´ Äáº¡i QuÃ¢n", "SÃ¡t ThÃ¡t DÅ©ng SÄ©"
 ].map((name, index) => {
   const pLineup = [];
   let pPower = 0;
@@ -7450,8 +7450,8 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
 
   const decompose = (rewardType: 'fragments' | 'jade' | 'gold') => {
     if (!selectedHero) return;
-    if (player.permLineup.includes(selectedHero.id)) return alert("Anh hùng đang tham trận, không thể giải ngũ!");
-    if (selectedHero.isPermanent !== true) return alert("Đây là Tướng Doanh Trại tạm thời! Hãy vào Doanh Trại để giải ngũ.");
+    if (player.permLineup.includes(selectedHero.id)) return alert("Anh hÃ¹ng Ä‘ang tham tráº­n, khÃ´ng thá»ƒ giáº£i ngÅ©!");
+    if (selectedHero.isPermanent !== true) return alert("ÄÃ¢y lÃ  TÆ°á»›ng Doanh Tráº¡i táº¡m thá»i! HÃ£y vÃ o Doanh Tráº¡i Ä‘á»ƒ giáº£i ngÅ©.");
 
     const heroRarity = selectedHero.rarity;
     const heroName = selectedHero.name;
@@ -7481,11 +7481,11 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
     });
 
     const rewardMsg = rewardType === 'fragments'
-      ? `+50 Mảnh Tướng ${heroName}`
+      ? `+50 Máº£nh TÆ°á»›ng ${heroName}`
       : rewardType === 'jade'
-      ? `+${jadeGain} Ngọc Bích 💎`
-      : `+${goldGain} Vàng 🪙`;
-    setTimeout(() => alert(`Giải ngũ thành công!\n${rewardMsg}`), 100);
+      ? `+${jadeGain} Ngá»c BÃ­ch ðŸ’Ž`
+      : `+${goldGain} VÃ ng ðŸª™`;
+    setTimeout(() => alert(`Giáº£i ngÅ© thÃ nh cÃ´ng!\n${rewardMsg}`), 100);
 
     setSelectedHeroId(null);
     setShowDecomposeModal(false);
@@ -7493,21 +7493,21 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
 
   const upgradeStar = () => {
     if (!selectedHero) return;
-    if (selectedHero.star >= 30) return alert("Hào kiệt đã đạt tới giới hạn tối thượng 30 Sao!");
-    if (selectedHero.rarity === Rarity.R || selectedHero.rarity === Rarity.C) return alert("Binh sĩ hạng R và C không thể nâng sao.");
+    if (selectedHero.star >= 30) return alert("HÃ o kiá»‡t Ä‘Ã£ Ä‘áº¡t tá»›i giá»›i háº¡n tá»‘i thÆ°á»£ng 30 Sao!");
+    if (selectedHero.rarity === Rarity.R || selectedHero.rarity === Rarity.C) return alert("Binh sÄ© háº¡ng R vÃ  C khÃ´ng thá»ƒ nÃ¢ng sao.");
 
     const req = getStarUpgradeReq(selectedHero.star);
-    // Tổng mảnh = mảnh trên người + mảnh rời trong kho
+    // Tá»•ng máº£nh = máº£nh trÃªn ngÆ°á»i + máº£nh rá»i trong kho
     const _heroName = selectedHero.name;
     const _storedFrags = (player.heroFragments || {})[_heroName] || 0;
     const _totalFragments = (selectedHero.fragments || 0) + _storedFrags;
 
-    if (_totalFragments < req.fragReq) return alert(`Thiếu mảnh tướng! (Cần ${req.fragReq}, hiện có ${_totalFragments})`);
-    if (player.jade < req.jadeReq) return alert(`Thiếu Ngọc Bích! (Cần ${req.jadeReq}, hiện có ${player.jade})`);
+    if (_totalFragments < req.fragReq) return alert(`Thiáº¿u máº£nh tÆ°á»›ng! (Cáº§n ${req.fragReq}, hiá»‡n cÃ³ ${_totalFragments})`);
+    if (player.jade < req.jadeReq) return alert(`Thiáº¿u Ngá»c BÃ­ch! (Cáº§n ${req.jadeReq}, hiá»‡n cÃ³ ${player.jade})`);
 
     if (req.requiredPill) {
        const hasCount = (player.pills && player.pills[req.requiredPill.id]) || 0;
-       if (hasCount < req.pillQty!) return alert(`Đột phá mốc ${req.nextStar} Sao cần ${req.pillQty} ${req.requiredPill.name}! (Hiện có ${hasCount}). Hãy dùng Lệnh Bài Chúa Công để lấy đan!`);
+       if (hasCount < req.pillQty!) return alert(`Äá»™t phÃ¡ má»‘c ${req.nextStar} Sao cáº§n ${req.pillQty} ${req.requiredPill.name}! (Hiá»‡n cÃ³ ${hasCount}). HÃ£y dÃ¹ng Lá»‡nh BÃ i ChÃºa CÃ´ng Ä‘á»ƒ láº¥y Ä‘an!`);
     }
 
     setPlayer((p: any) => {
@@ -7539,16 +7539,16 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
   };
 
   return (
-    <div className="min-h-screen viet-bg flex flex-col h-screen overflow-hidden">
+    <div className="min-h-full viet-bg flex flex-col h-full overflow-hidden">
        <div className="p-4 flex justify-between items-center bg-gradient-to-r from-stone-950 via-stone-900 to-stone-950 border-b border-amber-900/50 shadow-[0_4px_20px_rgba(0,0,0,0.5)] z-30">
-          <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors"><ChevronLeft/> Trở về</button>
+          <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors"><ChevronLeft/> Trá»Ÿ vá»</button>
           <div className="flex flex-col items-center">
-             <h2 className="text-xl font-cinzel text-amber-400 font-black uppercase tracking-widest drop-shadow-[0_0_8px_rgba(201,148,26,0.3)]">⚔ Quân Đoàn ⚔</h2>
-             <div className="text-[10px] md:text-xs font-bold text-amber-500/80 uppercase tracking-widest mt-0.5 bg-black/40 px-3 py-0.5 rounded-full border border-amber-900/30">Lực chiến Quân Đoàn: <span className="text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.8)]">{(combatPower || 0).toLocaleString()}</span></div>
+             <h2 className="text-xl font-cinzel text-amber-400 font-black uppercase tracking-widest drop-shadow-[0_0_8px_rgba(201,148,26,0.3)]">âš” QuÃ¢n ÄoÃ n âš”</h2>
+             <div className="text-[10px] md:text-xs font-bold text-amber-500/80 uppercase tracking-widest mt-0.5 bg-black/40 px-3 py-0.5 rounded-full border border-amber-900/30">Lá»±c chiáº¿n QuÃ¢n ÄoÃ n: <span className="text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.8)]">{(combatPower || 0).toLocaleString()}</span></div>
           </div>
           <div className="flex gap-3">
-             <button onClick={quickLineup} className="bg-amber-900/80 text-amber-200 px-5 py-2 rounded-xl font-black uppercase text-xs flex items-center gap-2 hover:bg-amber-800 shadow-lg transition-all border border-amber-800/40"><Zap size={16}/> Bày trận nhanh</button>
-             <button onClick={onCombat} className="bg-gradient-to-r from-red-800 to-red-700 text-white px-8 py-2 rounded-xl font-black uppercase text-xs flex items-center gap-2 hover:from-red-700 hover:to-red-600 shadow-[0_0_20px_rgba(239,68,68,0.4)] animate-pulse transition-all border border-red-600/30"><SwordIcon size={18}/> XUẤT QUÂN</button>
+             <button onClick={quickLineup} className="bg-amber-900/80 text-amber-200 px-5 py-2 rounded-xl font-black uppercase text-xs flex items-center gap-2 hover:bg-amber-800 shadow-lg transition-all border border-amber-800/40"><Zap size={16}/> BÃ y tráº­n nhanh</button>
+             <button onClick={onCombat} className="bg-gradient-to-r from-red-800 to-red-700 text-white px-8 py-2 rounded-xl font-black uppercase text-xs flex items-center gap-2 hover:from-red-700 hover:to-red-600 shadow-[0_0_20px_rgba(239,68,68,0.4)] animate-pulse transition-all border border-red-600/30"><SwordIcon size={18}/> XUáº¤T QUÃ‚N</button>
           </div>
        </div>
 
@@ -7561,20 +7561,20 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
                    onClick={() => setActiveTab('heroes')} 
                    className={`flex-1 py-3 rounded-xl font-black uppercase text-sm transition-all border ${activeTab === 'heroes' ? 'bg-amber-900/80 text-amber-200 border-amber-500 shadow-[0_0_15px_rgba(251,191,36,0.2)]' : 'bg-stone-900 text-stone-500 border-stone-800 hover:bg-stone-800'}`}
                 >
-                   <Tent size={18} className="inline-block mb-1 mr-1" /> Anh Hào ({player.inventory.filter(h => h.isPermanent === true).length})
+                   <Tent size={18} className="inline-block mb-1 mr-1" /> Anh HÃ o ({player.inventory.filter(h => h.isPermanent === true).length})
                 </button>
                 <button 
                    onClick={() => setActiveTab('items')} 
                    className={`flex-1 py-3 rounded-xl font-black uppercase text-sm transition-all border ${activeTab === 'items' ? 'bg-amber-900/80 text-amber-200 border-amber-500 shadow-[0_0_15px_rgba(251,191,36,0.2)]' : 'bg-stone-900 text-stone-500 border-stone-800 hover:bg-stone-800'}`}
                 >
-                   <Package size={18} className="inline-block mb-1 mr-1" /> Vật Phẩm
+                   <Package size={18} className="inline-block mb-1 mr-1" /> Váº­t Pháº©m
                 </button>
              </div>
              
              {activeTab === 'heroes' && (
                <>
                 <button onClick={() => setShowQuickDecomposeModal(true)} className="w-full mb-4 bg-red-900/40 text-red-400 border border-red-900/50 hover:bg-red-900/60 transition-all p-3 rounded-xl font-black uppercase text-xs flex items-center justify-center gap-2">
-                   <Recycle size={16}/> Tách Tướng Nhanh
+                   <Recycle size={16}/> TÃ¡ch TÆ°á»›ng Nhanh
                 </button>
                 <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-10">
                   {[...player.inventory.filter((h: Hero) => h.isPermanent === true)].sort((a: Hero, b: Hero) => {
@@ -7607,64 +7607,64 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
                            <Crown size={28} className="text-yellow-300 drop-shadow-md" />
                         </div>
                         <div className="flex-1">
-                           <div className="text-yellow-400 font-black text-sm uppercase tracking-widest drop-shadow-md">Lệnh Bài Chúa Công</div>
-                           <div className="text-red-200 text-xs mt-1">Đặc quyền tối cao - Lấy mọi vật phẩm trong thiên hạ</div>
+                           <div className="text-yellow-400 font-black text-sm uppercase tracking-widest drop-shadow-md">Lá»‡nh BÃ i ChÃºa CÃ´ng</div>
+                           <div className="text-red-200 text-xs mt-1">Äáº·c quyá»n tá»‘i cao - Láº¥y má»i váº­t pháº©m trong thiÃªn háº¡</div>
                         </div>
-                        <div className="text-sm font-black text-yellow-500 px-3 py-1 bg-black/40 rounded-full border border-yellow-500/30">Vĩnh viễn</div>
+                        <div className="text-sm font-black text-yellow-500 px-3 py-1 bg-black/40 rounded-full border border-yellow-500/30">VÄ©nh viá»…n</div>
                      </div>
                   )}
 
                   <div className="bg-stone-900/80 p-4 rounded-2xl border border-stone-700 flex items-center gap-4">
                      <div className="w-12 h-12 bg-blue-900/30 rounded-xl flex items-center justify-center border border-blue-500/30 overflow-hidden relative">
-                        <img src="./items/normal_ticket.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Lệnh Bài Thường"/>
+                        <img src="./items/normal_ticket.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Lá»‡nh BÃ i ThÆ°á»ng"/>
                      </div>
                      <div className="flex-1">
-                        <div className="text-white font-bold text-sm uppercase">Lệnh Bài Thường</div>
-                        <div className="text-stone-400 text-xs">Dùng để chiêu mộ Hào Kiệt</div>
+                        <div className="text-white font-bold text-sm uppercase">Lá»‡nh BÃ i ThÆ°á»ng</div>
+                        <div className="text-stone-400 text-xs">DÃ¹ng Ä‘á»ƒ chiÃªu má»™ HÃ o Kiá»‡t</div>
                      </div>
                      <div className="text-2xl font-black text-blue-400">{player.normalTickets}</div>
                   </div>
 
                   <div className="bg-stone-900/80 p-4 rounded-2xl border border-stone-700 flex items-center gap-4">
                      <div className="w-12 h-12 bg-purple-900/30 rounded-xl flex items-center justify-center border border-purple-500/30 overflow-hidden relative">
-                        <img src="./items/premium_ticket.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Lệnh Bài Danh Tướng"/>
+                        <img src="./items/premium_ticket.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Lá»‡nh BÃ i Danh TÆ°á»›ng"/>
                      </div>
                      <div className="flex-1">
-                        <div className="text-white font-bold text-sm uppercase">Lệnh Bài Danh Tướng</div>
-                        <div className="text-stone-400 text-xs">Dùng để chiêu mộ Danh Tướng SSR/UR</div>
+                        <div className="text-white font-bold text-sm uppercase">Lá»‡nh BÃ i Danh TÆ°á»›ng</div>
+                        <div className="text-stone-400 text-xs">DÃ¹ng Ä‘á»ƒ chiÃªu má»™ Danh TÆ°á»›ng SSR/UR</div>
                      </div>
                      <div className="text-2xl font-black text-purple-400">{player.premiumTickets}</div>
                   </div>
 
                   <div className="bg-stone-900/80 p-4 rounded-2xl border border-stone-700 flex items-center gap-4">
                      <div className="w-12 h-12 bg-amber-900/30 rounded-xl flex items-center justify-center border border-amber-500/30 overflow-hidden relative">
-                        <img src="./items/artifact_ticket.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Lệnh Bài Tầm Bảo Thần Khí" onError={(e) => { (e.target as HTMLImageElement).src = './items/premium_ticket.png'; }} />
+                        <img src="./items/artifact_ticket.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Lá»‡nh BÃ i Táº§m Báº£o Tháº§n KhÃ­" onError={(e) => { (e.target as HTMLImageElement).src = './items/premium_ticket.png'; }} />
                      </div>
                      <div className="flex-1">
-                        <div className="text-white font-bold text-sm uppercase">Tầm Bảo Thần Khí</div>
-                        <div className="text-stone-400 text-xs">Dùng để tìm kiếm Thần Khí Bản Mệnh</div>
+                        <div className="text-white font-bold text-sm uppercase">Táº§m Báº£o Tháº§n KhÃ­</div>
+                        <div className="text-stone-400 text-xs">DÃ¹ng Ä‘á»ƒ tÃ¬m kiáº¿m Tháº§n KhÃ­ Báº£n Má»‡nh</div>
                      </div>
                      <div className="text-2xl font-black text-amber-500">{player.artifactTickets || 0}</div>
                   </div>
 
                   <div className="bg-stone-900/80 p-4 rounded-2xl border border-stone-700 flex items-center gap-4">
                      <div className="w-12 h-12 bg-green-900/30 rounded-xl flex items-center justify-center border border-green-500/30 overflow-hidden relative">
-                        <img src="./items/jade.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Ngọc Bích"/>
+                        <img src="./items/jade.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Ngá»c BÃ­ch"/>
                      </div>
                      <div className="flex-1">
-                        <div className="text-white font-bold text-sm uppercase">Ngọc Bích</div>
-                        <div className="text-stone-400 text-xs">Dùng để Đột Phá cảnh giới (Nâng sao)</div>
+                        <div className="text-white font-bold text-sm uppercase">Ngá»c BÃ­ch</div>
+                        <div className="text-stone-400 text-xs">DÃ¹ng Ä‘á»ƒ Äá»™t PhÃ¡ cáº£nh giá»›i (NÃ¢ng sao)</div>
                      </div>
                      <div className="text-2xl font-black text-green-400">{player.jade}</div>
                   </div>
 
                   <div className="bg-stone-900/80 p-4 rounded-2xl border border-stone-700 flex items-center gap-4">
                      <div className="w-12 h-12 bg-yellow-900/30 rounded-xl flex items-center justify-center border border-yellow-500/30 overflow-hidden relative">
-                        <img src="./items/gold.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="Ngân Lượng"/>
+                        <img src="./items/gold.png" className="w-full h-full object-cover scale-110 drop-shadow-md" alt="NgÃ¢n LÆ°á»£ng"/>
                      </div>
                      <div className="flex-1">
-                        <div className="text-white font-bold text-sm uppercase">Ngân Lượng</div>
-                        <div className="text-stone-400 text-xs">Vàng dùng để mua sắm trong Kỳ Trân Các</div>
+                        <div className="text-white font-bold text-sm uppercase">NgÃ¢n LÆ°á»£ng</div>
+                        <div className="text-stone-400 text-xs">VÃ ng dÃ¹ng Ä‘á»ƒ mua sáº¯m trong Ká»³ TrÃ¢n CÃ¡c</div>
                      </div>
                      <div className="text-xl font-black text-yellow-500">{(player.gold || 0).toLocaleString()}</div>
                   </div>
@@ -7674,7 +7674,7 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
 
            <div className="w-full h-[45%] md:h-auto md:flex-1 p-4 md:p-10 flex flex-col items-center justify-center relative bg-[url('/hub-bg.png')] bg-cover bg-center order-1 md:order-2 overflow-hidden">
              <div className="absolute inset-0 bg-stone-900/70"></div>
-             <div className="absolute top-2 md:top-10 text-amber-900/20 font-cinzel font-black uppercase tracking-[0.2em] md:tracking-[0.5em] text-xl md:text-4xl pointer-events-none select-none z-0">TRẬN ĐỒ QUÂN TA</div>
+             <div className="absolute top-2 md:top-10 text-amber-900/20 font-cinzel font-black uppercase tracking-[0.2em] md:tracking-[0.5em] text-xl md:text-4xl pointer-events-none select-none z-0">TRáº¬N Äá»’ QUÃ‚N TA</div>
              <div className="grid grid-cols-3 gap-4 md:gap-8 p-6 md:p-12 bg-black/40 rounded-[2rem] md:rounded-[4rem] border-2 md:border-4 border-dashed border-amber-900/40 shadow-inner relative z-10 transform scale-90 md:scale-100">
                 {[0, 1, 2, 3, 4, 5].map(idx => {
                    const hId = player.permLineup[idx];
@@ -7695,18 +7695,18 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
                                    <div className="relative overflow-hidden rounded-xl w-full h-full z-10 bg-[#1c1917]">
                                       <img src={hero.image} className="w-full h-full object-cover contrast-110" onError={(e) => { (e.target as HTMLImageElement).src = hero.faction === 'enemy' ? DEFAULT_ENEMY_IMG : DEFAULT_ALLY_IMG; }} />
 
-                                       {/* Sao & Cảnh giới */}
+                                       {/* Sao & Cáº£nh giá»›i */}
                                        <div className="absolute top-1.5 left-1/2 -translate-x-1/2 z-20 bg-black/80 px-2 py-0.5 rounded-full border border-white/10 shadow-md">
                                           <HeroStars starCount={hero.star} size={8} />
                                        </div>
 
-                                       {/* Tên & Lực chiến */}
+                                       {/* TÃªn & Lá»±c chiáº¿n */}
                                        <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/90 to-transparent py-1.5 px-1 text-center z-20">
                                           <div className="text-[10px] text-amber-300 font-cinzel font-black uppercase truncate">{hero.name}</div>
                                           <div className="text-[8px] text-amber-500 font-bold">CL: {hero.overall ? hero.overall.toLocaleString() : ''}</div>
                                        </div>
 
-                                       {/* Nút Xóa khỏi trận */}
+                                       {/* NÃºt XÃ³a khá»i tráº­n */}
                                        <button onClick={(e) => { e.stopPropagation(); removeHeroFromLineup(idx); }} className="absolute -top-1 -right-1 bg-red-900 text-white p-1 rounded-full shadow-lg hover:bg-red-700 transition-colors z-30 opacity-0 group-hover:opacity-100">
                                           <XCircle size={16}/>
                                        </button>
@@ -7716,11 +7716,11 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
                            ) : (
                              <div className="text-center space-y-2 opacity-30 group-hover:opacity-100 transition-opacity">
                                 <Plus size={32} className="text-amber-900 mx-auto" />
-                                <div className="text-[8px] text-amber-900 font-black uppercase">Vị trí {idx+1}</div>
+                                <div className="text-[8px] text-amber-900 font-black uppercase">Vá»‹ trÃ­ {idx+1}</div>
                              </div>
                            )}
                         </button>
-                        {isSelected && !hero && <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-[10px] text-amber-500 font-black whitespace-nowrap animate-bounce">CHỌN TƯỚNG BÊN TRÁI</div>}
+                        {isSelected && !hero && <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-[10px] text-amber-500 font-black whitespace-nowrap animate-bounce">CHá»ŒN TÆ¯á»šNG BÃŠN TRÃI</div>}
                      </div>
                    );
                 })}
@@ -7742,28 +7742,28 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
           return (
            <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-6 backdrop-blur-sm animate-in fade-in duration-300">
               <div className="scroll-bg max-w-lg w-full p-10 rounded-[3rem] shadow-2xl border-amber-900 text-center">
-                 <h3 className="text-2xl font-cinzel font-black uppercase mb-6">Đột Phá Cảnh Giới</h3>
+                 <h3 className="text-2xl font-cinzel font-black uppercase mb-6">Äá»™t PhÃ¡ Cáº£nh Giá»›i</h3>
                  <div className="flex justify-center gap-10 items-center mb-10">
                     <div className="text-center">
                        <HeroStars starCount={selectedHero.star} size={14} className="justify-center mb-2" />
-                       <div className="text-xs font-bold uppercase text-stone-600">Hiện tại</div>
+                       <div className="text-xs font-bold uppercase text-stone-600">Hiá»‡n táº¡i</div>
                     </div>
                     <ArrowRight size={32} className="text-amber-900" />
                     <div className="text-center">
                        <HeroStars starCount={selectedHero.star + 1} size={14} className="justify-center mb-2 animate-pulse" />
-                       <div className="text-xs font-bold uppercase text-amber-900">Sao mới</div>
+                       <div className="text-xs font-bold uppercase text-amber-900">Sao má»›i</div>
                     </div>
                  </div>
                  <div className="bg-white/40 p-6 rounded-2xl mb-8 border border-amber-900/10 space-y-3 text-left">
                     <div className="flex justify-between items-center font-bold">
-                       <span className="text-xs uppercase">Mảnh tướng {selectedHero.name}:</span>
+                       <span className="text-xs uppercase">Máº£nh tÆ°á»›ng {selectedHero.name}:</span>
                         <span className={totalFrags >= req.fragReq ? 'text-green-700 font-black' : 'text-red-700 font-black'}>
                           {totalFrags} / {req.fragReq}
-                          {storedFrags > 0 && <span className="text-[10px] text-amber-600 ml-1">(+{storedFrags} kho rời)</span>}
+                          {storedFrags > 0 && <span className="text-[10px] text-amber-600 ml-1">(+{storedFrags} kho rá»i)</span>}
                         </span>
                     </div>
                     <div className="flex justify-between items-center font-bold">
-                       <span className="text-xs uppercase">Ngọc bích cần thiết:</span>
+                       <span className="text-xs uppercase">Ngá»c bÃ­ch cáº§n thiáº¿t:</span>
                        <span className={player.jade >= req.jadeReq ? 'text-green-700 font-black' : 'text-red-700 font-black'}>
                           {player.jade} / {req.jadeReq}
                        </span>
@@ -7778,11 +7778,11 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
                           </span>
                        </div>
                     )}
-                    <div className="pt-3 border-t border-amber-900/10 text-xs italic text-amber-900/70 text-center">Tăng điểm tiềm năng, lực chiến và mở khóa cảnh giới mới.</div>
+                    <div className="pt-3 border-t border-amber-900/10 text-xs italic text-amber-900/70 text-center">TÄƒng Ä‘iá»ƒm tiá»m nÄƒng, lá»±c chiáº¿n vÃ  má»Ÿ khÃ³a cáº£nh giá»›i má»›i.</div>
                  </div>
                  <div className="flex gap-4">
-                    <button onClick={() => setShowUpgradeModal(false)} className="flex-1 bg-stone-800 hover:bg-stone-700 py-3 rounded-xl font-bold uppercase transition-colors text-white">Hủy</button>
-                    <button onClick={upgradeStar} className="flex-1 py-4 font-black uppercase text-xs bg-amber-950 text-white rounded-xl shadow-lg transition-all active:scale-95">Xác nhận nâng sao</button>
+                    <button onClick={() => setShowUpgradeModal(false)} className="flex-1 bg-stone-800 hover:bg-stone-700 py-3 rounded-xl font-bold uppercase transition-colors text-white">Há»§y</button>
+                    <button onClick={upgradeStar} className="flex-1 py-4 font-black uppercase text-xs bg-amber-950 text-white rounded-xl shadow-lg transition-all active:scale-95">XÃ¡c nháº­n nÃ¢ng sao</button>
                  </div>
               </div>
            </div>
@@ -7792,23 +7792,23 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
        {showDecomposeModal && selectedHero && (
           <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-6 backdrop-blur-sm animate-in fade-in duration-300">
              <div className="scroll-bg max-w-lg w-full p-10 rounded-[3rem] shadow-2xl border-red-900 text-center">
-                <h3 className="text-2xl font-cinzel font-black uppercase mb-6 text-red-900">Giải Ngũ Hào Kiệt</h3>
-                <p className="text-sm italic mb-8 text-stone-700 font-bold">Lệnh bài giải ngũ sẽ thu hồi anh hùng, Chúa công muốn nhận bồi hoàn gì?</p>
+                <h3 className="text-2xl font-cinzel font-black uppercase mb-6 text-red-900">Giáº£i NgÅ© HÃ o Kiá»‡t</h3>
+                <p className="text-sm italic mb-8 text-stone-700 font-bold">Lá»‡nh bÃ i giáº£i ngÅ© sáº½ thu há»“i anh hÃ¹ng, ChÃºa cÃ´ng muá»‘n nháº­n bá»“i hoÃ n gÃ¬?</p>
                 <div className="grid grid-cols-1 gap-4 mb-10">
                    <button onClick={() => decompose('fragments')} className="bg-white/60 p-5 rounded-2xl border-2 border-amber-900/20 hover:border-amber-900 transition-all flex justify-between items-center font-black">
-                      <span className="text-xs uppercase">50 Mảnh tướng {selectedHero.name}</span>
+                      <span className="text-xs uppercase">50 Máº£nh tÆ°á»›ng {selectedHero.name}</span>
                       <UserCheck className="text-amber-900" />
                    </button>
                    <button onClick={() => decompose('jade')} className="bg-white/60 p-5 rounded-2xl border-2 border-amber-900/20 hover:border-amber-900 transition-all flex justify-between items-center font-black">
-                      <span className="text-xs uppercase">Ngọc Bích ({selectedHero.rarity === 'UR' ? 30 : selectedHero.rarity === 'SSR' ? 20 : selectedHero.rarity === 'SR' ? 10 : selectedHero.rarity === 'R' ? 5 : 2})</span>
+                      <span className="text-xs uppercase">Ngá»c BÃ­ch ({selectedHero.rarity === 'UR' ? 30 : selectedHero.rarity === 'SSR' ? 20 : selectedHero.rarity === 'SR' ? 10 : selectedHero.rarity === 'R' ? 5 : 2})</span>
                       <Star className="text-green-700" />
                    </button>
                    <button onClick={() => decompose('gold')} className="bg-white/60 p-5 rounded-2xl border-2 border-amber-900/20 hover:border-amber-900 transition-all flex justify-between items-center font-black">
-                      <span className="text-xs uppercase">Vàng ({selectedHero.rarity === 'UR' ? 15000 : selectedHero.rarity === 'SSR' ? 10000 : selectedHero.rarity === 'SR' ? 7500 : selectedHero.rarity === 'R' ? 3000 : 1000})</span>
+                      <span className="text-xs uppercase">VÃ ng ({selectedHero.rarity === 'UR' ? 15000 : selectedHero.rarity === 'SSR' ? 10000 : selectedHero.rarity === 'SR' ? 7500 : selectedHero.rarity === 'R' ? 3000 : 1000})</span>
                       <Coins className="text-yellow-600" />
                    </button>
                 </div>
-                <button onClick={() => setShowDecomposeModal(false)} className="w-full py-4 text-xs font-black uppercase text-stone-500 underline">Quay lại</button>
+                <button onClick={() => setShowDecomposeModal(false)} className="w-full py-4 text-xs font-black uppercase text-stone-500 underline">Quay láº¡i</button>
              </div>
           </div>
        )}
@@ -7817,9 +7817,9 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
 
        {showEquipModal && selectedHero && (
           <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-6 backdrop-blur-sm animate-in fade-in duration-300">
-             <div className="scroll-bg max-w-2xl w-full p-8 rounded-[3rem] shadow-2xl border-purple-900 text-center max-h-[80vh] flex flex-col">
-                <h3 className="text-2xl font-cinzel font-black uppercase mb-2 text-purple-400">Trang Bị Thần Khí</h3>
-                <p className="text-sm italic mb-6 text-stone-400 font-bold">Chọn thần khí phù hợp cho {selectedHero.name}</p>
+             <div className="scroll-bg max-w-2xl w-full p-8 rounded-[3rem] shadow-2xl border-purple-900 text-center max-h-[80%] flex flex-col">
+                <h3 className="text-2xl font-cinzel font-black uppercase mb-2 text-purple-400">Trang Bá»‹ Tháº§n KhÃ­</h3>
+                <p className="text-sm italic mb-6 text-stone-400 font-bold">Chá»n tháº§n khÃ­ phÃ¹ há»£p cho {selectedHero.name}</p>
                 <div className="flex-1 overflow-y-auto min-h-[300px] grid grid-cols-2 md:grid-cols-3 gap-4 mb-6 pr-2">
                    <button onClick={() => {
                       setPlayer((p: any) => ({
@@ -7828,8 +7828,8 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
                       }));
                       setShowEquipModal(false);
                    }} className="bg-red-900/20 p-4 rounded-xl border border-red-500/30 hover:bg-red-900/40 hover:border-red-400 transition-all font-black text-[10px] uppercase text-red-300 flex flex-col items-center justify-center gap-2">
-                      <div className="w-12 h-12 rounded-full border-2 border-red-500/50 flex items-center justify-center bg-red-950/50 text-xl">✖</div>
-                      Tháo Trang Bị
+                      <div className="w-12 h-12 rounded-full border-2 border-red-500/50 flex items-center justify-center bg-red-950/50 text-xl">âœ–</div>
+                      ThÃ¡o Trang Bá»‹
                    </button>
                    {player.artifacts && player.artifacts.filter((artId: string) => {
                           const art = ARTIFACTS.find(a => a.id === artId);
@@ -7852,15 +7852,15 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
                              }} className={`bg-purple-900/20 p-3 rounded-xl border ${isEquipped ? 'border-purple-400 bg-purple-900/40 shadow-[0_0_15px_rgba(168,85,247,0.4)]' : 'border-purple-500/30'} hover:border-purple-400 transition-all flex flex-col items-center gap-2 relative`}>
                                 <img src={art.image} className="w-12 h-12 rounded border border-purple-500/50 object-cover" />
                                 <div className="font-bold text-purple-200 text-[10px] uppercase truncate w-full">{art.name}</div>
-                                {isEquipped && <div className="absolute top-1 right-1 bg-purple-500 text-white text-[8px] px-1 rounded uppercase font-bold">Đang dùng</div>}
+                                {isEquipped && <div className="absolute top-1 right-1 bg-purple-500 text-white text-[8px] px-1 rounded uppercase font-bold">Äang dÃ¹ng</div>}
                              </button>
                           );
                        })
                    ) : (
-                       <div className="col-span-2 text-stone-500 text-xs italic mt-10">Chúa công chưa có Thần Khí bản mệnh nào phù hợp cho hào kiệt này. Hãy vào Chiêu Hiền Đài để tìm kiếm!</div>
+                       <div className="col-span-2 text-stone-500 text-xs italic mt-10">ChÃºa cÃ´ng chÆ°a cÃ³ Tháº§n KhÃ­ báº£n má»‡nh nÃ o phÃ¹ há»£p cho hÃ o kiá»‡t nÃ y. HÃ£y vÃ o ChiÃªu Hiá»n ÄÃ i Ä‘á»ƒ tÃ¬m kiáº¿m!</div>
                    )}
                 </div>
-                <button onClick={() => setShowEquipModal(false)} className="w-full py-4 text-xs font-black uppercase text-stone-500 underline mt-auto">Đóng</button>
+                <button onClick={() => setShowEquipModal(false)} className="w-full py-4 text-xs font-black uppercase text-stone-500 underline mt-auto">ÄÃ³ng</button>
              </div>
           </div>
        )}
@@ -7871,9 +7871,9 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
             onClose={() => setSelectedHeroId(null)}
             actions={
                <div className="flex gap-2 mt-4 w-full">
-                  <button onClick={() => setShowUpgradeModal(true)} className="flex-1 bg-gradient-to-r from-green-800 to-green-700 hover:from-green-700 hover:to-green-600 text-white py-3 rounded-xl text-[10px] font-black uppercase flex flex-col items-center justify-center gap-1 shadow-md transition-all border border-green-600/30"><ArrowUpCircle size={14}/> Nâng Sao</button>
-                  <button onClick={() => setShowEquipModal(true)} className="flex-1 bg-gradient-to-r from-purple-900 to-purple-800 hover:from-purple-800 hover:to-purple-700 text-white py-3 rounded-xl text-[10px] font-black uppercase flex flex-col items-center justify-center gap-1 shadow-md transition-all border border-purple-500/30"><ScrollText size={14}/> Thần Khí</button>
-                  <button onClick={() => setShowDecomposeModal(true)} className="flex-1 bg-gradient-to-r from-red-900 to-red-800 hover:from-red-800 hover:to-red-700 text-white py-3 rounded-xl text-[10px] font-black uppercase flex flex-col items-center justify-center gap-1 shadow-md transition-all border border-red-700/30"><Scissors size={14}/> Tách</button>
+                  <button onClick={() => setShowUpgradeModal(true)} className="flex-1 bg-gradient-to-r from-green-800 to-green-700 hover:from-green-700 hover:to-green-600 text-white py-3 rounded-xl text-[10px] font-black uppercase flex flex-col items-center justify-center gap-1 shadow-md transition-all border border-green-600/30"><ArrowUpCircle size={14}/> NÃ¢ng Sao</button>
+                  <button onClick={() => setShowEquipModal(true)} className="flex-1 bg-gradient-to-r from-purple-900 to-purple-800 hover:from-purple-800 hover:to-purple-700 text-white py-3 rounded-xl text-[10px] font-black uppercase flex flex-col items-center justify-center gap-1 shadow-md transition-all border border-purple-500/30"><ScrollText size={14}/> Tháº§n KhÃ­</button>
+                  <button onClick={() => setShowDecomposeModal(true)} className="flex-1 bg-gradient-to-r from-red-900 to-red-800 hover:from-red-800 hover:to-red-700 text-white py-3 rounded-xl text-[10px] font-black uppercase flex flex-col items-center justify-center gap-1 shadow-md transition-all border border-red-700/30"><Scissors size={14}/> TÃ¡ch</button>
                </div>
             }
           />
@@ -7909,7 +7909,7 @@ const DanhVongDaiView = ({ player, setView }: any) => {
   const combatPower = top6.reduce((acc: number, h: Hero) => acc + h.overall, 0);
 
   const combatLeaderboard = [...MOCK_LEGIONS, {
-       legionName: player.legionName || player.playerName || "Quân Đoàn Của Bạn", 
+       legionName: player.legionName || player.playerName || "QuÃ¢n ÄoÃ n Cá»§a Báº¡n", 
        power: combatPower, 
        lineup: top6, 
        isPlayer: true,
@@ -7927,10 +7927,10 @@ const DanhVongDaiView = ({ player, setView }: any) => {
   const top8Combat = combatLeaderboard.slice(0, 8);
   const remainingCombat = combatLeaderboard.slice(8);
 
-  // KNOWLEDGE LEADERBOARD (Khoa Cử)
+  // KNOWLEDGE LEADERBOARD (Khoa Cá»­)
   const knowledgeLeaderboard = useMemo(() => {
     return [...MOCK_LEGIONS, {
-       legionName: player.playerName || player.legionName || "Bạn", 
+       legionName: player.playerName || player.legionName || "Báº¡n", 
        power: player.tuHaoSuVietScore || player.level * 100 || 500, // mock score if undefined
        lineup: top6,
        isPlayer: true,
@@ -7955,14 +7955,14 @@ const DanhVongDaiView = ({ player, setView }: any) => {
   const remaining = activeTab === 'combat' ? remainingCombat : remainingKnowledge;
 
   return (
-    <div className="min-h-screen viet-bg flex flex-col h-screen overflow-hidden">
+    <div className="min-h-full viet-bg flex flex-col h-full overflow-hidden">
        <div className="p-4 flex justify-between items-center bg-gradient-to-r from-stone-950 via-stone-900 to-stone-950 border-b border-amber-900/50 shadow-[0_4px_20px_rgba(0,0,0,0.5)] z-30 shrink-0">
-          <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors"><ChevronLeft/> Trở về</button>
+          <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors"><ChevronLeft/> Trá»Ÿ vá»</button>
           <div className="flex flex-col items-center">
-             <h2 className="text-xl font-cinzel text-amber-400 font-black uppercase tracking-widest drop-shadow-[0_0_8px_rgba(201,148,26,0.3)]">🏆 Danh Vọng Đài 🏆</h2>
+             <h2 className="text-xl font-cinzel text-amber-400 font-black uppercase tracking-widest drop-shadow-[0_0_8px_rgba(201,148,26,0.3)]">ðŸ† Danh Vá»ng ÄÃ i ðŸ†</h2>
              <div className="flex gap-4 mt-2">
-                <button onClick={() => setActiveTab('combat')} className={`px-4 py-1 font-bold text-sm rounded-full transition-colors border ${activeTab === 'combat' ? 'bg-amber-600 text-white border-amber-400' : 'bg-stone-800 text-stone-400 border-stone-600 hover:text-amber-500'}`}>Lực Chiến</button>
-                <button onClick={() => setActiveTab('knowledge')} className={`px-4 py-1 font-bold text-sm rounded-full transition-colors border ${activeTab === 'knowledge' ? 'bg-amber-600 text-white border-amber-400' : 'bg-stone-800 text-stone-400 border-stone-600 hover:text-amber-500'}`}>Khoa Cử</button>
+                <button onClick={() => setActiveTab('combat')} className={`px-4 py-1 font-bold text-sm rounded-full transition-colors border ${activeTab === 'combat' ? 'bg-amber-600 text-white border-amber-400' : 'bg-stone-800 text-stone-400 border-stone-600 hover:text-amber-500'}`}>Lá»±c Chiáº¿n</button>
+                <button onClick={() => setActiveTab('knowledge')} className={`px-4 py-1 font-bold text-sm rounded-full transition-colors border ${activeTab === 'knowledge' ? 'bg-amber-600 text-white border-amber-400' : 'bg-stone-800 text-stone-400 border-stone-600 hover:text-amber-500'}`}>Khoa Cá»­</button>
              </div>
           </div>
           <div className="w-20"></div>
@@ -7970,48 +7970,48 @@ const DanhVongDaiView = ({ player, setView }: any) => {
 
        <div className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar">
           <div className="max-w-4xl mx-auto flex justify-center items-end gap-4 md:gap-10 pt-10 pb-16 relative">
-             {/* Hạng 2 */}
+             {/* Háº¡ng 2 */}
              {top8[1] && (
                 <div onClick={() => activeTab === 'combat' && setViewLineupTarget(top8[1])} className={`flex flex-col items-center hover:scale-105 transition-transform z-20 pb-10 ${activeTab === 'combat' ? 'cursor-pointer' : ''}`}>
                    <div className="bg-gradient-to-r from-gray-300 via-gray-100 to-gray-400 px-4 py-1.5 rounded-t-lg font-black text-black shadow-md uppercase text-xs border-2 border-white text-center">
-                      {activeTab === 'combat' ? '🥈 Quốc Sư [Hạng 2]' : '🥈 Bảng Nhãn'}
+                      {activeTab === 'combat' ? 'ðŸ¥ˆ Quá»‘c SÆ° [Háº¡ng 2]' : 'ðŸ¥ˆ Báº£ng NhÃ£n'}
                    </div>
-                   <div className="bg-black/80 px-3 py-1 text-[10px] text-gray-300 font-bold border-b border-x border-gray-400/50 rounded-b-md mb-2">{top8[1].legionName} - {activeTab === 'combat' ? top8[1].power.toLocaleString() : (top8[1].score + ' điểm')}</div>
+                   <div className="bg-black/80 px-3 py-1 text-[10px] text-gray-300 font-bold border-b border-x border-gray-400/50 rounded-b-md mb-2">{top8[1].legionName} - {activeTab === 'combat' ? top8[1].power.toLocaleString() : (top8[1].score + ' Ä‘iá»ƒm')}</div>
                    <div className={`relative w-32 h-44 md:w-40 md:h-52 z-10 drop-shadow-[0_0_20px_rgba(156,163,175,0.5)] ${getStarBorderClass(top8[1].leaderStar)}`}>
                       <div className="relative overflow-hidden rounded-xl w-full h-full z-10 bg-[#1c1917]">
-                         <img src={top8[1].leaderImg || DEFAULT_ALLY_IMG} onError={(e) => { (e.target as HTMLImageElement).src = DEFAULT_ALLY_IMG; }} className="w-full h-full object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)] relative z-10" alt="Hạng 2" />
+                         <img src={top8[1].leaderImg || DEFAULT_ALLY_IMG} onError={(e) => { (e.target as HTMLImageElement).src = DEFAULT_ALLY_IMG; }} className="w-full h-full object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)] relative z-10" alt="Háº¡ng 2" />
                       </div>
                       <div className="absolute bottom-[-15px] left-1/2 -translate-x-1/2 w-36 md:w-48 h-12 md:h-16 bg-gradient-to-b from-gray-200 to-gray-500 rounded-[100%] shadow-[0_10px_30px_rgba(156,163,175,0.6)] border-2 border-white/50 z-0"></div>
                    </div>
                 </div>
              )}
 
-             {/* Hạng 1 */}
+             {/* Háº¡ng 1 */}
              {top8[0] && (
                 <div onClick={() => activeTab === 'combat' && setViewLineupTarget(top8[0])} className={`flex flex-col items-center hover:scale-105 transition-transform z-30 pb-20 ${activeTab === 'combat' ? 'cursor-pointer' : ''}`}>
                    <div className="bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600 px-6 py-2 rounded-t-xl font-black text-black shadow-lg uppercase text-sm border-2 border-yellow-200 text-center">
-                      {activeTab === 'combat' ? '🥇 Cửu Ngũ Chí Tôn [Hạng 1]' : '🥇 Trạng Nguyên'}
+                      {activeTab === 'combat' ? 'ðŸ¥‡ Cá»­u NgÅ© ChÃ­ TÃ´n [Háº¡ng 1]' : 'ðŸ¥‡ Tráº¡ng NguyÃªn'}
                    </div>
-                   <div className="bg-black/80 px-4 py-1 text-[10px] text-yellow-500 font-bold border-b border-x border-yellow-600/50 rounded-b-lg mb-2">{top8[0].legionName} - {activeTab === 'combat' ? top8[0].power.toLocaleString() : (top8[0].score + ' điểm')}</div>
+                   <div className="bg-black/80 px-4 py-1 text-[10px] text-yellow-500 font-bold border-b border-x border-yellow-600/50 rounded-b-lg mb-2">{top8[0].legionName} - {activeTab === 'combat' ? top8[0].power.toLocaleString() : (top8[0].score + ' Ä‘iá»ƒm')}</div>
                    <div className={`relative w-40 h-56 md:w-48 md:h-64 z-10 drop-shadow-[0_0_30px_rgba(234,179,8,0.5)] ${getStarBorderClass(top8[0].leaderStar)}`}>
                       <div className="relative overflow-hidden rounded-xl w-full h-full z-10 bg-[#1c1917]">
-                         <img src={top8[0].leaderImg || DEFAULT_ALLY_IMG} onError={(e) => { (e.target as HTMLImageElement).src = DEFAULT_ALLY_IMG; }} className="w-full h-full object-contain drop-shadow-[0_15px_15px_rgba(0,0,0,0.8)] relative z-10" alt="Hạng 1" />
+                         <img src={top8[0].leaderImg || DEFAULT_ALLY_IMG} onError={(e) => { (e.target as HTMLImageElement).src = DEFAULT_ALLY_IMG; }} className="w-full h-full object-contain drop-shadow-[0_15px_15px_rgba(0,0,0,0.8)] relative z-10" alt="Háº¡ng 1" />
                       </div>
                       <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2 w-48 md:w-64 h-16 md:h-24 bg-gradient-to-b from-yellow-300 to-yellow-700 rounded-[100%] shadow-[0_20px_50px_rgba(202,138,4,0.6)] border-4 border-yellow-100/50 z-0"></div>
                    </div>
                 </div>
              )}
 
-             {/* Hạng 3 */}
+             {/* Háº¡ng 3 */}
              {top8[2] && (
                 <div onClick={() => activeTab === 'combat' && setViewLineupTarget(top8[2])} className={`flex flex-col items-center hover:scale-105 transition-transform z-20 pb-10 ${activeTab === 'combat' ? 'cursor-pointer' : ''}`}>
                    <div className="bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 px-4 py-1.5 rounded-t-lg font-black text-white shadow-md uppercase text-xs border-2 border-amber-400 text-center">
-                      {activeTab === 'combat' ? '🥉 Thừa Tướng [Hạng 3]' : '🥉 Thám Hoa'}
+                      {activeTab === 'combat' ? 'ðŸ¥‰ Thá»«a TÆ°á»›ng [Háº¡ng 3]' : 'ðŸ¥‰ ThÃ¡m Hoa'}
                    </div>
-                   <div className="bg-black/80 px-3 py-1 text-[10px] text-amber-500 font-bold border-b border-x border-amber-700/50 rounded-b-md mb-2">{top8[2].legionName} - {activeTab === 'combat' ? top8[2].power.toLocaleString() : (top8[2].score + ' điểm')}</div>
+                   <div className="bg-black/80 px-3 py-1 text-[10px] text-amber-500 font-bold border-b border-x border-amber-700/50 rounded-b-md mb-2">{top8[2].legionName} - {activeTab === 'combat' ? top8[2].power.toLocaleString() : (top8[2].score + ' Ä‘iá»ƒm')}</div>
                    <div className={`relative w-32 h-44 md:w-40 md:h-52 z-10 drop-shadow-[0_0_20px_rgba(217,119,6,0.5)] ${getStarBorderClass(top8[2].leaderStar)}`}>
                       <div className="relative overflow-hidden rounded-xl w-full h-full z-10 bg-[#1c1917]">
-                         <img src={top8[2].leaderImg || DEFAULT_ALLY_IMG} onError={(e) => { (e.target as HTMLImageElement).src = DEFAULT_ALLY_IMG; }} className="w-full h-full object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)] relative z-10" alt="Hạng 3" />
+                         <img src={top8[2].leaderImg || DEFAULT_ALLY_IMG} onError={(e) => { (e.target as HTMLImageElement).src = DEFAULT_ALLY_IMG; }} className="w-full h-full object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)] relative z-10" alt="Háº¡ng 3" />
                       </div>
                       <div className="absolute bottom-[-15px] left-1/2 -translate-x-1/2 w-36 md:w-44 h-12 md:h-14 bg-gradient-to-b from-amber-500 to-amber-800 rounded-[100%] shadow-[0_10px_30px_rgba(180,83,9,0.6)] border-2 border-amber-300/50 z-0"></div>
                    </div>
@@ -8023,15 +8023,15 @@ const DanhVongDaiView = ({ player, setView }: any) => {
           {top8.length > 3 && (
           <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-4 mt-8">
              {[
-               { title: activeTab === 'combat' ? "Tả Tướng Quân" : "Tiến Sĩ", data: top8[3], rank: 4, color: "from-cyan-700 to-cyan-900", border: "border-cyan-500" },
-               { title: activeTab === 'combat' ? "Hữu Tướng Quân" : "Cử Nhân", data: top8[4], rank: 5, color: "from-blue-700 to-blue-900", border: "border-blue-500" },
-               { title: activeTab === 'combat' ? "Phó Tướng" : "Tú Tài", data: top8[5], rank: 6, color: "from-purple-700 to-purple-900", border: "border-purple-500" },
-               { title: activeTab === 'combat' ? "Thống Lĩnh" : "Đồng Sinh", data: top8[6], rank: 7, color: "from-pink-700 to-pink-900", border: "border-pink-500" },
-               { title: activeTab === 'combat' ? "Hiệu Úy" : "Môn Sinh", data: top8[7], rank: 8, color: "from-red-700 to-red-900", border: "border-red-500" },
+               { title: activeTab === 'combat' ? "Táº£ TÆ°á»›ng QuÃ¢n" : "Tiáº¿n SÄ©", data: top8[3], rank: 4, color: "from-cyan-700 to-cyan-900", border: "border-cyan-500" },
+               { title: activeTab === 'combat' ? "Há»¯u TÆ°á»›ng QuÃ¢n" : "Cá»­ NhÃ¢n", data: top8[4], rank: 5, color: "from-blue-700 to-blue-900", border: "border-blue-500" },
+               { title: activeTab === 'combat' ? "PhÃ³ TÆ°á»›ng" : "TÃº TÃ i", data: top8[5], rank: 6, color: "from-purple-700 to-purple-900", border: "border-purple-500" },
+               { title: activeTab === 'combat' ? "Thá»‘ng LÄ©nh" : "Äá»“ng Sinh", data: top8[6], rank: 7, color: "from-pink-700 to-pink-900", border: "border-pink-500" },
+               { title: activeTab === 'combat' ? "Hiá»‡u Ãšy" : "MÃ´n Sinh", data: top8[7], rank: 8, color: "from-red-700 to-red-900", border: "border-red-500" },
              ].map((item, idx) => item.data && (
                 <div key={idx} onClick={() => activeTab === 'combat' && setViewLineupTarget(item.data)} className={`bg-stone-900 rounded-2xl border-2 overflow-hidden shadow-2xl flex flex-col items-center relative group hover:-translate-y-2 transition-transform ${activeTab === 'combat' ? 'cursor-pointer' : ''} ${item.border} ${getStarBorderClass(item.data.leaderStar)}`}>
                    <div className={`absolute top-0 w-full bg-gradient-to-r ${item.color} py-1 text-center font-black text-white text-[10px] uppercase z-20 shadow-md`}>
-                      {item.title} [Hạng {item.rank}]
+                      {item.title} [Háº¡ng {item.rank}]
                    </div>
                    <div className="w-full aspect-[3/4] relative mt-6 border-b-2 border-stone-800 bg-stone-950">
                       <img src={item.data.leaderImg || DEFAULT_ALLY_IMG} onError={(e) => { (e.target as HTMLImageElement).src = DEFAULT_ALLY_IMG; }} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-90 group-hover:opacity-100" />
@@ -8039,7 +8039,7 @@ const DanhVongDaiView = ({ player, setView }: any) => {
                    </div>
                    <div className="absolute bottom-0 w-full p-2 text-center bg-black/60 backdrop-blur-sm z-30">
                       <div className={`font-black text-[10px] uppercase truncate px-1 ${item.data.isPlayer ? 'text-amber-400' : 'text-stone-200'}`}>{item.data.legionName}</div>
-                      <div className="text-[10px] text-amber-500 font-bold">{activeTab === 'combat' ? 'CL: ' + item.data.power.toLocaleString() : 'Điểm: ' + item.data.score}</div>
+                      <div className="text-[10px] text-amber-500 font-bold">{activeTab === 'combat' ? 'CL: ' + item.data.power.toLocaleString() : 'Äiá»ƒm: ' + item.data.score}</div>
                    </div>
                 </div>
              ))}
@@ -8051,9 +8051,9 @@ const DanhVongDaiView = ({ player, setView }: any) => {
                 <table className="w-full text-left border-collapse">
                    <thead>
                       <tr className="bg-gradient-to-r from-amber-900/80 to-amber-950/80 text-amber-200 uppercase tracking-widest text-sm border-b border-amber-700/50">
-                         <th className="p-4 text-center w-24">Hạng</th>
-                         <th className="p-4">{activeTab === 'combat' ? 'Tên Quân Đoàn' : 'Người Chơi'}</th>
-                         <th className="p-4 text-center">{activeTab === 'combat' ? 'Chiến Lực' : 'Điểm Khoa Cử'}</th>
+                         <th className="p-4 text-center w-24">Háº¡ng</th>
+                         <th className="p-4">{activeTab === 'combat' ? 'TÃªn QuÃ¢n ÄoÃ n' : 'NgÆ°á»i ChÆ¡i'}</th>
+                         <th className="p-4 text-center">{activeTab === 'combat' ? 'Chiáº¿n Lá»±c' : 'Äiá»ƒm Khoa Cá»­'}</th>
                       </tr>
                    </thead>
                    <tbody>
@@ -8062,7 +8062,7 @@ const DanhVongDaiView = ({ player, setView }: any) => {
                             <td className="p-4 text-center font-bold text-stone-500">{idx + 9}</td>
                             <td className={`p-4 font-bold text-base ${lb.isPlayer ? 'text-amber-400' : 'text-stone-200'}`}>
                                {lb.legionName}
-                               {lb.isPlayer && <span className="ml-2 text-[10px] bg-amber-600 text-white px-2 py-0.5 rounded-full uppercase tracking-widest align-middle">Bạn</span>}
+                               {lb.isPlayer && <span className="ml-2 text-[10px] bg-amber-600 text-white px-2 py-0.5 rounded-full uppercase tracking-widest align-middle">Báº¡n</span>}
                             </td>
                             <td className="p-4 text-center font-black text-amber-500 tracking-wider">
                                {activeTab === 'combat' ? (lb.power || 0).toLocaleString() : lb.score}
@@ -8077,13 +8077,13 @@ const DanhVongDaiView = ({ player, setView }: any) => {
 
        {viewLineupTarget && (
           <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-4 md:p-6 backdrop-blur-sm animate-in fade-in duration-300" onClick={(e) => { if(e.target === e.currentTarget) setViewLineupTarget(null); }}>
-             <div className="scroll-bg max-w-2xl w-full p-4 md:p-6 rounded-[2rem] shadow-2xl border-amber-900 relative max-h-screen flex flex-col">
+             <div className="scroll-bg max-w-2xl w-full p-4 md:p-6 rounded-[2rem] shadow-2xl border-amber-900 relative max-h-full flex flex-col">
                 <button onClick={() => setViewLineupTarget(null)} className="absolute top-4 right-4 text-amber-500 hover:text-amber-300 z-50">
                    <XCircle size={28} />
                 </button>
                 <div className="text-center mb-4 shrink-0 mt-4 md:mt-0">
                    <h3 className="text-xl md:text-3xl font-cinzel font-black uppercase text-amber-400 drop-shadow-[0_0_10px_rgba(201,148,26,0.5)]">{viewLineupTarget.legionName}</h3>
-                   <div className="text-amber-100 text-xs md:text-sm font-bold uppercase tracking-widest mt-1">Chiến Lực: <span className="text-amber-500 text-base md:text-lg">{viewLineupTarget.power.toLocaleString()}</span></div>
+                   <div className="text-amber-100 text-xs md:text-sm font-bold uppercase tracking-widest mt-1">Chiáº¿n Lá»±c: <span className="text-amber-500 text-base md:text-lg">{viewLineupTarget.power.toLocaleString()}</span></div>
                 </div>
                 
                 <div className="bg-stone-900/50 p-4 rounded-2xl border-2 border-dashed border-amber-900/30 overflow-y-auto custom-scrollbar">
@@ -8106,7 +8106,7 @@ const DanhVongDaiView = ({ player, setView }: any) => {
                                    </div>
                                  ) : (
                                    <div className="text-center opacity-20">
-                                      <div className="text-[10px] text-white font-black uppercase tracking-widest">Trống</div>
+                                      <div className="text-[10px] text-white font-black uppercase tracking-widest">Trá»‘ng</div>
                                    </div>
                                  )}
                               </div>
@@ -8130,58 +8130,58 @@ const Ch9FactionSelectModal = ({ currentFaction, onSelect, onClose }: { currentF
   const factions = [
     {
       id: 'mac',
-      title: 'Bắc Triều (Nhà Mạc)',
-      badge: 'Hoàng Long Bắc Triều',
+      title: 'Báº¯c Triá»u (NhÃ  Máº¡c)',
+      badge: 'HoÃ ng Long Báº¯c Triá»u',
       color: 'from-yellow-950 via-stone-900 to-yellow-950/80 border-yellow-500 text-yellow-300 shadow-[0_0_30px_rgba(234,179,8,0.3)]',
       accentColor: 'text-yellow-400',
       tagBg: 'bg-yellow-900/60 border-yellow-600/50 text-yellow-300',
-      icon: '👑',
-      desc: 'Định đô Thăng Long, mở mang phát triển kinh tế thương mại, cải cách điền địa và duy trì nền khoa cử Nho học thịnh vượng bậc nhất thế kỷ XVI.',
-      heroes: ['Mạc Đăng Dung', 'Mạc Kính Điển', 'Nguyễn Kính', 'Mạc Đăng Doanh', 'Nguyễn Giản Thanh'],
-      statBonus: 'Tấn Công +10% & Phòng Thủ +15%'
+      icon: 'ðŸ‘‘',
+      desc: 'Äá»‹nh Ä‘Ã´ ThÄƒng Long, má»Ÿ mang phÃ¡t triá»ƒn kinh táº¿ thÆ°Æ¡ng máº¡i, cáº£i cÃ¡ch Ä‘iá»n Ä‘á»‹a vÃ  duy trÃ¬ ná»n khoa cá»­ Nho há»c thá»‹nh vÆ°á»£ng báº­c nháº¥t tháº¿ ká»· XVI.',
+      heroes: ['Máº¡c ÄÄƒng Dung', 'Máº¡c KÃ­nh Äiá»ƒn', 'Nguyá»…n KÃ­nh', 'Máº¡c ÄÄƒng Doanh', 'Nguyá»…n Giáº£n Thanh'],
+      statBonus: 'Táº¥n CÃ´ng +10% & PhÃ²ng Thá»§ +15%'
     },
     {
       id: 'le_trinh',
-      title: 'Nam Triều (Vua Lê - Chúa Trịnh)',
-      badge: 'Trung Hưng Nam Triều',
+      title: 'Nam Triá»u (Vua LÃª - ChÃºa Trá»‹nh)',
+      badge: 'Trung HÆ°ng Nam Triá»u',
       color: 'from-red-950 via-stone-900 to-red-950/80 border-red-500 text-red-300 shadow-[0_0_30px_rgba(239,68,68,0.3)]',
       accentColor: 'text-red-400',
       tagBg: 'bg-red-900/60 border-red-600/50 text-red-300',
-      icon: '🚩',
-      desc: 'Phất cờ Phò Lê diệt Mạc từ Thanh Hóa - Vạn Lại, binh hùng tướng mạnh, nắm trọn quyền bính quân sự thiết lập chế độ Vua Lê - Chúa Trịnh thống trị Đàng Ngoài.',
-      heroes: ['Trịnh Kiểm', 'Trịnh Tùng', 'Nguyễn Kim', 'Trịnh Cương', 'Phùng Khắc Khoan'],
-      statBonus: 'Tấn Công +15% & Tốc Độ +10%'
+      icon: 'ðŸš©',
+      desc: 'Pháº¥t cá» PhÃ² LÃª diá»‡t Máº¡c tá»« Thanh HÃ³a - Váº¡n Láº¡i, binh hÃ¹ng tÆ°á»›ng máº¡nh, náº¯m trá»n quyá»n bÃ­nh quÃ¢n sá»± thiáº¿t láº­p cháº¿ Ä‘á»™ Vua LÃª - ChÃºa Trá»‹nh thá»‘ng trá»‹ ÄÃ ng NgoÃ i.',
+      heroes: ['Trá»‹nh Kiá»ƒm', 'Trá»‹nh TÃ¹ng', 'Nguyá»…n Kim', 'Trá»‹nh CÆ°Æ¡ng', 'PhÃ¹ng Kháº¯c Khoan'],
+      statBonus: 'Táº¥n CÃ´ng +15% & Tá»‘c Äá»™ +10%'
     },
     {
       id: 'nguyen',
-      title: 'Đàng Trong (Chúa Nguyễn)',
-      badge: 'Hùng Cứ Nam Hà',
+      title: 'ÄÃ ng Trong (ChÃºa Nguyá»…n)',
+      badge: 'HÃ¹ng Cá»© Nam HÃ ',
       color: 'from-blue-950 via-stone-900 to-blue-950/80 border-blue-500 text-blue-300 shadow-[0_0_30px_rgba(59,130,246,0.3)]',
       accentColor: 'text-blue-400',
       tagBg: 'bg-blue-900/60 border-blue-600/50 text-blue-300',
-      icon: '🌊',
-      desc: 'Nghe lời sấm Trạng Trình vượt Hoành Sơn mở cõi phương Nam, lập Lũy Thầy vững như bàn thạch, mở mang thương cảng Hội An và cương thổ đến Sài Gòn - Gia Định.',
-      heroes: ['Nguyễn Hoàng', 'Nguyễn Phúc Nguyên', 'Đào Duy Từ', 'Nguyễn Hữu Cảnh', 'Nguyễn Phúc Tần'],
-      statBonus: 'Phòng Thủ +20% & Hồi Máu +10%'
+      icon: 'ðŸŒŠ',
+      desc: 'Nghe lá»i sáº¥m Tráº¡ng TrÃ¬nh vÆ°á»£t HoÃ nh SÆ¡n má»Ÿ cÃµi phÆ°Æ¡ng Nam, láº­p LÅ©y Tháº§y vá»¯ng nhÆ° bÃ n tháº¡ch, má»Ÿ mang thÆ°Æ¡ng cáº£ng Há»™i An vÃ  cÆ°Æ¡ng thá»• Ä‘áº¿n SÃ i GÃ²n - Gia Äá»‹nh.',
+      heroes: ['Nguyá»…n HoÃ ng', 'Nguyá»…n PhÃºc NguyÃªn', 'ÄÃ o Duy Tá»«', 'Nguyá»…n Há»¯u Cáº£nh', 'Nguyá»…n PhÃºc Táº§n'],
+      statBonus: 'PhÃ²ng Thá»§ +20% & Há»“i MÃ¡u +10%'
     }
   ];
 
   return (
     <div className="fixed inset-0 z-[250] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-300" onClick={onClose}>
-      <div className="relative w-full max-w-4xl bg-gradient-to-b from-stone-900 via-stone-950 to-black border-2 border-amber-500/80 rounded-[2.5rem] p-6 md:p-8 shadow-[0_0_60px_rgba(245,158,11,0.35)] flex flex-col max-h-[92vh] overflow-y-auto custom-scrollbar" onClick={e => e.stopPropagation()}>
+      <div className="relative w-full max-w-4xl bg-gradient-to-b from-stone-900 via-stone-950 to-black border-2 border-amber-500/80 rounded-[2.5rem] p-6 md:p-8 shadow-[0_0_60px_rgba(245,158,11,0.35)] flex flex-col max-h-[92%] overflow-y-auto custom-scrollbar" onClick={e => e.stopPropagation()}>
         <button onClick={onClose} className="absolute top-5 right-5 z-20 w-10 h-10 rounded-full bg-black/70 flex items-center justify-center text-stone-400 hover:text-white hover:bg-red-900 transition-all border border-white/10">
           <XCircle size={24} />
         </button>
         
         <div className="text-center mb-6">
           <div className="inline-flex items-center gap-2 bg-amber-950/80 border border-amber-500/50 px-4 py-1 rounded-full text-amber-300 text-xs font-black uppercase tracking-widest mb-2">
-            ⚔️ Chương 9: Thời Kỳ Nội Chiến Nam - Bắc Triều ⚔️
+            âš”ï¸ ChÆ°Æ¡ng 9: Thá»i Ká»³ Ná»™i Chiáº¿n Nam - Báº¯c Triá»u âš”ï¸
           </div>
           <h2 className="text-2xl md:text-3xl font-cinzel font-black uppercase text-amber-400 drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]">
-            Lựa Chọn Phe Phái Xuất Quân
+            Lá»±a Chá»n Phe PhÃ¡i Xuáº¥t QuÃ¢n
           </h2>
           <p className="text-stone-400 text-xs md:text-sm mt-1 max-w-xl mx-auto">
-            Chúa công hãy chọn một trong ba thế lực lớn để dẫn dắt quân đội, chiêu mộ tướng tài và đối đầu với các thế lực đối nghịch!
+            ChÃºa cÃ´ng hÃ£y chá»n má»™t trong ba tháº¿ lá»±c lá»›n Ä‘á»ƒ dáº«n dáº¯t quÃ¢n Ä‘á»™i, chiÃªu má»™ tÆ°á»›ng tÃ i vÃ  Ä‘á»‘i Ä‘áº§u vá»›i cÃ¡c tháº¿ lá»±c Ä‘á»‘i nghá»‹ch!
           </p>
         </div>
 
@@ -8196,7 +8196,7 @@ const Ch9FactionSelectModal = ({ currentFaction, onSelect, onClose }: { currentF
               >
                 {isSelected && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-400 text-black font-black text-[10px] uppercase px-3 py-0.5 rounded-full shadow-lg">
-                    ✓ Đang Phụng Sự
+                    âœ“ Äang Phá»¥ng Sá»±
                   </div>
                 )}
                 <div>
@@ -8213,7 +8213,7 @@ const Ch9FactionSelectModal = ({ currentFaction, onSelect, onClose }: { currentF
                     {f.desc}
                   </p>
                   <div className="border-t border-white/10 pt-2.5 mb-3">
-                    <span className="text-[9px] font-bold text-stone-400 uppercase tracking-wider block mb-1">Tướng Tiêu Biểu:</span>
+                    <span className="text-[9px] font-bold text-stone-400 uppercase tracking-wider block mb-1">TÆ°á»›ng TiÃªu Biá»ƒu:</span>
                     <div className="flex flex-wrap gap-1">
                       {f.heroes.map((hName, idx) => (
                         <span key={idx} className="text-[9px] bg-black/50 text-stone-300 px-1.5 py-0.5 rounded border border-white/5 font-semibold">
@@ -8229,7 +8229,7 @@ const Ch9FactionSelectModal = ({ currentFaction, onSelect, onClose }: { currentF
                     isSelected ? 'bg-amber-500 text-stone-950 border-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.5)]' : 'bg-black/60 text-stone-200 border-white/20 hover:bg-white/10'
                   }`}
                 >
-                  {isSelected ? 'Đang Phụng Sự' : 'Gia Nhập Phe'}
+                  {isSelected ? 'Äang Phá»¥ng Sá»±' : 'Gia Nháº­p Phe'}
                 </button>
               </div>
             );
@@ -8237,10 +8237,10 @@ const Ch9FactionSelectModal = ({ currentFaction, onSelect, onClose }: { currentF
         </div>
 
         <div className="bg-amber-950/40 border border-amber-500/30 rounded-2xl p-4 flex items-center gap-3">
-          <span className="text-2xl shrink-0">📜</span>
+          <span className="text-2xl shrink-0">ðŸ“œ</span>
           <p className="text-[11px] text-amber-200/90 leading-relaxed italic">
-            <strong className="text-amber-400 not-italic">Lời sấm Trạng Trình: </strong> 
-            Bậc tiên tri đại tài Nguyễn Bỉnh Khiêm giữ vị thế trung lập tối cao, sẵn sàng xuất hiện hỗ trợ trong đội hình của cả ba phe!
+            <strong className="text-amber-400 not-italic">Lá»i sáº¥m Tráº¡ng TrÃ¬nh: </strong> 
+            Báº­c tiÃªn tri Ä‘áº¡i tÃ i Nguyá»…n Bá»‰nh KhiÃªm giá»¯ vá»‹ tháº¿ trung láº­p tá»‘i cao, sáºµn sÃ ng xuáº¥t hiá»‡n há»— trá»£ trong Ä‘á»™i hÃ¬nh cá»§a cáº£ ba phe!
           </p>
         </div>
       </div>
@@ -8277,7 +8277,7 @@ const QuocTuGiamView = ({ setView, activeChapter = 1 }: any) => {
     ...a,
     rarity: 'SSR',
     star: 5,
-    overall: 'Thần Khí',
+    overall: 'Tháº§n KhÃ­',
     isArtifact: true,
     baseId: a.id
   }));
@@ -8288,26 +8288,26 @@ const QuocTuGiamView = ({ setView, activeChapter = 1 }: any) => {
   const allCh9Count = INITIAL_HEROES.filter(h => h.chapter === 9).length;
 
   return (
-    <div className="min-h-screen ancient-bg flex flex-col h-screen overflow-hidden">
+    <div className="min-h-full ancient-bg flex flex-col h-full overflow-hidden">
        <div className="p-6 flex justify-between items-center bg-stone-900 border-b border-amber-900 shadow-xl z-20">
-          <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors"><ChevronLeft/> Trở về</button>
+          <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors"><ChevronLeft/> Trá»Ÿ vá»</button>
           <div className="flex items-center gap-4 bg-stone-800 px-4 py-2 rounded-2xl border border-amber-900/40 shadow-inner">
-            <span className="text-amber-900 font-black uppercase text-[10px] tracking-widest">Tra cứu:</span>
+            <span className="text-amber-900 font-black uppercase text-[10px] tracking-widest">Tra cá»©u:</span>
             <select 
               value={viewChapter} 
               onChange={(e) => setViewChapter(Number(e.target.value))}
               className="bg-transparent text-amber-500 border-none outline-none font-bold text-sm cursor-pointer"
             >
-              {[1,2,3,4,5,6,7,8,9,10].map(c => <option key={c} value={c} className="bg-stone-900">Chương {c}</option>)}
+              {[1,2,3,4,5,6,7,8,9,10].map(c => <option key={c} value={c} className="bg-stone-900">ChÆ°Æ¡ng {c}</option>)}
             </select>
           </div>
-          <h2 className="text-xl font-cinzel text-amber-500 font-black uppercase tracking-widest">Quốc Tử Giám</h2>
+          <h2 className="text-xl font-cinzel text-amber-500 font-black uppercase tracking-widest">Quá»‘c Tá»­ GiÃ¡m</h2>
        </div>
 
        <div className="flex-1 overflow-y-auto p-8 custom-scrollbar pb-24">
           <div className="text-center max-w-2xl mx-auto mb-8">
              <h3 className="text-3xl font-cinzel text-amber-950 font-black uppercase mb-2 animate-in slide-in-from-top duration-500">{CHAPTER_NAMES[viewChapter]}</h3>
-             <p className="text-stone-600 italic text-sm font-bold uppercase tracking-wider opacity-60">Sử thi anh hào & nghịch tặc</p>
+             <p className="text-stone-600 italic text-sm font-bold uppercase tracking-wider opacity-60">Sá»­ thi anh hÃ o & nghá»‹ch táº·c</p>
           </div>
 
           <div className="flex justify-center gap-4 mb-12 animate-in slide-in-from-bottom duration-500 flex-wrap">
@@ -8317,31 +8317,31 @@ const QuocTuGiamView = ({ setView, activeChapter = 1 }: any) => {
                   onClick={() => setActiveTab('mac')}
                   className={`px-5 py-2.5 rounded-xl font-cinzel font-bold text-sm transition-all flex items-center gap-2 ${activeTab === 'mac' ? 'bg-yellow-950/60 text-yellow-300 border-2 border-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.35)] scale-105' : 'bg-stone-900/60 text-stone-400 border border-stone-800 hover:bg-stone-800 hover:text-yellow-400'}`}
                 >
-                  <Crown size={16} /> Bắc Triều Nhà Mạc ({macCount})
+                  <Crown size={16} /> Báº¯c Triá»u NhÃ  Máº¡c ({macCount})
                 </button>
                 <button 
                   onClick={() => setActiveTab('le_trinh')}
                   className={`px-5 py-2.5 rounded-xl font-cinzel font-bold text-sm transition-all flex items-center gap-2 ${activeTab === 'le_trinh' ? 'bg-red-950/60 text-red-300 border-2 border-red-500 shadow-[0_0_20px_rgba(239,68,68,0.35)] scale-105' : 'bg-stone-900/60 text-stone-400 border border-stone-800 hover:bg-stone-800 hover:text-red-400'}`}
                 >
-                  <SwordIcon size={16} /> Vua Lê - Chúa Trịnh ({leTrinhCount})
+                  <SwordIcon size={16} /> Vua LÃª - ChÃºa Trá»‹nh ({leTrinhCount})
                 </button>
                 <button 
                   onClick={() => setActiveTab('nguyen')}
                   className={`px-5 py-2.5 rounded-xl font-cinzel font-bold text-sm transition-all flex items-center gap-2 ${activeTab === 'nguyen' ? 'bg-blue-950/60 text-blue-300 border-2 border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.35)] scale-105' : 'bg-stone-900/60 text-stone-400 border border-stone-800 hover:bg-stone-800 hover:text-blue-400'}`}
                 >
-                  <Users size={16} /> Chúa Nguyễn Đàng Trong ({nguyenCount})
+                  <Users size={16} /> ChÃºa Nguyá»…n ÄÃ ng Trong ({nguyenCount})
                 </button>
                 <button 
                   onClick={() => setActiveTab('all')}
                   className={`px-5 py-2.5 rounded-xl font-cinzel font-bold text-sm transition-all flex items-center gap-2 ${activeTab === 'all' ? 'bg-emerald-950/60 text-emerald-300 border-2 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.35)] scale-105' : 'bg-stone-900/60 text-stone-400 border border-stone-800 hover:bg-stone-800 hover:text-emerald-400'}`}
                 >
-                  <Users size={16} /> Toàn Bộ Hào Kiệt ({allCh9Count})
+                  <Users size={16} /> ToÃ n Bá»™ HÃ o Kiá»‡t ({allCh9Count})
                 </button>
                 <button 
                   onClick={() => setActiveTab('artifacts')}
                   className={`px-5 py-2.5 rounded-xl font-cinzel font-bold text-sm transition-all flex items-center gap-2 ${activeTab === 'artifacts' ? 'bg-purple-950/60 text-purple-300 border-2 border-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.35)] scale-105' : 'bg-stone-900/60 text-stone-400 border border-stone-800 hover:bg-stone-800 hover:text-purple-400'}`}
                 >
-                  <Sparkles size={16} /> Thần Khí ({artifacts.length})
+                  <Sparkles size={16} /> Tháº§n KhÃ­ ({artifacts.length})
                 </button>
               </>
             ) : (
@@ -8350,19 +8350,19 @@ const QuocTuGiamView = ({ setView, activeChapter = 1 }: any) => {
                   onClick={() => setActiveTab('allies')}
                   className={`px-6 py-2.5 rounded-xl font-cinzel font-bold text-sm transition-all flex items-center gap-2 ${activeTab === 'allies' ? 'bg-green-900/20 text-green-500 border-2 border-green-700/50 shadow-[0_0_15px_rgba(34,197,94,0.2)]' : 'bg-stone-900/50 text-stone-500 border border-stone-800 hover:bg-stone-800 hover:text-green-600'}`}
                 >
-                  <Users size={16} /> Hào Kiệt Phe Ta ({allies.length})
+                  <Users size={16} /> HÃ o Kiá»‡t Phe Ta ({allies.length})
                 </button>
                 <button 
                   onClick={() => setActiveTab('enemies')}
                   className={`px-6 py-2.5 rounded-xl font-cinzel font-bold text-sm transition-all flex items-center gap-2 ${activeTab === 'enemies' ? 'bg-red-900/20 text-red-500 border-2 border-red-700/50 shadow-[0_0_15px_rgba(239,68,68,0.2)]' : 'bg-stone-900/50 text-stone-500 border border-stone-800 hover:bg-stone-800 hover:text-red-600'}`}
                 >
-                  <SwordIcon size={16} /> Nghịch Tặc Phe Địch ({enemies.length})
+                  <SwordIcon size={16} /> Nghá»‹ch Táº·c Phe Äá»‹ch ({enemies.length})
                 </button>
                 <button 
                   onClick={() => setActiveTab('artifacts')}
                   className={`px-6 py-2.5 rounded-xl font-cinzel font-bold text-sm transition-all flex items-center gap-2 ${activeTab === 'artifacts' ? 'bg-purple-900/20 text-purple-500 border-2 border-purple-700/50 shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'bg-stone-900/50 text-stone-500 border border-stone-800 hover:bg-stone-800 hover:text-purple-600'}`}
                 >
-                  <Sparkles size={16} /> Thần Khí ({artifacts.length})
+                  <Sparkles size={16} /> Tháº§n KhÃ­ ({artifacts.length})
                 </button>
               </>
             )}
@@ -8377,7 +8377,7 @@ const QuocTuGiamView = ({ setView, activeChapter = 1 }: any) => {
                     </div>
                   ) : (
                     <div className="text-center py-20 text-stone-500 font-cinzel text-sm uppercase tracking-widest italic">
-                       Chưa có thần khí nào cho chương này
+                       ChÆ°a cÃ³ tháº§n khÃ­ nÃ o cho chÆ°Æ¡ng nÃ y
                     </div>
                   )
                 ) : (
@@ -8415,7 +8415,7 @@ const QuocTuGiamView = ({ setView, activeChapter = 1 }: any) => {
                       </div>
                     ) : (
                       <div className="text-center py-20 text-stone-500 font-cinzel text-sm uppercase tracking-widest italic">
-                         Chưa có thần khí nào cho chương này
+                         ChÆ°a cÃ³ tháº§n khÃ­ nÃ o cho chÆ°Æ¡ng nÃ y
                       </div>
                     )}
                  </section>

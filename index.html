@@ -807,17 +807,13 @@
       var screenW = window.innerWidth;
       var screenH = window.innerHeight;
 
-      // COVER mode: scale lấp đầy toàn màn hình - không viền đen
-      // (giống background-size: cover, nội dung tràn sẽ bị clip bởi overflow:hidden)
+      // FIT mode (Letterbox): scale sao cho vừa màn hình, giữ nguyên tỉ lệ 16:9
+      // (để không bị mất UI/nút bấm ở các cạnh màn hình)
       var scaleX = screenW / DESIGN_W;
       var scaleY = screenH / DESIGN_H;
+      var scale = Math.min(scaleX, scaleY);
 
-      // Trên PC (màn hình rộng): dùng fit (contain) để không vỡ layout
-      // Trên mobile (màn hình nhỏ): dùng cover để full màn hình
-      var isMobile = Math.min(screenW, screenH) < 768;
-      var scale = isMobile ? Math.max(scaleX, scaleY) : Math.min(scaleX, scaleY);
-
-      // Căn giữa và clip phần tràn ra ngoài
+      // Căn giữa (tạo viền đen 2 bên hoặc trên dưới tùy tỉ lệ)
       var offsetX = (screenW - DESIGN_W * scale) / 2;
       var offsetY = (screenH - DESIGN_H * scale) / 2;
 
