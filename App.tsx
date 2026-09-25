@@ -2814,8 +2814,8 @@ const App: React.FC = () => {
          player={player} 
          setPlayer={setPlayer} 
       />}
-      {/* NÚT NHIỆM VỤ HÀNG NGÀY - Fixed góc phải trên (thay thế vị trí cũ ChatbotAI) */}
-      {view !== 'auth' && (() => {
+      {/* NÚT NHIỆM VỤ HÀNG NGÀY - Ẩn khi đang trong màn hình chiến đấu */}
+      {view !== 'auth' && view !== 'combat-play' && view !== 'arena' && (() => {
         const prog = player.dailyQuestProgress || {};
         const claimed = player.dailyQuestClaimed || [];
         const QUEST_IDS = ['q_login','q_answer_3_row','q_answer_10','q_answer_20','q_spin_3','q_play_arena_1','q_win_arena_1','q_play_trial_1','q_upgrade_hero_1','q_play_suviet_1'];
@@ -2841,7 +2841,8 @@ const App: React.FC = () => {
           </button>
         );
       })()}
-      {showChatbot && <ChatbotWidget />}
+      {/* AI Chatbot - ẩn khi chiến đấu */}
+      {showChatbot && view !== 'combat-play' && view !== 'arena' && <ChatbotWidget />}
     </>
   );
 };

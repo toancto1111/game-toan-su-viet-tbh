@@ -3,7 +3,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -803,26 +803,32 @@
       var root = document.getElementById('root');
       if (!root) return;
 
-      // Kích thước màn hình thực (bỏ qua thanh trình duyệt)
+      // Kích thước màn hình thực
       var screenW = window.innerWidth;
       var screenH = window.innerHeight;
 
-      // Tính tỉ lệ scale để fit vừa màn hình (letterbox)
+      // COVER mode: scale lấp đầy toàn màn hình - không viền đen
+      // (giống background-size: cover, nội dung tràn sẽ bị clip bởi overflow:hidden)
       var scaleX = screenW / DESIGN_W;
       var scaleY = screenH / DESIGN_H;
-      var scale  = Math.min(scaleX, scaleY);
 
-      // Tính offset để căn giữa (letterbox đen hai bên nếu aspect ratio khác)
-      var offsetX = (screenW  - DESIGN_W * scale) / 2;
+      // Trên PC (màn hình rộng): dùng fit (contain) để không vỡ layout
+      // Trên mobile (màn hình nhỏ): dùng cover để full màn hình
+      var isMobile = Math.min(screenW, screenH) < 768;
+      var scale = isMobile ? Math.max(scaleX, scaleY) : Math.min(scaleX, scaleY);
+
+      // Căn giữa và clip phần tràn ra ngoài
+      var offsetX = (screenW - DESIGN_W * scale) / 2;
       var offsetY = (screenH - DESIGN_H * scale) / 2;
 
-      root.style.width     = DESIGN_W + 'px';
-      root.style.height    = DESIGN_H + 'px';
-      root.style.transform = 'scale(' + scale + ')';
+      root.style.width          = DESIGN_W + 'px';
+      root.style.height         = DESIGN_H + 'px';
+      root.style.transform      = 'scale(' + scale + ')';
       root.style.transformOrigin = 'top left';
-      root.style.left      = offsetX + 'px';
-      root.style.top       = offsetY + 'px';
-      root.style.position  = 'fixed';
+      root.style.left           = offsetX + 'px';
+      root.style.top            = offsetY + 'px';
+      root.style.position       = 'fixed';
+      root.style.overflow        = 'hidden';
     }
 
     // Chạy ngay khi load
