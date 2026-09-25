@@ -2687,7 +2687,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className={`relative z-0 has-bottom-nav ${view !== 'auth' ? 'pb-[72px] md:pb-0' : ''}`} style={{ minHeight: view === 'chapter-hub' ? '100dvh' : undefined }}>
+      <div className={`relative z-0 has-bottom-nav ${view !== 'auth' ? 'pb-[72px] md:pb-0' : ''}`} style={{ minHeight: '100dvh' }}>
         {renderView()}
       </div>
 
@@ -5679,7 +5679,7 @@ const MainMenuItem = ({ icon, title, subtitle, onClick, color }: any) => (
 
 const GradeView = ({ setGrade, setView }: any) => (
   <div 
-    className="min-h-full flex flex-col items-center justify-end pb-[10%] p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
+    className="min-h-[100dvh] flex flex-col items-center justify-end pb-[10%] p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
     style={{ backgroundImage: `url('${import.meta.env.BASE_URL}ancient_exam_bg.jpg')` }}
   >
      <div className="absolute inset-0 bg-black/40 pointer-events-none z-0" />
@@ -5764,7 +5764,7 @@ const TopicView = ({ grade, setChapterIdx, setView, player }: any) => {
 
   return (
   <div 
-    className="min-h-full flex items-center justify-center p-8 overflow-y-auto bg-cover bg-center bg-no-repeat relative"
+    className="min-h-[100dvh] flex items-center justify-center p-8 overflow-y-auto bg-cover bg-center bg-no-repeat relative"
     style={{ backgroundImage: `url('${import.meta.env.BASE_URL}ancient_exam_bg.jpg')` }}
   >
      <div className="absolute inset-0 bg-black/60 pointer-events-none z-0" />
@@ -5909,7 +5909,7 @@ const LessonListView = ({ grade, chapterIdx, setLessonIdx, setView, progress, pl
 
   return (
     <div 
-      className="min-h-full flex items-center justify-center p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
+      className="min-h-[100dvh] flex items-center justify-center p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url('${import.meta.env.BASE_URL}ancient_exam_bg.jpg')` }}
     >
        <div className="absolute inset-0 bg-black/60 pointer-events-none z-0" />
