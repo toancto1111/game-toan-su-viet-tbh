@@ -6584,6 +6584,31 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
   const [selectedHero, setSelectedHero] = useState<any>(null);
   const [videoQueue, setVideoQueue] = useState<any[]>([]);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [videoReady, setVideoReady] = useState(false);
+  const preloadVideoRef = useRef<HTMLVideoElement | null>(null);
+
+  // Preload video NGAY KHI biết kết quả - trong lúc 2.5s animation đang quay
+  // Kỹ thuật: tạo element ẩn, tải về, đợi canplaythrough → phát ngay lập tức không lag
+  useEffect(() => {
+    if (videoQueue.length > 0) {
+      setVideoReady(false);
+      const vid = document.createElement('video');
+      vid.src = videoQueue[0].skillVideoUrl;
+      vid.preload = 'auto';
+      vid.muted = false;
+      vid.playsInline = true;
+      preloadVideoRef.current = vid;
+      const onReady = () => setVideoReady(true);
+      const onError = () => setVideoReady(true); // fallback nếu lỗi cũng cho tiếp tục
+      vid.addEventListener('canplaythrough', onReady, { once: true });
+      vid.addEventListener('error', onError, { once: true });
+      vid.load();
+      return () => {
+        vid.removeEventListener('canplaythrough', onReady);
+        vid.removeEventListener('error', onError);
+      };
+    }
+  }, [videoQueue]);
 
   useEffect(() => {
     if (results.length > 0 && animState === 'idle') {
@@ -6604,6 +6629,7 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
       // Wait for rolling animation
       setTimeout(() => {
         if (queue.length > 0) {
+          // Video đã được preload trong lúc rolling → phát ngay không lag
           setAnimState('playing_videos');
         } else {
           setAnimState('revealing');
@@ -6612,6 +6638,8 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
     } else if (results.length === 0) {
       setAnimState('idle');
       setVideoQueue([]);
+      setVideoReady(false);
+      preloadVideoRef.current = null;
     }
   }, [results, animState]);
 
@@ -6646,14 +6674,25 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
           className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center cursor-pointer select-none"
           onClick={() => setAnimState('revealing')}
         >
+          {/* Loading spinner nếu video chưa sẵn sàng */}
+          {!videoReady && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center z-10 bg-black">
+              <div className="w-16 h-16 border-4 border-amber-500/30 border-t-amber-400 rounded-full animate-spin mb-4" />
+              <p className="text-amber-400/70 text-sm font-cinzel tracking-widest animate-pulse">Đang tải chiêu thức...</p>
+            </div>
+          )}
           <video
+            key={videoQueue[currentVideoIndex].skillVideoUrl}
             src={videoQueue[currentVideoIndex].skillVideoUrl}
             autoPlay
             playsInline
             preload="auto"
+            style={{ opacity: videoReady ? 1 : 0, transition: 'opacity 0.3s ease' }}
             className="w-full max-w-4xl h-auto max-h-[70%] object-contain border-2 border-amber-500/50 rounded-xl shadow-[0_0_50px_rgba(245,158,11,0.3)] pointer-events-none"
+            onCanPlayThrough={() => setVideoReady(true)}
             onEnded={() => {
               if (currentVideoIndex < videoQueue.length - 1) {
+                setVideoReady(false);
                 setCurrentVideoIndex(currentVideoIndex + 1);
               } else {
                 setAnimState('revealing');
@@ -6662,6 +6701,7 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
             onError={(e) => {
               console.warn("Video load failed, skipping...", e);
               if (currentVideoIndex < videoQueue.length - 1) {
+                setVideoReady(false);
                 setCurrentVideoIndex(currentVideoIndex + 1);
               } else {
                 setAnimState('revealing');
