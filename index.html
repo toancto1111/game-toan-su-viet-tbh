@@ -80,7 +80,12 @@
             height: 720px;
             transform-origin: top left;
             overflow: hidden;
-            /* Scale sẽ được set bằng JS bên dưới */
+            /* GPU compositing - buộc browser dùng GPU để scale/animate */
+            will-change: transform;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            /* Isolate paint: chỉ repaint #root, không ảnh hưởng layout nào khác */
+            contain: layout style;
         }
         /* === LANDSCAPE MOBILE: khóa scroll để tránh bounce như game native === */
         @media (orientation: landscape) and (max-height: 600px) {
@@ -191,6 +196,21 @@
         }
 
         /* === KEYFRAME ANIMATIONS === */
+        /* GPU acceleration: tất cả animated elements dùng GPU compositor */
+        /* Kỹ thuật: buộc browser tạo layer riêng cho từng element → không block main thread */
+        .petal, .animate-spin, .animate-bounce, .animate-pulse,
+        [class*="animate-"], .ssr-flash-overlay,
+        .lantern, .float-anim, .hero-card-hover {
+            will-change: transform;
+            transform: translateZ(0); /* Kích hoạt GPU layer ngay lập tức */
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        /* Tối ưu scrollable containers */
+        .overflow-y-auto, .overflow-x-auto, .custom-scrollbar {
+            -webkit-overflow-scrolling: touch;
+            will-change: scroll-position;
+        }
         @keyframes petalFall {
             0%   { transform: translateY(-20px) translateX(0px) rotate(0deg); opacity: 0; }
             10%  { opacity: 0.85; }
@@ -827,11 +847,21 @@
       root.style.overflow        = 'hidden';
     }
 
+    // Debounced resize: tránh xử lý làm DOM quá nhiều lần khi resize
+    var _resizeTimer = null;
+    function debouncedScale() {
+      if (_resizeTimer) return;
+      _resizeTimer = requestAnimationFrame(function() {
+        scaleGame();
+        _resizeTimer = null;
+      });
+    }
+
     // Chạy ngay khi load
     scaleGame();
 
     // Cập nhật khi resize hoặc xoay màn hình
-    window.addEventListener('resize', scaleGame);
+    window.addEventListener('resize', debouncedScale);
     window.addEventListener('orientationchange', function() {
       setTimeout(scaleGame, 100); // Delay nhỏ để browser cập nhật kích thước
     });
