@@ -116,10 +116,10 @@ export const SU_VIET_QUESTIONS_EXTRA_12: SuVietQuestion[] = [
     id: 'sv_ex12_11',
     era: 'Khởi Nghĩa Lam Sơn & Hậu Lê',
     type: 'short_answer',
-    question: 'Một viên tướng nổi bật của nghĩa quân Lam Sơn, quê ở Mường (Hòa Bình), đã tham gia Hội thề Lũng Nhai và lập nhiều chiến công tên là gì?',
-    correctAnswer: 'Bùi Bị', // Thực ra có Lê Sát, Bùi Bị, Lê Ngân, Trịnh Khả. Sẽ đổi sang Trịnh Khả cho phổ biến.
-    acceptableAnswers: ['trịnh khả', 'trinh kha', 'nguyễn lý'], // Dữ liệu này hơi khó, sẽ đổi câu hỏi.
-    explanation: 'Trong Hội thề Lũng Nhai có nhiều vị tướng tài ba như Lê Sát, Lê Ngân, Trịnh Khả. (Câu hỏi đã được hệ thống tự động chấm linh hoạt ở phần điền ngắn).',
+    question: 'Một viên tướng nổi bật của nghĩa quân Lam Sơn, quê ở Thanh Hóa, có công trong việc chiêu mộ nghĩa quân và tham gia Hội thề Lũng Nhai tên là gì?',
+    correctAnswer: 'Trịnh Khả', 
+    acceptableAnswers: ['trịnh khả', 'trinh kha', 'khả'], 
+    explanation: 'Trịnh Khả là tướng quân trong khởi nghĩa Lam Sơn, có công trong việc chiêu mộ nghĩa quân vùng Thanh Hóa. Ông cũng là một trong những người tham gia Hội thề Lũng Nhai.',
     source: 'Việt Nam Sử Lược', // Chút nữa replace thành 'Việt Nam Sử Lược'
     difficulty: 'hard'
   },
