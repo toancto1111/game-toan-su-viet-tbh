@@ -7,6 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="/manifest.json">
     <title>Sử Việt Anh Hùng Truyện & Toán Học Kỳ Thư</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,8 +63,89 @@
             color: #e7e5e4;
             overflow-x: hidden;
         }
+        /* === LANDSCAPE MOBILE: khóa scroll để tránh bounce như game native === */
         @media (orientation: landscape) and (max-height: 600px) {
             html, body { overflow: hidden !important; height: 100%; position: fixed; width: 100%; }
+        }
+        /* === Ẩn bottom nav khi landscape (mobile xoay ngang) để giao diện giống PC === */
+        @media (orientation: landscape) {
+            .mobile-bottom-nav { display: none !important; }
+            .has-bottom-nav { padding-bottom: 0 !important; }
+        }
+        /* === LANDSCAPE MOBILE: Giả lập md: breakpoint khi xoay ngang điện thoại === */
+        /* Vì Tailwind md: chỉ check width (768px), nhưng điện thoại landscape thường < 768px */
+        /* Dùng [class*="md:xxx"] để match bất kỳ element nào có class chứa pattern đó */
+        @media (orientation: landscape) and (max-width: 899px) {
+            /* === FLEX DIRECTION === */
+            [class*="md:flex-row"] { flex-direction: row !important; }
+            [class*="md:flex-col"] { flex-direction: column !important; }
+            
+            /* === WIDTH === */
+            [class*="md:w-1/3"] { width: 33.333% !important; }
+            [class*="md:w-2/3"] { width: 66.666% !important; }
+            [class*="md:w-1/2"] { width: 50% !important; }
+            [class*="md:w-[30%]"] { width: 30% !important; }
+            [class*="md:w-[40%]"] { width: 40% !important; }
+            [class*="md:flex-1"] { flex: 1 1 0% !important; }
+            
+            /* === HEIGHT === */
+            [class*="md:h-auto"] { height: auto !important; }
+            
+            /* === GRID COLUMNS === */
+            [class*="md:grid-cols-2"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+            [class*="md:grid-cols-3"] { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+            [class*="md:grid-cols-4"] { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+            [class*="md:grid-cols-5"] { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; }
+            [class*="md:grid-cols-6"] { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; }
+            
+            /* === DISPLAY === */
+            [class*="md:flex"]:not([class*="md:flex-"]) { display: flex !important; }
+            [class*="md:block"] { display: block !important; }
+            [class*="md:grid"]:not([class*="md:grid-"]) { display: grid !important; }
+            [class*="md:hidden"] { display: none !important; }
+            
+            /* === PADDING === */
+            [class*="md:p-10"] { padding: 1.5rem !important; }
+            [class*="md:p-6"]:not([class*="md:p-6"]) { padding: 1rem !important; }
+            [class*="md:p-5"] { padding: 0.875rem !important; }
+            [class*="md:p-4"] { padding: 0.75rem !important; }
+            [class*="md:py-4"] { padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
+            [class*="md:pl-8"] { padding-left: 1.5rem !important; }
+            [class*="md:pr-8"] { padding-right: 1.5rem !important; }
+            [class*="md:pb-0"] { padding-bottom: 0 !important; }
+            
+            /* === ORDER === */
+            [class*="md:order-1"] { order: 1 !important; }
+            [class*="md:order-2"] { order: 2 !important; }
+            [class*="md:order-3"] { order: 3 !important; }
+            
+            /* === BORDER === */
+            [class*="md:border-t-0"] { border-top-width: 0 !important; }
+            
+            /* === TEXT SIZE === */
+            [class*="md:text-xs"]   { font-size: 0.75rem !important; }
+            [class*="md:text-sm"]   { font-size: 0.875rem !important; }
+            [class*="md:text-base"] { font-size: 1rem !important; }
+            [class*="md:text-lg"]   { font-size: 1.125rem !important; }
+            [class*="md:text-xl"]   { font-size: 1.25rem !important; }
+            [class*="md:text-2xl"]  { font-size: 1.5rem !important; }
+            [class*="md:text-3xl"]  { font-size: 1.875rem !important; }
+            [class*="md:text-4xl"]  { font-size: 2.25rem !important; }
+            [class*="md:text-5xl"]  { font-size: 3rem !important; }
+            [class*="md:text-8xl"]  { font-size: 4.5rem !important; }
+            [class*="md:text-9xl"]  { font-size: 8rem !important; }
+            
+            /* === JUSTIFY & TRACKING === */
+            [class*="md:justify-start"] { justify-content: flex-start !important; }
+            [class*="md:justify-end"]   { justify-content: flex-end !important; }
+            
+            /* Đảm bảo overflow scroll touch-friendly */
+            .overflow-y-auto { -webkit-overflow-scrolling: touch; }
+            
+            /* Giảm padding quá lớn trong landscape */
+            .py-12 { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
+            .pt-12 { padding-top: 1.5rem !important; }
+            .pb-24 { padding-bottom: 1.5rem !important; }
         }
         /* Override Tailwind utilities với !important */
         .font-cinzel { font-family: 'Playfair Display', 'Noto Serif', serif !important; }
@@ -592,13 +674,57 @@
             100% { transform: rotate(-90deg); }
         }
 
+        /* === PORTRAIT MOBILE: Hiển thị overlay yêu cầu xoay ngang === */
         @media screen and (max-width: 899px) and (orientation: portrait) {
-            /* #root {
+            #root {
                 display: none !important;
             }
             #rotate-overlay {
                 display: flex !important;
-            } */
+            }
+        }
+        /* === Cải thiện overlay visual === */
+        #rotate-overlay {
+            background:
+                radial-gradient(ellipse at 25% 25%, rgba(139,26,26,0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 75% 75%, rgba(201,148,26,0.12) 0%, transparent 55%),
+                radial-gradient(circle at center, #1c1008 0%, #0c0a09 100%);
+        }
+        #rotate-overlay .rotate-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(201,148,26,0.12);
+            border: 1px solid rgba(201,148,26,0.35);
+            border-radius: 999px;
+            padding: 0.4rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #C9941A;
+            margin-bottom: 1.5rem;
+        }
+        #rotate-overlay .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            max-width: 320px;
+            margin-top: 1.5rem;
+        }
+        #rotate-overlay .feature-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(201,148,26,0.15);
+            border-radius: 12px;
+            padding: 0.75rem 0.5rem;
+            font-size: 0.72rem;
+            color: #a8a29e;
+            text-align: center;
+        }
+        #rotate-overlay .feature-item .feat-icon {
+            font-size: 1.4rem;
+            display: block;
+            margin-bottom: 0.3rem;
         }
     </style>
 <script type="importmap">
@@ -615,14 +741,46 @@
 </head>
 <body>
     <div id="rotate-overlay">
+        <!-- Animated phone icon -->
+        <div class="rotate-badge">
+            <span>&#9876;</span> Màn hình ngang
+        </div>
         <div class="phone-icon"></div>
-        <h2 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 1rem; font-weight: 800; text-transform: uppercase; text-shadow: 0 2px 10px rgba(251, 191, 36, 0.3);">Xoay ngang màn hình</h2>
-        <p style="color: #a8a29e; font-size: 1rem; line-height: 1.6; max-width: 320px; font-weight: 500;">
-            Trải nghiệm "Sử Việt Anh Hùng Truyện" được thiết kế tối ưu nhất cho giao diện ngang. 
-            Vui lòng xoay điện thoại của bạn để có thể tham gia vào những trận chiến sử thi hào hùng!
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 1.7rem; margin-bottom: 0.75rem; font-weight: 900; text-transform: uppercase; text-shadow: 0 2px 20px rgba(201,148,26,0.5); letter-spacing: 0.05em; line-height: 1.2;">Xoay ngang màn hình</h2>
+        <p style="color: #a8a29e; font-size: 0.9rem; line-height: 1.7; max-width: 300px; font-weight: 500; margin-bottom: 0;">
+            Game được thiết kế tối ưu cho <strong style="color: #fbbf24;">màn hình ngang</strong> để trải nghiệm toàn bộ tính năng.
         </p>
+        <div class="features-grid">
+            <div class="feature-item">
+                <span class="feat-icon">⚔️</span>
+                Chiến đấu
+            </div>
+            <div class="feature-item">
+                <span class="feat-icon">📚</span>
+                Tự Luyện
+            </div>
+            <div class="feature-item">
+                <span class="feat-icon">🎮</span>
+                Gacha Anh Hùng
+            </div>
+            <div class="feature-item">
+                <span class="feat-icon">🏆</span>
+                Đấu Trường
+            </div>
+        </div>
     </div>
     <div id="root"></div>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').then(registration => {
+        console.log('SW registered: ', registration);
+      }).catch(registrationError => {
+        console.log('SW registration failed: ', registrationError);
+      });
+    });
+  }
+</script>
 <script type="module" src="/index.tsx"></script>
 </body>
 </html>
