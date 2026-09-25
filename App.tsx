@@ -2199,90 +2199,9 @@ const App: React.FC = () => {
       case 'chapter-hub': return (
         <div className="h-full w-full bg-black overflow-hidden relative flex">
           
-          {/* MOBILE PORTRAIT VIEW – chỉ hiện khi portrait (dọc), ẩn khi landscape */}
-          <div className={`${isLandscape ? 'hidden' : 'flex'} w-full h-full bg-stone-900 flex-col items-center justify-start overflow-y-auto relative pb-20`}>
-             <div className="w-full relative h-[45%] shrink-0 bg-[url('/hub-bg.png?v=2')] bg-cover bg-center border-b-4 border-amber-900 shadow-xl overflow-hidden">
-                 <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-stone-900/40 to-black/70"></div>
-                 <div className="absolute top-8 left-4 z-30">
-                    <h2 className="text-amber-400 font-cinzel font-black text-2xl md:text-3xl uppercase tracking-[0.25em] drop-shadow-[0_0_10px_rgba(201,148,26,0.8)]">Chương {activeChapter}</h2>
-                    <p className="text-amber-100 font-cinzel text-sm md:text-base mt-0.5 italic tracking-widest">{CHAPTER_NAMES[activeChapter]}</p>
-                 </div>
-                 {/* Floating character or icon to make it lively */}
-                 <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 flex flex-col items-center">
-                    <span className="text-7xl md:text-8xl drop-shadow-lg filter sepia opacity-80">🏯</span>
-                 </div>
-             </div>
-
-             <div className="w-full max-w-md mx-auto flex-1 px-5 py-8 flex flex-col gap-4 relative z-10 -mt-12">
-                <button onClick={() => setView('chapter-select')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
-                   <div className="w-14 h-14 shrink-0 rounded-xl bg-amber-900/50 flex flex-col items-center justify-center border border-amber-500/50">
-                     <span className="text-2xl drop-shadow-md">🏕️</span>
-                   </div>
-                   <div className="text-left flex-1">
-                     <div className="font-cinzel font-black text-amber-400 text-lg uppercase tracking-wider">Doanh Trại</div>
-                     <div className="text-xs text-stone-400 font-bold">Vượt Ải Cốt Truyện</div>
-                   </div>
-                </button>
-                <button onClick={() => setView('tu-luyen-menu')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
-                   <div className="w-14 h-14 shrink-0 rounded-xl bg-blue-900/50 flex flex-col items-center justify-center border border-blue-500/50">
-                     <span className="text-2xl drop-shadow-md">📚</span>
-                   </div>
-                   <div className="text-left flex-1">
-                     <div className="font-cinzel font-black text-blue-400 text-lg uppercase tracking-wider">Quốc Tử Giám</div>
-                     <div className="text-xs text-stone-400 font-bold">Tu Luyện Môn Quy</div>
-                   </div>
-                </button>
-                <button onClick={() => setView('danh-vong-dai')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
-                   <div className="w-14 h-14 shrink-0 rounded-xl bg-purple-900/50 flex flex-col items-center justify-center border border-purple-500/50">
-                     <span className="text-2xl drop-shadow-md">🏆</span>
-                   </div>
-                   <div className="text-left flex-1">
-                     <div className="font-cinzel font-black text-purple-400 text-lg uppercase tracking-wider">Danh Vọng Đài</div>
-                     <div className="text-xs text-stone-400 font-bold">Bảng Xếp Hạng Đỉnh Cao</div>
-                   </div>
-                </button>
-                <button onClick={() => setView('quan-doan')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
-                   <div className="w-14 h-14 shrink-0 rounded-xl bg-green-900/50 flex flex-col items-center justify-center border border-green-500/50">
-                     <span className="text-2xl drop-shadow-md">🎪</span>
-                   </div>
-                   <div className="text-left flex-1">
-                     <div className="font-cinzel font-black text-green-400 text-lg uppercase tracking-wider">Quân Đoàn</div>
-                     <div className="text-xs text-stone-400 font-bold">Gia nhập Thế Lực</div>
-                   </div>
-                </button>
-                <button onClick={() => setView('hero-trial')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
-                   <div className="w-14 h-14 shrink-0 rounded-xl bg-red-900/50 flex flex-col items-center justify-center border border-red-500/50">
-                     <span className="text-2xl drop-shadow-md">⚔️</span>
-                   </div>
-                   <div className="text-left flex-1">
-                     <div className="font-cinzel font-black text-red-400 text-lg uppercase tracking-wider">Thí Luyện</div>
-                     <div className="text-xs text-stone-400 font-bold">Thử thách leo tháp</div>
-                   </div>
-                </button>
-                <button onClick={() => setView('tu-hao-su-viet')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
-                   <div className="w-14 h-14 shrink-0 rounded-xl bg-emerald-900/50 flex flex-col items-center justify-center border border-emerald-500/50">
-                     <span className="text-2xl drop-shadow-md">🐉</span>
-                   </div>
-                   <div className="text-left flex-1">
-                     <div className="font-cinzel font-black text-emerald-400 text-lg uppercase tracking-wider">Tự Hào Sử Việt</div>
-                     <div className="text-xs text-stone-400 font-bold">Quà tặng đặc biệt</div>
-                   </div>
-                </button>
-                <button onClick={() => setView('arena')} className="bg-stone-800/90 backdrop-blur-sm border-2 border-stone-600 rounded-2xl p-4 flex items-center gap-4 active:scale-95 transition-transform shadow-lg">
-                   <div className="w-14 h-14 shrink-0 rounded-xl bg-orange-900/50 flex flex-col items-center justify-center border border-orange-500/50">
-                     <span className="text-2xl drop-shadow-md">⚔️</span>
-                   </div>
-                   <div className="text-left flex-1">
-                     <div className="font-cinzel font-black text-orange-400 text-lg uppercase tracking-wider">Đấu Trường PK</div>
-                     <div className="text-xs text-stone-400 font-bold">Tranh đoạt Ngôi Vương</div>
-                   </div>
-                </button>
-             </div>
-          </div>
-
-          {/* DESKTOP VIEW */}
+          {/* DESKTOP VIEW - Always visible, scaled by index.html */}
           <div 
-            className={`${isLandscape ? 'flex' : 'hidden'} absolute top-1/2 left-1/2 flex-col bg-black transition-transform duration-300 origin-center`}
+            className="flex absolute top-1/2 left-1/2 flex-col bg-black transition-transform duration-300 origin-center"
             style={{ width: '100%', height: '100%', transform: 'translate(-50%, -50%)' }}
           >
             <Header state={player} setView={setView} onLogout={handleLogout} onOpenProfile={() => setIsProfileOpen(true)} syncStatus={syncStatus} />
