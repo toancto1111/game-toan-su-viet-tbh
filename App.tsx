@@ -5764,7 +5764,7 @@ const TopicView = ({ grade, setChapterIdx, setView, player }: any) => {
 
   return (
   <div 
-    className="h-full flex items-center justify-center p-8 overflow-y-auto bg-cover bg-center bg-no-repeat relative"
+    className="h-full flex flex-col items-center justify-start p-8 overflow-y-auto bg-cover bg-center bg-no-repeat relative"
     style={{ backgroundImage: `url('${import.meta.env.BASE_URL}ancient_exam_bg.jpg')` }}
   >
      <div className="absolute inset-0 bg-black/60 pointer-events-none z-0" />
@@ -5796,7 +5796,7 @@ const TopicView = ({ grade, setChapterIdx, setView, player }: any) => {
        </div>
      )}
 
-     <div className="max-w-3xl w-full scroll-bg p-10 rounded-[3rem] text-center shadow-2xl border-blue-900 my-10 relative z-10">
+     <div className="max-w-3xl w-full scroll-bg p-10 rounded-[3rem] text-center shadow-2xl border-blue-900 my-auto shrink-0 relative z-10">
         <h2 className="text-2xl font-cinzel font-black text-blue-950 uppercase mb-8">LỚP {grade} - Chọn Chương</h2>
         <div className="grid grid-cols-1 gap-4 text-left">
            {chapters.map((ch: any, idx: number) => {
