@@ -2734,7 +2734,7 @@ const App: React.FC = () => {
          setPlayer={setPlayer} 
       />}
       {/* NÚT NHIỆM VỤ HÀNG NGÀY - Ẩn khi đang trong màn hình chiến đấu */}
-      {view !== 'auth' && view !== 'combat-play' && view !== 'arena' && (() => {
+      {view === 'chapter-hub' && (() => {
         const prog = player.dailyQuestProgress || {};
         const claimed = player.dailyQuestClaimed || [];
         const QUEST_IDS = ['q_login','q_answer_3_row','q_answer_10','q_answer_20','q_spin_3','q_play_arena_1','q_win_arena_1','q_play_trial_1','q_upgrade_hero_1','q_play_suviet_1'];
@@ -2761,7 +2761,7 @@ const App: React.FC = () => {
         );
       })()}
       {/* AI Chatbot - ẩn khi chiến đấu */}
-      {showChatbot && view !== 'combat-play' && view !== 'arena' && <ChatbotWidget />}
+      {showChatbot && view === 'chapter-hub' && <ChatbotWidget />}
     </>
   );
 };
@@ -5698,17 +5698,17 @@ const GradeView = ({ setGrade, setView }: any) => (
         </div>
      </div>
      {/* 2 Câu thơ bên trái */}
-     <div className="hidden lg:flex absolute left-[2%] top-0 bottom-0 flex-row items-center justify-center gap-6 xl:gap-10 pointer-events-none opacity-100 py-10 z-10">
-       <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
+     <div className="hidden xl:flex absolute left-[2%] top-0 bottom-0 flex-row items-center justify-center gap-4 2xl:gap-8 pointer-events-none opacity-100 py-10 z-10">
+       <div className="flex flex-col justify-center gap-2 2xl:gap-6 h-full">
          {["Nam", "Quốc", "Sơn", "Hà", "Nam", "Đế", "Cư"].map((word, i) => (
-           <div key={`l1-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+           <div key={`l1-${i}`} className="text-[1.6rem] 2xl:text-[2.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
              {word}
            </div>
          ))}
        </div>
-       <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
+       <div className="flex flex-col justify-center gap-2 2xl:gap-6 h-full">
          {["Tiệt", "Nhiên", "Định", "Phận", "Tại", "Thiên", "Thư"].map((word, i) => (
-           <div key={`l2-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+           <div key={`l2-${i}`} className="text-[1.6rem] 2xl:text-[2.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
              {word}
            </div>
          ))}
@@ -5716,17 +5716,17 @@ const GradeView = ({ setGrade, setView }: any) => (
      </div>
 
      {/* 2 Câu thơ bên phải */}
-     <div className="hidden lg:flex absolute right-[2%] top-0 bottom-0 flex-row items-center justify-center gap-6 xl:gap-10 pointer-events-none opacity-100 py-10 z-10">
-       <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
+     <div className="hidden xl:flex absolute right-[2%] top-0 bottom-0 flex-row items-center justify-center gap-4 2xl:gap-8 pointer-events-none opacity-100 py-10 z-10">
+       <div className="flex flex-col justify-center gap-2 2xl:gap-6 h-full">
          {["Như", "Hà", "Nghịch", "Lỗ", "Lai", "Xâm", "Phạm"].map((word, i) => (
-           <div key={`r1-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+           <div key={`r1-${i}`} className="text-[1.6rem] 2xl:text-[2.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
              {word}
            </div>
          ))}
        </div>
-       <div className="flex flex-col justify-center gap-4 xl:gap-8 h-full">
+       <div className="flex flex-col justify-center gap-2 2xl:gap-6 h-full">
          {["Nhữ", "Đẳng", "Hành", "Khan", "Thủ", "Bại", "Hư"].map((word, i) => (
-           <div key={`r2-${i}`} className="text-[2.2rem] xl:text-[2.8rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+           <div key={`r2-${i}`} className="text-[1.6rem] 2xl:text-[2.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
              {word}
            </div>
          ))}
@@ -5915,43 +5915,43 @@ const LessonListView = ({ grade, chapterIdx, setLessonIdx, setView, progress, pl
        <div className="absolute inset-0 bg-black/60 pointer-events-none z-0" />
        
        {/* Trái - Nguyễn Ánh */}
-       <div className="hidden lg:flex absolute left-[2%] top-0 bottom-0 flex-row items-center justify-center gap-4 xl:gap-8 pointer-events-none opacity-100 py-4 z-10">
-         <div className="flex flex-col justify-center gap-2 xl:gap-4 h-full">
+       <div className="hidden xl:flex absolute left-[2%] top-0 bottom-0 flex-row items-center justify-center gap-2 2xl:gap-8 pointer-events-none opacity-100 py-4 z-10">
+         <div className="flex flex-col justify-center gap-1 2xl:gap-4 h-full">
            {["Ta", "Và", "Nguyễn", "Huệ", "Ai", "Hơn?"].map((word, i) => (
-             <div key={`l1-${i}`} className="text-[1.8rem] xl:text-[2.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+             <div key={`l1-${i}`} className="text-[1.4rem] 2xl:text-[2.2rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
                {word}
              </div>
            ))}
-           <div className="text-[1.2rem] xl:text-[1.5rem] font-bold text-[#c2a265] text-center mt-6 leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Nguyễn</div>
-           <div className="text-[1.2rem] xl:text-[1.5rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Ánh</div>
+           <div className="text-[1rem] 2xl:text-[1.5rem] font-bold text-[#c2a265] text-center mt-6 leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Nguyễn</div>
+           <div className="text-[1rem] 2xl:text-[1.5rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Ánh</div>
          </div>
        </div>
 
        {/* Phải - Bùi Thị Xuân */}
-       <div className="hidden lg:flex absolute right-[2%] top-0 bottom-0 flex-row items-center justify-center gap-4 xl:gap-6 pointer-events-none opacity-100 py-4 z-10">
-         <div className="flex flex-col justify-center gap-1 xl:gap-2 h-full">
+       <div className="hidden xl:flex absolute right-[2%] top-0 bottom-0 flex-row items-center justify-center gap-2 2xl:gap-6 pointer-events-none opacity-100 py-4 z-10">
+         <div className="flex flex-col justify-center gap-1 h-full">
            {["Chúa", "Công", "Ta", "Tay", "Kiếm", "Tay", "Cờ", "Mà", "Làm", "Nên", "Sự", "Nghiệp"].map((word, i) => (
-             <div key={`r1-${i}`} className="text-[1rem] xl:text-[1.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+             <div key={`r1-${i}`} className="text-[1rem] 2xl:text-[1.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
                {word}
              </div>
            ))}
          </div>
-         <div className="flex flex-col justify-center gap-1 xl:gap-2 h-full">
+         <div className="flex flex-col justify-center gap-1 h-full">
            {["Trong", "Khi", "Nhà", "Ngươi", "Đi", "Cầu", "Viện", "Ngoại", "Bang", "Làm", "Tan", "Nát", "Cả", "Sơn", "Hà"].map((word, i) => (
-             <div key={`r2-${i}`} className="text-[1rem] xl:text-[1.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+             <div key={`r2-${i}`} className="text-[1rem] 2xl:text-[1.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
                {word}
              </div>
            ))}
          </div>
-         <div className="flex flex-col justify-center gap-1 xl:gap-2 h-full">
+         <div className="flex flex-col justify-center gap-1 h-full">
            {["Đem", "So", "Với", "Chúa", "Công", "Ta", "Ngươi", "Chỉ", "Là", "Nước", "Vũng", "So", "Với", "Ao", "Trời"].map((word, i) => (
-             <div key={`r3-${i}`} className="text-[1rem] xl:text-[1.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
+             <div key={`r3-${i}`} className="text-[1rem] 2xl:text-[1.4rem] font-bold text-[#FFD700] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 6px rgba(0,0,0,1), 0 0 15px rgba(0,0,0,0.9)' }}>
                {word}
              </div>
            ))}
-           <div className="text-[0.9rem] xl:text-[1.1rem] font-bold text-[#c2a265] text-center mt-2 leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Bùi</div>
-           <div className="text-[0.9rem] xl:text-[1.1rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Thị</div>
-           <div className="text-[0.9rem] xl:text-[1.1rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Xuân</div>
+           <div className="text-[0.9rem] 2xl:text-[1.1rem] font-bold text-[#c2a265] text-center mt-2 leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Bùi</div>
+           <div className="text-[0.9rem] 2xl:text-[1.1rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Thị</div>
+           <div className="text-[0.9rem] 2xl:text-[1.1rem] font-bold text-[#c2a265] text-center leading-none" style={{ fontFamily: "'Dancing Script', cursive", textShadow: '2px 2px 4px rgba(0,0,0,1)' }}>Xuân</div>
          </div>
        </div>
 
