@@ -5909,7 +5909,7 @@ const LessonListView = ({ grade, chapterIdx, setLessonIdx, setView, progress, pl
 
   return (
     <div 
-      className="h-full flex items-center justify-center p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
+      className="h-full flex flex-col items-center justify-start p-8 relative overflow-y-auto bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url('${import.meta.env.BASE_URL}ancient_exam_bg.jpg')` }}
     >
        <div className="absolute inset-0 bg-black/60 pointer-events-none z-0" />
@@ -5955,13 +5955,13 @@ const LessonListView = ({ grade, chapterIdx, setLessonIdx, setView, progress, pl
          </div>
        </div>
 
-       <div className="max-w-3xl w-full scroll-bg p-8 md:p-10 rounded-[3rem] text-center shadow-2xl border-blue-900 my-10 relative z-20">
+       <div className="max-w-3xl w-full scroll-bg p-8 md:p-10 rounded-[3rem] text-center shadow-2xl border-blue-900 my-auto shrink-0 relative z-20">
           <h2 className="text-2xl md:text-3xl font-cinzel font-black text-blue-950 mb-2 uppercase tracking-wider drop-shadow-sm">Bài Học (Tuần Tự)</h2>
           <p className="text-amber-900/80 font-bold text-sm uppercase tracking-widest mb-6">
             LỚP {grade} &middot; {chapter.title}
           </p>
 
-          <div className="grid grid-cols-1 gap-3 max-h-[60%] overflow-y-auto custom-scrollbar pr-1">
+          <div className="grid grid-cols-1 gap-3 custom-scrollbar pr-1">
              {chapter.lessons.map((lesson: any, idx: number) => {
                const isUnlocked = idx <= unlockedCount;
                const isDone = idx < unlockedCount;
