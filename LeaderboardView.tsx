@@ -334,37 +334,41 @@ export const LeaderboardView: React.FC<{
 
           {/* Nút hành động */}
           <div className="flex items-center gap-2">
-            <button 
-              onClick={() => setIncludeMockSeeds(!includeMockSeeds)}
-              className={`flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full transition-all border ${
-                includeMockSeeds 
-                  ? 'bg-amber-950 text-amber-300 border-amber-600' 
-                  : 'bg-stone-900 text-stone-400 border-stone-700 hover:text-white'
-              }`}
-              title="Bật/Tắt hiển thị danh tướng mẫu giả lập"
-            >
-              <Filter size={13} />
-              <span className="hidden sm:inline">{includeMockSeeds ? "Tướng Mẫu: Bật" : "Tướng Mẫu: Tắt"}</span>
-            </button>
+            {(player?.playerName?.toLowerCase() === 'admin' || player?.playerName?.toLowerCase() === 'tmt') && (
+              <>
+                <button 
+                  onClick={() => setIncludeMockSeeds(!includeMockSeeds)}
+                  className={`flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full transition-all border ${
+                    includeMockSeeds 
+                      ? 'bg-amber-950 text-amber-300 border-amber-600' 
+                      : 'bg-stone-900 text-stone-400 border-stone-700 hover:text-white'
+                  }`}
+                  title="Bật/Tắt hiển thị danh tướng mẫu giả lập"
+                >
+                  <Filter size={13} />
+                  <span className="hidden sm:inline">{includeMockSeeds ? "Tướng Mẫu: Bật" : "Tướng Mẫu: Tắt"}</span>
+                </button>
 
-            <button 
-              onClick={handleResetLeaderboard}
-              className="flex items-center gap-1.5 text-xs text-red-400 hover:text-white bg-red-950/60 hover:bg-red-900/80 border border-red-700/50 px-3 py-1.5 rounded-full transition-all active:scale-95"
-              title="Reset lại toàn bộ bảng xếp hạng từ đầu (khi bắt đầu mở cổng cho học sinh tham gia)"
-            >
-              <RotateCcw size={13} />
-              <span className="hidden md:inline">Reset BXH</span>
-            </button>
+                <button 
+                  onClick={handleResetLeaderboard}
+                  className="flex items-center gap-1.5 text-xs text-red-400 hover:text-white bg-red-950/60 hover:bg-red-900/80 border border-red-700/50 px-3 py-1.5 rounded-full transition-all active:scale-95"
+                  title="Reset lại toàn bộ bảng xếp hạng từ đầu (khi bắt đầu mở cổng cho học sinh tham gia)"
+                >
+                  <RotateCcw size={13} />
+                  <span className="hidden md:inline">Reset BXH</span>
+                </button>
 
-            <button 
-              onClick={refreshData}
-              disabled={loading}
-              className="flex items-center gap-1.5 text-xs text-stone-300 hover:text-amber-400 bg-stone-900/80 hover:bg-stone-800 border border-stone-700 px-3 py-1.5 rounded-full transition-all active:scale-95"
-              title="Đồng bộ lại dữ liệu mới nhất"
-            >
-              <RefreshCw size={13} className={loading ? "animate-spin text-amber-500" : ""} />
-              <span className="hidden sm:inline">{loading ? "Đang đồng bộ..." : "Đồng Bộ"}</span>
-            </button>
+                <button 
+                  onClick={refreshData}
+                  disabled={loading}
+                  className="flex items-center gap-1.5 text-xs text-stone-300 hover:text-amber-400 bg-stone-900/80 hover:bg-stone-800 border border-stone-700 px-3 py-1.5 rounded-full transition-all active:scale-95"
+                  title="Đồng bộ lại dữ liệu mới nhất"
+                >
+                  <RefreshCw size={13} className={loading ? "animate-spin text-amber-500" : ""} />
+                  <span className="hidden sm:inline">{loading ? "Đang đồng bộ..." : "Đồng Bộ"}</span>
+                </button>
+              </>
+            )}
           </div>
         </div>
       </header>
