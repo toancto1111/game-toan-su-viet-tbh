@@ -1848,9 +1848,9 @@ const App: React.FC = () => {
     // Kiểm tra điều kiện Học Toán cho chương tiếp theo
     let isMathDone = true;
     const unlockedLessons = player.tuLuyenUnlockedLessons || ['B1'];
-    if (nextChapter === 2) isMathDone = unlockedLessons.includes('B8');
-    else if (nextChapter === 3) isMathDone = unlockedLessons.includes('C3_B13');
-    else if (nextChapter === 4) isMathDone = unlockedLessons.includes('C4');
+    if (nextChapter === 2) isMathDone = unlockedLessons.includes('B2');
+    else if (nextChapter === 3) isMathDone = unlockedLessons.includes('B3');
+    else if (nextChapter === 4) isMathDone = unlockedLessons.includes('B4');
 
     setPlayer(prev => {
       const newState = { ...prev };
