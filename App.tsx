@@ -1318,7 +1318,7 @@ const App: React.FC = () => {
   const [userAnswers, setUserAnswers] = useState<Record<number, any>>({});
   const [showFeedback, setShowFeedback] = useState(false);
   const [lastReward, setLastReward] = useState<{ gold: number, ticket?: 'normal' | 'premium', speedLabel?: string } | null>(null);
-  const [sessionRewards, setSessionRewards] = useState({ gold: 0, normal: 0, premium: 0, artifact: 0 });
+  const [sessionRewards, setSessionRewards] = useState({ gold: 0, normal: 0, premium: 0, artifact: 0, legion: 0 });
   const [userDurations, setUserDurations] = useState<Record<number, number>>({});
   const [autoNext, setAutoNext] = useState(false);
   const [showCh9FactionModal, setShowCh9FactionModal] = useState(false);
@@ -1382,7 +1382,7 @@ const App: React.FC = () => {
     setUserDurations({});
     setShowFeedback(false);
     setCorrectTotal(0);
-    setSessionRewards({ gold: 0, normal: 0, premium: 0, artifact: 0 });
+    setSessionRewards({ gold: 0, normal: 0, premium: 0, artifact: 0, legion: 0 });
     setView('quiz-play');
   };
 
@@ -1413,7 +1413,7 @@ const App: React.FC = () => {
     setUserDurations({});
     setShowFeedback(false);
     setCorrectTotal(0);
-    setSessionRewards({ gold: 0, normal: 0, premium: 0, artifact: 0 });
+    setSessionRewards({ gold: 0, normal: 0, premium: 0, artifact: 0, legion: 0 });
     setView('tu-luyen-play');
   };
 
@@ -1433,7 +1433,7 @@ const App: React.FC = () => {
        normal += 1;
     }
     
-    setSessionRewards({ gold, normal, premium, artifact: 0 });
+    setSessionRewards({ gold, normal, premium, artifact: 0, legion: 0 });
     
     setPlayer(prev => {
        const newGold = prev.gold + gold;
@@ -1539,17 +1539,11 @@ const App: React.FC = () => {
     });
 
     let goldEarned = correctCount * 300;
-    let normalTicketsEarned = 0;
-    let premiumTicketsEarned = 0;
+    // Mỗi 5 câu đúng thưởng 1 vé Anh Hào, mỗi 10 câu đúng thưởng 1 vé Danh Tướng
+    let normalTicketsEarned = Math.floor(correctCount / 5);
+    let premiumTicketsEarned = Math.floor(correctCount / 10);
+    let legionTicketsEarned = 0;
 
-    if (percent === 100) {
-       goldEarned += 2000;
-       normalTicketsEarned += 3;
-       premiumTicketsEarned += 1;
-    } else if (percent >= 80) {
-       goldEarned += 1000;
-       normalTicketsEarned += 1;
-    }
     let justUnlockedNextLesson = false;
     let nextLessonName = '';
 
@@ -1557,8 +1551,16 @@ const App: React.FC = () => {
        const newHistory = [...(prev.trialHistory || []), record];
        const correctKey = `g${selectedGrade}-c${selectedMathChapterIdx}-l${selectedMathLessonIdx}`;
        const oldCorrectSet = new Set(prev.mathCorrectQuestions?.[correctKey] || []);
+       
+       const oldTotalCorrect = oldCorrectSet.size;
        newlyCorrectIds.forEach(id => oldCorrectSet.add(id));
        const updatedCorrectIds = Array.from(oldCorrectSet);
+       const newTotalCorrect = updatedCorrectIds.length;
+
+       // Thưởng mốc vượt ải (Quân Đoàn)
+       if (oldTotalCorrect < 20 && newTotalCorrect >= 20) legionTicketsEarned += 1;
+       if (oldTotalCorrect < 40 && newTotalCorrect >= 40) legionTicketsEarned += 1;
+       if (oldTotalCorrect < 60 && newTotalCorrect >= 60) legionTicketsEarned += 1;
 
        const newMathCorrect = {
          ...(prev.mathCorrectQuestions || {}),
@@ -1588,13 +1590,14 @@ const App: React.FC = () => {
           gold: (prev.gold || 0) + goldEarned,
           normalTickets: (prev.normalTickets || 0) + normalTicketsEarned,
           premiumTickets: (prev.premiumTickets || 0) + premiumTicketsEarned,
+          legionTickets: (prev.legionTickets || 0) + legionTicketsEarned,
           mathProgress: newMathProgress,
           mathCorrectQuestions: newMathCorrect,
           trialHistory: newHistory
        };
     });
 
-    setSessionRewards({ gold: goldEarned, normal: normalTicketsEarned, premium: premiumTicketsEarned, artifact: 0 });
+    setSessionRewards({ gold: goldEarned, normal: normalTicketsEarned, premium: premiumTicketsEarned, artifact: 0, legion: legionTicketsEarned });
 
     if (justUnlockedNextLesson) {
        setTimeout(() => {
@@ -6429,7 +6432,7 @@ const QuizSetupView = ({ startQuiz, setView, grade, chapterIdx, lessonIdx, playe
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-             {[10, 15, 20, 30].map(cnt => (
+             {[20, 40, 60].filter(c => c < (remainingQ > 0 ? remainingQ : totalQ)).map(cnt => (
                <button 
                  key={cnt} 
                  onClick={() => startQuiz(cnt)} 
@@ -6581,6 +6584,13 @@ const QuizResultView = ({ correct, total, rewards, setView, player }: any) => {
               <div className="text-amber-400 font-black text-2xl">+{rewards.artifact || 0}</div>
               <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-xl border border-amber-500/50">Mảnh Thần Khí</div>
            </div>
+           {rewards.legion > 0 && (
+              <div className="group relative bg-stone-900 p-4 rounded-2xl border border-rose-500/40 shadow-lg flex flex-col items-center justify-center cursor-pointer">
+                 <img src="/items/legion_ticket.png" alt="Quân Đoàn" className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2 drop-shadow-md group-hover:scale-110 transition-transform" />
+                 <div className="text-rose-400 font-black text-2xl">+{rewards.legion}</div>
+                 <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-xl border border-rose-500/50">Vé Quân Đoàn</div>
+              </div>
+           )}
         </div>
         <div className="flex flex-col md:flex-row justify-center gap-4">
            <button onClick={handleExportExcel} className="bg-green-700 hover:bg-green-600 text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 transition-all text-sm md:text-base">Xuất Excel</button>
