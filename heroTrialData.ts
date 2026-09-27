@@ -22,7 +22,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận Lãng Bạc",
     year: "Năm 42",
     context: "Quân Hán mang quân số áp đảo, vũ khí kim loại và ngựa chiến tiến sang nhằm đè bẹp chính quyền non trẻ của Hai Bà Trưng. Nghĩa quân Hai Bà Trưng tuy anh dũng nhưng trang bị thô sơ, chưa có nhiều kinh nghiệm dàn trận quy mô lớn trước quân chính quy nhà Hán.",
-    recommendedPower: 12000,
+    recommendedPower: 35000,
     enemiesRaw: [
       { name: "Mã Viện", title: "Phục ba Tướng quân", desc: "Tổng chỉ huy quân Hán" },
       { name: "Lưu Long", title: "Phù Lạc hầu", desc: "Phó tướng của Mã Viện" },
@@ -37,7 +37,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận đầm Dạ Trạch",
     year: "548 - 550",
     context: "Quân Lương ban đầu rất mạnh nhưng bị sa lầy vào đầm Dạ Trạch do không quen thuộc địa hình. Triệu Quang Phục lợi dụng đầm lầy hiểm trở để đánh du kích tiêu hao sinh lực địch, cuối cùng phản công khi nội bộ giặc suy yếu.",
-    recommendedPower: 18000,
+    recommendedPower: 45000,
     enemiesRaw: [
       { name: "Trần Bá Tiên", title: "Tư mã Giao Châu", desc: "Tướng thiện chiến nhất chỉ huy vây hãm Dạ Trạch" },
       { name: "Dương Phiêu", title: "Thứ sử Giao Châu", desc: "Chỉ huy chung của nhà Lương" },
@@ -52,7 +52,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận Bạch Đằng lần 1",
     year: "Năm 938",
     context: "Lưu Hoằng Tháo ỷ thế quân đông, thuyền lớn tiến vào Bạch Đằng với ý đồ đánh nhanh. Ngô Quyền đã lường trước, chủ động diệt nội phản, ổn định lòng quân và bày sẵn trận địa cọc ngầm đón lõng giặc.",
-    recommendedPower: 26000,
+    recommendedPower: 60000,
     enemiesRaw: [
       { name: "Lưu Hoằng Tháo", title: "Giao Châu thứ sử", desc: "Chủ soái đạo quân Nam Hán tử trận tại Bạch Đằng" },
       { name: "Lưu Nghiễm", title: "Hoàng đế Nam Hán", desc: "Cha của Hoằng Tháo, dẫn đại quân đóng ở Hải Môn" },
@@ -67,7 +67,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận Bạch Đằng lần 2",
     year: "Năm 981",
     context: "Nhà Tống lợi dụng Đại Cồ Việt rối ren để xâm lược. Lê Hoàn kế thừa chiến thuật cọc ngầm của Ngô Quyền, nhử thủy quân địch vào bãi cọc để tiêu diệt, làm phá sản hoàn toàn kế hoạch phối hợp thủy bộ.",
-    recommendedPower: 38000,
+    recommendedPower: 80000,
     enemiesRaw: [
       { name: "Hầu Nhân Bảo", title: "Tổng chỉ huy thủy quân", desc: "Tử trận tại Bạch Đằng" },
       { name: "Lưu Trừng", title: "Phó tướng thủy quân", desc: "Khâm châu Lộ bố hải bộ trù sứ" },
@@ -82,7 +82,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận Chi Lăng lần 1",
     year: "Năm 981",
     context: "Cánh quân bộ Tống đóng ở Lạng Sơn nghe tin thủy quân bị diệt thì nhuệ khí suy sụp. Lê Hoàn chớp thời cơ dốc toàn lực lượng lên ải Chi Lăng đánh một trận phủ đầu khiến quân Tống tan vỡ.",
-    recommendedPower: 55000,
+    recommendedPower: 110000,
     enemiesRaw: [
       { name: "Tôn Toàn Hưng", title: "Tổng chỉ huy bộ binh", desc: "Tiến vào Lạng Sơn" },
       { name: "Trần Khâm Tộ", title: "Phó tướng bộ binh", desc: "Trực tiếp đụng độ quân Tiền Lê" },
@@ -97,7 +97,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận Ung Châu",
     year: "Năm 1075",
     context: "Nhà Tống tập trung vật lực lớn tại Ung Châu chuẩn bị xâm lược. Lý Thường Kiệt dùng chiến thuật 'Tiên phát chế nhân', bất ngờ đưa đại quân vây hãm và thiêu rụi toàn bộ hậu cần của địch.",
-    recommendedPower: 75000,
+    recommendedPower: 150000,
     enemiesRaw: [
       { name: "Tô Giám", title: "Tri châu Ung Châu", desc: "Chỉ huy tử thủ và tự sát khi thành vỡ" },
       { name: "Trương Thủ Tiết", title: "Tuần kiểm Đô giám", desc: "Đem viện binh cứu nhưng bị phục kích ở ải Côn Lôn" },
@@ -112,7 +112,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận phòng tuyến Như Nguyệt",
     year: "Năm 1077",
     context: "Đạo quân Tống hừng hực khí thế báo thù nhưng bị chặn đứng tại bờ bắc sông Như Nguyệt. Không thể vượt sông, quân Tống đóng trại chờ đợi, dần bị thời tiết và các cuộc tập kích ban đêm làm kiệt quệ.",
-    recommendedPower: 100000,
+    recommendedPower: 200000,
     enemiesRaw: [
       { name: "Quách Quỳ", title: "Đô tổng quản", desc: "Tổng chỉ huy đại quân Tống" },
       { name: "Triệu Tiết", title: "Phó đô tổng quản", desc: "Phó tướng của Quách Quỳ" },
@@ -127,7 +127,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận Bình Lệ Nguyên",
     year: "Năm 1258",
     context: "Cuộc đụng độ lớn đầu tiên với kỵ binh Mông Cổ. Vua Trần Thái Tông thấy thế giặc quá mạnh nên quyết định không dốc túi đánh, mà tổ chức rút lui có trật tự để thực hiện kế 'vườn không nhà trống'.",
-    recommendedPower: 130000,
+    recommendedPower: 280000,
     enemiesRaw: [
       { name: "Ngột Lương Hợp Thai", title: "Chủ soái", desc: "Chủ soái đạo quân Mông Cổ (Uriyangkhadai)" },
       { name: "A Thuật", title: "Tướng tiên phong", desc: "Con trai của Ngột Lương Hợp Thai, dũng mãnh (Aju)" },
@@ -142,7 +142,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận Đông Bộ Đầu",
     year: "Năm 1258",
     context: "Quân Mông Cổ chiếm Thăng Long trống không nên rơi vào nạn đói. Lợi dụng giặc suy yếu và mệt mỏi, quân Trần dùng thuyền ngược sông Hồng bất ngờ đổ bộ vào bến Đông Bộ Đầu, đánh tan địch.",
-    recommendedPower: 170000,
+    recommendedPower: 400000,
     enemiesRaw: [
       { name: "Ngột Lương Hợp Thai", title: "Chủ soái", desc: "Chủ soái đạo quân Mông Cổ" },
       { name: "A Thuật", title: "Tướng tiên phong", desc: "Tướng tiên phong dũng mãnh" },
@@ -157,7 +157,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận Hàm Tử",
     year: "Năm 1285",
     context: "Đạo quân thiện chiến của Toa Đô di chuyển dài ngày từ phía Nam lên, bị mệt mỏi và chia cắt. Trần Nhật Duật đã tổ chức chặn đánh ác liệt tại cửa Hàm Tử, cắt đứt hoàn toàn liên lạc của giặc.",
-    recommendedPower: 220000,
+    recommendedPower: 580000,
     enemiesRaw: [
       { name: "Toa Đô", title: "Nguyên soái", desc: "Chỉ huy cánh quân từ Chiêm Thành đánh lên (Sogetu)" },
       { name: "Ô Mã Nhi", title: "Phó tướng", desc: "Rất thiện chiến trên thủy chiến (Omar)" },
@@ -172,7 +172,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận Chương Dương",
     year: "Năm 1285",
     context: "Căn cứ thủy quân Chương Dương của giặc bị suy yếu do thiếu lương. Quân Trần dưới sự chỉ huy của Trần Quang Khải đánh úp chớp nhoáng, dọn đường giải phóng Thăng Long.",
-    recommendedPower: 280000,
+    recommendedPower: 800000,
     enemiesRaw: [
       { name: "Thoát Hoan", title: "Trấn Nam Vương", desc: "Tổng chỉ huy toàn bộ quân Nguyên (Toghon)" },
       { name: "A Lý Hải Nha", title: "Hữu Thừa tướng", desc: "Phó tướng mưu lược số 1 (Ariq Qaya)" },
@@ -187,7 +187,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận Tây Kết",
     year: "Năm 1285",
     context: "Toa Đô cố gắng hội quân với Thoát Hoan nhưng không biết hắn đã bỏ chạy. Quân Trần bao vây trùng trùng điệp điệp, chém đầu Toa Đô. Ô Mã Nhi dùng thuyền nhỏ trốn chạy ra biển.",
-    recommendedPower: 350000,
+    recommendedPower: 1100000,
     enemiesRaw: [
       { name: "Toa Đô", title: "Nguyên soái", desc: "Bị chém đầu tại trận Tây Kết" },
       { name: "Ô Mã Nhi", title: "Phó tướng", desc: "Trốn chạy ra biển trên thuyền nhỏ" },
@@ -202,7 +202,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận Vân Đồn",
     year: "Năm 1287",
     context: "Nhược điểm chí mạng của quân Nguyên là lương thảo. Trần Khánh Dư bỏ qua Ô Mã Nhi, chờ đoàn thuyền chở lương khổng lồ của Trương Văn Hổ đi qua để tiêu diệt, đốt sạch lương thảo.",
-    recommendedPower: 450000,
+    recommendedPower: 1500000,
     enemiesRaw: [
       { name: "Trương Văn Hổ", title: "Phó Đô vạn hộ", desc: "Chỉ huy trưởng đoàn thuyền lương" },
       { name: "Ô Mã Nhi", title: "Tướng hộ tống", desc: "Kiêu ngạo tiến đi trước bỏ mặc thuyền lương" },
@@ -217,7 +217,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận thủy chiến Bạch Đằng lần 3",
     year: "Năm 1288",
     context: "Mất sạch lương thảo, quân Nguyên phải rút quân. Thủy quân rút qua sông Bạch Đằng, bị nhử vào bãi cọc lúc triều rút. Quân Trần dùng hỏa công và đổ bộ đánh giáp lá cà tiêu diệt toàn bộ.",
-    recommendedPower: 580000,
+    recommendedPower: 2000000,
     enemiesRaw: [
       { name: "Ô Mã Nhi", title: "Tổng chỉ huy thủy quân", desc: "Bị bắt sống" },
       { name: "Phàn Tiếp", title: "Phó tướng", desc: "Trúng tên bị thương, bị bắt sống" },
@@ -232,7 +232,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận Tốt Động - Chúc Động",
     year: "Năm 1426",
     context: "Quân Minh có viện binh nên chủ quan định gài bẫy ta. Nhưng nghĩa quân Lam Sơn bắt được thám tử địch, tương kế tựu kế dụ toàn bộ 5 vạn quân Minh lọt vào vùng đầm lầy lội để tiêu diệt.",
-    recommendedPower: 750000,
+    recommendedPower: 2600000,
     enemiesRaw: [
       { name: "Vương Thông", title: "Tổng binh", desc: "Tổng chỉ huy quân Minh, bị thương trong trận này" },
       { name: "Mã Kỳ", title: "Tham tướng", desc: "Bị quân Lam Sơn đánh tơi bời" },
@@ -247,7 +247,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận ải Chi Lăng lần 2",
     year: "Năm 1427",
     context: "Viện binh nhà Minh hùng hậu tràn sang. Nghĩa quân Lam Sơn giả thua bỏ chạy để nhử cánh kỵ binh đi đầu của kiêu tướng Liễu Thăng lọt vào ổ phục kích ở Chi Lăng.",
-    recommendedPower: 950000,
+    recommendedPower: 3400000,
     enemiesRaw: [
       { name: "Liễu Thăng", title: "An Viễn hầu", desc: "Trực tiếp dẫn quân đi trước và bị chém đầu ở đồi Mã Yên" },
       { name: "Lương Minh", title: "Bảo Định bá", desc: "Lên thay Liễu Thăng được vài ngày thì tử trận" },
@@ -262,7 +262,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận Xương Giang",
     year: "Năm 1427",
     context: "Đạo quân Liễu Thăng vỡ nát, lê lết đến Xương Giang thì thành đã bị ta chiếm. Quân Minh bị dồn ra cánh đồng trống vắng, kiệt sức và bị đại quân Lam Sơn vây bọc tiêu diệt sạch.",
-    recommendedPower: 1200000,
+    recommendedPower: 4400000,
     enemiesRaw: [
       { name: "Thôi Tụ", title: "Đô đốc", desc: "Tổng chỉ huy tàn quân, bị chém vì không chịu quỳ" },
       { name: "Hoàng Phúc", title: "Binh bộ Thượng thư", desc: "Bị bắt sống, Lê Lợi tha mạng cho về nước" },
@@ -277,7 +277,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận Rạch Gầm - Xoài Mút",
     year: "Năm 1785",
     context: "Quân Xiêm vô cùng kiêu ngạo. Nguyễn Huệ giấu đại bác ở bờ sông rậm rạp, dùng thuyền nhỏ dụ địch đuổi theo rồi nhất tề khai hỏa pháo tiễu trừ 5 vạn quân Xiêm La.",
-    recommendedPower: 1550000,
+    recommendedPower: 5600000,
     enemiesRaw: [
       { name: "Chiêu Tăng", title: "Chủ soái", desc: "Chỉ huy quân Xiêm La do vua Rama I cử sang" },
       { name: "Chiêu Sương", title: "Phó soái", desc: "Phó tướng quân Xiêm La" },
@@ -292,7 +292,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận Hà Hồi - Ngọc Hồi",
     year: "Năm 1789",
     context: "Quân Thanh đóng đồn kiên cố ở phía Nam Thăng Long, ỷ thế quân đông trúng dịp Tết. Quang Trung hành quân thần tốc, dùng rơm ướt làm mộc đỡ đạn hỏa khí, đánh giáp lá cà đè bẹp hệ thống phòng thủ.",
-    recommendedPower: 2000000,
+    recommendedPower: 7000000,
     enemiesRaw: [
       { name: "Tôn Sĩ Nghị", title: "Lưỡng Quảng tổng đốc", desc: "Tổng chỉ huy 29 vạn quân Thanh" },
       { name: "Hứa Thế Hanh", title: "Tả dực bảo dũng hầu", desc: "Trực tiếp chỉ huy đồn Ngọc Hồi, tử trận" },
@@ -307,7 +307,7 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     name: "Trận Đống Đa",
     year: "Năm 1789",
     context: "Đô đốc Long đi đường tắt, tập kích bất ngờ sáng mùng 5 Tết. Đồn Khương Thượng vỡ, quân Tây Sơn đốt lửa bện rơm hình rồng tiến vào, uy hiếp đại bản doanh của Tôn Sĩ Nghị.",
-    recommendedPower: 2600000,
+    recommendedPower: 9000000,
     enemiesRaw: [
       { name: "Sầm Nghi Đống", title: "Thái thú Điền Châu", desc: "Chỉ huy đồn Khương Thượng, thắt cổ ở Loa Sơn" },
       { name: "Tôn Sĩ Nghị", title: "Tổng đốc", desc: "Hoảng loạn bỏ chạy không kịp mặc áo giáp" },
