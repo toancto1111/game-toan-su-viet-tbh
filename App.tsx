@@ -2768,10 +2768,14 @@ const App: React.FC = () => {
           </button>
         );
       })()}
-      {/* AI Chatbot - ẩn khi chiến đấu */}
-      {showChatbot && view === 'chapter-hub' && <ChatbotWidget />}
+      {/* AI Chatbot - ẩn khi chiến đấu nhưng giữ nguyên state để không bị reset */}
+      {view !== 'auth' && (
+        <div style={{ display: showChatbot ? 'block' : 'none' }}>
+          <ChatbotWidget />
+        </div>
+      )}
       {isInstructionsOpen && <InstructionsModal onClose={() => setIsInstructionsOpen(false)} />}
-      
+
       {customAlert.visible && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm" onClick={() => setCustomAlert({...customAlert, visible: false})}>
           <div className="bg-[#1a1005] border-2 border-amber-500/80 p-8 md:p-10 rounded-2xl max-w-2xl w-[90%] mx-4 shadow-[0_0_60px_rgba(245,158,11,0.3)] text-center animate-in zoom-in-95 duration-200 relative overflow-hidden" onClick={e => e.stopPropagation()}>
