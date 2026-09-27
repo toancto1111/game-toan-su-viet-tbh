@@ -559,7 +559,14 @@ export const ChatbotWidget: React.FC = () => {
   
   const createNewSession = () => {
     setCurrentSessionId('session-' + Date.now());
-    setMessages([CHATBOT_WELCOME_MESSAGE]);
+    setMessages([
+      {
+        id: 'msg-' + Date.now(),
+        html: markdownToHtml(CHATBOT_WELCOME_MESSAGE),
+        sender: 'ai',
+        timestamp: new Date(),
+      },
+    ]);
     setIsHistoryOpen(false);
   };
   const [messages, setMessages] = useState<Message[]>([
