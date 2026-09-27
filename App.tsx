@@ -1424,13 +1424,18 @@ const App: React.FC = () => {
     let premium = 0;
     
     gold += correctCount * 250;
+    
+    // Cày cuốc: 1 câu đúng = 1 vé Anh Hào, 3 câu đúng = 1 vé Danh Tướng
+    normal += correctCount;
+    premium += Math.floor(correctCount / 3);
+    
+    // Thưởng vượt mốc xuất sắc
     if (percent === 100) {
        gold += 2000;
-       normal += 3;
-       premium += 1;
+       premium += 2;
     } else if (percent >= 80) {
        gold += 1000;
-       normal += 1;
+       normal += 2;
     }
     
     setSessionRewards({ gold, normal, premium, artifact: 0, legion: 0 });
@@ -1539,9 +1544,9 @@ const App: React.FC = () => {
     });
 
     let goldEarned = correctCount * 300;
-    // Mỗi 5 câu đúng thưởng 1 vé Anh Hào, mỗi 10 câu đúng thưởng 1 vé Danh Tướng
-    let normalTicketsEarned = Math.floor(correctCount / 5);
-    let premiumTicketsEarned = Math.floor(correctCount / 10);
+    // Cày cuốc: 1 câu đúng = 1 vé Anh Hào, 3 câu đúng = 1 vé Danh Tướng
+    let normalTicketsEarned = correctCount;
+    let premiumTicketsEarned = Math.floor(correctCount / 3);
     let legionTicketsEarned = 0;
 
     let justUnlockedNextLesson = false;
