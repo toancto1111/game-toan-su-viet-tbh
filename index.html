@@ -830,20 +830,16 @@
 
       // FIT mode (Letterbox): scale sao cho vừa màn hình, giữ nguyên tỉ lệ 16:9
       // (để không bị mất UI/nút bấm ở các cạnh màn hình)
+      // THAY ĐỔI: Sử dụng STRETCH mode để không có viền đen
       var scaleX = screenW / DESIGN_W;
       var scaleY = screenH / DESIGN_H;
-      var scale = Math.min(scaleX, scaleY);
-
-      // Căn giữa (tạo viền đen 2 bên hoặc trên dưới tùy tỉ lệ)
-      var offsetX = (screenW - DESIGN_W * scale) / 2;
-      var offsetY = (screenH - DESIGN_H * scale) / 2;
-
+      
       root.style.width          = DESIGN_W + 'px';
       root.style.height         = DESIGN_H + 'px';
-      root.style.transform      = 'scale(' + scale + ')';
+      root.style.transform      = 'scale(' + scaleX + ', ' + scaleY + ')';
       root.style.transformOrigin = 'top left';
-      root.style.left           = offsetX + 'px';
-      root.style.top            = offsetY + 'px';
+      root.style.left           = '0px';
+      root.style.top            = '0px';
       root.style.position       = 'fixed';
       root.style.overflow        = 'hidden';
     }
