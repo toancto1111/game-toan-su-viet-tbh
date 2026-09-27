@@ -27,6 +27,8 @@ export const AdminView: React.FC<{ setView: (v: string) => void }> = ({ setView 
   const [loading, setLoading] = useState(false);
   const [records, setRecords] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<'thi_luyen' | 'giftcode' | 'analytics' | 'chat-logs'>('analytics');
+  const [chatSessions, setChatSessions] = useState<ChatSession[]>([]);
+  const [selectedChatSession, setSelectedChatSession] = useState<ChatSession | null>(null);
   const [giftCodes, setGiftCodes] = useState<GiftCode[]>([]);
   const [newCodeStr, setNewCodeStr] = useState('');
   const [newRewards, setNewRewards] = useState<GiftCodeReward[]>([]);
@@ -130,6 +132,20 @@ export const AdminView: React.FC<{ setView: (v: string) => void }> = ({ setView 
       setAnalyticsLoading(false);
     };
     load();
+  }, [activeTab]);
+
+  // Load chat sessions khi chuyển sang tab chat-logs
+  useEffect(() => {
+    if (activeTab !== 'chat-logs') return;
+    const loadChats = async () => {
+      try {
+        const chats = await getAllChatSessions();
+        setChatSessions(chats);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    loadChats();
   }, [activeTab]);
 
   const handleExportAnalytics = () => {

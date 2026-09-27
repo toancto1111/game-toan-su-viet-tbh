@@ -540,13 +540,7 @@ export const ChatbotWidget: React.FC = () => {
   const [chatSessions, setChatSessions] = useState<ChatSession[]>([]);
   const username = localStorage.getItem('sv-session-v2') || 'guest_' + Date.now();
   
-  // Load History on Mount
-  useEffect(() => {
-    if (username.startsWith('guest_')) return;
-    getPlayerChatSessions(username).then(sessions => {
-      setChatSessions(sessions);
-    });
-  }, [username]);
+  // Load History Logic moved down
 
 
 
@@ -578,6 +572,20 @@ export const ChatbotWidget: React.FC = () => {
     },
   ]);
   const [inputValue, setInputValue] = useState('');
+
+  // Load History on Mount (Auto-load latest session)
+  useEffect(() => {
+    if (username.startsWith('guest_')) return;
+    getPlayerChatSessions(username).then(sessions => {
+      setChatSessions(sessions);
+      if (sessions.length > 0) {
+        // Tự động load phiên chat gần nhất (sessions đã được sort theo updatedAt giảm dần từ Firebase)
+        const latestSession = sessions[0];
+        setCurrentSessionId(latestSession.id);
+        setMessages(latestSession.messages);
+      }
+    });
+  }, [username]);
 
   // Auto-save Session on messages change (Debounced)
   useEffect(() => {
