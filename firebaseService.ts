@@ -545,3 +545,88 @@ export const updateArenaDefenseFormation = async (uid: string, playerName: strin
     return false;
   }
 };
+
+
+// ==================== AI CHAT HISTORY & CACHING (CLOUD) ====================
+
+export interface ChatMessage {
+  id: string;
+  html: string;
+  sender: 'user' | 'ai';
+  timestamp: number;
+}
+
+export interface ChatSession {
+  id: string;
+  uid: string;
+  playerName: string;
+  title: string;
+  messages: ChatMessage[];
+  updatedAt: number;
+}
+
+export const saveChatSession = async (session: ChatSession): Promise<boolean> => {
+  if (!db || session.uid.startsWith('guest_')) return false;
+  try {
+    const docRef = doc(db, 'chat_sessions', session.id);
+    await setDoc(docRef, { ...session, updatedAt: Date.now() }, { merge: true });
+    return true;
+  } catch (error) {
+    console.error('Lỗi lưu lịch sử chat:', error);
+    return false;
+  }
+};
+
+export const getPlayerChatSessions = async (uid: string): Promise<ChatSession[]> => {
+  if (!db || uid.startsWith('guest_')) return [];
+  try {
+    const q = query(collection(db, 'chat_sessions'), where('uid', '==', uid), orderBy('updatedAt', 'desc'), limit(20));
+    const snapshot = await getDocs(q);
+    const sessions: ChatSession[] = [];
+    snapshot.forEach(docSnap => sessions.push(docSnap.data() as ChatSession));
+    return sessions;
+  } catch (error) {
+    console.error('Lỗi lấy lịch sử chat:', error);
+    return [];
+  }
+};
+
+export const getAllChatSessions = async (): Promise<ChatSession[]> => {
+  if (!db) return [];
+  try {
+    const q = query(collection(db, 'chat_sessions'), orderBy('updatedAt', 'desc'), limit(100));
+    const snapshot = await getDocs(q);
+    const sessions: ChatSession[] = [];
+    snapshot.forEach(docSnap => sessions.push(docSnap.data() as ChatSession));
+    return sessions;
+  } catch (error) {
+    console.error('Lỗi lấy tất cả lịch sử chat:', error);
+    return [];
+  }
+};
+
+export const getAICache = async (questionHash: string): Promise<string | null> => {
+  if (!db) return null;
+  try {
+    const docRef = doc(db, 'ai_cache', questionHash);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      await setDoc(docRef, { hits: (docSnap.data().hits || 0) + 1, lastUsedAt: Date.now() }, { merge: true });
+      return docSnap.data().answer;
+    }
+    return null;
+  } catch (error) {
+    console.error('Lỗi đọc AI Cache:', error);
+    return null;
+  }
+};
+
+export const saveAICache = async (questionHash: string, question: string, answer: string): Promise<void> => {
+  if (!db) return;
+  try {
+    const docRef = doc(db, 'ai_cache', questionHash);
+    await setDoc(docRef, { question, answer, hits: 1, createdAt: Date.now(), lastUsedAt: Date.now() }, { merge: true });
+  } catch (error) {
+    console.error('Lỗi lưu AI Cache:', error);
+  }
+};

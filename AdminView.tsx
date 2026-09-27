@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, Download, Database } from 'lucide-react';
-import { getAllTrialRecords, fetchCloudGiftCodes, saveCloudGiftCode, deleteCloudGiftCode, fetchAllStudentAnalytics, StudentAnalytics } from './firebaseService';
+import { getAllTrialRecords, getAllChatSessions, ChatSession , fetchCloudGiftCodes, saveCloudGiftCode, deleteCloudGiftCode, fetchAllStudentAnalytics, StudentAnalytics } from './firebaseService';
 import * as XLSX from 'xlsx';
 import { GiftCode, GiftCodeReward } from './types';
 import { Plus, Trash2, Gift, Code } from 'lucide-react';
@@ -238,7 +238,55 @@ export const AdminView: React.FC<{ setView: (v: string) => void }> = ({ setView 
       <div className="flex-1 p-6 overflow-auto">
 
         {/* ===== TAB: ANALYTICS HỌC SINH ===== */}
-        {activeTab === 'analytics' && (
+        {/* Tab Chat Logs */}
+          {activeTab === 'chat-logs' && (
+            <div className="space-y-4">
+              <h3 className="text-xl font-bold text-amber-400">Giám sát AI Chat (Gần nhất)</h3>
+              
+              <div className="flex gap-4">
+                {/* Cột danh sách */}
+                <div className="w-1/3 bg-black/40 rounded-lg p-2 overflow-y-auto" style={{ maxHeight: '600px' }}>
+                  {chatSessions.length === 0 ? <div className="text-gray-400 p-4">Chưa có lịch sử hội thoại nào.</div> : chatSessions.map(session => (
+                    <div 
+                      key={session.id} 
+                      onClick={() => setSelectedChatSession(session)}
+                      className={`p-3 mb-2 rounded cursor-pointer transition-colors ${selectedChatSession?.id === session.id ? 'bg-amber-900/40 border border-amber-500/50' : 'bg-white/5 hover:bg-white/10'}`}
+                    >
+                      <div className="font-bold text-amber-300">{session.playerName}</div>
+                      <div className="text-sm text-gray-300 truncate">{session.title}</div>
+                      <div className="text-xs text-gray-500 mt-1">{new Date(session.updatedAt).toLocaleString('vi-VN')}</div>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Cột chi tiết */}
+                <div className="w-2/3 bg-black/40 rounded-lg p-4 flex flex-col" style={{ height: '600px' }}>
+                  {!selectedChatSession ? (
+                    <div className="flex-1 flex items-center justify-center text-gray-500 italic">Chọn một phiên chat để xem chi tiết...</div>
+                  ) : (
+                    <>
+                      <div className="border-b border-white/10 pb-2 mb-4">
+                        <h4 className="font-bold text-lg text-amber-400">{selectedChatSession.playerName}</h4>
+                        <div className="text-sm text-gray-400">{selectedChatSession.title}</div>
+                      </div>
+                      <div className="flex-1 overflow-y-auto space-y-4 pr-2">
+                        {selectedChatSession.messages.map((msg, idx) => (
+                          <div key={msg.id || idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                            <div 
+                              className={`max-w-[85%] rounded-lg p-3 ${msg.sender === 'user' ? 'bg-indigo-600/50 text-white rounded-tr-none' : 'bg-amber-900/50 text-amber-50 rounded-tl-none border border-amber-500/30'}`}
+                              dangerouslySetInnerHTML={{ __html: msg.html }}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'analytics' && (
           <div className="max-w-7xl mx-auto">
             {/* Header + Controls */}
             <div className="flex flex-wrap gap-4 items-center justify-between mb-6">

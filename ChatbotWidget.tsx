@@ -3,6 +3,7 @@ import { Bot, GraduationCap, X, ChevronDown, Paperclip, Send, Image as ImageIcon
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { CHATBOT_SYSTEM_PROMPT, CHATBOT_WELCOME_MESSAGE } from './chatbotPrompt';
 import { INITIAL_HEROES as heroes } from './constants';
+import { getAICache, saveAICache, saveChatSession, getPlayerChatSessions, ChatSession } from './firebaseService';
 import { CHAPTER_NAMES } from './geminiService';
 import { Hero } from './types';
 import { GeometryRenderer } from './GeometryRenderer';
@@ -518,8 +519,78 @@ interface Message {
 // ─── Gợi ý nhanh (Đã bị loại bỏ theo yêu cầu để tăng diện tích) ──────────
 
 // ─── Component ───────────────────────────────────────────────────────────────
+const cyrb53 = (str: string, seed = 0) => {
+  let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+  for(let i = 0, ch; i < str.length; i++) {
+      ch = str.charCodeAt(i);
+      h1 = Math.imul(h1 ^ ch, 2654435761);
+      h2 = Math.imul(h2 ^ ch, 1597334677);
+  }
+  h1  = Math.imul(h1 ^ (h1 >>> 16), 2246822507);
+  h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2  = Math.imul(h2 ^ (h2 >>> 16), 2246822507);
+  h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return 4294967296 * (2097151 & h2) + (h1 >>> 0);
+};
+
 export const ChatbotWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [currentSessionId, setCurrentSessionId] = useState<string>(() => 'session-' + Date.now());
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [chatSessions, setChatSessions] = useState<ChatSession[]>([]);
+  const username = localStorage.getItem('sv-session-v2') || 'guest_' + Date.now();
+  
+  // Load History on Mount
+  useEffect(() => {
+    if (username.startsWith('guest_')) return;
+    getPlayerChatSessions(username).then(sessions => {
+      setChatSessions(sessions);
+    });
+  }, [username]);
+
+  // Auto-save Session on messages change (Debounced)
+  useEffect(() => {
+    if (messages.length <= 1 || username.startsWith('guest_')) return;
+    
+    const timer = setTimeout(() => {
+      const title = messages[1]?.html.replace(/<[^>]+>/g, '').substring(0, 30) || 'Hội thoại mới';
+      const session: ChatSession = {
+        id: currentSessionId,
+        uid: username,
+        playerName: username,
+        title: title + (title.length >= 30 ? '...' : ''),
+        messages: messages,
+        updatedAt: Date.now()
+      };
+      saveChatSession(session);
+      
+      // Update local state without fetching
+      setChatSessions(prev => {
+        const idx = prev.findIndex(s => s.id === session.id);
+        if (idx >= 0) {
+          const newArr = [...prev];
+          newArr[idx] = session;
+          return newArr.sort((a, b) => b.updatedAt - a.updatedAt);
+        }
+        return [session, ...prev];
+      });
+    }, 2000);
+    
+    return () => clearTimeout(timer);
+  }, [messages, currentSessionId, username]);
+
+  // Load a specific session
+  const loadSession = (session: ChatSession) => {
+    setCurrentSessionId(session.id);
+    setMessages(session.messages);
+    setIsHistoryOpen(false);
+  };
+  
+  const createNewSession = () => {
+    setCurrentSessionId('session-' + Date.now());
+    setMessages([CHATBOT_WELCOME_MESSAGE]);
+    setIsHistoryOpen(false);
+  };
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'msg-0',
@@ -663,6 +734,22 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
           );
         };
 
+                // ⚡ 2.5 Kiểm tra Cache
+        let isCacheHit = false;
+        let questionHash = '';
+        if (!currentImage) {
+          questionHash = cyrb53(promptWithContext.trim().toLowerCase()).toString();
+          const cachedAnswer = await getAICache(questionHash);
+          if (cachedAnswer) {
+            flushRender(cachedAnswer);
+            setMessages(prev =>
+              prev.map(m => (m.id === aiMsgId ? { ...m, isStreaming: false } : m))
+            );
+            setIsTyping(false);
+            return;
+          }
+        }
+
         const streamResult = await streamMessageWithKeyRotation(promptWithContext, currentImage, accumulatedText => {
           pendingText = accumulatedText;
           const now = Date.now();
@@ -684,6 +771,10 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
         setMessages(prev =>
           prev.map(m => (m.id === aiMsgId ? { ...m, isStreaming: false, isTruncated: streamResult.isTruncated } : m))
         );
+
+        if (!currentImage && questionHash && pendingText && !streamResult.isTruncated) {
+          await saveAICache(questionHash, promptWithContext, pendingText);
+        }
       }
     } catch (err: any) {
       const errMsg = err?.message || String(err);
@@ -1212,10 +1303,51 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
                 </div>
               </div>
             </div>
-            <button className="cb-close-btn" onClick={() => setIsOpen(false)}>
-              <ChevronDown size={20} />
-            </button>
+            
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button 
+                onClick={() => setIsHistoryOpen(!isHistoryOpen)}
+                style={{ background: 'none', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: '4px', padding: '2px 8px', fontSize: '0.8rem', cursor: 'pointer' }}
+              >
+                Lịch sử
+              </button>
+              <button className="cb-close-btn" onClick={() => setIsOpen(false)}>
+                <ChevronDown size={20} />
+              </button>
+            </div>
           </div>
+
+          {/* Lịch sử Sidebar Overlay */}
+          {isHistoryOpen && (
+            <div style={{ position: 'absolute', inset: '60px 0 0 0', background: 'rgba(26, 16, 5, 0.95)', zIndex: 10, display: 'flex', flexDirection: 'column', color: 'white', padding: '16px', backdropFilter: 'blur(4px)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                <h3 style={{ margin: 0, fontSize: '1rem', color: '#fbbf24' }}>Lịch sử bài học</h3>
+                <button onClick={createNewSession} style={{ background: '#fbbf24', color: '#1a1005', border: 'none', padding: '6px 12px', borderRadius: '16px', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.8rem' }}>
+                  + Cuộc trò chuyện mới
+                </button>
+              </div>
+              <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '8px', paddingRight: '4px' }}>
+                {chatSessions.length === 0 ? (
+                  <div style={{ textAlign: 'center', color: '#9ca3af', marginTop: '20px' }}>Chưa có lịch sử học tập.</div>
+                ) : (
+                  chatSessions.map(session => (
+                    <div 
+                      key={session.id} 
+                      onClick={() => loadSession(session)}
+                      style={{ padding: '12px', background: currentSessionId === session.id ? 'rgba(251, 191, 36, 0.15)' : 'rgba(255,255,255,0.05)', borderRadius: '8px', cursor: 'pointer', border: currentSessionId === session.id ? '1px solid rgba(251, 191, 36, 0.5)' : '1px solid transparent', transition: 'all 0.2s' }}
+                    >
+                      <div style={{ fontSize: '0.9rem', fontWeight: '500', color: currentSessionId === session.id ? '#fbbf24' : '#e5e7eb', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        {session.title}
+                      </div>
+                      <div style={{ fontSize: '0.75rem', color: '#9ca3af', marginTop: '4px' }}>
+                        {new Date(session.updatedAt).toLocaleString('vi-VN')}
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          )}
 
           {/* API key warning */}
           {!hasRealKeys && (
