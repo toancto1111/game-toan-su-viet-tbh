@@ -293,7 +293,14 @@ const streamMessageWithKeyRotation = async (
 };
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
-const formatTime = (d: Date) => d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+const formatTime = (d: Date | string | number) => {
+  try {
+    const dateObj = new Date(d);
+    return dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  } catch {
+    return '';
+  }
+};
 
 const sanitizeSvg = (svgStr: string): string => {
   return svgStr

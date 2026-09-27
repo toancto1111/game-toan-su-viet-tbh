@@ -569,7 +569,9 @@ export const saveChatSession = async (session: ChatSession): Promise<boolean> =>
   if (!db || session.uid.startsWith('guest_')) return false;
   try {
     const docRef = doc(db, 'chat_sessions', session.id);
-    await setDoc(docRef, { ...session, updatedAt: Date.now() }, { merge: true });
+    // Sanitize to remove undefined values (like isStreaming) that Firestore rejects
+    const sanitizedSession = JSON.parse(JSON.stringify(session));
+    await setDoc(docRef, { ...sanitizedSession, updatedAt: Date.now() }, { merge: true });
     return true;
   } catch (error) {
     console.error('Lỗi lưu lịch sử chat:', error);
@@ -580,11 +582,12 @@ export const saveChatSession = async (session: ChatSession): Promise<boolean> =>
 export const getPlayerChatSessions = async (uid: string): Promise<ChatSession[]> => {
   if (!db || uid.startsWith('guest_')) return [];
   try {
-    const q = query(collection(db, 'chat_sessions'), where('uid', '==', uid), orderBy('updatedAt', 'desc'), limit(20));
+    const q = query(collection(db, 'chat_sessions'), where('uid', '==', uid), limit(50));
     const snapshot = await getDocs(q);
     const sessions: ChatSession[] = [];
     snapshot.forEach(docSnap => sessions.push(docSnap.data() as ChatSession));
-    return sessions;
+    // Sort in memory to avoid needing composite index in Firestore
+    return sessions.sort((a, b) => b.updatedAt - a.updatedAt);
   } catch (error) {
     console.error('Lỗi lấy lịch sử chat:', error);
     return [];
