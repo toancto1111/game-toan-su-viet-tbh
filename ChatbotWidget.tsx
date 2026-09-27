@@ -548,6 +548,30 @@ export const ChatbotWidget: React.FC = () => {
     });
   }, [username]);
 
+
+
+  // Load a specific session
+  const loadSession = (session: ChatSession) => {
+    setCurrentSessionId(session.id);
+    setMessages(session.messages);
+    setIsHistoryOpen(false);
+  };
+  
+  const createNewSession = () => {
+    setCurrentSessionId('session-' + Date.now());
+    setMessages([CHATBOT_WELCOME_MESSAGE]);
+    setIsHistoryOpen(false);
+  };
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: 'msg-0',
+      html: markdownToHtml(CHATBOT_WELCOME_MESSAGE),
+      sender: 'ai',
+      timestamp: new Date(),
+    },
+  ]);
+  const [inputValue, setInputValue] = useState('');
+
   // Auto-save Session on messages change (Debounced)
   useEffect(() => {
     if (messages.length <= 1 || username.startsWith('guest_')) return;
@@ -578,28 +602,6 @@ export const ChatbotWidget: React.FC = () => {
     
     return () => clearTimeout(timer);
   }, [messages, currentSessionId, username]);
-
-  // Load a specific session
-  const loadSession = (session: ChatSession) => {
-    setCurrentSessionId(session.id);
-    setMessages(session.messages);
-    setIsHistoryOpen(false);
-  };
-  
-  const createNewSession = () => {
-    setCurrentSessionId('session-' + Date.now());
-    setMessages([CHATBOT_WELCOME_MESSAGE]);
-    setIsHistoryOpen(false);
-  };
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 'msg-0',
-      html: markdownToHtml(CHATBOT_WELCOME_MESSAGE),
-      sender: 'ai',
-      timestamp: new Date(),
-    },
-  ]);
-  const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<ImagePayload | null>(null);

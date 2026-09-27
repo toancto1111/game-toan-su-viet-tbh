@@ -622,7 +622,7 @@ export const TuHaoSuVietView: React.FC<TuHaoSuVietViewProps> = ({
     });
 
     return (
-      <div className="min-h-screen viet-bg flex flex-col p-4 md:p-8 items-center text-amber-100 font-sans">
+      <div className="h-screen w-full viet-bg flex flex-col p-4 md:p-8 items-center text-amber-100 font-sans overflow-hidden">
         <div className="w-full max-w-5xl flex items-center justify-between border-b-2 border-amber-600/40 pb-4 mb-6">
           <button 
             onClick={() => setMode('menu')}
@@ -651,7 +651,7 @@ export const TuHaoSuVietView: React.FC<TuHaoSuVietViewProps> = ({
         </div>
 
         {/* Danh sách thẻ sử liệu */}
-        <div className="w-full max-w-5xl space-y-4 max-h-[75vh] overflow-y-auto pr-2">
+        <div className="w-full max-w-5xl space-y-4 flex-1 overflow-y-auto pr-2 pb-24">
           {filteredQuestions.map((q, idx) => (
             <div key={q.id || idx} className="rounded-xl border border-amber-700/50 bg-stone-900/80 p-5 shadow-lg">
               <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
