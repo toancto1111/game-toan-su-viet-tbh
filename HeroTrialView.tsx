@@ -11,9 +11,10 @@ interface EnemyCardProps {
    desc: string;
    isBoss: boolean;
    index: number;
+   image?: string;
 }
 
-const EnemyCard: React.FC<EnemyCardProps> = ({ name, title, desc, isBoss, index }) => {
+const EnemyCard: React.FC<EnemyCardProps> = ({ name, title, desc, isBoss, index, image }) => {
    const cardRef = useRef<HTMLDivElement>(null);
    const particlesRef = useRef<HTMLDivElement>(null);
    const [isHovered, setIsHovered] = useState(false);
@@ -207,8 +208,13 @@ const EnemyCard: React.FC<EnemyCardProps> = ({ name, title, desc, isBoss, index 
                display: 'flex', alignItems: 'center', justifyContent: 'center',
                boxShadow: isBoss ? '0 0 12px rgba(234,179,8,0.4) inset' : '0 0 8px rgba(120,20,20,0.4) inset',
                fontSize: '20px',
+               overflow: 'hidden',
             }}>
-               {isBoss ? '👑' : '⚔️'}
+               {image && !image.includes('default_enemy') ? (
+                  <img src={image} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+               ) : (
+                  isBoss ? '👑' : '⚔️'
+               )}
             </div>
 
             {/* Text info */}
@@ -432,14 +438,15 @@ export const HeroTrialView: React.FC<HeroTrialViewProps> = ({ playerState, onBac
                      </div>
 
                      <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
-                        {selectedStage.enemiesRaw.map((enemy, idx) => (
+                        {generateTrialEnemies(selectedStage.id).map((enemy, idx) => (
                            <EnemyCard
                               key={idx}
                               name={enemy.name}
                               title={enemy.title}
-                              desc={enemy.desc}
+                              desc={enemy.description || ''}
                               isBoss={idx === 0}
                               index={idx}
+                              image={enemy.image}
                            />
                         ))}
                      </div>

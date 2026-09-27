@@ -2684,14 +2684,8 @@ const App: React.FC = () => {
     }
   };
 
-  // Chatbot chỉ hiển thị ở các tính năng chính của game,
-  // KHÔNG hiển thị khi: đăng nhập, đang làm bài thi (quiz-play, tu-luyen-play), thí luyện đường (hero-trial)
-  const showChatbot =
-    view !== 'auth' &&
-    view !== 'quiz-play' &&
-    view !== 'tu-luyen-play' &&
-    view !== 'hero-trial' &&
-    view !== 'tu-hao-su-viet';
+  // Chatbot và nhiệm vụ chỉ hiển thị ở giao diện ban đầu game (chapter-select)
+  const showChatbot = view === 'chapter-select';
 
   return (
     <>
@@ -2742,7 +2736,7 @@ const App: React.FC = () => {
          setPlayer={setPlayer} 
       />}
       {/* NÚT NHIỆM VỤ HÀNG NGÀY - Ẩn khi đang trong màn hình chiến đấu */}
-      {view === 'chapter-hub' && (() => {
+      {view === 'chapter-select' && (() => {
         const prog = player.dailyQuestProgress || {};
         const claimed = player.dailyQuestClaimed || [];
         const QUEST_IDS = ['q_login','q_answer_3_row','q_answer_10','q_answer_20','q_spin_3','q_play_arena_1','q_win_arena_1','q_play_trial_1','q_upgrade_hero_1','q_play_suviet_1'];

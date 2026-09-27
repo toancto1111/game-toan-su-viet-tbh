@@ -325,14 +325,35 @@ export const generateTrialEnemies = (stageId: number): Hero[] => {
 
   // Base stats scaling significantly per stage
   const baseStat = 80 + stageId * 2; // e.g. Stage 1: 82 -> SSR, Stage 20: 120 -> UR
-  
   return stage.enemiesRaw.map((e, idx) => {
     // Make the first enemy the "Boss" with higher stats
     const isBoss = idx === 0;
-    const stat = isBoss ? baseStat + 10 : baseStat;
+    
+    // Reverse-engineer stats from recommendedPower to ensure balanced difficulty
+    const targetPowerPerEnemy = stage.recommendedPower / stage.enemiesRaw.length;
+    const bossMult = isBoss ? 1.5 : 0.9;
+    const targetPwr = targetPowerPerEnemy * bossMult;
+    
+    const spd = 90 + Math.min(60, stageId * 2) + (isBoss ? 5 : 0);
+    const star = Math.min(30, 5 + Math.floor(stageId * 1.2) + (isBoss ? 3 : 0));
+    
+    // Calculate power consumed by speed and star (passive)
+    const spdPower = spd * 15;
+    const tier = Math.floor(star / 5);
+    const starsInTier = star % 5;
+    const passivePower = 800 * tier + starsInTier * 300;
+    
+    // Distribute remaining power to ATK, DEF, HP
+    const remainingPower = Math.max(300, targetPwr - spdPower - passivePower);
+    const atk = Math.round((remainingPower * 0.4) / 10);
+    const def = Math.round((remainingPower * 0.2) / 8);
+    const maxHp = Math.round((remainingPower * 0.4) / 0.5);
+    
+    // The calculated overall matching getHeroCombatPower loosely
+    const overall = Math.round(atk * 10 + def * 8 + maxHp * 0.5 + spdPower + passivePower);
     
     let rarity = Rarity.SSR;
-    if (stat >= 90) rarity = Rarity.UR;
+    if (stageId >= 10 || isBoss && stageId >= 8) rarity = Rarity.UR;
     
     const baseTemplate = INITIAL_HEROES.find(b => b.name === e.name) || ENEMY_HEROES.find(b => b.name === e.name);
 
@@ -341,15 +362,15 @@ export const generateTrialEnemies = (stageId: number): Hero[] => {
       name: e.name,
       title: baseTemplate ? baseTemplate.title : e.title,
       rarity,
-      overall: stat,
-      atk: stat * 3, // inflated stats for trial challenge
-      def: stat * 2,
-      spd: 90 + Math.min(60, stageId * 3) + (stat % 10),
-      hp: stat * 150,
-      maxHp: stat * 150,
+      overall,
+      atk,
+      def,
+      spd,
+      hp: maxHp,
+      maxHp,
       morale: 0,
       initialMorale: isBoss ? 50 : 0,
-      star: Math.min(30, 5 + Math.floor(stageId * 1.2) + (isBoss ? 3 : 0)),
+      star,
       fragments: 0,
       description: baseTemplate ? baseTemplate.desc || e.desc : e.desc,
       skillName: baseTemplate ? baseTemplate.skillName : 'Khí Thế Nghịch Tặc',
