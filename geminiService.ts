@@ -5,6 +5,9 @@ import { chuong1ThucTeData } from './chuong1_thucte_data';
 import { chuong2ThucTeData } from './chuong2_thucte_data';
 import { chuong3ThucTeData } from './chuong3_thucte_data';
 import { chuong4ThucTeData } from './chuong4_thucte_data';
+import { TOAN_7_DATA } from './toan7_data';
+import { TOAN_8_DATA } from './toan8_data';
+import { TOAN_8_CHUONG1_QUESTIONS } from './toan8_chuong1_questions';
 import { TOAN_9_DATA } from './toan9_data';
 import { toan9Chuong1Questions } from './toan9_chuong1_questions';
 import { toan9Chuong2Questions } from './toan9_chuong2_questions';
@@ -31,6 +34,9 @@ export const CHAPTER_NAMES: Record<number, string> = {
 const commonSummaryPrefix = "### Kiến thức cần nắm\nToán học là nền tảng của tư duy binh pháp. Chúa công cần nắm vững các định nghĩa và quy tắc sau đây:\n\n";
 
 export const MATH_DATA: Record<number, any> = {
+  7: TOAN_7_DATA,
+  8: TOAN_8_DATA,
+  9: TOAN_9_DATA,
   6: [
     { 
       title: "Chương I: Tập hợp các số tự nhiên", 
@@ -1069,8 +1075,7 @@ $$ 11\\,500\\,000 + (-80\\,000) = 11\\,420\\,000 \\text{ (đồng)} $$
         { title: "Bài tập cuối chương V", summary: commonSummaryPrefix + "Hệ thống hóa toàn bộ kiến thức về tính đối xứng của hình phẳng trong tự nhiên." }
       ]
     }
-  ],
-  9: TOAN_9_DATA
+  ]
 };
 
 const ALL_PRACTICAL = [
@@ -1078,6 +1083,7 @@ const ALL_PRACTICAL = [
   ...chuong2ThucTeData,
   ...chuong3ThucTeData,
   ...chuong4ThucTeData,
+  ...TOAN_8_CHUONG1_QUESTIONS,
   ...toan9Chuong1Questions,
   ...toan9Chuong2Questions,
   ...toan9Chuong3Questions,
@@ -1120,13 +1126,17 @@ export const getQuestionsForLesson = (grade: number, chapterIdx: number, lessonI
   let idPrefixes: string[] = [];
   let chapterPrefixes: string[] = [];
 
-  const matchBai = title.match(/Bài (\d+):/);
+  const matchBai = title.match(/Bài (\d+)[:.]/);
   if (matchBai) {
     const baiNum = matchBai[1];
     if (grade === 9) {
       idPrefixes.push(`TOAN9_B${baiNum}_`);
       idPrefixes.push(`TOAN9_C${chapterIdx + 1}_B${baiNum}_`);
       // idPrefixes.push(`TOAN9_C${chapterIdx + 1}_`);
+    } else if (grade === 8) {
+      idPrefixes.push(`toan8_c${chapterIdx + 1}_b${baiNum}_`);
+    } else if (grade === 7) {
+      idPrefixes.push(`toan7_c${chapterIdx + 1}_b${baiNum}_`);
     } else {
       idPrefixes.push(`USER_B${baiNum}_`);
       idPrefixes.push(`THUC_TE_B${baiNum}_`);
@@ -1147,11 +1157,15 @@ export const getQuestionsForLesson = (grade: number, chapterIdx: number, lessonI
       
       // Collect all 'Bài X' prefixes from the same chapter as a fallback
       for (const lesson of chapterLessons) {
-         const m = lesson.title.match(/Bài (\d+):/);
+         const m = lesson.title.match(/Bài (\d+)[:.]/);
          if (m) {
            if (grade === 9) {
              chapterPrefixes.push(`TOAN9_B${m[1]}_`);
              chapterPrefixes.push(`TOAN9_C${chapNum}_B${m[1]}_`);
+           } else if (grade === 8) {
+             chapterPrefixes.push(`toan8_c${chapNum}_b${m[1]}_`);
+           } else if (grade === 7) {
+             chapterPrefixes.push(`toan7_c${chapNum}_b${m[1]}_`);
            } else {
              chapterPrefixes.push(`USER_B${m[1]}_`);
              chapterPrefixes.push(`THUC_TE_B${m[1]}_`);

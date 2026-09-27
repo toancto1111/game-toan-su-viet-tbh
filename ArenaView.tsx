@@ -264,9 +264,11 @@ const ArenaTeamSelector: React.FC<{
       if (playerData.arenaAttackFormation && playerData.arenaAttackFormation.filter(Boolean).length > 0) {
         return playerData.arenaAttackFormation;
       }
+      // Lấy danh sách tướng vĩnh viễn
+      const permInventory = playerData.inventory.filter((h: any) => h.isPermanent);
       // Tự động sắp 6 tướng mạnh nhất (không trùng tên) nếu chưa lưu
       const uniqueTopHeroesMap = new Map();
-      const sortedHeroes = [...playerData.inventory].sort((a: any, b: any) => {
+      const sortedHeroes = [...permInventory].sort((a: any, b: any) => {
         const powerA = (a.overall || 1) * (a.star || 1);
         const powerB = (b.overall || 1) * (b.star || 1);
         return powerB - powerA;
@@ -318,8 +320,9 @@ const ArenaTeamSelector: React.FC<{
   };
 
   const handleQuickLineup = () => {
+    const permInventory = playerData.inventory.filter((h: any) => h.isPermanent);
     const uniqueTopHeroesMap = new Map();
-    const sortedHeroes = [...playerData.inventory].sort((a, b) => {
+    const sortedHeroes = [...permInventory].sort((a, b) => {
       const powerA = (a.overall || 1) * (a.star || 1);
       const powerB = (b.overall || 1) * (b.star || 1);
       return powerB - powerA;
@@ -387,9 +390,9 @@ const ArenaTeamSelector: React.FC<{
 
         {/* Inventory */}
         <div className="flex-1 bg-slate-900/50 border border-slate-800 rounded-2xl p-6 overflow-y-auto">
-          <h3 className="text-slate-400 mb-4 text-sm font-bold tracking-widest">DANH SÁCH TƯỚNG ({playerData.inventory.length})</h3>
+          <h3 className="text-slate-400 mb-4 text-sm font-bold tracking-widest">DANH SÁCH TƯỚNG ({playerData.inventory.filter((h: any) => h.isPermanent).length})</h3>
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
-            {playerData.inventory.map(hero => {
+            {playerData.inventory.filter((h: any) => h.isPermanent).map(hero => {
               const isSelected = formation.includes(hero.id);
               return (
                 <div 

@@ -38,6 +38,7 @@ import { HERO_TRIAL_STAGES, generateTrialEnemies } from './heroTrialData';
 import { TuLuyenMenuView } from './TuLuyenMenuView';
 import { TuHaoSuVietView } from './TuHaoSuVietView';
 import { LeaderboardView } from './LeaderboardView';
+import { InstructionsModal } from './InstructionsModal';
 import { ArenaView } from './ArenaView';
 import { 
   ChevronLeft, Sparkles, ArrowRight, Book, RotateCcw, 
@@ -621,7 +622,7 @@ const SyncStatusBadge: React.FC<{ status: 'idle' | 'saving' | 'saved' | 'offline
   );
 };
 
-const Header: React.FC<{ state: PlayerState, setView: any, onLogout?: () => void, onOpenProfile?: () => void, syncStatus?: 'idle' | 'saving' | 'saved' | 'offline' }> = ({ state, setView, onLogout, onOpenProfile, syncStatus = 'idle' }) => {
+const Header: React.FC<{ state: PlayerState, setView: any, onLogout?: () => void, onOpenProfile?: () => void, onOpenInstructions?: () => void, syncStatus?: 'idle' | 'saving' | 'saved' | 'offline' }> = ({ state, setView, onLogout, onOpenProfile, onOpenInstructions, syncStatus = 'idle' }) => {
   const currentAvatarHero = (state.inventory || []).find(h => h.id === state.avatarId);
   const avatarImg = state.customAvatar || (currentAvatarHero ? currentAvatarHero.image : DEFAULT_ALLY_IMG);
 
@@ -658,7 +659,7 @@ const Header: React.FC<{ state: PlayerState, setView: any, onLogout?: () => void
             <span className="bg-stone-800/80 px-3 py-1 rounded-full border border-blue-900/40 flex items-center gap-1.5 text-blue-400 text-xs font-bold">🎫 {state.normalTickets || 0}</span>
           </div>
           <button 
-            onClick={() => alert("Chào mừng đến với Sử Việt Anh Hùng!\\n\\n1. Doanh Trại: Nơi vượt các ải cốt truyện, chiến đấu với quân thù.\\n2. Quốc Tử Giám: Nơi thu thập kiến thức, tu luyện và trả lời câu hỏi.\\n3. Danh Vọng Đài: Xem bảng xếp hạng anh tài.\\n4. Quân Đoàn: Nơi quản lý tướng lĩnh và đội hình xuất chiến.\\n5. Thí Luyện: Leo tháp thử thách cực hạn.\\n6. Tự Hào Sử Việt: Nhận phần thưởng đặc biệt.\\n7. AI Trạng Nguyên: Sẵn sàng giải đáp mọi thắc mắc của bạn (nút ở góc phải)!")} 
+            onClick={() => onOpenInstructions && onOpenInstructions()} 
             className="text-amber-400 hover:text-amber-300 transition-colors bg-stone-900 hover:bg-stone-800 p-2 rounded-xl border border-amber-900/40 ml-1 flex items-center gap-1.5"
             title="Hướng dẫn trò chơi"
           >
@@ -1115,11 +1116,24 @@ const App: React.FC = () => {
   const [combatMode, setCombatMode] = useState<'campaign' | 'hero-trial' | 'arena'>('campaign');
   const [arenaMatchData, setArenaMatchData] = useState<any>(null);
   const [activeTrialStage, setActiveTrialStage] = useState<number>(0);
+  const [isInstructionsOpen, setIsInstructionsOpen] = useState(false);
   const viewportRef = useRef<HTMLDivElement>(null);
   const [hubScaleX, setHubScaleX] = useState(1);
   const [hubScaleY, setHubScaleY] = useState(1);
   // isLandscape = true khi màn hình ngang — bao gồm cả điện thoại xoay ngang
   const [isLandscape, setIsLandscape] = useState(() => window.innerWidth > window.innerHeight);
+
+  const [customAlert, setCustomAlert] = useState<{message: string, visible: boolean}>({ message: '', visible: false });
+  const [customConfirm, setCustomConfirm] = useState<{message: string, visible: boolean, onConfirm: () => void}>({ message: '', visible: false, onConfirm: () => {} });
+
+  useEffect(() => {
+    window.alert = (msg: string) => {
+      setCustomAlert({ message: msg, visible: true });
+    };
+    (window as any).gameConfirm = (msg: string, callback: () => void) => {
+      setCustomConfirm({ message: msg, visible: true, onConfirm: callback });
+    };
+  }, []);
 
   useEffect(() => {
     const checkOrientation = () => {
@@ -2204,7 +2218,7 @@ const App: React.FC = () => {
             className="flex absolute top-1/2 left-1/2 flex-col bg-black transition-transform duration-300 origin-center"
             style={{ width: '100%', height: '100%', transform: 'translate(-50%, -50%)' }}
           >
-            <Header state={player} setView={setView} onLogout={handleLogout} onOpenProfile={() => setIsProfileOpen(true)} syncStatus={syncStatus} />
+            <Header state={player} setView={setView} onLogout={handleLogout} onOpenProfile={() => setIsProfileOpen(true)} onOpenInstructions={() => setIsInstructionsOpen(true)} syncStatus={syncStatus} />
             <div 
               className="flex-1 relative w-full h-full overflow-hidden bg-stone-950 flex items-center justify-center min-h-0 min-w-0"
               ref={viewportRef}
@@ -2402,13 +2416,7 @@ const App: React.FC = () => {
             {/* 1. THÍ LUYỆN ĐƯỜNG - Cạnh trái (trên) -> Tòa nhà thác nước */}
             <button 
               onClick={() => {
-                if (player.grade) {
-                  setSelectedGrade(player.grade);
-                  setSelectedMathChapterIdx(0);
-                  setView('kinh-luan-topic');
-                } else {
-                  setView('kinh-luan-grade');
-                }
+                setView('kinh-luan-grade');
               }}
               className="absolute top-[38%] left-[12%] -translate-x-1/2 group z-20 flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             >
@@ -2554,7 +2562,7 @@ const App: React.FC = () => {
       case 'admin': return <AdminView setView={(v: any) => setView(v)} />;
       case 'tu-luyen-menu': return <TuLuyenMenuView setView={(v: any) => setView(v)} startLesson={startLessonTuLuyen} unlockedLessons={player.tuLuyenUnlockedLessons || ['B1']} correctIds={player.tuLuyenCorrectIds || {}} />;
       case 'tu-luyen-play': return <QuizPlayView question={currentQuestions[currentIdx]} idx={currentIdx} total={currentQuestions.length} showFeedback={showFeedback} userAnswers={userAnswers} setUserAnswers={setUserAnswers} onAnswer={handleQuizAnswer} lastReward={lastReward} setView={setView} autoNext={autoNext} onAutoNextChange={setAutoNext} onNext={() => { setShowFeedback(false); if (currentIdx < currentQuestions.length - 1) setCurrentIdx(c => c + 1); else handleTuLuyenResult(correctTotal, currentQuestions.length); }} tuLuyenLessonId={activeLessonId} />;
-      case 'kinh-luan-grade': return <GradeView setGrade={setSelectedGrade} setView={setView} />;
+      case 'kinh-luan-grade': return <GradeView player={player} setGrade={setSelectedGrade} setView={setView} />;
       case 'kinh-luan-topic': return <TopicView grade={selectedGrade} setChapterIdx={setSelectedMathChapterIdx} setView={setView} player={player} />;
       case 'kinh-luan-lesson': return <LessonListView grade={selectedGrade} chapterIdx={selectedMathChapterIdx} setLessonIdx={setSelectedMathLessonIdx} setView={setView} progress={player.mathProgress} player={player} startQuiz={startQuiz} />;
       case 'lesson-summary': return <LessonSummaryView grade={selectedGrade} chapterIdx={selectedMathChapterIdx} lessonIdx={selectedMathLessonIdx} setView={setView} />;
@@ -2762,6 +2770,62 @@ const App: React.FC = () => {
       })()}
       {/* AI Chatbot - ẩn khi chiến đấu */}
       {showChatbot && view === 'chapter-hub' && <ChatbotWidget />}
+      {isInstructionsOpen && <InstructionsModal onClose={() => setIsInstructionsOpen(false)} />}
+      
+      {customAlert.visible && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm" onClick={() => setCustomAlert({...customAlert, visible: false})}>
+          <div className="bg-[#1a1005] border-2 border-amber-500/80 p-8 md:p-10 rounded-2xl max-w-2xl w-[90%] mx-4 shadow-[0_0_60px_rgba(245,158,11,0.3)] text-center animate-in zoom-in-95 duration-200 relative overflow-hidden" onClick={e => e.stopPropagation()}>
+            <div className="absolute inset-0 bg-cover bg-center opacity-10 pointer-events-none" style={{ backgroundImage: `url('${import.meta.env.BASE_URL}ancient_exam_bg.jpg')` }}></div>
+            <div className="absolute inset-0 border-[3px] border-amber-900/40 rounded-2xl pointer-events-none" style={{ margin: '4px' }}></div>
+            <div className="text-6xl mb-4 drop-shadow-[0_0_15px_rgba(251,191,36,0.5)] relative z-10 text-amber-400">📜</div>
+            <h2 className="text-2xl md:text-3xl font-cinzel font-black text-amber-400 uppercase tracking-widest mb-6 border-b border-amber-700/50 pb-4 relative z-10 drop-shadow-md">
+              Chiếu Chỉ
+            </h2>
+            <p className="text-amber-100/90 text-lg md:text-xl font-medium leading-relaxed mb-8 whitespace-pre-wrap relative z-10 font-serif">
+              {customAlert.message}
+            </p>
+            <button 
+              onClick={() => setCustomAlert({...customAlert, visible: false})}
+              className="relative z-10 bg-gradient-to-r from-amber-700 to-yellow-600 hover:from-amber-600 hover:to-yellow-500 text-[#1a1005] px-12 py-3.5 rounded-xl font-black uppercase tracking-widest text-lg md:text-xl shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] transition-all active:scale-95 border-2 border-yellow-400/50"
+            >
+              Tuân Lệnh
+            </button>
+          </div>
+        </div>
+      )}
+
+      {customConfirm.visible && (
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/80 backdrop-blur-sm" onClick={() => setCustomConfirm({...customConfirm, visible: false})}>
+          <div className="bg-[#1a1005] border-2 border-red-500/80 p-8 md:p-10 rounded-2xl max-w-2xl w-[90%] mx-4 shadow-[0_0_60px_rgba(239,68,68,0.3)] text-center animate-in zoom-in-95 duration-200 relative overflow-hidden" onClick={e => e.stopPropagation()}>
+            <div className="absolute inset-0 bg-cover bg-center opacity-10 pointer-events-none" style={{ backgroundImage: `url('${import.meta.env.BASE_URL}ancient_exam_bg.jpg')` }}></div>
+            <div className="absolute inset-0 border-[3px] border-red-900/40 rounded-2xl pointer-events-none" style={{ margin: '4px' }}></div>
+            <div className="text-6xl mb-4 drop-shadow-[0_0_15px_rgba(239,68,68,0.5)] relative z-10 text-red-400">⚔️</div>
+            <h2 className="text-2xl md:text-3xl font-cinzel font-black text-red-400 uppercase tracking-widest mb-6 border-b border-red-700/50 pb-4 relative z-10 drop-shadow-md">
+              Mật Lệnh
+            </h2>
+            <p className="text-amber-100/90 text-lg md:text-xl font-medium leading-relaxed mb-8 whitespace-pre-wrap relative z-10 font-serif">
+              {customConfirm.message}
+            </p>
+            <div className="flex items-center justify-center gap-6 relative z-10">
+               <button 
+                 onClick={() => setCustomConfirm({...customConfirm, visible: false})}
+                 className="bg-stone-800 hover:bg-stone-700 text-stone-300 px-8 py-3.5 rounded-xl font-black uppercase tracking-widest text-lg md:text-xl transition-all active:scale-95 border-2 border-stone-600/50 shadow-md"
+               >
+                 Hủy Bỏ
+               </button>
+               <button 
+                 onClick={() => {
+                    setCustomConfirm({...customConfirm, visible: false});
+                    customConfirm.onConfirm();
+                 }}
+                 className="bg-gradient-to-r from-red-800 to-red-600 hover:from-red-700 hover:to-red-500 text-white px-8 py-3.5 rounded-xl font-black uppercase tracking-widest text-lg md:text-xl shadow-[0_0_20px_rgba(239,68,68,0.4)] hover:shadow-[0_0_30px_rgba(239,68,68,0.6)] transition-all active:scale-95 border-2 border-red-400/50"
+               >
+                 Xác Nhận
+               </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
@@ -3402,10 +3466,10 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
     
     
     const handleFlee = () => {
-        if (window.confirm("Nếu rời trận xem như phe ta đã bại. Bạn có chắc chắn muốn rời trận?")) {
+        (window as any).gameConfirm("Nếu rời trận xem như phe ta đã bại. Bạn có chắc chắn muốn rời trận?", () => {
             setResult('lose');
             setActive(false);
-        }
+        });
     };
     const [activeAttacker, setActiveAttacker] = useState<string | null>(null);
     const [activeTargets, setActiveTargets] = useState<string[]>([]);
@@ -5677,7 +5741,7 @@ const MainMenuItem = ({ icon, title, subtitle, onClick, color }: any) => (
   </button>
 );
 
-const GradeView = ({ setGrade, setView }: any) => (
+const GradeView = ({ player, setGrade, setView }: any) => (
   <div 
     className="h-full flex flex-col items-center justify-end pb-[10%] p-8 relative overflow-hidden bg-cover bg-center bg-no-repeat"
     style={{ backgroundImage: `url('${import.meta.env.BASE_URL}ancient_exam_bg.jpg')` }}
@@ -5736,7 +5800,19 @@ const GradeView = ({ setGrade, setView }: any) => (
      <div className="w-full max-w-4xl text-center relative z-20 flex flex-col items-center">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full px-4">
            {[6, 7, 8, 9].map(g => (
-             <button key={g} onClick={() => { setGrade(g); setView('kinh-luan-topic'); }} className="bg-stone-900/80 backdrop-blur-md text-[#FFD700] border-2 border-[#FFD700] py-8 rounded-2xl font-cinzel font-black text-3xl hover:bg-stone-800 hover:scale-105 shadow-[0_0_20px_rgba(255,215,0,0.3)] active:scale-95 transition-all">LỚP {g}</button>
+             <button key={g} onClick={() => { 
+               const userGrade = player?.grade;
+               if (userGrade && userGrade !== g) {
+                 if (userGrade < g) {
+                   alert(`Chúa công cần vượt qua Thí luyện khối lớp ${userGrade} sẽ mở được khối lớp ${g}`);
+                 } else {
+                   alert(`Chúa công đã vượt qua Thí luyện khối lớp ${g} rồi, hãy tiếp tục chinh phạt các kiến thức khối lớp ${userGrade}.`);
+                 }
+                 return;
+               }
+               setGrade(g); 
+               setView('kinh-luan-topic'); 
+             }} className="bg-stone-900/80 backdrop-blur-md text-[#FFD700] border-2 border-[#FFD700] py-8 rounded-2xl font-cinzel font-black text-3xl hover:bg-stone-800 hover:scale-105 shadow-[0_0_20px_rgba(255,215,0,0.3)] active:scale-95 transition-all">LỚP {g}</button>
            ))}
         </div>
         <button onClick={() => setView('chapter-hub')} className="mt-12 text-[#c2a265] font-cinzel font-bold text-xl uppercase tracking-widest border-b-2 border-[#c2a265] hover:text-amber-400 hover:border-amber-400 transition-colors drop-shadow-md">
@@ -6392,6 +6468,83 @@ const QuizResultView = ({ correct, total, rewards, setView, player }: any) => {
     XLSX.writeFile(workbook, `KetQuaThiLuyen_${lastRecord.timestamp}.xlsx`);
   };
 
+  const handleExportPDF = () => {
+    if (!player || !player.trialHistory || player.trialHistory.length === 0) {
+      alert("Không có dữ liệu để xuất!");
+      return;
+    }
+    const lastRecord = player.trialHistory[player.trialHistory.length - 1];
+
+    let htmlContent = `
+      <html>
+      <head>
+        <title>Kết Quả Thí Luyện - ${player.playerName || lastRecord.username}</title>
+        <meta charset="utf-8">
+        <style>
+          body { font-family: 'Times New Roman', serif; padding: 20px; color: black; background: white; line-height: 1.5; }
+          h1 { text-align: center; color: #b45309; }
+          .info { margin-bottom: 20px; font-size: 16px; border-bottom: 2px solid #b45309; padding-bottom: 10px; }
+          .question-box { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed #ccc; page-break-inside: avoid; }
+          .q-title { font-weight: bold; margin-bottom: 5px; }
+          .correct { color: #16a34a; font-weight: bold; }
+          .wrong { color: #dc2626; font-weight: bold; }
+          .time { color: #6b7280; font-size: 12px; }
+        </style>
+        <script>
+          window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\\\(', '\\\\)']], displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']] },
+            startup: {
+              pageReady: () => {
+                return MathJax.startup.defaultPageReady().then(() => {
+                  setTimeout(() => { window.print(); }, 500);
+                });
+              }
+            }
+          };
+        </script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      </head>
+      <body>
+        <h1>KẾT QUẢ KHOA CỬ THÍ LUYỆN</h1>
+        <div class="info">
+          <p><strong>Người chơi:</strong> ${player.playerName || lastRecord.username}</p>
+          <p><strong>Gói câu hỏi:</strong> ${lastRecord.packageSize} câu</p>
+          <p><strong>Thời gian nộp bài:</strong> ${new Date(lastRecord.timestamp).toLocaleString('vi-VN')}</p>
+        </div>
+        <div class="results">
+    `;
+
+    lastRecord.questions.forEach((q: any, i: number) => {
+      const userAnswerText = q.options && q.options.length > 0 && typeof q.userAnswer === 'number' ? q.options[q.userAnswer] : (q.userAnswer !== null ? q.userAnswer : "Chưa trả lời");
+      const correctAnswerText = q.options && q.options.length > 0 && typeof q.correctAnswer === 'number' ? q.options[q.correctAnswer] : q.correctAnswer;
+      
+      htmlContent += `
+        <div class="question-box">
+          <div class="q-title">Câu ${i + 1}: ${q.questionText}</div>
+          <div>Đáp án của bạn: <span class="${q.isCorrect ? 'correct' : 'wrong'}">${userAnswerText}</span></div>
+          ${!q.isCorrect ? `<div>Đáp án đúng: <span class="correct">${correctAnswerText}</span></div>` : ''}
+          <div class="time">Thời gian: ${q.timeTakenSeconds} giây</div>
+        </div>
+      `;
+    });
+
+    htmlContent += `
+        </div>
+      </body>
+      </html>
+    `;
+
+    const printWin = window.open('', '', 'width=800,height=900');
+    if (printWin) {
+      printWin.document.open();
+      printWin.document.write(htmlContent);
+      printWin.document.close();
+    } else {
+      alert("Trình duyệt đã chặn popup. Vui lòng cho phép mở popup để xuất PDF.");
+    }
+  };
+
+
   return (
   <div className="min-h-full ancient-bg flex items-center justify-center p-8">
      <div className="max-w-3xl w-full scroll-bg p-12 rounded-[3rem] text-center shadow-2xl border-amber-900">
@@ -6420,9 +6573,10 @@ const QuizResultView = ({ correct, total, rewards, setView, player }: any) => {
               <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-xl border border-amber-500/50">Mảnh Thần Khí</div>
            </div>
         </div>
-        <div className="flex flex-col gap-4">
-           <button onClick={handleExportExcel} className="bg-green-700 hover:bg-green-600 text-white px-20 py-5 rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 transition-all">Xuất Kết Quả Excel</button>
-           <button onClick={() => setView('chapter-hub')} className="bg-stone-900 text-amber-500 px-20 py-5 rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 hover:bg-stone-800 transition-all">Về Doanh Trại</button>
+        <div className="flex flex-col md:flex-row justify-center gap-4">
+           <button onClick={handleExportExcel} className="bg-green-700 hover:bg-green-600 text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 transition-all text-sm md:text-base">Xuất Excel</button>
+           <button onClick={handleExportPDF} className="bg-red-700 hover:bg-red-600 text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 transition-all text-sm md:text-base">In Kết Quả (PDF)</button>
+           <button onClick={() => setView('chapter-hub')} className="bg-stone-900 text-amber-500 px-8 py-4 rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 hover:bg-stone-800 transition-all text-sm md:text-base">Về Doanh Trại</button>
         </div>
      </div>
   </div>
@@ -6435,6 +6589,9 @@ const QuizPlayView = ({ question, idx, total, showFeedback, userAnswers, setUser
   // Reset timer khi chuyển câu
   useEffect(() => {
     setTimeLeft(30);
+    // Scroll về đầu khi chuyển câu mới
+    const container = document.querySelector('.ancient-bg');
+    if (container) container.scrollTop = 0;
   }, [idx]);
 
   // Đồng hồ đếm ngược
@@ -6456,9 +6613,22 @@ const QuizPlayView = ({ question, idx, total, showFeedback, userAnswers, setUser
     }
   }, [showFeedback, autoNext]);
 
+  // Auto-scroll xuống để hiện phần giải thích & nút Tiếp Tục
+  useEffect(() => {
+    if (showFeedback) {
+      const t = setTimeout(() => {
+        const container = document.querySelector('.ancient-bg');
+        if (container) {
+          container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+        }
+      }, 150); // đợi DOM render xong
+      return () => clearTimeout(t);
+    }
+  }, [showFeedback]);
+
   if (!question) {
      return (
-       <div className="min-h-full ancient-bg flex items-center justify-center p-8">
+       <div className="fixed inset-0 ancient-bg flex items-center justify-center p-8" style={{ zIndex: 10 }}>
          <div className="max-w-2xl w-full scroll-bg p-12 rounded-[3rem] text-center shadow-2xl border-amber-900">
            <h2 className="text-2xl font-cinzel font-black text-amber-950 uppercase mb-4">Không tìm thấy câu hỏi</h2>
            <p className="text-amber-900/70 mb-8 font-bold">Chưa có dữ liệu bài tập cho phần này hoặc dữ liệu đang cập nhật. Xin vui lòng thử lại sau.</p>
@@ -6475,15 +6645,15 @@ const QuizPlayView = ({ question, idx, total, showFeedback, userAnswers, setUser
   const timerBarColor = timeLeft <= 5 ? 'bg-red-500' : timeLeft <= 10 ? 'bg-orange-400' : 'bg-amber-600';
 
   return (
-    <div className="min-h-full ancient-bg flex items-center justify-center p-4">
-      <div id="quiz-container-inner" className="max-w-5xl w-[95%] scroll-bg p-10 md:p-16 rounded-[3rem] shadow-2xl min-h-[85%] flex flex-col relative">
+    <div className="fixed inset-0 ancient-bg overflow-y-auto py-6 px-4" style={{ zIndex: 10 }}>
+      <div id="quiz-container-inner" className="max-w-5xl w-[95%] mx-auto scroll-bg p-10 md:p-16 rounded-[3rem] shadow-2xl flex flex-col relative">
         {/* Header: Thoát | Câu số | Timer | AutoNext | Cấp độ */}
         <div className="flex justify-between items-center mb-4 text-xs font-black uppercase text-amber-900/40">
           <div className="flex gap-4 items-center">
              <button onClick={() => {
-                if (window.confirm('Bạn có chắc chắn muốn thoát? Toàn bộ kết quả thi luyện hiện tại sẽ bị hủy bỏ!')) {
+                (window as any).gameConfirm('Bạn có chắc chắn muốn thoát? Toàn bộ kết quả thi luyện hiện tại sẽ bị hủy bỏ!', () => {
                    setView('chapter-hub');
-                }
+                });
              }} className="bg-red-900/10 text-red-700 px-4 py-2 rounded-xl hover:bg-red-900/20 active:scale-95 transition-all">THOÁT</button>
              <span>Câu {idx + 1} / {total}</span>
           </div>
@@ -6556,7 +6726,23 @@ const QuizPlayView = ({ question, idx, total, showFeedback, userAnswers, setUser
                  )}
                </div>
              )}
-             <MathJaxText className="bg-amber-50 p-6 md:p-8 rounded-xl border border-amber-900/10 text-lg md:text-xl italic font-bold text-amber-950 leading-relaxed" html={question.explanation.replace(/\\,/g, '.').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\*\*(.*?)\*\*/g, '<strong class="text-amber-900">$1</strong>')} tag="div" />
+             {/* Kiểm tra đáp án đúng/sai */}
+             {(() => {
+               const uAns2 = userAnswers[idx];
+               const isCorrectAns = question.type === 'short_answer'
+                 ? String(uAns2 || '').trim().toLowerCase() === String(question.correctAnswer || '').trim().toLowerCase()
+                 : (uAns2 !== null && uAns2 !== undefined && uAns2 !== -1 && uAns2 === question.correctAnswer);
+               return (
+                 <div className={`flex items-center gap-2 mb-4 px-4 py-2 rounded-xl font-black text-base ${isCorrectAns ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                   {isCorrectAns ? '✅ Chính xác!' : `❌ Sai rồi! Đáp án đúng: ${question.type === 'short_answer' ? question.correctAnswer : (question.options?.[question.correctAnswer] ?? question.correctAnswer)}`}
+                 </div>
+               );
+             })()}
+             {(question.explanation || '') ? (
+               <MathJaxText className="bg-amber-50 p-6 md:p-8 rounded-xl border border-amber-900/10 text-lg md:text-xl italic font-bold text-amber-950 leading-relaxed" html={(question.explanation || '').replace(/\\,/g, '.').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\*\*(.*?)\*\*/g, '<strong class="text-amber-900">$1</strong>')} tag="div" />
+             ) : (
+               <div className="bg-amber-50 p-4 rounded-xl border border-amber-900/10 text-base text-amber-800 italic">Xem lại lý thuyết để hiểu rõ hơn về câu này.</div>
+             )}
              {question.explanationImageUrl && (
                <div className="flex justify-center mt-4">
                  <img src={question.explanationImageUrl} alt="Giải thích" className="max-w-full h-auto max-h-64 rounded-xl border-4 border-amber-900/20 shadow-sm object-contain bg-white" />
@@ -6598,14 +6784,22 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
       vid.muted = false;
       vid.playsInline = true;
       preloadVideoRef.current = vid;
-      const onReady = () => setVideoReady(true);
-      const onError = () => setVideoReady(true); // fallback nếu lỗi cũng cho tiếp tục
-      vid.addEventListener('canplaythrough', onReady, { once: true });
+      let isReady = false;
+      const onReady = () => {
+        if (!isReady) {
+          isReady = true;
+          setVideoReady(true);
+        }
+      };
+      const onError = () => onReady();
+      vid.addEventListener('canplay', onReady, { once: true });
       vid.addEventListener('error', onError, { once: true });
+      const fallbackTimeout = setTimeout(onReady, 2000);
       vid.load();
       return () => {
-        vid.removeEventListener('canplaythrough', onReady);
+        vid.removeEventListener('canplay', onReady);
         vid.removeEventListener('error', onError);
+        clearTimeout(fallbackTimeout);
       };
     }
   }, [videoQueue]);
@@ -6667,7 +6861,7 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
   }, [animState, results]);
 
   return (
-    <div className="min-h-full viet-bg flex flex-col items-center justify-start pt-12 pb-24 p-6 relative overflow-y-auto custom-scrollbar">
+    <div className="min-h-full viet-bg flex flex-col items-center justify-start pt-6 pb-6 md:pb-12 p-4 md:p-6 relative overflow-y-auto custom-scrollbar">
       {flash && <div className="ssr-flash-overlay" />}
       {animState === 'playing_videos' && videoQueue.length > 0 && (
         <div
@@ -6760,7 +6954,7 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
       
       {results.length > 0 ? (
         <div className="flex flex-col items-center justify-start w-full max-w-[1080px] px-2 relative z-10 mt-4 mb-auto">
-          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+          <div className="flex flex-wrap justify-center gap-2 md:gap-4 max-w-[900px]">
             {results.map((res: any, idx: number) => {
               const raritySummonClass: Record<string, string> = {
                 'UR':  'border-yellow-500 summon-card-ur',
@@ -6779,7 +6973,7 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
               const isRolling = animState === 'rolling';
 
               return (
-                <div key={idx} className={`w-[120px] md:w-[180px] h-[180px] md:h-[270px] gacha-card-container relative`}>
+                <div key={idx} className={`w-[90px] sm:w-[110px] md:w-[140px] lg:w-[155px] h-[135px] sm:h-[165px] md:h-[210px] lg:h-[232px] gacha-card-container relative`}>
                   <div className={`gacha-card ${isRevealed ? 'flipped' : ''} ${isRolling ? 'animate-gacha-spin' : ''}`}>
                     
                     {/* MẶT TRƯỚC (Bí ẩn - Lưng thẻ 3D) */}
@@ -6813,7 +7007,7 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
             })}
           </div>
           {animState === 'done' && (
-            <button onClick={clearResults} className="mt-12 gold-shimmer-btn px-20 py-5 rounded-2xl font-black uppercase text-xl shadow-xl transition-all active:scale-95 border border-amber-600/30 animate-in slide-in-from-bottom-4">Thu Quân!</button>
+            <button onClick={clearResults} className="mt-6 md:mt-8 gold-shimmer-btn px-16 md:px-20 py-3 md:py-4 rounded-2xl font-black uppercase text-lg md:text-xl shadow-xl transition-all active:scale-95 border border-amber-600/30 animate-in slide-in-from-bottom-4">Thu Quân!</button>
           )}
         </div>
       ) : (
