@@ -1197,7 +1197,8 @@ const App: React.FC = () => {
           pd.inventory = syncHeroInventoryStats(pd.inventory);
         }
         
-        const todayStr = new Date().toISOString().split('T')[0];
+        const _d = new Date();
+        const todayStr = `${_d.getFullYear()}-${String(_d.getMonth() + 1).padStart(2, '0')}-${String(_d.getDate()).padStart(2, '0')}`;
         if (pd.lastLoginDate !== todayStr) {
           pd.lastLoginDate = todayStr;
           pd.dailyQuestProgress = { 'q_login': 1 };
@@ -1211,7 +1212,8 @@ const App: React.FC = () => {
         return pd;
       }
     }
-    const todayStr = new Date().toISOString().split('T')[0];
+    const _d = new Date();
+    const todayStr = `${_d.getFullYear()}-${String(_d.getMonth() + 1).padStart(2, '0')}-${String(_d.getDate()).padStart(2, '0')}`;
     return {
       playerName: '',
       legionName: '',
@@ -1536,9 +1538,18 @@ const App: React.FC = () => {
       }
     });
 
-    const goldEarned = correctCount * 300;
+    let goldEarned = correctCount * 300;
     let normalTicketsEarned = 0;
     let premiumTicketsEarned = 0;
+
+    if (percent === 100) {
+       goldEarned += 2000;
+       normalTicketsEarned += 3;
+       premiumTicketsEarned += 1;
+    } else if (percent >= 80) {
+       goldEarned += 1000;
+       normalTicketsEarned += 1;
+    }
     let justUnlockedNextLesson = false;
     let nextLessonName = '';
 
