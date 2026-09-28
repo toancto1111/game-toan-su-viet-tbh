@@ -773,9 +773,17 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
       if (cloudAccount && localAccount) {
         const localTime = localAccount.updatedAt || 0;
         const cloudTime = cloudAccount.updatedAt || 0;
+        const cloudHasData = !!cloudAccount.playerData;
+        const localHasData = !!localAccount.playerData;
         
-        // Nếu Local mới hơn Cloud (VD: do tắt tab đột ngột trước khi kịp sync Cloud)
-        if (localTime > cloudTime) {
+        if (!cloudHasData && localHasData) {
+          // Cloud không có data (lỗi cấu trúc), dùng local và sync lên cloud
+          console.log("Cloud playerData rỗng! Dùng Local và sync lên Cloud.");
+          bestPlayerData = localAccount.playerData;
+          needCloudSync = true;
+        } else if (cloudHasData && !localHasData) {
+          bestPlayerData = cloudAccount.playerData;
+        } else if (localTime > cloudTime && localHasData) {
           console.log("Local data is newer than Cloud! Using Local.");
           bestPlayerData = localAccount.playerData;
           needCloudSync = true;
@@ -785,6 +793,11 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
         }
       } else if (cloudAccount) {
         bestPlayerData = cloudAccount.playerData;
+        if (!bestPlayerData && localAccount?.playerData) {
+          // Cloud thiếu playerData, fallback sang local
+          bestPlayerData = localAccount.playerData;
+          needCloudSync = true;
+        }
       } else {
         bestPlayerData = localAccount.playerData;
         needCloudSync = true;
@@ -802,6 +815,13 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
 
       if (needCloudSync && isFirebaseReady()) {
          savePlayerProgress(key, bestPlayerData, localSessionIdRef.current).catch(() => {});
+      }
+
+      // Safeguard: nếu bestPlayerData null (lỗi cấu trúc cloud), báo lỗi
+      if (!bestPlayerData) {
+        setError('Không tải được dữ liệu người chơi. Hãy xóa dữ liệu trình duyệt và thử lại hoặc liên hệ quản trị viên.');
+        setLoading(false);
+        return;
       }
 
       setSession(key);
@@ -2140,38 +2160,23 @@ const App: React.FC = () => {
     switch (view) {
       case 'auth': return (
         <AuthView onLogin={async (username: string, playerData: PlayerState) => {
-          // Khởi tạo các trường mặc định
+          // Khởi tạo các trường mặc định trước
+          if (!playerData) {
+            console.error("Lỗi: playerData null sau login!");
+            return;
+          }
           if (!playerData.permLineup) playerData.permLineup = [null, null, null, null, null, null];
           if (playerData.legionTickets === undefined) playerData.legionTickets = 0;
           if (!playerData.unlockedChapters) playerData.unlockedChapters = [1];
           if (!playerData.tuLuyenCorrectIds) playerData.tuLuyenCorrectIds = {};
           if (!playerData.tuLuyenUnlockedLessons) playerData.tuLuyenUnlockedLessons = ['B1'];
 
-          // Thử tải dữ liệu mới nhất từ Cloud (Cloud luôn thắng nếu có)
-          try {
-            const cloudData = await loadPlayerDataFromCloud(username);
-            if (cloudData) {
-              // Merge: dùng cloud làm gốc nhưng giữ lại các trường mặc định nếu thiếu
-              playerData = {
-                ...cloudData,
-                permLineup: cloudData.permLineup || [null, null, null, null, null, null],
-                legionTickets: cloudData.legionTickets ?? 0,
-                unlockedChapters: cloudData.unlockedChapters || [1],
-                tuLuyenCorrectIds: cloudData.tuLuyenCorrectIds || {},
-                tuLuyenUnlockedLessons: cloudData.tuLuyenUnlockedLessons || ['B1'],
-              };
-            }
-          } catch (e) {
-            // Không load được cloud — dùng local data (offline fallback)
-            console.warn("Không tải được dữ liệu Cloud, dùng local backup:", e);
-          }
-
           // Sync hero stats từ game data mới nhất
           if (playerData.inventory) {
             playerData.inventory = syncHeroInventoryStats(playerData.inventory);
           }
           
-          // Bắt buộc set username để ProfileModal có dữ liệu chính xác thay vì fallback về playerName
+          // Bắt buộc set username để ProfileModal có dữ liệu chính xác
           playerData.username = username;
 
           if (playerData.grade) setSelectedGrade(playerData.grade);
