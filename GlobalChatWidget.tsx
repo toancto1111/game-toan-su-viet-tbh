@@ -57,9 +57,9 @@ export const GlobalChatWidget: React.FC<GlobalChatWidgetProps> = ({ player }) =>
 
     const success = await sendGlobalChatMessage({
       senderId: player.username || 'unknown',
-      senderName: player.name || 'Người Chơi',
-      senderGrade: player.grade || 'Tân Binh',
-      avatar: player.avatar || '',
+      senderName: player.playerName || 'Người Chơi',
+      senderGrade: player.grade ? `Lớp ${player.grade}` : 'Tân Binh',
+      avatar: player.customAvatar || (player.avatarId ? `./avatars/${player.avatarId}.png` : './heroes/h1_0.png'),
       text: filteredText
     });
 
