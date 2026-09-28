@@ -1092,6 +1092,7 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
 const App: React.FC = () => {
   // --- Khởi tạo Session ID duy nhất cho tab/thiết bị này ---
   const localSessionIdRef = React.useRef(Date.now().toString() + "_" + Math.random().toString(36).substring(2, 9));
+  const [sessionAsserted, setSessionAsserted] = useState(false);
 
   // --- Auth state ---
   const [currentUser, setCurrentUser] = useState<string | null>(() => {
@@ -1279,18 +1280,26 @@ const App: React.FC = () => {
             }
             
             // ÉP CẬP NHẬT SESSION ID LÊN CLOUD NGAY KHI MỞ GAME (KICK THIẾT BỊ KHÁC NGAY LẬP TỨC)
-            savePlayerProgress(currentUser, finalData, localSessionIdRef.current).catch(() => {});
+            savePlayerProgress(currentUser, finalData, localSessionIdRef.current)
+              .then(() => setSessionAsserted(true))
+              .catch(() => setSessionAsserted(true));
             
             return finalData;
           });
+        } else {
+          // Fallback nếu không có dữ liệu cloud
+          setSessionAsserted(true);
         }
-      }).catch(e => console.warn("Lỗi auto-sync dữ liệu nền:", e));
+      }).catch(e => {
+        console.warn("Lỗi auto-sync dữ liệu nền:", e);
+        setSessionAsserted(true);
+      });
     }
   }, [currentUser]);
 
   // ========= THEO DÕI SESSION (KICK OUT NẾU ĐĂNG NHẬP THIẾT BỊ KHÁC) =========
   useEffect(() => {
-    if (currentUser && !currentUser.startsWith('guest_') && isFirebaseReady()) {
+    if (currentUser && !currentUser.startsWith('guest_') && isFirebaseReady() && sessionAsserted) {
       const unsubscribe = listenToAccountSession(currentUser, localSessionIdRef.current, () => {
         // Callback khi bị kick out
         alert("Tài khoản của bạn đã được đăng nhập ở một thiết bị khác! Vui lòng tải lại trang hoặc đăng nhập lại.");
