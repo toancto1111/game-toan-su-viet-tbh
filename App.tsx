@@ -1241,6 +1241,45 @@ const App: React.FC = () => {
     };
   });
 
+  // ========= AUTO-SYNC TỪ CLOUD (ĐỒNG BỘ ĐA THIẾT BỊ PC & MOBILE) =========
+  useEffect(() => {
+    if (currentUser && !currentUser.startsWith('guest_') && isFirebaseReady()) {
+      loadPlayerDataFromCloud(currentUser).then(cloudData => {
+        if (cloudData) {
+          setPlayer(prev => {
+            // So sánh thời gian cập nhật, nếu Cloud mới hơn thì lấy Cloud (tính năng đồng bộ như game Top 1)
+            const cloudTime = cloudData.updatedAt || 0;
+            const localTime = prev.updatedAt || 0;
+            
+            if (cloudTime > localTime) {
+              console.log("Đã phát hiện dữ liệu mới hơn từ Cloud! Đang đồng bộ...");
+              const merged = {
+                ...cloudData,
+                permLineup: cloudData.permLineup || [null, null, null, null, null, null],
+                legionTickets: cloudData.legionTickets ?? 0,
+                unlockedChapters: cloudData.unlockedChapters || [1],
+                tuLuyenCorrectIds: cloudData.tuLuyenCorrectIds || {},
+                tuLuyenUnlockedLessons: cloudData.tuLuyenUnlockedLessons || ['B1'],
+              };
+              if (merged.inventory) {
+                merged.inventory = syncHeroInventoryStats(merged.inventory);
+              }
+              // Cập nhật lại localStorage để mượt cho lần sau
+              const accts = getAccounts();
+              if (accts[currentUser]) {
+                accts[currentUser].playerData = merged;
+                accts[currentUser].updatedAt = cloudTime;
+                saveAccounts(accts);
+              }
+              return merged;
+            }
+            return prev;
+          });
+        }
+      }).catch(e => console.warn("Lỗi auto-sync dữ liệu nền:", e));
+    }
+  }, [currentUser]);
+
   // ========= CLOUD SYNC STATE =========
   const [syncStatus, setSyncStatus] = useState<'idle' | 'saving' | 'saved' | 'offline'>('idle');
   const syncTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
