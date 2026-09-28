@@ -3508,38 +3508,43 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
                       Tháo Trang Bị
                    </button>
                     {(() => {
-                       // Gộp cả permArtifacts (mới) và artifacts (cũ - migration fallback) để chắc chắn
+                       // Gộp cả permArtifacts (mới) và artifacts (cũ - migration fallback)
                        const allOwned: string[] = [...new Set([
                          ...((player.permArtifacts as string[]) || []),
                          ...(((player as any).artifacts as string[]) || [])
                        ])];
-                       // Lọc các artifact hợp lệ
-                       const validArts = allOwned.map((artId: string) => ARTIFACTS.find(a => a.id === artId)).filter(Boolean);
-                       if (validArts.length === 0) return (
-                         <div className="col-span-2 text-stone-500 text-xs italic mt-10">Chúa công chưa có Thần Khí nào. Hãy vào Chiêu Hiền Đài để tìm kiếm!</div>
+                       // Chỉ lấy thần khí BẢN MỆNH của đúng tướng này
+                       const matchingArts = allOwned
+                         .map((artId: string) => ARTIFACTS.find(a => a.id === artId))
+                         .filter((art): art is typeof ARTIFACTS[0] => !!art && (
+                           art.exclusiveTo?.includes(selectedHero.id) ||
+                           art.exclusiveTo?.some((id: string) => selectedHero.id.startsWith(id + '_')) ||
+                           art.exclusiveTo?.some((id: string) => id.startsWith(selectedHero.id.split('_').slice(0,2).join('_')))
+                         ));
+                       if (matchingArts.length === 0) return (
+                         <div className="col-span-2 text-stone-500 text-xs italic mt-10">
+                           Chúa công chưa có Thần Khí bản mệnh của <b>{selectedHero.name}</b>.<br/>Hãy vào <b>Chiêu Hiền Đài → Thu Thần Khí</b> để tìm kiếm!
+                         </div>
                        );
-                       return (<>{validArts.map((art: any, i: number) => {
-                           if (!art) return null;
+                       return (<>{matchingArts.map((art: any, i: number) => {
                            const isEquipped = selectedHero.artifactId === art.id;
-                           const isSignature = art.exclusiveTo?.includes(selectedHero.id) || art.exclusiveTo?.some((id: string) => selectedHero.id.startsWith(id + '_'));
                            return (
                               <button key={i} onClick={() => {
                                  setPlayer((p: any) => ({
                                      ...p,
                                      inventory: p.inventory.map((h: any) => h.id === selectedHero.id ? { ...h, artifactId: art.id } : h)
                                  }));
-                                 // Đảm bảo lưu vào permArtifacts
+                                 // Đảm bảo lưu vào permArtifacts nếu còn ở field cũ
                                  if (!(player.permArtifacts || []).includes(art.id)) {
                                    setPlayer((p: any) => ({ ...p, permArtifacts: [...(p.permArtifacts || []), art.id] }));
                                  }
                                  setShowEquipModal(false);
                               }} className={`bg-purple-900/20 p-3 rounded-xl border ${
-                                isEquipped ? 'border-purple-400 bg-purple-900/40 shadow-[0_0_15px_rgba(168,85,247,0.4)]' :
-                                isSignature ? 'border-yellow-500/70' : 'border-purple-500/30'
+                                isEquipped ? 'border-purple-400 bg-purple-900/40 shadow-[0_0_15px_rgba(168,85,247,0.4)]' : 'border-yellow-500/50'
                               } hover:border-purple-400 transition-all flex flex-col items-center gap-2 relative`}>
                                  <img src={art.image} className="w-12 h-12 rounded border border-purple-500/50 object-cover" />
                                  <div className="font-bold text-purple-200 text-[10px] uppercase truncate w-full">{art.name}</div>
-                                 {isSignature && <div className="absolute top-1 left-1 bg-yellow-600 text-white text-[7px] px-1 rounded uppercase font-bold">Bản Mệnh</div>}
+                                 <div className="text-yellow-500 text-[8px] font-bold">⚡ Bản Mệnh</div>
                                  {isEquipped && <div className="absolute top-1 right-1 bg-purple-500 text-white text-[8px] px-1 rounded uppercase font-bold">Đang dùng</div>}
                               </button>
                            );
@@ -8124,14 +8129,20 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
                          ...((player.permArtifacts as string[]) || []),
                          ...(((player as any).artifacts as string[]) || [])
                        ])];
-                       const validArts = allOwned.map((artId: string) => ARTIFACTS.find(a => a.id === artId)).filter(Boolean);
-                       if (validArts.length === 0) return (
-                         <div className="col-span-2 text-stone-500 text-xs italic mt-10">Chúa công chưa có Thần Khí nào. Hãy vào Chiêu Hiền Đài để tìm kiếm!</div>
+                       const matchingArts = allOwned
+                         .map((artId: string) => ARTIFACTS.find(a => a.id === artId))
+                         .filter((art): art is typeof ARTIFACTS[0] => !!art && (
+                           art.exclusiveTo?.includes(selectedHero.id) ||
+                           art.exclusiveTo?.some((id: string) => selectedHero.id.startsWith(id + '_')) ||
+                           art.exclusiveTo?.some((id: string) => id.startsWith(selectedHero.id.split('_').slice(0,2).join('_')))
+                         ));
+                       if (matchingArts.length === 0) return (
+                         <div className="col-span-2 text-stone-500 text-xs italic mt-10">
+                           Chúa công chưa có Thần Khí bản mệnh của <b>{selectedHero.name}</b>.<br/>Hãy vào <b>Chiêu Hiền Đài → Thu Thần Khí</b> để tìm kiếm!
+                         </div>
                        );
-                       return (<>{validArts.map((art: any, i: number) => {
-                           if (!art) return null;
+                       return (<>{matchingArts.map((art: any, i: number) => {
                            const isEquipped = selectedHero.artifactId === art.id;
-                           const isSignature = art.exclusiveTo?.includes(selectedHero.id) || art.exclusiveTo?.some((id: string) => selectedHero.id.startsWith(id + '_'));
                            return (
                               <button key={i} onClick={() => {
                                  setPlayer((p: any) => ({
@@ -8143,12 +8154,11 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
                                  }
                                  setShowEquipModal(false);
                               }} className={`bg-purple-900/20 p-3 rounded-xl border ${
-                                isEquipped ? 'border-purple-400 bg-purple-900/40 shadow-[0_0_15px_rgba(168,85,247,0.4)]' :
-                                isSignature ? 'border-yellow-500/70' : 'border-purple-500/30'
+                                isEquipped ? 'border-purple-400 bg-purple-900/40 shadow-[0_0_15px_rgba(168,85,247,0.4)]' : 'border-yellow-500/50'
                               } hover:border-purple-400 transition-all flex flex-col items-center gap-2 relative`}>
                                  <img src={art.image} className="w-12 h-12 rounded border border-purple-500/50 object-cover" />
                                  <div className="font-bold text-purple-200 text-[10px] uppercase truncate w-full">{art.name}</div>
-                                 {isSignature && <div className="absolute top-1 left-1 bg-yellow-600 text-white text-[7px] px-1 rounded uppercase font-bold">Bản Mệnh</div>}
+                                 <div className="text-yellow-500 text-[8px] font-bold">⚡ Bản Mệnh</div>
                                  {isEquipped && <div className="absolute top-1 right-1 bg-purple-500 text-white text-[8px] px-1 rounded uppercase font-bold">Đang dùng</div>}
                               </button>
                            );
