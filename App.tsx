@@ -4996,7 +4996,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                     <SwordIcon size={18} className="animate-pulse" />
                 </div>
                 <div className="flex gap-1 sm:gap-2">
-                    <button onClick={() => setSpeed(s => s === 1 ? 2 : (s === 2 ? 4 : 1))} className="text-stone-300 font-black text-[10px] sm:text-xs bg-stone-800 px-2 sm:px-3 py-1 rounded-md border border-stone-600 hover:bg-stone-700 w-12 sm:w-16 text-center relative z-[60]">
+                    <button onClick={() => setSpeed(s => s === 1 ? 2 : s === 2 ? 4 : s === 4 ? 8 : s === 8 ? 16 : 1)} className="text-stone-300 font-black text-[10px] sm:text-xs bg-stone-800 px-2 sm:px-3 py-1 rounded-md border border-stone-600 hover:bg-stone-700 w-12 sm:w-16 text-center relative z-[60]">
                         x{speed}
                     </button>
                 </div>
