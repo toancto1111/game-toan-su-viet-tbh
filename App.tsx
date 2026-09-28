@@ -2885,11 +2885,9 @@ const App: React.FC = () => {
         </div>
       )}
       
-      {/* Global Chat Widget */}
-      {view !== 'auth' && player && (
-        <div style={{ display: showChatbot ? 'block' : 'none' }}>
-          <GlobalChatWidget player={player} />
-        </div>
+      {/* Global Chat Widget - Hiện ở tất cả các màn trừ chiến đấu và đăng nhập */}
+      {view !== 'auth' && view !== 'combat' && view !== 'arena-combat' && player && (
+        <GlobalChatWidget player={player} />
       )}
       {isInstructionsOpen && <InstructionsModal onClose={() => setIsInstructionsOpen(false)} />}
 
