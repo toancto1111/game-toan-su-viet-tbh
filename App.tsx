@@ -1434,7 +1434,7 @@ const App: React.FC = () => {
         currentChapter: chapterNum,
         inventory: permInventory, 
         lineup: permLineup,
-        artifacts: prev.permArtifacts ? [...prev.permArtifacts] : [],
+        permArtifacts: prev.permArtifacts ? [...prev.permArtifacts] : [],
         ch9Faction: undefined
       };
     });
@@ -1720,7 +1720,7 @@ const App: React.FC = () => {
           const a = ARTIFACTS[Math.floor(Math.random() * ARTIFACTS.length)];
           newResults.push({ ...a, rarity: 'SSR', star: 5, overall: 'Thần Khí', isArtifact: true, id: "artifact_" + Date.now() + "_" + i, baseId: a.id });
        }
-       setPlayer(prev => ({ ...prev, [ticketKey]: (prev[ticketKey as keyof PlayerState] as number||0) - count, artifacts: [...(prev.artifacts||[]), ...newResults.map(r => r.baseId)] }));
+       setPlayer(prev => ({ ...prev, [ticketKey]: (prev[ticketKey as keyof PlayerState] as number||0) - count, permArtifacts: [...(prev.permArtifacts||[]), ...newResults.map(r => r.baseId)] }));
     } else {
         const getRolledRarity = (summonType: string) => {
            const roll = Math.random() * 100;
@@ -3489,11 +3489,11 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
                       <div className="w-12 h-12 rounded-full border-2 border-red-500/50 flex items-center justify-center bg-red-950/50 text-xl">✖</div>
                       Tháo Trang Bị
                    </button>
-                   {player.artifacts && player.artifacts.filter((artId: string) => {
+                   {player.permArtifacts && player.permArtifacts.filter((artId: string) => {
                           const art = ARTIFACTS.find(a => a.id === artId);
                           return art && (art.exclusiveTo?.includes(selectedHero.id) || art.exclusiveTo?.some(id => selectedHero.id.startsWith(id + '_')));
                        }).length > 0 ? (
-                       player.artifacts.filter((artId: string) => {
+                       player.permArtifacts.filter((artId: string) => {
                           const art = ARTIFACTS.find(a => a.id === artId);
                           return art && (art.exclusiveTo?.includes(selectedHero.id) || art.exclusiveTo?.some(id => selectedHero.id.startsWith(id + '_')));
                        }).map((artId: string, i: number) => {
@@ -7247,9 +7247,9 @@ const AdminPanel = ({ player, setPlayer, onClose }: any) => {
         if (!selectedItem) return alert("Chưa chọn thần khí");
         const artData = ARTIFACTS.find(a => a.id === selectedItem);
         if (!artData) return alert("Không tìm thấy thần khí");
-        const newArtifacts = [...(player.artifacts || [])];
+        const newArtifacts = [...(player.permArtifacts || [])];
         for(let i = 0; i < amount; i++) newArtifacts.push(artData.id);
-        setPlayer({ ...player, artifacts: newArtifacts });
+        setPlayer({ ...player, permArtifacts: newArtifacts });
      }
      alert("Chúa công đã nhận vật phẩm thành công!");
   };
@@ -8091,11 +8091,11 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
                       <div className="w-12 h-12 rounded-full border-2 border-red-500/50 flex items-center justify-center bg-red-950/50 text-xl">✖</div>
                       Tháo Trang Bị
                    </button>
-                   {player.artifacts && player.artifacts.filter((artId: string) => {
+                   {player.permArtifacts && player.permArtifacts.filter((artId: string) => {
                           const art = ARTIFACTS.find(a => a.id === artId);
                           return art && (art.exclusiveTo?.includes(selectedHero.id) || art.exclusiveTo?.some(id => selectedHero.id.startsWith(id + '_')));
                        }).length > 0 ? (
-                       player.artifacts.filter((artId: string) => {
+                       player.permArtifacts.filter((artId: string) => {
                           const art = ARTIFACTS.find(a => a.id === artId);
                           return art && (art.exclusiveTo?.includes(selectedHero.id) || art.exclusiveTo?.some(id => selectedHero.id.startsWith(id + '_')));
                        }).map((artId: string, i: number) => {
