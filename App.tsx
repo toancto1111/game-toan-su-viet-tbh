@@ -7036,7 +7036,11 @@ const SummonView = ({ player, summon, results, setView, clearResults, chapter }:
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center w-full z-10 h-full flex-1">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8 w-full max-w-[1400px] px-4 text-center relative z-10 h-full items-center pb-8">
+          {/* Mobile: horizontal scroll row | Desktop: 4-col grid */}
+          <div className="xl:grid xl:grid-cols-4 xl:gap-8 xl:max-w-[1400px] xl:px-4 xl:items-center xl:pb-8
+            flex flex-row gap-3 overflow-x-auto overscroll-x-contain snap-x snap-mandatory
+            w-full px-3 pb-6 pt-2
+            scrollbar-hide relative z-10 justify-start xl:justify-center">
             <SummonBox type="normal" title="Chiêu Mộ Anh Hào" desc="Tỉ lệ cao C, R, SR" ticketCount={player.normalTickets} onSummon={(cnt: number) => summon('normal', cnt)} color="border-blue-500/80" glow="shadow-[0_0_70px_rgba(59,130,246,0.5)]" icon={<Ticket className="text-blue-300 drop-shadow-[0_0_20px_rgba(59,130,246,1)] mb-4" size={56}/>} titleColor="text-blue-100 drop-shadow-[0_0_12px_rgba(59,130,246,1)]" btnColor="bg-blue-900/80 hover:bg-blue-800 border-blue-400/50 text-blue-100 hover:text-white" bgImage="./images/black_tortoise_pillar.png" bgClass="brightness-[0.85]" />
             
             <SummonBox type="premium" title="Chiêu Mộ Danh Tướng" desc="Tỉ lệ cao SR, SSR, UR" ticketCount={player.premiumTickets} onSummon={(cnt: number) => summon('premium', cnt)} color="border-purple-500/80" glow="shadow-[0_0_70px_rgba(168,85,247,0.4)]" icon={<Ticket className="text-purple-300 drop-shadow-[0_0_20px_rgba(168,85,247,0.9)] mb-4" size={56}/>} titleColor="text-purple-100 drop-shadow-[0_0_10px_rgba(168,85,247,0.8)]" btnColor="bg-purple-900/80 hover:bg-purple-800 border-purple-400/50 text-purple-100 hover:text-white" bgImage="./images/vermilion_bird_pillar.png" />
@@ -7059,7 +7063,7 @@ const SummonBox = ({ type, title, desc, ticketCount, onSummon, color, glow, icon
   const titleLine2 = titleParts.slice(2).join(' ');
 
   return (
-  <div className={`relative w-full h-[550px] ${isCenter ? 'h-[600px]' : ''} rounded-[3rem] border-4 ${color} ${glow} overflow-hidden group hover:scale-[1.03] transition-all duration-500`}>
+  <div className={`relative snap-center shrink-0 w-[72vw] max-w-[240px] xl:w-full h-[420px] sm:h-[480px] xl:h-[550px] ${isCenter ? 'xl:h-[600px]' : ''} rounded-[2rem] xl:rounded-[3rem] border-4 ${color} ${glow} overflow-hidden group hover:scale-[1.03] transition-all duration-500`}>
     {/* Background Image Pillar */}
     <img src={bgImage || "./images/dragon_pillar.png"} className={`absolute inset-0 w-full h-full object-cover ${bgClass || 'brightness-[0.7]'} group-hover:brightness-[0.9] group-hover:scale-110 transition-all duration-700`} alt="Pillar" />
     

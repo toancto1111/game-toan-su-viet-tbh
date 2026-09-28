@@ -392,6 +392,9 @@
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #1c1917; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #78350f; border-radius: 10px; }
+        /* Hide scrollbar but keep scroll functionality */
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
         .hero-avatar {
             filter: sepia(30%) contrast(110%) brightness(90%);
             mix-blend-mode: multiply;
