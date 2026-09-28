@@ -27,8 +27,8 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
       { name: "Mã Viện", title: "Phục ba Tướng quân", desc: "Tổng chỉ huy quân Hán" },
       { name: "Lưu Long", title: "Phù Lạc hầu", desc: "Phó tướng của Mã Viện" },
       { name: "Đoàn Chí", title: "Lâu thuyền tướng quân", desc: "Chỉ huy thủy quân" },
-      { name: "Hàn Uy", title: "Tì tướng", desc: "Tham gia chỉ huy bộ binh" },
-      { name: "Tôn Thất Hồn", title: "Tì tướng", desc: "Cùng cánh quân với Hàn Uy" },
+      { name: "Tô Định", title: "Thái thú", desc: "Thái thú Giao Chỉ tàn bạo, kẻ khơi mào khởi nghĩa Hai Bà Trưng" },
+      { name: "Hiến Trung", title: "Bình Lạc Hầu", desc: "Đô úy tiền phương của nhà Đông Hán, tướng tiên phong dưới quyền Mã Viện xâm lược Đại Việt, đối thủ mưu mô, thâm độc của Hai Bà Trưng" },
       { name: "Hán Quang Vũ Đế", title: "Hoàng đế nhà Hán", desc: "Người hạ chiếu điều động binh lực" }
     ]
   },

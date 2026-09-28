@@ -818,6 +818,12 @@ const ENEMY_HEROES_LIST: Hero[] = [
   createHero2('e2_6','Đoàn Chí',59,2,'enemy','Lâu thuyền tướng quân',
     'Đoàn Chí là Lâu thuyền tướng quân chỉ huy đạo quân thủy tiến sang phối hợp với Mã Viện đàn áp Hai Bà Trưng. Tuy nhiên, ông bệnh chết tại Hợp Phố, để lại binh quyền cho Mã Viện.',
     'Hán Hóa Mưu Kế','Dần dần làm suy yếu ý chí kháng cự bằng văn hóa và tư tưởng, gây sát thương (118% Tấn công) lên 1 mục tiêu địch..'),
+  createHero2('e2_7','Hiến Trung',68,2,'enemy','Bình Lạc Hầu',
+    'Đô úy tiền phương của nhà Đông Hán, tướng tiên phong dưới quyền Mã Viện xâm lược Đại Việt, đối thủ mưu mô, thâm độc của Hai Bà Trưng.',
+    'Mưu Đồ Thâm Độc','Dùng mưu kế thâm độc gây rối loạn, gây sát thương (136% Tấn công) lên 1 mục tiêu địch.'),
+  createHero2('e2_8','Hán Quang Vũ Đế',85,2,'enemy','Hoàng đế nhà Hán',
+    'Hoàng đế nhà Đông Hán, người hạ chiếu điều động binh lực sai Mã Viện sang đàn áp Hai Bà Trưng.',
+    'Hoàng Đế Hạ Chiếu','Tăng cường sức mạnh cho toàn quân Hán, gây sát thương (170% Tấn công) lên toàn bộ địch.'),
 
   // ═══════════════════════════════════════ CHƯƠNG 3 (địch) ═══════════════════════════════════════
   createHero2('e3_1','Tiêu Tư',78,3,'enemy','Thứ sử',
