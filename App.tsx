@@ -29,7 +29,7 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
 import { PlayerState, Rarity, Question, Hero, Artifact, TrialRecord } from './types';
 import { INITIAL_HEROES, ARTIFACTS, ENEMY_HEROES, DEFAULT_ALLY_IMG, DEFAULT_ENEMY_IMG, SYNERGIES, AVAILABLE_VIDEOS } from './constants';
 import { CHAPTER_NAMES, MATH_DATA, getMathQuestions, getQuestionsForLesson } from './geminiService';
-import { saveTrialRecord, syncPlayerToLeaderboard, savePlayerProgress, loadPlayerDataFromCloud, updateStudentAnalytics, isFirebaseReady, getCloudAccount, saveCloudAccount , updateArenaScore } from './firebaseService';
+import { saveTrialRecord, syncPlayerToLeaderboard, savePlayerProgress, loadPlayerDataFromCloud, updateStudentAnalytics, isFirebaseReady, getCloudAccount, saveCloudAccount , updateArenaScore, listenToAccountSession } from './firebaseService';
 import { AdminView } from './AdminView';
 import { demoTuLuyenData } from './demo_tu_luyen_data';
 import * as XLSX from 'xlsx';
@@ -801,7 +801,7 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
       }
 
       if (needCloudSync && isFirebaseReady()) {
-         savePlayerProgress(key, bestPlayerData).catch(() => {});
+         savePlayerProgress(key, bestPlayerData, localSessionIdRef.current).catch(() => {});
       }
 
       setSession(key);
@@ -1090,6 +1090,9 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
 // ====================================================
 
 const App: React.FC = () => {
+  // --- Khởi tạo Session ID duy nhất cho tab/thiết bị này ---
+  const localSessionIdRef = React.useRef(Date.now().toString() + "_" + Math.random().toString(36).substring(2, 9));
+
   // --- Auth state ---
   const [currentUser, setCurrentUser] = useState<string | null>(() => {
     const sess = getSession();
@@ -1250,6 +1253,7 @@ const App: React.FC = () => {
             // So sánh thời gian cập nhật, nếu Cloud mới hơn thì lấy Cloud (tính năng đồng bộ như game Top 1)
             const cloudTime = cloudData.updatedAt || 0;
             const localTime = prev.updatedAt || 0;
+            let finalData = prev;
             
             if (cloudTime > localTime) {
               console.log("Đã phát hiện dữ liệu mới hơn từ Cloud! Đang đồng bộ...");
@@ -1271,12 +1275,32 @@ const App: React.FC = () => {
                 accts[currentUser].updatedAt = cloudTime;
                 saveAccounts(accts);
               }
-              return merged;
+              finalData = merged;
             }
-            return prev;
+            
+            // ÉP CẬP NHẬT SESSION ID LÊN CLOUD NGAY KHI MỞ GAME (KICK THIẾT BỊ KHÁC NGAY LẬP TỨC)
+            savePlayerProgress(currentUser, finalData, localSessionIdRef.current).catch(() => {});
+            
+            return finalData;
           });
         }
       }).catch(e => console.warn("Lỗi auto-sync dữ liệu nền:", e));
+    }
+  }, [currentUser]);
+
+  // ========= THEO DÕI SESSION (KICK OUT NẾU ĐĂNG NHẬP THIẾT BỊ KHÁC) =========
+  useEffect(() => {
+    if (currentUser && !currentUser.startsWith('guest_') && isFirebaseReady()) {
+      const unsubscribe = listenToAccountSession(currentUser, localSessionIdRef.current, () => {
+        // Callback khi bị kick out
+        alert("Tài khoản của bạn đã được đăng nhập ở một thiết bị khác! Vui lòng tải lại trang hoặc đăng nhập lại.");
+        setCurrentUser(null);
+        clearSession();
+        setView('auth');
+      });
+      return () => {
+        if (unsubscribe) unsubscribe();
+      };
     }
   }, [currentUser]);
 
@@ -1305,7 +1329,7 @@ const App: React.FC = () => {
     }
     setSyncStatus('saving');
     try {
-      const ok = await savePlayerProgress(user, data);
+      const ok = await savePlayerProgress(user, data, localSessionIdRef.current);
       if (ok) {
         setSyncStatus('saved');
         // Fire-and-forget analytics (không block)
@@ -1960,7 +1984,7 @@ const App: React.FC = () => {
     setPlayer(newPlayer);
     
     if (currentUser && !currentUser.startsWith('guest_')) {
-        savePlayerProgress(currentUser, newPlayer);
+        savePlayerProgress(currentUser, newPlayer, localSessionIdRef.current);
     }
     
     // Pass info to UI by storing the change in arenaMatchData
@@ -2665,7 +2689,7 @@ const App: React.FC = () => {
           initTrialCombat(stageId, enemies);
         }} /></ErrorBoundary>;
       case 'tu-hao-su-viet': return <ErrorBoundary><TuHaoSuVietView playerState={player} setPlayer={setPlayer} onBack={() => setView('chapter-hub')} /></ErrorBoundary>;
-      case 'arena': return <ErrorBoundary><ArenaView playerData={player} setPlayerData={setPlayer} setView={setView} saveData={(data) => { savePlayerProgress(currentUser, data); updateStudentAnalytics(currentUser, data, data.combatPower); }} initArenaCombat={initArenaCombat} /></ErrorBoundary>;
+      case 'arena': return <ErrorBoundary><ArenaView playerData={player} setPlayerData={setPlayer} setView={setView} saveData={(data) => { savePlayerProgress(currentUser, data, localSessionIdRef.current); updateStudentAnalytics(currentUser, data, data.combatPower); }} initArenaCombat={initArenaCombat} /></ErrorBoundary>;
       default: return null;
     }
   };

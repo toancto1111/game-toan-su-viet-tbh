@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, doc, setDoc, where, getDoc, deleteDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, doc, setDoc, where, getDoc, deleteDoc, onSnapshot } from "firebase/firestore";
 import { GiftCode } from "./types";
 import { TrialRecord, LeaderboardEntry, PlayerState } from "./types";
 
@@ -308,11 +308,11 @@ export const getCloudAccount = async (username: string): Promise<{ passwordHash:
 /**
  * Lưu dữ liệu game (tiến độ, vàng, tướng...) lên Cloud sau mỗi hành động quan trọng
  */
-export const savePlayerDataToCloud = async (username: string, playerData: any): Promise<boolean> => {
+export const savePlayerDataToCloud = async (username: string, playerData: any, sessionId?: string): Promise<boolean> => {
   if (!db || playerData?.isGuest || username.startsWith('guest_')) return false;
   try {
     const docRef = doc(db, "accounts", username.toLowerCase());
-    await setDoc(docRef, { playerData, updatedAt: Date.now() }, { merge: true });
+    await setDoc(docRef, { playerData, updatedAt: Date.now(), ...(sessionId ? { currentSessionId: sessionId } : {}) }, { merge: true });
     return true;
   } catch (error) {
     console.error("Lỗi lưu dữ liệu người chơi lên Cloud:", error);
@@ -331,7 +331,8 @@ export const isFirebaseReady = (): boolean => !!db;
  */
 export const savePlayerProgress = async (
   username: string,
-  playerData: PlayerState
+  playerData: PlayerState,
+  sessionId?: string
 ): Promise<boolean> => {
   if (!db || playerData.isGuest || username.startsWith('guest_')) return false;
   try {
@@ -342,7 +343,8 @@ export const savePlayerProgress = async (
       docRef,
       {
         playerData: safePlayerData,
-        updatedAt: Date.now()
+        updatedAt: Date.now(),
+        ...(sessionId ? { currentSessionId: sessionId } : {})
       },
       { merge: true }
     );
@@ -371,6 +373,33 @@ export const loadPlayerDataFromCloud = async (
     return data.playerData as PlayerState;
   } catch (error) {
     console.error("Lỗi tải tiến độ từ Cloud:", error);
+    return null;
+  }
+};
+
+/**
+ * Lắng nghe thay đổi tài khoản từ Cloud để xử lý kick out nếu đăng nhập thiết bị khác
+ */
+export const listenToAccountSession = (
+  username: string,
+  currentSessionId: string,
+  onKickedOut: () => void
+): (() => void) | null => {
+  if (!db) return null;
+  try {
+    const docRef = doc(db, "accounts", username.toLowerCase());
+    const unsubscribe = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        if (data.currentSessionId && data.currentSessionId !== currentSessionId) {
+          // Phát hiện đăng nhập từ nơi khác!
+          onKickedOut();
+        }
+      }
+    });
+    return unsubscribe;
+  } catch (error) {
+    console.error("Lỗi lắng nghe session từ Cloud:", error);
     return null;
   }
 };
