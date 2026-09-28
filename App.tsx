@@ -419,6 +419,8 @@ const SESSION_KEY  = 'sv-session-v2';
 interface AccountRecord {
   passwordHash: string;
   playerData: PlayerState;
+  updatedAt?: number;
+  username?: string;
 }
 
 /** Hash mật khẩu đơn giản (client-side). Đủ để che mật khẩu trong localStorage. */
@@ -814,7 +816,7 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
       }
 
       if (needCloudSync && isFirebaseReady()) {
-         savePlayerProgress(key, bestPlayerData, localSessionIdRef.current).catch(() => {});
+         savePlayerProgress(key, bestPlayerData).catch(() => {});
       }
 
       // Safeguard: nếu bestPlayerData null (lỗi cấu trúc cloud), báo lỗi
