@@ -1300,6 +1300,14 @@ const App: React.FC = () => {
               }
               finalData = merged;
             }
+
+            // MIGRATION: Chuyển dữ liệu cũ 'artifacts' → 'permArtifacts' (nếu còn sót)
+            const fdAny = finalData as any;
+            if (fdAny.artifacts && Array.isArray(fdAny.artifacts) && fdAny.artifacts.length > 0) {
+              const migratedArts = [...new Set([...(finalData.permArtifacts || []), ...fdAny.artifacts])];
+              finalData = { ...finalData, permArtifacts: migratedArts };
+              delete (finalData as any).artifacts;
+            }
             
             // ÉP CẬP NHẬT SESSION ID LÊN CLOUD NGAY KHI MỞ GAME (KICK THIẾT BỊ KHÁC NGAY LẬP TỨC)
             savePlayerProgress(currentUser, finalData, localSessionIdRef.current)
@@ -2172,6 +2180,16 @@ const App: React.FC = () => {
           if (!playerData.unlockedChapters) playerData.unlockedChapters = [1];
           if (!playerData.tuLuyenCorrectIds) playerData.tuLuyenCorrectIds = {};
           if (!playerData.tuLuyenUnlockedLessons) playerData.tuLuyenUnlockedLessons = ['B1'];
+
+          // MIGRATION: Chuyển dữ liệu cũ từ 'artifacts' → 'permArtifacts' (bug cũ lưu sai field)
+          const pdAny = playerData as any;
+          if (pdAny.artifacts && Array.isArray(pdAny.artifacts) && pdAny.artifacts.length > 0) {
+            const merged = [...new Set([...(playerData.permArtifacts || []), ...pdAny.artifacts])];
+            playerData.permArtifacts = merged;
+            delete pdAny.artifacts; // Xóa field cũ
+            console.log(`[Migration] Đã chuyển ${pdAny.artifacts?.length || merged.length} thần khí từ 'artifacts' → 'permArtifacts'`);
+          }
+          if (!playerData.permArtifacts) playerData.permArtifacts = [];
 
           // Sync hero stats từ game data mới nhất
           if (playerData.inventory) {
