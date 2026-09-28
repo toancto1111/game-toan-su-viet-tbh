@@ -46,12 +46,12 @@ import {
   CheckCircle, Trophy, Coins, Ticket, XCircle, Gift, BookOpen, 
   ShoppingBag, Star, UserCheck, Plus, Minus, School, Tent, Crosshair,
   Lightbulb, Zap, Info, FastForward, Swords as SwordIcon, Users, ScrollText, Scissors, ArrowUpCircle,
-  Music, Play, Pause, SkipForward, Volume2, VolumeX, Package, LogOut, Crown, Shield, Moon, Gem, Snowflake, Flag, Disc, X, Database, MountainSnow, Recycle,
-  HeartCrack, Skull, Wind, Heart, Frown, Flame, Droplets, ShieldOff, Ban, TrendingDown, Target, ShieldCheck, Syringe, RefreshCw, Link2, ShieldAlert, Hourglass, HeartPulse, User, Maximize, Minimize
+  HeartCrack, Skull, Wind, Heart, Frown, Flame, Droplets, ShieldOff, Ban, TrendingDown, Target, ShieldCheck, Syringe, RefreshCw, Link2, ShieldAlert, Hourglass, HeartPulse, User, Maximize, Minimize, MessageCircle, Send, AlertTriangle
 } from 'lucide-react';
 import { ProfileModal } from './ProfileModal';
 import { DailyQuestsModal } from './DailyQuestsModal';
 import { ChatbotWidget } from './ChatbotWidget';
+import { GlobalChatWidget } from './GlobalChatWidget';
 
 const HeroStars = ({ starCount, size = 10, className = "" }: { starCount: number, size?: number, className?: string }) => {
    if (!starCount) return null;
@@ -2882,6 +2882,13 @@ const App: React.FC = () => {
       {view !== 'auth' && (
         <div style={{ display: showChatbot ? 'block' : 'none' }}>
           <ChatbotWidget />
+        </div>
+      )}
+      
+      {/* Global Chat Widget */}
+      {view !== 'auth' && player && (
+        <div style={{ display: showChatbot ? 'block' : 'none' }}>
+          <GlobalChatWidget player={player} />
         </div>
       )}
       {isInstructionsOpen && <InstructionsModal onClose={() => setIsInstructionsOpen(false)} />}

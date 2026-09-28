@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, doc, setDoc, where, getDoc, deleteDoc, onSnapshot } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, doc, setDoc, where, getDoc, deleteDoc, onSnapshot, arrayUnion, updateDoc } from "firebase/firestore";
 import { GiftCode } from "./types";
 import { TrialRecord, LeaderboardEntry, PlayerState } from "./types";
 
@@ -660,5 +660,71 @@ export const saveAICache = async (questionHash: string, question: string, answer
     await setDoc(docRef, { question, answer, hits: 1, createdAt: Date.now(), lastUsedAt: Date.now() }, { merge: true });
   } catch (error) {
     console.error('Lỗi lưu AI Cache:', error);
+  }
+};
+
+// ================= GLOBAL CHAT (TỐI ƯU CHI PHÍ) =================
+export interface ChatMessage {
+  id: string;
+  senderId: string;
+  senderName: string;
+  senderGrade: string; // Tên cấp bậc (Tân binh, Thiếu úy...)
+  avatar?: string;
+  text: string;
+  timestamp: number;
+}
+
+const GLOBAL_CHAT_ROOM_ID = 'main_room';
+
+/**
+ * Lắng nghe tin nhắn mới.
+ * Dùng Single-Document (1 read) thay vì Collection (100 reads) để siêu tiết kiệm chi phí!
+ */
+export const listenToGlobalChat = (callback: (messages: ChatMessage[]) => void) => {
+  if (!db) return () => {};
+  const docRef = doc(db, 'global_chat', GLOBAL_CHAT_ROOM_ID);
+  
+  return onSnapshot(docRef, (docSnap) => {
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      callback((data.messages as ChatMessage[]) || []);
+    } else {
+      callback([]);
+    }
+  }, (error) => {
+    console.error("Lỗi lắng nghe chat:", error);
+  });
+};
+
+/**
+ * Gửi tin nhắn mới.
+ * Tự động loại bỏ tin nhắn cũ nếu mảng > 100 phần tử để giảm dung lượng Document.
+ */
+export const sendGlobalChatMessage = async (message: Omit<ChatMessage, 'id' | 'timestamp'>): Promise<boolean> => {
+  if (!db) return false;
+  try {
+    const docRef = doc(db, 'global_chat', GLOBAL_CHAT_ROOM_ID);
+    const newMsg: ChatMessage = {
+      ...message,
+      id: crypto.randomUUID(),
+      timestamp: Date.now()
+    };
+
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      await setDoc(docRef, { messages: [newMsg] });
+    } else {
+      let currentMessages = (docSnap.data().messages as ChatMessage[]) || [];
+      // Giữ tối đa 99 tin cũ + 1 tin mới = 100 tin nhắn
+      if (currentMessages.length >= 100) {
+        currentMessages = currentMessages.slice(currentMessages.length - 99);
+      }
+      currentMessages.push(newMsg);
+      await updateDoc(docRef, { messages: currentMessages });
+    }
+    return true;
+  } catch (error) {
+    console.error("Lỗi gửi tin nhắn:", error);
+    return false;
   }
 };
