@@ -39,12 +39,12 @@ export const HERO_TRIAL_STAGES: HeroTrialStage[] = [
     context: "Quân Lương ban đầu rất mạnh nhưng bị sa lầy vào đầm Dạ Trạch do không quen thuộc địa hình. Triệu Quang Phục lợi dụng đầm lầy hiểm trở để đánh du kích tiêu hao sinh lực địch, cuối cùng phản công khi nội bộ giặc suy yếu.",
     recommendedPower: 45000,
     enemiesRaw: [
-      { name: "Trần Bá Tiên", title: "Tư mã Giao Châu", desc: "Tướng thiện chiến nhất chỉ huy vây hãm Dạ Trạch" },
-      { name: "Dương Phiêu", title: "Thứ sử Giao Châu", desc: "Chỉ huy chung của nhà Lương" },
-      { name: "Dương Sàn", title: "Tì tướng", desc: "Thay Trần Bá Tiên giữ quyền chỉ huy và bị tử trận" },
-      { name: "Vương Tăng Biện", title: "Đại tướng nhà Lương", desc: "Hỗ trợ chiến dịch dẹp loạn phương Nam" },
-      { name: "Tiêu Tư", title: "Cựu Thứ sử", desc: "Bị đuổi trước đó, luôn tìm cách báo thù" },
-      { name: "Lương Vũ Đế", title: "Hoàng đế nhà Lương", desc: "Kẻ phát động cuộc chiến tiêu diệt vạn Xuân" }
+      { name: "Dương Sàn", title: "Tì tướng", desc: "Tì tướng của Trần Bá Tiên, được giao quyền trấn giữ đồn lũy quân Lương. Boss chính của ải. Là kẻ trực tiếp đối đầu với chiến thuật du kích của Triệu Quang Phục. Khi Triệu Việt Vương tổng phản công vào năm 550, Dương Sàn bị chém chết tại trận, quân Lương tan rã." },
+      { name: "Trần Bá Tiên", title: "Danh tướng nhà Lương", desc: "Ban đầu chỉ huy chiến dịch vây hãm đầm Dạ Trạch. Sau khi Lý Nam Đế rút lui, ông ta trực tiếp đem đại quân vây chặt Dạ Trạch suốt gần 4 năm trời nhưng bất lực trước nghĩa quân. Đến năm 548, ông ta bàn giao lại binh quyền cho Dương Sàn để rút về dẹp loạn chính quốc." },
+      { name: "Dương Phiêu", title: "Thứ sử Giao Châu", desc: "Tổng chỉ huy tối cao của chiến dịch chinh phạt nước Vạn Xuân. Tướng chỉ huy trung quân. Là người trực tiếp hạ lệnh phối hợp cả hai đường thủy, bộ đánh thọc sâu vào căn cứ cốt lõi của quân ta ngay từ đầu chiến dịch." },
+      { name: "Nguyễn Cảnh Trọng", title: "Thứ sử Quảng Châu", desc: "Tỳ tướng hỗ trợ hậu cần / Phản diện gián tiếp. Hắn ta trấn thủ vùng giáp ranh, đóng vai trò đảm bảo tuyến đường tiếp tế khí giới cho quân Lương ở Vạn Xuân. Sự rạn nứt giữa hắn và Trần Bá Tiên sau này đã gián tiếp phá vỡ tuyến chi viện phía Bắc." },
+      { name: "Hầu Cảnh", title: "Tướng phản loạn", desc: "Tướng kích hoạt hiệu ứng/Quái đặc biệt. Dù không trực tiếp sang nước ta, nhưng cuộc nổi loạn của Hầu Cảnh tại Trung Nguyên chính là tác nhân trực tiếp khiến nội bộ giặc suy yếu, buộc Trần Bá Tiên phải bỏ dở chiến trường Dạ Trạch rút quân về nước." },
+      { name: "Lương Vũ Đế", title: "Hoàng đế nhà Lương", desc: "Boss tối cao. Kẻ phát động toàn bộ cuộc chiến tiêu diệt nhà nước non trẻ Vạn Xuân, đóng vai trò buff sức mạnh toàn cục cho quân Hán từ xa." }
     ]
   },
   {
