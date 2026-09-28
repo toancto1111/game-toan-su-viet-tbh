@@ -3507,34 +3507,44 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
                       <div className="w-12 h-12 rounded-full border-2 border-red-500/50 flex items-center justify-center bg-red-950/50 text-xl">✖</div>
                       Tháo Trang Bị
                    </button>
-                   {player.permArtifacts && player.permArtifacts.filter((artId: string) => {
-                          const art = ARTIFACTS.find(a => a.id === artId);
-                          return art && (art.exclusiveTo?.includes(selectedHero.id) || art.exclusiveTo?.some(id => selectedHero.id.startsWith(id + '_')));
-                       }).length > 0 ? (
-                       player.permArtifacts.filter((artId: string) => {
-                          const art = ARTIFACTS.find(a => a.id === artId);
-                          return art && (art.exclusiveTo?.includes(selectedHero.id) || art.exclusiveTo?.some(id => selectedHero.id.startsWith(id + '_')));
-                       }).map((artId: string, i: number) => {
-                          const art = ARTIFACTS.find(a => a.id === artId);
-                          if (!art) return null;
-                          const isEquipped = selectedHero.artifactId === art.id;
-                          return (
-                             <button key={i} onClick={() => {
-                                setPlayer((p: any) => ({
-                                    ...p, 
-                                    inventory: p.inventory.map((h: any) => h.id === selectedHero.id ? { ...h, artifactId: art.id } : h)
-                                }));
-                                setShowEquipModal(false);
-                             }} className={`bg-purple-900/20 p-3 rounded-xl border ${isEquipped ? 'border-purple-400 bg-purple-900/40 shadow-[0_0_15px_rgba(168,85,247,0.4)]' : 'border-purple-500/30'} hover:border-purple-400 transition-all flex flex-col items-center gap-2 relative`}>
-                                <img src={art.image} className="w-12 h-12 rounded border border-purple-500/50 object-cover" />
-                                <div className="font-bold text-purple-200 text-[10px] uppercase truncate w-full">{art.name}</div>
-                                {isEquipped && <div className="absolute top-1 right-1 bg-purple-500 text-white text-[8px] px-1 rounded uppercase font-bold">Đang dùng</div>}
-                             </button>
-                          );
-                       })
-                   ) : (
-                       <div className="col-span-2 text-stone-500 text-xs italic mt-10">Chúa công chưa có Thần Khí bản mệnh nào phù hợp cho hào kiệt này. Hãy vào Chiêu Hiền Đài để tìm kiếm!</div>
-                   )}
+                    {(() => {
+                       // Gộp cả permArtifacts (mới) và artifacts (cũ - migration fallback) để chắc chắn
+                       const allOwned: string[] = [...new Set([
+                         ...((player.permArtifacts as string[]) || []),
+                         ...(((player as any).artifacts as string[]) || [])
+                       ])];
+                       // Lọc các artifact hợp lệ
+                       const validArts = allOwned.map((artId: string) => ARTIFACTS.find(a => a.id === artId)).filter(Boolean);
+                       if (validArts.length === 0) return (
+                         <div className="col-span-2 text-stone-500 text-xs italic mt-10">Chúa công chưa có Thần Khí nào. Hãy vào Chiêu Hiền Đài để tìm kiếm!</div>
+                       );
+                       return (<>{validArts.map((art: any, i: number) => {
+                           if (!art) return null;
+                           const isEquipped = selectedHero.artifactId === art.id;
+                           const isSignature = art.exclusiveTo?.includes(selectedHero.id) || art.exclusiveTo?.some((id: string) => selectedHero.id.startsWith(id + '_'));
+                           return (
+                              <button key={i} onClick={() => {
+                                 setPlayer((p: any) => ({
+                                     ...p,
+                                     inventory: p.inventory.map((h: any) => h.id === selectedHero.id ? { ...h, artifactId: art.id } : h)
+                                 }));
+                                 // Đảm bảo lưu vào permArtifacts
+                                 if (!(player.permArtifacts || []).includes(art.id)) {
+                                   setPlayer((p: any) => ({ ...p, permArtifacts: [...(p.permArtifacts || []), art.id] }));
+                                 }
+                                 setShowEquipModal(false);
+                              }} className={`bg-purple-900/20 p-3 rounded-xl border ${
+                                isEquipped ? 'border-purple-400 bg-purple-900/40 shadow-[0_0_15px_rgba(168,85,247,0.4)]' :
+                                isSignature ? 'border-yellow-500/70' : 'border-purple-500/30'
+                              } hover:border-purple-400 transition-all flex flex-col items-center gap-2 relative`}>
+                                 <img src={art.image} className="w-12 h-12 rounded border border-purple-500/50 object-cover" />
+                                 <div className="font-bold text-purple-200 text-[10px] uppercase truncate w-full">{art.name}</div>
+                                 {isSignature && <div className="absolute top-1 left-1 bg-yellow-600 text-white text-[7px] px-1 rounded uppercase font-bold">Bản Mệnh</div>}
+                                 {isEquipped && <div className="absolute top-1 right-1 bg-purple-500 text-white text-[8px] px-1 rounded uppercase font-bold">Đang dùng</div>}
+                              </button>
+                           );
+                       })}</>);
+                    })()}
                 </div>
                 <button onClick={() => setShowEquipModal(false)} className="w-full py-4 text-xs font-black uppercase text-stone-500 underline mt-auto">Đóng</button>
              </div>
@@ -8109,34 +8119,42 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
                       <div className="w-12 h-12 rounded-full border-2 border-red-500/50 flex items-center justify-center bg-red-950/50 text-xl">✖</div>
                       Tháo Trang Bị
                    </button>
-                   {player.permArtifacts && player.permArtifacts.filter((artId: string) => {
-                          const art = ARTIFACTS.find(a => a.id === artId);
-                          return art && (art.exclusiveTo?.includes(selectedHero.id) || art.exclusiveTo?.some(id => selectedHero.id.startsWith(id + '_')));
-                       }).length > 0 ? (
-                       player.permArtifacts.filter((artId: string) => {
-                          const art = ARTIFACTS.find(a => a.id === artId);
-                          return art && (art.exclusiveTo?.includes(selectedHero.id) || art.exclusiveTo?.some(id => selectedHero.id.startsWith(id + '_')));
-                       }).map((artId: string, i: number) => {
-                          const art = ARTIFACTS.find(a => a.id === artId);
-                          if (!art) return null;
-                          const isEquipped = selectedHero.artifactId === art.id;
-                          return (
-                             <button key={i} onClick={() => {
-                                setPlayer((p: any) => ({
-                                    ...p, 
-                                    inventory: p.inventory.map((h: any) => h.id === selectedHero.id ? { ...h, artifactId: art.id } : h)
-                                }));
-                                setShowEquipModal(false);
-                             }} className={`bg-purple-900/20 p-3 rounded-xl border ${isEquipped ? 'border-purple-400 bg-purple-900/40 shadow-[0_0_15px_rgba(168,85,247,0.4)]' : 'border-purple-500/30'} hover:border-purple-400 transition-all flex flex-col items-center gap-2 relative`}>
-                                <img src={art.image} className="w-12 h-12 rounded border border-purple-500/50 object-cover" />
-                                <div className="font-bold text-purple-200 text-[10px] uppercase truncate w-full">{art.name}</div>
-                                {isEquipped && <div className="absolute top-1 right-1 bg-purple-500 text-white text-[8px] px-1 rounded uppercase font-bold">Đang dùng</div>}
-                             </button>
-                          );
-                       })
-                   ) : (
-                       <div className="col-span-2 text-stone-500 text-xs italic mt-10">Chúa công chưa có Thần Khí bản mệnh nào phù hợp cho hào kiệt này. Hãy vào Chiêu Hiền Đài để tìm kiếm!</div>
-                   )}
+                    {(() => {
+                       const allOwned: string[] = [...new Set([
+                         ...((player.permArtifacts as string[]) || []),
+                         ...(((player as any).artifacts as string[]) || [])
+                       ])];
+                       const validArts = allOwned.map((artId: string) => ARTIFACTS.find(a => a.id === artId)).filter(Boolean);
+                       if (validArts.length === 0) return (
+                         <div className="col-span-2 text-stone-500 text-xs italic mt-10">Chúa công chưa có Thần Khí nào. Hãy vào Chiêu Hiền Đài để tìm kiếm!</div>
+                       );
+                       return (<>{validArts.map((art: any, i: number) => {
+                           if (!art) return null;
+                           const isEquipped = selectedHero.artifactId === art.id;
+                           const isSignature = art.exclusiveTo?.includes(selectedHero.id) || art.exclusiveTo?.some((id: string) => selectedHero.id.startsWith(id + '_'));
+                           return (
+                              <button key={i} onClick={() => {
+                                 setPlayer((p: any) => ({
+                                     ...p,
+                                     inventory: p.inventory.map((h: any) => h.id === selectedHero.id ? { ...h, artifactId: art.id } : h)
+                                 }));
+                                 if (!(player.permArtifacts || []).includes(art.id)) {
+                                   setPlayer((p: any) => ({ ...p, permArtifacts: [...(p.permArtifacts || []), art.id] }));
+                                 }
+                                 setShowEquipModal(false);
+                              }} className={`bg-purple-900/20 p-3 rounded-xl border ${
+                                isEquipped ? 'border-purple-400 bg-purple-900/40 shadow-[0_0_15px_rgba(168,85,247,0.4)]' :
+                                isSignature ? 'border-yellow-500/70' : 'border-purple-500/30'
+                              } hover:border-purple-400 transition-all flex flex-col items-center gap-2 relative`}>
+                                 <img src={art.image} className="w-12 h-12 rounded border border-purple-500/50 object-cover" />
+                                 <div className="font-bold text-purple-200 text-[10px] uppercase truncate w-full">{art.name}</div>
+                                 {isSignature && <div className="absolute top-1 left-1 bg-yellow-600 text-white text-[7px] px-1 rounded uppercase font-bold">Bản Mệnh</div>}
+                                 {isEquipped && <div className="absolute top-1 right-1 bg-purple-500 text-white text-[8px] px-1 rounded uppercase font-bold">Đang dùng</div>}
+                              </button>
+                           );
+                       })}</>);
+                    })()}
+
                 </div>
                 <button onClick={() => setShowEquipModal(false)} className="w-full py-4 text-xs font-black uppercase text-stone-500 underline mt-auto">Đóng</button>
              </div>
