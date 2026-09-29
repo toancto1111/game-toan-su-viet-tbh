@@ -2881,14 +2881,16 @@ const App: React.FC = () => {
       })()}
       {/* AI Chatbot - ẩn khi chiến đấu nhưng giữ nguyên state để không bị reset */}
       {view !== 'auth' && (
-        <div style={{ display: showChatbot ? 'block' : 'none' }}>
+        <div style={{ display: view === 'chapter-hub' ? 'block' : 'none' }}>
           <ChatbotWidget />
         </div>
       )}
       
-      {/* Global Chat Widget - Hiện ở tất cả các màn trừ chiến đấu và đăng nhập */}
-      {view !== 'auth' && view !== 'combat' && view !== 'arena-combat' && player && (
-        <GlobalChatWidget player={player} />
+      {/* Global Chat Widget - Chỉ hiện ở chapter-hub */}
+      {view !== 'auth' && player && (
+        <div style={{ display: view === 'chapter-hub' ? 'block' : 'none' }}>
+          <GlobalChatWidget player={player} />
+        </div>
       )}
       {isInstructionsOpen && <InstructionsModal onClose={() => setIsInstructionsOpen(false)} />}
 
