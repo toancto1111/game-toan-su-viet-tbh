@@ -76,7 +76,7 @@ export const GlobalChatWidget: React.FC<GlobalChatWidgetProps> = ({ player }) =>
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed top-[370px] right-[24px] z-50 bg-gradient-to-br from-amber-600 to-amber-800 text-white w-[68px] h-[68px] rounded-full shadow-[0_0_15px_rgba(217,119,6,0.5)] hover:scale-110 transition-transform flex flex-col items-center justify-center border-2 border-amber-400"
+          className="fixed top-[445px] right-[24px] z-50 bg-gradient-to-br from-amber-600 to-amber-800 text-white w-[68px] h-[68px] rounded-full shadow-[0_0_15px_rgba(217,119,6,0.5)] hover:scale-110 transition-transform flex flex-col items-center justify-center border-2 border-amber-400"
           title="Kênh Thế Giới"
         >
           <MessageCircle size={28} />

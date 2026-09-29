@@ -2862,7 +2862,7 @@ const App: React.FC = () => {
         return (
           <button
             onClick={() => setIsDailyQuestsOpen(true)}
-            style={{ position: 'fixed', top: '280px', left: '24px', zIndex: 9997 }}
+            style={{ position: 'fixed', top: '355px', left: '24px', zIndex: 9997 }}
             className="group flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             title="Nhiệm Vụ Hàng Ngày"
           >
