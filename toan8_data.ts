@@ -32,8 +32,23 @@ export const TOAN_8_DATA = [
 *Giải:* Thu gọn bằng cách nhóm hạng tử để xuất hiện nhân tử chung $(x^2+y^2)$, kết quả ra 12.`
       },
       {
-        title: "Bài 2. Đa thức",
-        summary: commonSummaryPrefix + `Nội dung đang được cập nhật...`
+        title: "Bài 2. Các phép toán với đa thức nhiều biến",
+        summary: commonSummaryPrefix + `### 1. Kiến thức trọng tâm
+- **Nhân đơn thức với đa thức, đa thức với đa thức:** Áp dụng tính chất phân phối của phép nhân đối với phép cộng: $A(B+C) = AB + AC$ và $(A+B)(C+D) = AC + AD + BC + BD$.
+- **Chia đa thức cho đơn thức:** Muốn chia một đa thức cho một đơn thức (trường hợp chia hết), ta chia từng hạng tử của đa thức cho đơn thức đó rồi cộng các kết quả lại với nhau.
+- **Cộng, trừ đa thức nhiều biến:** Bỏ dấu ngoặc (chú ý quy tắc dấu) và thu gọn các hạng tử đồng dạng.
+- **Ứng dụng thực tế và hình học:** Sử dụng các phép toán đa thức để biểu diễn chu vi, diện tích, thể tích của các hình (tam giác, chữ nhật, hình hộp, hình thang) hoặc giải các bài toán thực tế (bán hàng, tính tiền lãi, chia lô đất).
+
+### 2. Các lỗi sai thường gặp
+- **Sai lầm về dấu:** Khi trừ hai đa thức hoặc nhân/chia với đơn thức có hệ số âm, học sinh thường quên đổi dấu toàn bộ các hạng tử bên trong.
+- **Sai lầm về số mũ:** Khi nhân hoặc chia các lũy thừa cùng cơ số, hay nhầm lẫn giữa phép cộng và phép nhân số mũ (ví dụ $x^2 \\cdot x^3$ tính nhầm thành $x^6$ thay vì $x^5$).
+- **Không thu gọn trước khi tính giá trị:** Thay số trực tiếp vào biểu thức dài và phức tạp dẫn đến sai sót tính toán thay vì thu gọn biểu thức trước.
+- **Thiết lập sai biểu thức hình học:** Không trừ đi các phần bị khoét lõm (như cửa sổ, góc hộp) khi tính diện tích, thể tích phần còn lại.
+
+### 3. Ví dụ minh họa
+**Phép chia:** $(-2x^5y^3 + 3x^2y^2 - 4x^3y) : (-2x^2y) = x^3y^2 - \\dfrac{3}{2}xy + 2$.
+
+**Tính giá trị biểu thức:** Rút gọn $E = \\dfrac{2}{3}x^2y^3 : \\left(-\\dfrac{1}{3}xy\\right) + 2x(y-1)(y+1)$ ta được $E = -2xy^2 + 2x(y^2-1) = -2x$. Giá trị này chỉ phụ thuộc vào $x$, không phụ thuộc vào $y$.`
       },
       {
         title: "Bài 3. Phép cộng và phép trừ đa thức",
