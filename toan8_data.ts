@@ -56,7 +56,19 @@ export const TOAN_8_DATA = [
       },
       {
         title: "Bài 4. Phép nhân đa thức",
-        summary: commonSummaryPrefix + `Nội dung đang được cập nhật...`
+        summary: commonSummaryPrefix + `### 1. Kiến thức trọng tâm
+- **Nhân đơn thức với đơn thức, đa thức với đa thức:** Đây là trọng tâm chính của bài. Áp dụng quy tắc nhân hệ số với hệ số, phần biến với phần biến (cộng số mũ các biến giống nhau). Khi nhân hai đa thức, ta nhân từng hạng tử của đa thức này với từng hạng tử của đa thức kia rồi cộng kết quả lại.
+- **Bậc của đa thức thu gọn:** Bậc của một đa thức là bậc của hạng tử có bậc cao nhất trong dạng thu gọn của đa thức đó. Lưu ý: Phải thu gọn đa thức trước khi xác định bậc.
+- **Giải toán bằng cách lập phương trình:** Ứng dụng các phép toán đa thức vào bài toán thực tế (tính diện tích, chu vi, thể tích, bài toán số học). Cần cẩn thận trong việc lập biểu thức đại số từ lời văn.
+
+### 2. Các lỗi sai thường gặp
+- **Sai dấu khi nhân:** Đặc biệt khi nhân các hạng tử mang dấu âm. VD: $(-x^2) \\cdot (-2x) = 2x^3$ nhưng học sinh hay nhầm thành $-2x^3$.
+- **Xác định bậc sai do chưa thu gọn:** Học sinh thường nhìn vào hạng tử có số mũ cao nhất ban đầu để kết luận bậc mà không nhận ra hạng tử đó có thể bị triệt tiêu sau khi thu gọn.
+- **Nhầm lẫn giữa nhân và cộng số mũ:** $x^2 \\cdot x^3 = x^5$ (cộng số mũ), nhưng học sinh dễ nhầm thành $x^6$ (nhân số mũ).
+
+### 3. Ví dụ minh họa tiêu biểu
+- **Nhân đa thức:** $(x-y)(x^2+xy+y^2) = x^3+x^2y+xy^2 - x^2y-xy^2-y^3 = x^3-y^3$.
+- **Tìm x:** $(3x+2)(x-1) - 3(x+1)(x-2) = 4 \\Rightarrow (3x^2-x-2) - 3(x^2-x-2) = 4 \\Rightarrow 3x^2-x-2-3x^2+3x+6 = 4 \\Rightarrow 2x+4=4 \\Rightarrow x=0$.`
       },
       {
         title: "Bài 5. Phép chia đa thức cho đơn thức",
