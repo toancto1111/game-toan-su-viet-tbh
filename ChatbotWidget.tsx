@@ -854,10 +854,13 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
 
     .cb-container {
       position: fixed;
-      top: 355px;
+      top: 350px;
       right: 24px;
       z-index: 9998;
       font-family: 'Inter', system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .cb-fab {
@@ -1300,11 +1303,14 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
       <div className="cb-container">
         {/* FAB button */}
         {!isOpen && (
-          <button className="cb-fab" onClick={() => setIsOpen(true)} title="Mở trợ lý học tập">
-            <span className="cb-fab-pulse" />
-            <GraduationCap size={26} />
-            <span className="cb-badge" />
-          </button>
+          <div className="flex flex-col items-center">
+            <button className="cb-fab" onClick={() => setIsOpen(true)} title="Mở trợ lý học tập">
+              <span className="cb-fab-pulse" />
+              <GraduationCap size={26} />
+              <span className="cb-badge" />
+            </button>
+            <span className="mt-1.5 px-2.5 py-0.5 rounded-full bg-stone-900/90 border border-indigo-700/50 text-[10px] font-black text-indigo-400 uppercase tracking-widest drop-shadow whitespace-nowrap cursor-pointer" onClick={() => setIsOpen(true)}>Hỏi AI</span>
+          </div>
         )}
 
         {/* Chat window */}

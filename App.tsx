@@ -2862,11 +2862,11 @@ const App: React.FC = () => {
         return (
           <button
             onClick={() => setIsDailyQuestsOpen(true)}
-            style={{ position: 'fixed', top: '335px', left: '24px', zIndex: 9997 }}
+            style={{ position: 'fixed', top: '240px', right: '24px', zIndex: 9997 }}
             className="group flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
             title="Nhiệm Vụ Hàng Ngày"
           >
-            <div className="relative w-[70px] h-[70px] rounded-2xl bg-gradient-to-br from-stone-800 to-stone-950 flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.5)] border-2 border-amber-500/80 hover:shadow-[0_0_25px_rgba(245,158,11,0.8)] hover:border-amber-400 overflow-hidden transition-all">
+            <div className="relative w-[68px] h-[68px] rounded-full bg-gradient-to-br from-stone-800 to-stone-950 flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.5)] border-2 border-amber-500/80 hover:shadow-[0_0_25px_rgba(245,158,11,0.8)] hover:border-amber-400 overflow-hidden transition-all">
               <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-amber-500/10 to-transparent pointer-events-none"></div>
               <ScrollText size={32} className="text-amber-400 drop-shadow-[0_2px_2px_rgba(0,0,0,1)] group-hover:text-amber-300 group-hover:scale-110 transition-all duration-300" />
               {pendingCount > 0 && (

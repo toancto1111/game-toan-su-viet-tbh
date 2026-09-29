@@ -74,18 +74,21 @@ export const GlobalChatWidget: React.FC<GlobalChatWidgetProps> = ({ player }) =>
   return (
     <>
       {!isOpen && (
-        <button
+        <div
           onClick={() => setIsOpen(true)}
-          className="fixed top-[445px] right-[24px] z-50 bg-gradient-to-br from-amber-600 to-amber-800 text-white w-[68px] h-[68px] rounded-full shadow-[0_0_15px_rgba(217,119,6,0.5)] hover:scale-110 transition-transform flex flex-col items-center justify-center border-2 border-amber-400"
+          className="fixed top-[460px] right-[24px] z-50 group flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
           title="Kênh Thế Giới"
         >
-          <MessageCircle size={28} />
-          {unreadCount > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[11px] font-black w-6 h-6 rounded-full flex items-center justify-center border-2 border-white animate-bounce shadow-[0_0_10px_rgba(220,38,38,0.8)]">
-              {unreadCount > 99 ? '99+' : unreadCount}
-            </span>
-          )}
-        </button>
+          <div className="relative bg-gradient-to-br from-amber-600 to-amber-800 text-white w-[68px] h-[68px] rounded-full shadow-[0_0_15px_rgba(217,119,6,0.5)] flex flex-col items-center justify-center border-2 border-amber-400">
+            <MessageCircle size={28} />
+            {unreadCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[11px] font-black w-6 h-6 rounded-full flex items-center justify-center border-2 border-white animate-bounce shadow-[0_0_10px_rgba(220,38,38,0.8)]">
+                {unreadCount > 99 ? '99+' : unreadCount}
+              </span>
+            )}
+          </div>
+          <span className="mt-1.5 px-2.5 py-0.5 rounded-full bg-stone-900/90 border border-amber-700/50 text-[10px] font-black text-amber-400 uppercase tracking-widest drop-shadow whitespace-nowrap">Thế Giới</span>
+        </div>
       )}
 
       {isOpen && (
