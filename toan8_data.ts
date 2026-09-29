@@ -12,21 +12,24 @@ export const TOAN_8_DATA = [
     lessons: [
       {
         title: "Bài 1. Đơn thức",
-        summary: commonSummaryPrefix + `### 1. Đơn thức và đơn thức thu gọn
-- **Đơn thức** là biểu thức đại số chỉ gồm một số hoặc một biến hoặc có dạng một tích của những số và biến.
-- **Đơn thức thu gọn** là đơn thức chỉ gồm một số, hoặc dạng tích của một số với những biến, mỗi biến chỉ xuất hiện một lần và đã được nâng lên luỹ thừa với số mũ nguyên dương.
-- **Bậc của đơn thức:** Tổng số mũ của các biến trong một đơn thức thu gọn với hệ số khác $0$ gọi là bậc của đơn thức đó.
-- Trong một đơn thức thu gọn, phần số còn gọi là **hệ số**, phần còn lại gọi là **phần biến**.
+        summary: commonSummaryPrefix + `### 1. Kiến thức trọng tâm
+- **Đơn thức:** Là biểu thức đại số chỉ gồm một số, một biến hoặc một tích giữa các số và các biến. Đơn thức thu gọn gồm phần hệ số và phần biến.
+- **Bậc của đơn thức:** Là tổng số mũ của tất cả các biến có trong đơn thức đó (với hệ số khác 0). Số thực khác 0 là đơn thức bậc 0, số 0 là đơn thức không có bậc.
+- **Đơn thức đồng dạng:** Là hai đơn thức có hệ số khác 0 và có cùng phần biến.
+- **Đa thức:** Là tổng của những đơn thức. Bậc của đa thức là bậc của hạng tử có bậc cao nhất trong dạng thu gọn của đa thức đó.
+- **Tính giá trị biểu thức:** Thay trực tiếp giá trị của các biến vào đa thức (ưu tiên thu gọn đa thức trước khi thay số để tính toán nhanh hơn).
 
-> [!NOTE]
-> **Chú ý:**
-> - Với các đơn thức có hệ số là $1$ hay $-1$, ta không viết số $1$.
-> - Mỗi số khác $0$ là một đơn thức thu gọn bậc $0$.
-> - Số $0$ cũng được coi là một đơn thức, nó không có bậc.
+### 2. Lỗi sai thường gặp
+- **Xác định sai phần biến và hệ số:** Ví dụ trong đơn thức $100abx^2yz$ (với $a, b$ là hằng số), học sinh hay nhầm phần biến bao gồm cả $a, b$ thay vì chỉ có $x^2yz$.
+- **Quên thu gọn trước khi xác định bậc hoặc hệ số:** Ví dụ tính bậc của đa thức mà chưa triệt tiêu các đơn thức đồng dạng trái dấu, dẫn đến xác định sai bậc.
+- **Cộng trừ sai đơn thức đồng dạng:** Quên giữ nguyên phần biến, hoặc cộng sai các hệ số âm dương.
 
-### 2. Đơn thức đồng dạng
-- **Khái niệm:** Hai đơn thức đồng dạng là hai đơn thức có hệ số khác $0$ và có phần biến giống nhau. Hai đơn thức đồng dạng thì cùng bậc.
-- **Cộng và trừ đơn thức đồng dạng:** Muốn cộng (hay trừ) các đơn thức đồng dạng, ta cộng (hay trừ) các hệ số với nhau và giữ nguyên phần biến.`
+### 3. Ví dụ minh họa tiêu biểu
+**Ví dụ 1 (Đơn thức đồng dạng):** Xác định hằng số $a$ để các đơn thức $axy^3, -4xy^3, 7xy^3$ có tổng bằng $6xy^3$.
+*Giải:* $(a-4+7)xy^3 = 6xy^3 \\Rightarrow a+3=6 \\Rightarrow a=3$.
+
+**Ví dụ 2 (Tính giá trị đa thức):** Tính giá trị của $3x^4+5x^2y^2+2y^4+2y^2$ tại $x^2+y^2=2$.
+*Giải:* Thu gọn bằng cách nhóm hạng tử để xuất hiện nhân tử chung $(x^2+y^2)$, kết quả ra 12.`
       },
       {
         title: "Bài 2. Đa thức",
