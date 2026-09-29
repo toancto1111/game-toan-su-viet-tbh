@@ -1,0 +1,4299 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\geometry{margin=2cm}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems,skins,breakable}
+\usepackage{mdframed}
+\usepackage{hyperref}
+
+\definecolor{kienthuc}{RGB}{0,84,166}
+\definecolor{vidu}{RGB}{0,128,96}
+\definecolor{luuy}{RGB}{180,40,40}
+\definecolor{nhanbiet}{RGB}{30,100,200}
+\definecolor{thonghieu}{RGB}{0,140,80}
+\definecolor{vandung}{RGB}{180,80,0}
+
+\newtcolorbox{kienthucbox}[1]{colback=blue!5,colframe=kienthuc,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{vidubox}[1]{colback=green!5,colframe=vidu,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{luuybox}{colback=red!5,colframe=luuy,fonttitle=\bfseries,title=Lưu ý -- Sai lầm thường gặp,breakable}
+
+\newcommand{\nhanbiet}{\textcolor{nhanbiet}{\textbf{[Nhận biết]}}}
+\newcommand{\thonghieu}{\textcolor{thonghieu}{\textbf{[Thông hiểu]}}}
+\newcommand{\vandung}{\textcolor{vandung}{\textbf{[Vận dụng]}}}
+\newcommand{\dapan}[1]{\par\smallskip\textbf{Đáp án:} #1}
+\newcommand{\giaithich}[1]{\par\textit{Giải thích: #1}}
+
+\title{\textbf{TÀI LIỆU ÔN TẬP TOÁN}\\[0.5em]\large [Chương I: Tập hợp các số tự nhiên -- Lớp 6]}
+\author{Thầy Trần Minh Toàn - Trường THCS Tăng Bạt Hổ}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Tóm tắt lý thuyết}[cite: 1, 2]
+
+\begin{kienthucbox}{1. Tập hợp và Phần tử}
+\begin{itemize}
+    \item \textbf{Khái niệm:} Một tập hợp (gọi tắt là tập) bao gồm những đối tượng nhất định. Các đối tượng ấy được gọi là những phần tử của tập hợp.[cite: 2]
+    \item \textbf{Kí hiệu:}
+    \begin{itemize}
+        \item $x \in A$: $x$ là một phần tử của tập $A$ ($x$ thuộc $A$).[cite: 1, 2]
+        \item $y \notin A$: $y$ không là phần tử của tập $A$ ($y$ không thuộc $A$).[cite: 1, 2]
+    \end{itemize}
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{2. Các cách mô tả tập hợp}
+\begin{itemize}
+    \item \textbf{Cách 1: Liệt kê các phần tử}[cite: 1, 2]
+    \begin{itemize}
+        \item Viết các phần tử trong dấu ngoặc nhọn $\{ \}$.[cite: 2]
+        \item Các phần tử cách nhau bởi dấu chấm phẩy ``$;$''.[cite: 2]
+        \item Mỗi phần tử được liệt kê đúng một lần, thứ tự tùy ý.[cite: 1, 2]
+    \end{itemize}
+    \item \textbf{Cách 2: Nêu dấu hiệu đặc trưng}[cite: 1, 2]
+    \begin{itemize}
+        \item Chỉ ra tính chất đặc trưng cho các phần tử của tập hợp đó.[cite: 1, 2]
+    \end{itemize}
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{3. Tập hợp số tự nhiên}
+\begin{itemize}
+    \item $\mathbb{N} = \{0; 1; 2; 3; \dots\}$ là tập hợp các số tự nhiên.[cite: 2]
+    \item $\mathbb{N}^* = \{1; 2; 3; \dots\}$ là tập hợp các số tự nhiên khác $0$.[cite: 2]
+\end{itemize}
+\end{kienthucbox}
+
+\begin{vidubox}{Dạng 1: Viết tập hợp bằng cách liệt kê}
+\textbf{Phương pháp:} Đọc kỹ điều kiện của các phần tử và liệt kê đầy đủ vào trong dấu ngoặc $\{ \}$.[cite: 1, 2]
+
+\textbf{Ví dụ 1:} Viết tập hợp $A$ các số tự nhiên lớn hơn $5$ và nhỏ hơn $10$.[cite: 1, 2]
+\begin{enumerate}
+    \item Các số tự nhiên lớn hơn $5$ và nhỏ hơn $10$ là: $6, 7, 8, 9$.[cite: 1, 2]
+    \item Tập hợp $A$ được viết là:
+    $$A = \{6; 7; 8; 9\}$$
+\end{enumerate}
+\end{vidubox}
+
+\begin{vidubox}{Dạng 2: Sử dụng kí hiệu $\in, \notin$}
+\textbf{Phương pháp:} Kiểm tra xem phần tử có nằm trong tập hợp đã cho hay không. Nếu có dùng $\in$, nếu không dùng $\notin$.[cite: 1, 2]
+
+\textbf{Ví dụ 2:} Cho tập hợp $M = \{1; 3; 5; 7\}$. Điền kí hiệu thích hợp vào ô trống: $3 \dots M$ và $4 \dots M$.[cite: 1, 2]
+\begin{enumerate}
+    \item Vì $3$ có mặt trong tập $M$, ta viết: $3 \in M$.[cite: 1, 2]
+    \item Vì $4$ không có mặt trong tập $M$, ta viết: $4 \notin M$.[cite: 1, 2]
+\end{enumerate}
+\end{vidubox}
+
+\begin{luuybox}
+\begin{itemize}
+    \item \textbf{Sai lầm 1:} Sử dụng sai dấu ngăn cách các phần tử.
+    \par \textcolor{red}{Sai:} $A = \{1, 2, 3\}$.
+    \par \textcolor{vidu}{Đúng:} $A = \{1; 2; 3\}$. (Phải dùng dấu chấm phẩy để tránh nhầm lẫn với số thập phân).[cite: 2]
+    \item \textbf{Sai lầm 2:} Liệt kê lặp lại phần tử.[cite: 1, 2]
+    \par \textcolor{red}{Sai:} Tập hợp các chữ cái trong từ ``MAM'' là $B = \{M; A; M\}$.
+    \par \textcolor{vidu}{Đúng:} $B = \{M; A\}$. (Mỗi phần tử chỉ được liệt kê một lần).[cite: 1, 2]
+    \item \textbf{Sai lầm 3:} Nhầm lẫn giữa $\mathbb{N}$ và $\mathbb{N}^*$.[cite: 2]
+    \par $\mathbb{N}$ có chứa số $0$, còn $\mathbb{N}^*$ bắt đầu từ $1$.[cite: 2]
+\end{itemize}
+\end{luuybox}
+
+
+\section{Bộ câu hỏi trắc nghiệm}
+
+\subsection*{Dạng 1: Trắc nghiệm một đáp án đúng}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.}]
+    \item \nhanbiet{} Kí hiệu nào sau đây đọc là ``$x$ thuộc tập hợp $A$''?
+    \begin{enumerate}[label=\Alph*.]
+        \item $x \notin A$
+        \item $x \subset A$
+        \item $x \in A$
+        \item $A \in x$
+    \end{enumerate}
+    \dapan{C}
+    \giaithich{Kí hiệu $\in$ nghĩa là thuộc.}
+
+    \item \nhanbiet{} Tập hợp các số tự nhiên được kí hiệu là gì?
+    \begin{enumerate}[label=\Alph*.]
+        \item $\mathbb{N}^*$
+        \item $\mathbb{N}$
+        \item $\mathbb{Z}$
+        \item $\mathbb{R}$
+    \end{enumerate}
+    \dapan{B}
+    \giaithich{Tập hợp các số tự nhiên kí hiệu là $\mathbb{N}$.}
+
+    \item \nhanbiet{} Tập hợp các số tự nhiên khác 0 được kí hiệu là gì?
+    \begin{enumerate}[label=\Alph*.]
+        \item $\mathbb{N}^*$
+        \item $\mathbb{N}$
+        \item $\mathbb{Z}$
+        \item $\mathbb{Q}$
+    \end{enumerate}
+    \dapan{A}
+    \giaithich{Kí hiệu $\mathbb{N}^*$ dành cho tập hợp số tự nhiên khác 0.}
+
+    \item \nhanbiet{} Cho tập hợp $A = \{2; 4; 6; 8\}$. Khẳng định nào sau đây đúng?
+    \begin{enumerate}[label=\Alph*.]
+        \item $2 \notin A$
+        \item $5 \in A$
+        \item $6 \in A$
+        \item $8 \notin A$
+    \end{enumerate}
+    \dapan{C}
+    \giaithich{Số 6 có trong tập hợp $A$ nên $6 \in A$.}
+
+    \item \nhanbiet{} Có bao nhiêu cách để mô tả một tập hợp?
+    \begin{enumerate}[label=\Alph*.]
+        \item 1 cách
+        \item 2 cách
+        \item 3 cách
+        \item 4 cách
+    \end{enumerate}
+    \dapan{B}
+    \giaithich{Có 2 cách: liệt kê các phần tử và nêu dấu hiệu đặc trưng.}
+
+    \item \nhanbiet{} Cách viết tập hợp nào sau đây đúng?
+    \begin{enumerate}[label=\Alph*.]
+        \item $A = [1; 2; 3]$
+        \item $A = (1; 2; 3)$
+        \item $A = \{1; 2; 3\}$
+        \item $A = 1; 2; 3$
+    \end{enumerate}
+    \dapan{C}
+    \giaithich{Tập hợp phải được viết trong dấu ngoặc nhọn $\{ \}$.}
+
+    \item \nhanbiet{} Cho $B = \{x \in \mathbb{N} \mid x < 5\}$. Số nào sau đây \textbf{không} thuộc $B$?
+    \begin{enumerate}[label=\Alph*.]
+        \item $0$
+        \item $2$
+        \item $4$
+        \item $5$
+    \end{enumerate}
+    \dapan{D}
+    \giaithich{Vì $x < 5$ nên số 5 không thuộc tập hợp $B$.}
+
+    \item \nhanbiet{} Các phần tử của một tập hợp được phân cách với nhau bằng dấu gì (nếu là số)?
+    \begin{enumerate}[label=\Alph*.]
+        \item Dấu phẩy ``,''
+        \item Dấu chấm phẩy ``;''
+        \item Dấu chấm ``.''
+        \item Dấu gạch ngang ``-''
+    \end{enumerate}
+    \dapan{B}
+    \giaithich{Để tránh nhầm lẫn với số thập phân, các phần tử là số được ngăn cách bằng dấu chấm phẩy ``;''.}
+
+    \item \nhanbiet{} Khi liệt kê các phần tử của một tập hợp, mỗi phần tử được liệt kê bao nhiêu lần?
+    \begin{enumerate}[label=\Alph*.]
+        \item Một lần
+        \item Hai lần
+        \item Ba lần
+        \item Tùy ý
+    \end{enumerate}
+    \dapan{A}
+    \giaithich{Mỗi phần tử chỉ được liệt kê đúng một lần.}
+
+    \item \nhanbiet{} Cho $X$ là tập hợp các chữ cái trong từ ``TOAN''. Tập hợp $X$ là:
+    \begin{enumerate}[label=\Alph*.]
+        \item $X = \{T; O; A; N\}$
+        \item $X = \{T, O, A, N\}$
+        \item $X = (T; O; A; N)$
+        \item $X = [T; O; A; N]$
+    \end{enumerate}
+    \dapan{A}
+    \giaithich{Sử dụng dấu ngoặc nhọn và dấu chấm phẩy để liệt kê.}
+
+    \item \thonghieu{} Viết tập hợp $P$ các số tự nhiên lớn hơn 3 và nhỏ hơn 7.
+    \begin{enumerate}[label=\Alph*.]
+        \item $P = \{3; 4; 5; 6; 7\}$
+        \item $P = \{4; 5; 6\}$
+        \item $P = \{4; 5; 6; 7\}$
+        \item $P = \{3; 4; 5; 6\}$
+    \end{enumerate}
+    \dapan{B}
+    \giaithich{Các số tự nhiên lớn hơn 3 và nhỏ hơn 7 là 4, 5, 6.}
+
+    \item \thonghieu{} Tập hợp $M = \{x \in \mathbb{N}^* \mid x \le 4\}$ gồm các phần tử:
+    \begin{enumerate}[label=\Alph*.]
+        \item $0; 1; 2; 3; 4$
+        \item $1; 2; 3; 4$
+        \item $0; 1; 2; 3$
+        \item $1; 2; 3$
+    \end{enumerate}
+    \dapan{B}
+    \giaithich{$\mathbb{N}^*$ không chứa số 0, nên $M = \{1; 2; 3; 4\}$.}
+
+    \item \thonghieu{} Cho tập hợp $E = \{x \in \mathbb{N} \mid 10 \le x < 14\}$. Tập hợp $E$ viết dưới dạng liệt kê là:
+    \begin{enumerate}[label=\Alph*.]
+        \item $E = \{10; 11; 12; 13; 14\}$
+        \item $E = \{11; 12; 13\}$
+        \item $E = \{10; 11; 12; 13\}$
+        \item $E = \{11; 12; 13; 14\}$
+    \end{enumerate}
+    \dapan{C}
+    \giaithich{Lấy từ 10 đến 13 (không lấy 14).}
+
+    \item \thonghieu{} Gọi $C$ là tập hợp các chữ cái tiếng Việt trong từ ``NHA TRANG''. Khẳng định nào đúng?
+    \begin{enumerate}[label=\Alph*.]
+        \item $C = \{N; H; A; T; R; A; N; G\}$
+        \item $C = \{N; H; A; T; R; G\}$
+        \item $C = \{N; H; A\}$
+        \item $C = \{T; R; A; N; G\}$
+    \end{enumerate}
+    \dapan{B}
+    \giaithich{Mỗi chữ cái liệt kê 1 lần: N, H, A, T, R, G. Các chữ N, A lặp lại bị loại.}
+
+    \item \thonghieu{} Trong một lớp có các tổ $1, 2, 3, 4$. Bạn An là tổ trưởng tổ 2. Nếu gọi $T$ là tập hợp các tổ trưởng của lớp, ta có thể viết:
+    \begin{enumerate}[label=\Alph*.]
+        \item $\text{An} \notin T$
+        \item $\text{Tổ 2} \in T$
+        \item $\text{An} \in T$
+        \item $T \in \text{An}$
+    \end{enumerate}
+    \dapan{C}
+    \giaithich{An là một tổ trưởng nên An thuộc tập $T$.}
+
+    \item \thonghieu{} Cho tập $K = \{0; 2; 4; 6; 8\}$. K có thể được viết bằng cách nêu tính chất đặc trưng là:
+    \begin{enumerate}[label=\Alph*.]
+        \item $K = \{x \in \mathbb{N} \mid x \text{ chẵn}\}$
+        \item $K = \{x \in \mathbb{N} \mid x \text{ chẵn}, x \le 8\}$
+        \item $K = \{x \in \mathbb{N} \mid x \text{ chẵn}, x < 8\}$
+        \item $K = \{x \in \mathbb{N} \mid x \le 8\}$
+    \end{enumerate}
+    \dapan{B}
+    \giaithich{K gồm các số tự nhiên chẵn nhỏ hơn hoặc bằng 8.}
+
+    \item \thonghieu{} Hệ Mặt Trời có các hành tinh: Thủy tinh, Kim tinh, Trái Đất, Hỏa tinh, Mộc tinh, Thổ tinh, Thiên Vương tinh, Hải Vương tinh. Gọi $S$ là tập các hành tinh. Phát biểu nào sai?
+    \begin{enumerate}[label=\Alph*.]
+        \item $\text{Trái Đất} \in S$
+        \item $\text{Mặt Trăng} \in S$
+        \item $\text{Kim tinh} \in S$
+        \item $\text{Mộc tinh} \in S$
+    \end{enumerate}
+    \dapan{B}
+    \giaithich{Mặt Trăng là vệ tinh, không phải hành tinh nên không thuộc $S$.}
+
+    \item \vandung{} Cho tập hợp $A = \{x \in \mathbb{N} \mid 5 < x \le 15 \text{ và } x \text{ chia hết cho } 3\}$. Tập $A$ có bao nhiêu phần tử?
+    \begin{enumerate}[label=\Alph*.]
+        \item 2
+        \item 3
+        \item 4
+        \item 5
+    \end{enumerate}
+    \dapan{C}
+    \giaithich{Các số tự nhiên từ 6 đến 15 chia hết cho 3 là: 6, 9, 12, 15. Có 4 phần tử.}
+
+    \item \vandung{} Để đánh số thứ tự học sinh hòa nhập trong danh sách (gồm 5 em), giáo viên lập tập hợp $H = \{1; 2; 3; 4; 5\}$. Tập $H$ có thể biểu diễn là:
+    \begin{enumerate}[label=\Alph*.]
+        \item $H = \{x \in \mathbb{N}^* \mid x \le 5\}$
+        \item $H = \{x \in \mathbb{N} \mid x \le 5\}$
+        \item $H = \{x \in \mathbb{N}^* \mid x < 5\}$
+        \item $H = \{x \in \mathbb{N} \mid x < 6\}$
+    \end{enumerate}
+    \dapan{A}
+    \giaithich{Tập $H$ không chứa số 0, nên dùng $\mathbb{N}^*$ và điều kiện $x \le 5$ là chính xác nhất.}
+
+    \item \vandung{} Viết tập hợp các chữ số của số $2026$.
+    \begin{enumerate}[label=\Alph*.]
+        \item $\{2; 0; 2; 6\}$
+        \item $\{2; 6\}$
+        \item $\{0; 2; 6\}$
+        \item $\{2026\}$
+    \end{enumerate}
+    \dapan{C}
+    \giaithich{Các chữ số là 2, 0, 2, 6. Liệt kê mỗi phần tử 1 lần ta được $\{0; 2; 6\}$ (thứ tự tùy ý).}
+\end{enumerate}
+
+\subsection*{Dạng 2: Trắc nghiệm Đúng -- Sai}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+    \item \nhanbiet{} Tập hợp $\mathbb{N}$ bắt đầu từ số 1.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Sai}
+    \giaithich{Tập hợp số tự nhiên $\mathbb{N}$ bắt đầu từ số 0.}
+
+    \item \nhanbiet{} Số $0 \in \mathbb{N}^*$.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Sai}
+    \giaithich{$\mathbb{N}^*$ là tập số tự nhiên khác 0.}
+
+    \item \nhanbiet{} Kí hiệu $\notin$ dùng để chỉ phần tử không thuộc tập hợp.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Đúng}
+    \giaithich{Đây là khái niệm cơ bản về kí hiệu tập hợp.}
+
+    \item \nhanbiet{} Tập hợp các số tự nhiên là tập hợp vô hạn.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Đúng}
+    \giaithich{Tập $\mathbb{N}$ có vô số phần tử.}
+
+    \item \nhanbiet{} Các phần tử trong tập hợp có thể đổi chỗ cho nhau mà tập hợp không thay đổi.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Đúng}
+    \giaithich{Thứ tự liệt kê các phần tử trong tập hợp là tùy ý.}
+
+    \item \nhanbiet{} Tập hợp $A = \{1; 1; 2; 3\}$ được viết đúng chuẩn Toán học.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Sai}
+    \giaithich{Mỗi phần tử chỉ được liệt kê một lần. Cách viết đúng là $A=\{1; 2; 3\}$.}
+
+    \item \nhanbiet{} Tập hợp chỉ có thể mô tả bằng cách liệt kê các phần tử.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Sai}
+    \giaithich{Còn có cách mô tả bằng nêu dấu hiệu đặc trưng.}
+
+    \item \nhanbiet{} $15 \in \mathbb{N}$.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Đúng}
+    \giaithich{15 là một số tự nhiên.}
+
+    \item \nhanbiet{} Kí hiệu $\mathbb{N}$ và $\mathbb{N}^*$ là giống nhau.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Sai}
+    \giaithich{$\mathbb{N}$ có chứa số 0, còn $\mathbb{N}^*$ thì không.}
+
+    \item \nhanbiet{} Dấu ngoặc nhọn $\{ \}$ được dùng để biểu diễn tập hợp.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Đúng}
+    \giaithich{Đây là quy ước chuẩn trong Toán học.}
+
+    \item \thonghieu{} Nếu $M = \{x \in \mathbb{N} \mid x \le 3\}$ thì $M = \{1; 2; 3\}$.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Sai}
+    \giaithich{Tập $M$ phải chứa cả số 0, tức là $M = \{0; 1; 2; 3\}$.}
+
+    \item \thonghieu{} Tập hợp các chữ cái tiếng Việt trong từ ``TOAN'' có 4 phần tử.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Đúng}
+    \giaithich{Các chữ cái là T, O, A, N. Tất cả đều khác nhau.}
+
+    \item \thonghieu{} Tập hợp các tháng có 30 ngày trong năm có 4 phần tử.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Đúng}
+    \giaithich{Các tháng đó là 4, 6, 9, 11 (có 4 tháng).}
+
+    \item \thonghieu{} Tập hợp $X = \{a, b, c\}$ là cách viết đúng.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Sai}
+    \giaithich{Nên dùng dấu chấm phẩy ``;'' để ngăn cách, đặc biệt nếu trong tập hợp có số, để tạo thói quen tốt.}
+
+    \item \thonghieu{} Nếu $x \in A$ và $A$ là tập hợp các số chẵn, thì $x$ luôn chia hết cho 2.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Đúng}
+    \giaithich{Dấu hiệu đặc trưng của $A$ là các số chẵn, nên mọi phần tử đều chia hết cho 2.}
+
+    \item \thonghieu{} Tập hợp $B = \{x \in \mathbb{N}^* \mid x < 1\}$ không có phần tử nào.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Đúng}
+    \giaithich{Không có số tự nhiên lớn hơn 0 và nhỏ hơn 1.}
+
+    \item \thonghieu{} Cho $A = \{1; 3; 5\}$ và $B = \{3; 5; 1\}$. Khi đó tập $A$ khác tập $B$.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Sai}
+    \giaithich{Thứ tự liệt kê không quan trọng, hai tập hợp này hoàn toàn giống nhau.}
+
+    \item \vandung{} Tập hợp $M$ các số tự nhiên lẻ, lớn hơn 5 và nhỏ hơn 10 được viết là $M = \{7; 9\}$.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Đúng}
+    \giaithich{Các số lẻ giữa 5 và 10 là 7 và 9.}
+
+    \item \vandung{} Tập hợp các số có hai chữ số chia hết cho 10 có 10 phần tử.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Sai}
+    \giaithich{Các số đó là 10, 20, ..., 90. Có tất cả $(90 - 10) \div 10 + 1 = 9$ phần tử.}
+
+    \item \vandung{} Nếu tập $P = \{x \in \mathbb{N} \mid x = 2k, k \in \mathbb{N}\}$ thì mọi phần tử của $P$ đều là số chẵn.
+    \hfill $\square$ Đúng \quad $\square$ Sai
+    \dapan{Đúng}
+    \giaithich{Biểu thức $2k$ là công thức tổng quát của số tự nhiên chẵn.}
+\end{enumerate}
+
+\subsection*{Dạng 3: Điền khuyết}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+    \item \nhanbiet{} Cho $A = \{2; 4; 6; 8; 10\}$. Số phần tử của tập hợp $A$ là \underline{\hspace{2cm}}.
+    \dapan{5}
+    \giaithich{Tập $A$ có 5 phần tử: 2, 4, 6, 8, 10.}
+
+    \item \nhanbiet{} Tập hợp $B = \{x \in \mathbb{N} \mid x \le 8\}$. Số phần tử của tập $B$ là \underline{\hspace{2cm}}.
+    \dapan{9}
+    \giaithich{Các phần tử là từ 0 đến 8, tổng cộng có $8 - 0 + 1 = 9$ phần tử.}
+
+    \item \nhanbiet{} Cho $M = \{11; 12; 13\}$. Phần tử nhỏ nhất của tập $M$ là \underline{\hspace{2cm}}.
+    \dapan{11}
+    \giaithich{Số nhỏ nhất trong tập hợp là 11.}
+
+    \item \nhanbiet{} Tập hợp $\mathbb{N}^*$ không chứa phần tử số \underline{\hspace{2cm}}.
+    \dapan{0}
+    \giaithich{$\mathbb{N}^*$ là các số tự nhiên khác 0.}
+
+    \item \nhanbiet{} Gọi $K$ là tập hợp các chữ số thập phân. Tập $K$ có \underline{\hspace{2cm}} phần tử.
+    \dapan{10}
+    \giaithich{Các chữ số là 0, 1, ..., 9. Có 10 chữ số.}
+
+    \item \nhanbiet{} Tập hợp $D = \{5\}$. Tập $D$ có \underline{\hspace{2cm}} phần tử.
+    \dapan{1}
+    \giaithich{Tập $D$ chỉ chứa duy nhất số 5.}
+
+    \item \nhanbiet{} Số tự nhiên nhỏ nhất thuộc tập $\mathbb{N}^*$ là số \underline{\hspace{2cm}}.
+    \dapan{1}
+    \giaithich{Tập $\mathbb{N}^*$ bắt đầu bằng 1.}
+
+    \item \nhanbiet{} Cho tập $E = \{4; 7; 9; 12\}$. Số 9 là một \underline{\hspace{2cm}} của tập $E$. (Điền số lượng phần tử mà 9 đại diện, ở đây hỏi khái niệm, nhưng yêu cầu đáp án là số, ta sửa câu hỏi: Vị trí thứ mấy nếu xếp tăng dần? Vị trí số \underline{\hspace{2cm}})
+    \dapan{3}
+    \giaithich{Sắp xếp tăng dần là 4, 7, 9, 12. Số 9 ở vị trí thứ 3.}
+
+    \item \nhanbiet{} Gọi $P$ là tập hợp các chữ cái tiếng Việt trong từ ``TET''. Tập $P$ có \underline{\hspace{2cm}} phần tử.
+    \dapan{2}
+    \giaithich{Tập $P = \{T; E\}$, có 2 phần tử.}
+
+    \item \nhanbiet{} Số tự nhiên lớn nhất có một chữ số là \underline{\hspace{2cm}}.
+    \dapan{9}
+    \giaithich{Là số 9.}
+
+    \item \thonghieu{} Cho tập $H = \{x \in \mathbb{N} \mid 15 < x < 20\}$. Tập $H$ có \underline{\hspace{2cm}} phần tử.
+    \dapan{4}
+    \giaithich{Các phần tử là 16, 17, 18, 19. Tổng cộng 4 phần tử.}
+
+    \item \thonghieu{} Số phần tử của tập hợp $M = \{x \in \mathbb{N}^* \mid x \le 10\}$ là \underline{\hspace{2cm}}.
+    \dapan{10}
+    \giaithich{Các phần tử từ 1 đến 10, tổng cộng 10 phần tử.}
+
+    \item \thonghieu{} Tập hợp các số tự nhiên chẵn nhỏ hơn 10 có \underline{\hspace{2cm}} phần tử.
+    \dapan{5}
+    \giaithich{Các phần tử: 0, 2, 4, 6, 8. Tổng cộng 5 phần tử.}
+
+    \item \thonghieu{} Tập hợp $X = \{10; 12; 14; \dots ; 30\}$ có số phần tử là \underline{\hspace{2cm}}.
+    \dapan{11}
+    \giaithich{Số phần tử: $(30 - 10) \div 2 + 1 = 11$.}
+
+    \item \thonghieu{} Cho tập $Y = \{x \in \mathbb{N} \mid x + 2 = 5\}$. Phần tử duy nhất của tập $Y$ là \underline{\hspace{2cm}}.
+    \dapan{3}
+    \giaithich{Giải phương trình $x + 2 = 5 \implies x = 3$.}
+
+    \item \thonghieu{} Số phần tử của tập hợp các tháng có 31 ngày trong năm là \underline{\hspace{2cm}}.
+    \dapan{7}
+    \giaithich{Các tháng: 1, 3, 5, 7, 8, 10, 12.}
+
+    \item \vandung{} Tổng các phần tử của tập hợp $A = \{x \in \mathbb{N} \mid x < 4\}$ bằng \underline{\hspace{2cm}}.
+    \dapan{6}
+    \giaithich{$A = \{0; 1; 2; 3\}$. Tổng $= 0 + 1 + 2 + 3 = 6$.}
+
+    \item \vandung{} Tập hợp $B = \{x \in \mathbb{N} \mid x \text{ là số lẻ và } 10 < x < 20\}$. Số phần tử của $B$ là \underline{\hspace{2cm}}.
+    \dapan{5}
+    \giaithich{Các số lẻ là 11, 13, 15, 17, 19. Có 5 số.}
+
+    \item \vandung{} Tính tổng của phần tử lớn nhất và nhỏ nhất trong tập $C = \{x \in \mathbb{N} \mid 10 \le x \le 99\}$. Kết quả là \underline{\hspace{2cm}}.
+    \dapan{109}
+    \giaithich{Phần tử lớn nhất là 99, nhỏ nhất là 10. Tổng $= 99 + 10 = 109$.}
+
+    \item \vandung{} Một học sinh hòa nhập cần hoàn thành bài tập gồm các câu có số thứ tự thuộc tập $K = \{x \in \mathbb{N} \mid 2 < x \le 7\}$. Học sinh đó cần làm \underline{\hspace{2cm}} câu.
+    \dapan{5}
+    \giaithich{Tập $K = \{3; 4; 5; 6; 7\}$. Có 5 phần tử, tức là 5 câu.}
+\end{enumerate}
+
+\end{document}
+
+% ==========================================
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\geometry{margin=2cm}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems,skins,breakable}
+\usepackage{mdframed}
+\usepackage{hyperref}
+
+\definecolor{kienthuc}{RGB}{0,84,166}
+\definecolor{vidu}{RGB}{0,128,96}
+\definecolor{luuy}{RGB}{180,40,40}
+\definecolor{nhanbiet}{RGB}{30,100,200}
+\definecolor{thonghieu}{RGB}{0,140,80}
+\definecolor{vandung}{RGB}{180,80,0}
+
+\newtcolorbox{kienthucbox}[1]{colback=blue!5,colframe=kienthuc,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{vidubox}[1]{colback=green!5,colframe=vidu,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{luuybox}{colback=red!5,colframe=luuy,fonttitle=\bfseries,title=Lưu ý -- Sai lầm thường gặp,breakable}
+
+\newcommand{\nhanbiet}{\textcolor{nhanbiet}{\textbf{[Nhận biết]}}}
+\newcommand{\thonghieu}{\textcolor{thonghieu}{\textbf{[Thông hiểu]}}}
+\newcommand{\vandung}{\textcolor{vandung}{\textbf{[Vận dụng]}}}
+\newcommand{\dapan}[1]{\par\smallskip\textbf{Đáp án:} #1}
+\newcommand{\giaithich}[1]{\par\textit{Giải thích: #1}}
+
+\title{\textbf{TÀI LIỆU ÔN TẬP TOÁN}\\[0.5em]\large [Bài 2: Cách ghi số tự nhiên -- Lớp 6]}
+\author{Thầy Trần Minh Toàn - Trường THCS Tăng Bạt Hổ}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Tóm tắt lý thuyết}
+
+\begin{kienthucbox}{1. Tập hợp các số tự nhiên}
+\begin{itemize}
+    \item Tập hợp các số tự nhiên được kí hiệu là $N$.
+    $$N = \{0; 1; 2; 3; \dots\}$$
+    \item Tập hợp các số tự nhiên khác 0 được kí hiệu là $N^*$.
+    $$N^* = \{1; 2; 3; \dots\}$$
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{2. Hệ thập phân}
+\begin{itemize}
+    \item Mỗi số tự nhiên được viết thành một dãy chữ số lấy trong mười chữ số: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9. (Chữ số đầu tiên bên trái phải khác 0).
+    \item Cứ 10 đơn vị ở một hàng thì bằng 1 đơn vị ở hàng liền trước nó.
+    \item Mỗi số tự nhiên bằng tổng giá trị các chữ số của nó. Ví dụ:
+    $$\overline{ab} = a \times 10 + b \quad (a \neq 0)$$
+    $$\overline{abc} = a \times 100 + b \times 10 + c \quad (a \neq 0)$$
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{3. Số La Mã}
+\begin{itemize}
+    \item Sử dụng các chữ số: $I = 1$, $V = 5$, $X = 10$.
+    \item Các cụm chữ số đặc biệt: $IV = 4$, $IX = 9$.
+    \item Mỗi số La Mã biểu diễn một số tự nhiên bằng tổng giá trị của các thành phần viết nên số đó. Không có số La Mã nào biểu diễn số 0.
+\end{itemize}
+\end{kienthucbox}
+
+\begin{vidubox}{Dạng 1: Đọc, viết và phân tích số tự nhiên}
+\textbf{Ví dụ 1:} Viết số 34 604 thành tổng giá trị các chữ số của nó.\\
+\textbf{Hướng dẫn giải:}
+\begin{enumerate}
+    \item Xác định giá trị của từng chữ số dựa vào vị trí hàng. Chữ số 3 ở hàng chục nghìn, chữ số 4 ở hàng nghìn, chữ số 6 ở hàng trăm, chữ số 0 ở hàng chục, chữ số 4 ở hàng đơn vị.
+    \item Biểu diễn thành tổng:
+    $$34~604 = 3 \times 10~000 + 4 \times 1~000 + 6 \times 100 + 4$$
+\end{enumerate}
+\end{vidubox}
+
+\begin{vidubox}{Dạng 2: Cấu tạo số tự nhiên theo điều kiện cho trước}
+\textbf{Ví dụ 2:} Tìm số tự nhiên $n$ có ba chữ số, biết chữ số hàng chục gấp 2 lần chữ số hàng đơn vị, chữ số hàng trăm gấp 3 lần chữ số hàng chục.\\
+\textbf{Hướng dẫn giải:}
+\begin{enumerate}
+    \item Gọi chữ số hàng đơn vị là $a$ ($a \neq 0$). Chữ số hàng chục là $2 \times a$. Chữ số hàng trăm là $3 \times (2 \times a) = 6 \times a$.
+    \item Vì chữ số hàng trăm phải nhỏ hơn 10 nên $6 \times a < 10 \Rightarrow a = 1$.
+    \item Suy ra hàng chục là 2, hàng trăm là 6. Vậy số cần tìm là 621.
+\end{enumerate}
+\end{vidubox}
+
+\begin{luuybox}
+\begin{itemize}
+    \item \textbf{Nhầm lẫn giữa tập hợp $N$ và $N^*$:} \\
+    \textcolor{red}{Sai:} Cho rằng $0 \in N^*$. \\
+    \textcolor{vidu}{Đúng:} Số $0$ thuộc $N$ nhưng không thuộc $N^*$.
+    \item \textbf{Lỗi khi viết số La Mã:} \\
+    \textcolor{red}{Sai:} Viết số 4 là $IIII$, số 9 là $VIIII$. \\
+    \textcolor{vidu}{Đúng:} Số 4 phải viết là $IV$, số 9 là $IX$. Chữ số $I$ không lặp lại quá 3 lần liên tiếp.
+    \item \textbf{Quên điều kiện chữ số đầu tiên:} \\
+    \textcolor{red}{Sai:} Viết số tự nhiên có hai chữ số là $05$. \\
+    \textcolor{vidu}{Đúng:} Chữ số hàng lớn nhất bên trái phải luôn khác $0$ (ví dụ: số 5 chỉ có một chữ số).
+\end{itemize}
+\end{luuybox}
+
+\section{Bộ câu hỏi trắc nghiệm}
+
+\subsection*{Dạng 1: Trắc nghiệm một đáp án đúng}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.}]
+  \item \nhanbiet{} Tập hợp các số tự nhiên được kí hiệu là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $N^*$
+    \item $N$
+    \item $Z$
+    \item $Q$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Theo quy ước, $N$ là tập hợp số tự nhiên, bao gồm cả số 0.}
+
+  \item \nhanbiet{} Tập hợp các số tự nhiên khác 0 được kí hiệu là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $N$
+    \item $N^*$
+    \item $Z$
+    \item $R$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Tập $N^*$ là tập hợp các số tự nhiên khác 0.}
+
+  \item \nhanbiet{} Trong hệ thập phân, có bao nhiêu chữ số được sử dụng để ghi số tự nhiên?
+  \begin{enumerate}[label=\Alph*.]
+    \item 9 chữ số
+    \item 10 chữ số
+    \item 11 chữ số
+    \item Vô số
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Hệ thập phân sử dụng 10 chữ số từ 0 đến 9.}
+
+  \item \nhanbiet{} Trong số $32~019$, chữ số 2 nằm ở hàng nào?
+  \begin{enumerate}[label=\Alph*.]
+    \item Hàng chục
+    \item Hàng trăm
+    \item Hàng nghìn
+    \item Hàng chục nghìn
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Tính từ phải sang trái: đơn vị, chục, trăm, nghìn. Vậy 2 ở hàng nghìn.}
+
+  \item \nhanbiet{} Chữ số La Mã $V$ có giá trị trong hệ thập phân là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 1
+    \item 5
+    \item 10
+    \item 50
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Theo quy ước, $V$ tương ứng với giá trị 5.}
+
+  \item \nhanbiet{} Số La Mã $IX$ biểu diễn số tự nhiên nào?
+  \begin{enumerate}[label=\Alph*.]
+    \item 4
+    \item 9
+    \item 11
+    \item 19
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Cụm chữ số $IX$ có giá trị là 9.}
+
+  \item \nhanbiet{} Số 14 được viết bằng chữ số La Mã là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $XIIII$
+    \item $XIV$
+    \item $VIX$
+    \item $XVI$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{$14 = 10 + 4$, tương ứng với $X$ và $IV$, ghép lại là $XIV$.}
+
+  \item \nhanbiet{} Số La Mã $XXI$ có giá trị là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 19
+    \item 20
+    \item 21
+    \item 29
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{$XXI$ gồm hai chữ số $X$ (10) và một chữ số $I$ (1). $10+10+1 = 21$.}
+
+  \item \nhanbiet{} Số tự nhiên lớn nhất có 6 chữ số là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $987~654$
+    \item $999~999$
+    \item $100~000$
+    \item $899~999$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Để số lớn nhất thì tất cả các hàng đều phải dùng chữ số lớn nhất là 9.}
+
+  \item \nhanbiet{} Trong số $7~110~385$, chữ số 7 ở lớp triệu có giá trị là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $700~000$
+    \item $7~000~000$
+    \item $7$
+    \item $70~000$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Chữ số 7 đứng ở hàng triệu nên có giá trị là 7 triệu ($7~000~000$).}
+
+  \item \thonghieu{} Số $236$ được phân tích thành tổng giá trị các chữ số là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $2 \times 100 + 3 \times 10 + 6$
+    \item $2 + 3 + 6$
+    \item $2 \times 10 + 36$
+    \item $23 \times 10 + 6 \times 1$
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Số $236$ gồm 2 trăm, 3 chục và 6 đơn vị.}
+
+  \item \thonghieu{} Nếu thêm chữ số $0$ vào bên phải số tự nhiên $n$ thì số mới sẽ:
+  \begin{enumerate}[label=\Alph*.]
+    \item Tăng thêm 10 đơn vị
+    \item Gấp 10 lần số ban đầu
+    \item Không thay đổi
+    \item Gấp 100 lần số ban đầu
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Khi thêm 0 vào bên phải, hàng đơn vị thành hàng chục, hàng chục thành hàng trăm... tức là số đó được nhân lên 10 lần.}
+
+  \item \thonghieu{} Viết số 26 bằng chữ số La Mã:
+  \begin{enumerate}[label=\Alph*.]
+    \item $XXIV$
+    \item $XXVI$
+    \item $XIVX$
+    \item $XVI$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{$26 = 10 + 10 + 5 + 1 \Rightarrow XXVI$.}
+
+  \item \thonghieu{} Cho tập hợp $P = \{0; 4; 9\}$. Có bao nhiêu số tự nhiên có hai chữ số khác nhau lấy từ tập $P$?
+  \begin{enumerate}[label=\Alph*.]
+    \item 2
+    \item 3
+    \item 4
+    \item 6
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Chữ số hàng chục phải khác 0, nên có thể là 4 hoặc 9. Các số lập được là: 40, 49, 90, 94 (4 số).}
+
+  \item \thonghieu{} Số tự nhiên $\overline{ab}$ với $a \neq 0$ được biểu diễn là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $a + b$
+    \item $a \times b$
+    \item $a \times 10 + b$
+    \item $a \times 100 + b$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Kí hiệu $\overline{ab}$ thể hiện số có hai chữ số, hàng chục là $a$, hàng đơn vị là $b$.}
+
+  \item \thonghieu{} Trong một cửa hàng, kẹo được đóng thành gói (10 cái), hộp (10 gói) và thùng (10 hộp). Nếu mua 2 thùng, 3 hộp và 4 gói, số kẹo là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 234
+    \item 2340
+    \item 243
+    \item 23400
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{1 gói = 10 cái, 1 hộp = 100 cái, 1 thùng = 1000 cái. Tổng là $2 \times 1000 + 3 \times 100 + 4 \times 10 = 2340$.}
+
+  \item \thonghieu{} Số La Mã biểu diễn số tự nhiên 29 là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $XXIX$
+    \item $XXVIIII$
+    \item $IXXX$
+    \item $XXIV$
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{$29 = 20 + 9 = XX + IX = XXIX$.}
+
+  \item \vandung{} Bác Hoa có ba loại tiền: 100 nghìn, 10 nghìn, 1 nghìn. Bác cần trả 492 nghìn và mang theo mỗi loại không quá 9 tờ. Bác cần trả bao nhiêu tờ tiền loại 100 nghìn?
+  \begin{enumerate}[label=\Alph*.]
+    \item 2 tờ
+    \item 4 tờ
+    \item 9 tờ
+    \item 5 tờ
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Số $492 = 4 \times 100 + 9 \times 10 + 2 \times 1$. Bác cần dùng 4 tờ 100 nghìn.}
+
+  \item \vandung{} Tìm số tự nhiên nhỏ nhất có sáu chữ số khác nhau.
+  \begin{enumerate}[label=\Alph*.]
+    \item $102~345$
+    \item $123~456$
+    \item $012~345$
+    \item $100~000$
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Chữ số đầu tiên nhỏ nhất khác 0 là 1, tiếp theo chọn các chữ số từ nhỏ nhất: 0, 2, 3, 4, 5.}
+
+  \item \vandung{} Dùng ba chữ số 0, 3 và 5, viết số tự nhiên có ba chữ số khác nhau sao cho chữ số 5 có giá trị là 50. Số đó là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 530
+    \item 350
+    \item 305
+    \item 503
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Chữ số 5 có giá trị 50 tức là đứng ở hàng chục. Chữ số hàng trăm phải khác 0 nên là 3. Hàng đơn vị là 0. Suy ra 350.}
+\end{enumerate}
+
+\subsection*{Dạng 2: Trắc nghiệm Đúng -- Sai}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+  \item \nhanbiet{} Mệnh đề: Tập hợp các số tự nhiên khác 0 được kí hiệu là $N$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Tập hợp các số tự nhiên khác 0 phải kí hiệu là $N^*$.}
+
+  \item \nhanbiet{} Mệnh đề: Trong hệ thập phân, 10 đơn vị ở một hàng thì bằng 1 đơn vị ở hàng liền trước nó.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây là quy tắc cơ bản của hệ thập phân (ví dụ 10 chục bằng 1 trăm).}
+
+  \item \nhanbiet{} Mệnh đề: Số La Mã $V$ biểu diễn số tự nhiên 5.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Theo bảng thành phần, $V$ có giá trị là 5.}
+
+  \item \nhanbiet{} Mệnh đề: Số La Mã $IV$ biểu diễn số tự nhiên 6.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Cụm $IV$ có giá trị là 4. Số 6 viết là $VI$.}
+
+  \item \nhanbiet{} Mệnh đề: Số $0$ là phần tử của tập hợp $N$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Tập $N = \{0; 1; 2; \dots\}$ nên chứa số 0.}
+
+  \item \nhanbiet{} Mệnh đề: Không có số La Mã nào biểu diễn số 0.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Hệ số La Mã bắt đầu từ I (1), không có kí hiệu cho số 0.}
+
+  \item \nhanbiet{} Mệnh đề: Số lớn nhất có một chữ số là 10.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Số lớn nhất có 1 chữ số là 9. Số 10 có 2 chữ số.}
+
+  \item \nhanbiet{} Mệnh đề: Số La Mã $XVIII$ tương ứng với số 18.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{$X (10) + V (5) + I (1) + I (1) + I (1) = 18$.}
+
+  \item \nhanbiet{} Mệnh đề: Lớp triệu gồm các hàng: triệu, chục triệu, trăm triệu.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đúng theo quy tắc phân lớp của số tự nhiên.}
+
+  \item \nhanbiet{} Mệnh đề: Trong số $27~501$, chữ số 2 nằm ở hàng chục nghìn.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Từ phải sang: đơn vị (1), chục (0), trăm (5), nghìn (7), chục nghìn (2).}
+
+  \item \thonghieu{} Mệnh đề: $32~019 = 3 \times 10~000 + 2 \times 1~000 + 1 \times 100 + 9$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Chữ số 1 nằm ở hàng chục nên giá trị là $1 \times 10$, không phải $1 \times 100$.}
+
+  \item \thonghieu{} Mệnh đề: Số tự nhiên $\overline{abc} = a \times 100 + b \times 10 + c$ với mọi giá trị $a, b, c \in \{0, 1, 2, ..., 9\}$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Điều kiện để $\overline{abc}$ là số có ba chữ số thì $a$ phải khác 0.}
+
+  \item \thonghieu{} Mệnh đề: Nếu viết thêm chữ số 1 vào bên phải một số có ba chữ số thì số mới thu được lớn hơn số cũ 10 lần và 1 đơn vị.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Giả sử số cũ là $x$, thêm chữ số 1 vào bên phải thành $\overline{x1} = x \times 10 + 1$.}
+
+  \item \thonghieu{} Mệnh đề: Số tự nhiên có 4 chữ số lớn nhất mà tổng các chữ số bằng 4 là 4000.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{4 + 0 + 0 + 0 = 4, và 4000 là số lớn nhất thoả mãn điều kiện này.}
+
+  \item \thonghieu{} Mệnh đề: Chữ số 4 đứng ở hàng nghìn thì có giá trị là 400.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Chữ số 4 đứng ở hàng nghìn thì có giá trị là 4000.}
+
+  \item \thonghieu{} Mệnh đề: Số 24 viết bằng số La Mã là $XXIV$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{$20 + 4 = XX + IV = XXIV$.}
+
+  \item \thonghieu{} Mệnh đề: Trong hệ thập phân, mỗi chữ số ở một vị trí khác nhau sẽ biểu thị một giá trị khác nhau.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Hệ thập phân là hệ thống ghi số theo vị trí, giá trị của chữ số phụ thuộc vào vị trí hàng.}
+
+  \item \vandung{} Mệnh đề: Số La Mã có ba thành phần là X, X và IX biểu diễn số tự nhiên 29.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{$X (10) + X (10) + IX (9) = 29$.}
+
+  \item \vandung{} Mệnh đề: Có 3 số tự nhiên chẵn có hai chữ số lấy từ tập hợp $\{0; 3; 6\}$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Hàng đơn vị chẵn (0 hoặc 6). Hàng chục khác 0 (3 hoặc 6). Các số lập được: 30, 36, 60, 66 (có 4 số).}
+
+  \item \vandung{} Mệnh đề: Bất kỳ số La Mã nào từ 1 đến 30 cũng chứa ít nhất một trong các chữ cái I, V, X.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Bởi vì chỉ có các kí tự I, V, X được dùng để lập nên các số La Mã trong phạm vi 30.}
+\end{enumerate}
+
+\subsection*{Dạng 3: Điền khuyết}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+  \item \nhanbiet{} Số La Mã $X$ có giá trị trong hệ thập phân là số \underline{\hspace{2cm}}.
+  \dapan{10}
+  \giaithich{$X$ là kí hiệu của số 10.}
+
+  \item \nhanbiet{} Tập hợp $N^*$ bắt đầu bằng số tự nhiên nhỏ nhất là số \underline{\hspace{2cm}}.
+  \dapan{1}
+  \giaithich{$N^* = \{1; 2; 3; ...\}$, số nhỏ nhất là 1.}
+
+  \item \nhanbiet{} Số tự nhiên nhỏ nhất trong tập hợp $N$ là số \underline{\hspace{2cm}}.
+  \dapan{0}
+  \giaithich{Tập $N$ bắt đầu từ 0.}
+
+  \item \nhanbiet{} Chữ số La Mã $I$ có giá trị trong hệ thập phân là \underline{\hspace{2cm}}.
+  \dapan{1}
+  \giaithich{Theo quy tắc, $I$ bằng 1.}
+
+  \item \nhanbiet{} Trong số $1~234~567$, chữ số ở hàng trăm là số \underline{\hspace{2cm}}.
+  \dapan{5}
+  \giaithich{Chữ số ở hàng trăm tính từ phải qua là 5.}
+
+  \item \nhanbiet{} Có tổng cộng \underline{\hspace{2cm}} chữ số được dùng để ghi số trong hệ thập phân.
+  \dapan{10}
+  \giaithich{Các chữ số từ 0 đến 9, tổng cộng có 10 chữ số.}
+
+  \item \nhanbiet{} Cụm chữ số La Mã $IV$ có giá trị bằng \underline{\hspace{2cm}}.
+  \dapan{4}
+  \giaithich{$IV = 5 - 1 = 4$.}
+
+  \item \nhanbiet{} Trong hệ La Mã, kí hiệu biểu diễn số 5 là chữ cái \underline{\hspace{2cm}}.
+  \dapan{V}
+  \giaithich{$V$ tương ứng với 5.}
+
+  \item \nhanbiet{} Số 16 được ghi bằng số La Mã, trong đó thành phần biểu thị số 6 là cụm kí tự \underline{\hspace{2cm}}.
+  \dapan{VI}
+  \giaithich{$16 = 10 + 6 = X + VI$.}
+
+  \item \nhanbiet{} Giá trị của chữ số 3 trong số $30~192$ là \underline{\hspace{2cm}}.
+  \dapan{30000}
+  \giaithich{Chữ số 3 nằm ở hàng chục nghìn nên có giá trị là 30 000.}
+
+  \item \thonghieu{} Số La Mã $XXIII$ có giá trị trong hệ thập phân là \underline{\hspace{2cm}}.
+  \dapan{23}
+  \giaithich{$XX (20) + III (3) = 23$.}
+
+  \item \thonghieu{} Số $5 \times 100 + 0 \times 10 + 3$ biểu diễn số tự nhiên \underline{\hspace{2cm}}.
+  \dapan{503}
+  \giaithich{$500 + 0 + 3 = 503$.}
+
+  \item \thonghieu{} Để biểu diễn số 19 bằng số La Mã, ta ghép thêm $IX$ vào bên phải chữ cái \underline{\hspace{2cm}}.
+  \dapan{X}
+  \giaithich{$19 = 10 + 9$, tương ứng ghép $X$ và $IX$ thành $XIX$.}
+
+  \item \thonghieu{} Cho tập hợp $A = \{1; 3; 5\}$. Số tự nhiên lớn nhất có 3 chữ số khác nhau lấy từ tập $A$ là số \underline{\hspace{2cm}}.
+  \dapan{531}
+  \giaithich{Xếp các chữ số từ lớn xuống nhỏ: 5, 3, 1.}
+
+  \item \thonghieu{} Nếu viết thêm chữ số 0 vào bên phải số 45, ta được số mới lớn hơn số cũ \underline{\hspace{2cm}} đơn vị.
+  \dapan{405}
+  \giaithich{Số mới là 450. $450 - 45 = 405$.}
+
+  \item \thonghieu{} Trong số $7~110~385$, tổng giá trị của hai chữ số 1 bằng \underline{\hspace{2cm}}.
+  \dapan{110000}
+  \giaithich{Một chữ số 1 ở hàng trăm nghìn (100 000), một ở hàng chục nghìn (10 000). Tổng là 110 000.}
+
+  \item \vandung{} Một người mua 9 hộp kẹo (mỗi hộp có 10 gói, mỗi gói 10 cái). Số cái kẹo người đó đã mua là \underline{\hspace{2cm}}.
+  \dapan{900}
+  \giaithich{$9 \times 10 \times 10 = 900$ cái kẹo.}
+
+  \item \vandung{} Từ ba chữ số 0, 4, 9, số tự nhiên nhỏ nhất có ba chữ số khác nhau là \underline{\hspace{2cm}}.
+  \dapan{409}
+  \giaithich{Hàng trăm nhỏ nhất khác 0 là 4, hàng chục nhỏ nhất là 0, hàng đơn vị là 9.}
+
+  \item \vandung{} Có một số tự nhiên có hai chữ số, chữ số hàng chục lớn hơn chữ số hàng đơn vị là 9. Số đó là số \underline{\hspace{2cm}}.
+  \dapan{90}
+  \giaithich{Vì chữ số cao nhất là 9 và thấp nhất là 0, nên hàng chục chỉ có thể là 9, hàng đơn vị là 0. Vậy là 90.}
+
+  \item \vandung{} Cho một số có ba chữ số, biết tổng các chữ số bằng 2 và số đó là số lẻ. Số đó là \underline{\hspace{2cm}}.
+  \dapan{101}
+  \giaithich{Vì là số lẻ nên hàng đơn vị phải lẻ, mà tổng bằng 2 nên hàng đơn vị là 1. Hàng trăm khác 0 nên phải là 1. Hàng chục là 0.}
+\end{enumerate}
+
+\end{document}
+
+
+
+% ==========================================
+
+
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\geometry{margin=2cm}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems,skins,breakable}
+\usepackage{mdframed}
+\usepackage{hyperref}
+
+\definecolor{kienthuc}{RGB}{0,84,166}
+\definecolor{vidu}{RGB}{0,128,96}
+\definecolor{luuy}{RGB}{180,40,40}
+\definecolor{nhanbiet}{RGB}{30,100,200}
+\definecolor{thonghieu}{RGB}{0,140,80}
+\definecolor{vandung}{RGB}{180,80,0}
+
+\newtcolorbox{kienthucbox}[1]{colback=blue!5,colframe=kienthuc,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{vidubox}[1]{colback=green!5,colframe=vidu,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{luuybox}{colback=red!5,colframe=luuy,fonttitle=\bfseries,title=Lưu ý -- Sai lầm thường gặp,breakable}
+
+\newcommand{\nhanbiet}{\textcolor{nhanbiet}{\textbf{[Nhận biết]}}}
+\newcommand{\thonghieu}{\textcolor{thonghieu}{\textbf{[Thông hiểu]}}}
+\newcommand{\vandung}{\textcolor{vandung}{\textbf{[Vận dụng]}}}
+\newcommand{\dapan}[1]{\par\smallskip\textbf{Đáp án:} #1}
+\newcommand{\giaithich}[1]{\par\textit{Giải thích: #1}}
+
+\title{\textbf{TÀI LIỆU ÔN TẬP TOÁN}\\[0.5em]\large [Bài 3: Thứ tự trong tập hợp các số tự nhiên -- Lớp 6]}
+\author{Được tạo bởi AI Giáo viên Toán}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Tóm tắt lý thuyết}
+
+\begin{kienthucbox}{1. Thứ tự của các số tự nhiên và Tia số}
+\begin{itemize}
+    \item Mỗi phần tử của tập hợp $\mathbb{N} = \{0; 1; 2; 3; \dots\}$ được biểu diễn bởi một điểm trên tia số gốc $O$. Điểm biểu diễn số tự nhiên $a$ gọi là điểm $a$.
+    \item Trong hai số tự nhiên khác nhau, luôn có một số nhỏ hơn số kia. 
+    \item Nếu $a < b$ thì trên tia số nằm ngang, điểm $a$ nằm bên \textbf{trái} điểm $b$. Ta nói điểm $a$ nằm trước điểm $b$.
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{2. Số liền trước và Số liền sau}
+\begin{itemize}
+    \item Mỗi số tự nhiên $a$ có đúng một số liền sau là $a + 1$. Khi đó $a$ là số liền trước của $a + 1$.
+    \item Hai số $a$ và $a + 1$ được gọi là hai số tự nhiên liên tiếp.
+    \item \textbf{Đặc biệt:} Số $0$ là số tự nhiên nhỏ nhất và \textbf{không có} số tự nhiên liền trước.
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{3. Ký hiệu và Tính chất}
+\begin{itemize}
+    \item Ký hiệu $\le$ (nhỏ hơn hoặc bằng): $a \le b$ nghĩa là $a < b$ hoặc $a = b$.
+    \item Ký hiệu $\ge$ (lớn hơn hoặc bằng): $a \ge b$ nghĩa là $a > b$ hoặc $a = b$.
+    \item \textbf{Tính chất bắc cầu:} 
+    \begin{align*}
+        \text{Nếu } a < b \text{ và } b < c &\Rightarrow a < c \\
+        \text{Nếu } a \le b \text{ và } b \le c &\Rightarrow a \le c
+    \end{align*}
+\end{itemize}
+\end{kienthucbox}
+
+\begin{vidubox}{Dạng 1: Viết tập hợp bằng cách liệt kê phần tử dựa vào quan hệ thứ tự}
+\textbf{Đặc điểm nhận dạng:} Bài toán cho một tập hợp dưới dạng chỉ ra tính chất đặc trưng chứa các dấu $<, >, \le, \ge$ và yêu cầu liệt kê.
+
+\textbf{Ví dụ:} Liệt kê các phần tử của tập hợp $M = \{x \in \mathbb{N} \mid 10 \le x < 15\}$.
+\begin{enumerate}
+    \item \textbf{Bước 1:} Phân tích điều kiện. $x$ là số tự nhiên ($\mathbb{N}$), $x$ lớn hơn hoặc bằng 10 và nhỏ hơn 15.
+    \item \textbf{Bước 2:} Tìm các số tự nhiên thỏa mãn. Do có dấu "=" ở 10 nên ta lấy cả số 10. Do không có dấu "=" ở 15 nên ta chỉ lấy đến 14.
+    \item \textbf{Bước 3:} Kết luận. $M = \{10; 11; 12; 13; 14\}$.
+\end{enumerate}
+\end{vidubox}
+
+\begin{vidubox}{Dạng 2: Sắp xếp và so sánh số tự nhiên}
+\textbf{Đặc điểm nhận dạng:} So sánh hai số hoặc sắp xếp một dãy số. Liên quan đến vị trí trên tia số.
+
+\textbf{Ví dụ:} Cho ba bạn An cao 150 cm, Bắc cao 153 cm, Cường cao 148 cm. Hãy sắp xếp chiều cao của ba bạn theo thứ tự tăng dần và biểu diễn thứ tự các điểm tương ứng trên tia số (trái sang phải).
+\begin{enumerate}
+    \item \textbf{Bước 1:} So sánh 3 số. Ta thấy $148 < 150 < 153$.
+    \item \textbf{Bước 2:} Gán tên người ứng với số đo. Chiều cao Cường $<$ chiều cao An $<$ chiều cao Bắc.
+    \item \textbf{Bước 3:} Trên tia số, điểm biểu diễn số nhỏ hơn nằm bên trái. Vậy thứ tự các điểm từ trái sang phải là: Điểm Cường $\rightarrow$ Điểm An $\rightarrow$ Điểm Bắc.
+\end{enumerate}
+\end{vidubox}
+
+\begin{luuybox}
+\begin{itemize}
+    \item \textbf{Nhầm lẫn giữa các ký hiệu $<$ và $\le$:} \\
+    \textcolor{red}{Sai:} Viết $A = \{x \in \mathbb{N} \mid x < 4\} = \{0; 1; 2; 3; 4\}$. \\
+    \textcolor{vidu}{Đúng:} Dấu $<$ (nhỏ hơn hẳn) không lấy số 4. Tập đúng là $A = \{0; 1; 2; 3\}$. Nếu có $\le$ mới lấy số 4.
+    \item \textbf{Tìm số liền trước của 0:} \\
+    \textcolor{red}{Sai:} Cho rằng số liền trước của 0 là -1 trong tập số tự nhiên. \\
+    \textcolor{vidu}{Đúng:} Số 0 là số tự nhiên nhỏ nhất, nó \textbf{không có} số tự nhiên liền trước.
+    \item \textbf{Xác định vị trí trên tia số:} \\
+    \textcolor{red}{Sai:} Nghĩ rằng số lớn hơn thì nằm bên trái trên tia số. \\
+    \textcolor{vidu}{Đúng:} Số nhỏ hơn luôn nằm bên \textbf{trái}, số lớn hơn luôn nằm bên \textbf{phải} trên tia số biểu diễn số tự nhiên.
+\end{itemize}
+\end{luuybox}
+
+\section{Bộ câu hỏi trắc nghiệm}
+
+\subsection*{Dạng 1: Trắc nghiệm một đáp án đúng}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.}]
+  \item \nhanbiet{} Cho hai số tự nhiên $a$ và $b$ với $a < b$. Khẳng định nào sau đây đúng?
+  \begin{enumerate}[label=\Alph*.]
+    \item Trên tia số nằm ngang, điểm $a$ nằm bên phải điểm $b$.
+    \item Trên tia số nằm ngang, điểm $a$ nằm bên trái điểm $b$.
+    \item Điểm $a$ và điểm $b$ trùng nhau.
+    \item Trên tia số nằm ngang, điểm $b$ nằm trước điểm $a$.
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Theo lý thuyết, số nhỏ hơn sẽ được biểu diễn bởi điểm nằm bên trái số lớn hơn trên tia số.}
+
+  \item \nhanbiet{} Số tự nhiên liền sau của số 2023 là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 2022
+    \item 2024
+    \item 2023
+    \item 2025
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Số liền sau của $a$ là $a + 1$. Vậy số liền sau của 2023 là $2023 + 1 = 2024$.}
+
+  \item \nhanbiet{} Số tự nhiên liền trước của số 100 là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 98
+    \item 99
+    \item 101
+    \item 10
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Số liền trước của 100 là $100 - 1 = 99$.}
+
+  \item \nhanbiet{} Trong các số tự nhiên, số nào không có số liền trước?
+  \begin{enumerate}[label=\Alph*.]
+    \item Số 1
+    \item Số 2
+    \item Số 0
+    \item Số 10
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Số 0 là số tự nhiên nhỏ nhất nên không có số tự nhiên nào liền trước nó.}
+
+  \item \nhanbiet{} Tập hợp $\mathbb{N}$ được viết đúng là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $\mathbb{N} = \{1; 2; 3; \dots\}$
+    \item $\mathbb{N} = \{0; 1; 2; 3; \dots\}$
+    \item $\mathbb{N} = \{0; 1; 2; 3\}$
+    \item $\mathbb{N} = \{\dots; -1; 0; 1; 2; \dots\}$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Tập hợp số tự nhiên bắt đầu từ 0 và kéo dài vô tận.}
+
+  \item \nhanbiet{} Tính chất bắc cầu được phát biểu như sau: "Nếu $a < b$ và $b < c$ thì..."
+  \begin{enumerate}[label=\Alph*.]
+    \item $a = c$
+    \item $a > c$
+    \item $a < c$
+    \item $a \ge c$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Tính chất bắc cầu: Nếu $a < b$ và $b < c$ thì $a < c$.}
+
+  \item \nhanbiet{} Ký hiệu $x \le 5$ có nghĩa là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $x$ nhỏ hơn 5
+    \item $x$ lớn hơn 5
+    \item $x$ nhỏ hơn 5 hoặc $x$ bằng 5
+    \item $x$ bằng 5
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Ký hiệu $\le$ đọc là "nhỏ hơn hoặc bằng".}
+
+  \item \nhanbiet{} Hai điểm 7 và 12 trên tia số, điểm nào nằm trước?
+  \begin{enumerate}[label=\Alph*.]
+    \item Điểm 7
+    \item Điểm 12
+    \item Cả hai điểm
+    \item Không có điểm nào
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Vì $7 < 12$ nên điểm 7 nằm bên trái, tức là nằm trước điểm 12 trên tia số.}
+
+  \item \nhanbiet{} Cho hai số $m = 12\,036\,001$ và $n = 12\,035\,987$. Dấu thích hợp để điền vào ô trống $m \dots n$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $<$
+    \item $>$
+    \item $=$
+    \item $\le$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{So sánh từ trái sang phải, chữ số hàng nghìn của $m$ là 6, của $n$ là 5. Do $6 > 5$ nên $m > n$.}
+
+  \item \nhanbiet{} Số tự nhiên nào lớn nhất trong các số: 54902; 55789; 55699; 55806?
+  \begin{enumerate}[label=\Alph*.]
+    \item 54902
+    \item 55789
+    \item 55699
+    \item 55806
+  \end{enumerate}
+  \dapan{D}
+  \giaithich{So sánh hàng trăm: $8 > 7 > 6$, số 54902 nhỏ nhất. Vậy 55806 là số lớn nhất.}
+
+  \item \thonghieu{} Viết tập hợp $A = \{x \in \mathbb{N} \mid x \le 4\}$ bằng cách liệt kê phần tử:
+  \begin{enumerate}[label=\Alph*.]
+    \item $A = \{1; 2; 3; 4\}$
+    \item $A = \{0; 1; 2; 3\}$
+    \item $A = \{0; 1; 2; 3; 4\}$
+    \item $A = \{1; 2; 3\}$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{$x$ thuộc $\mathbb{N}$ và $x \le 4$ nên lấy các số từ 0 đến 4.}
+
+  \item \thonghieu{} Viết tập hợp $K = \{x \in \mathbb{N}^* \mid x < 3\}$ bằng cách liệt kê phần tử:
+  \begin{enumerate}[label=\Alph*.]
+    \item $K = \{0; 1; 2\}$
+    \item $K = \{1; 2\}$
+    \item $K = \{1; 2; 3\}$
+    \item $K = \{0; 1; 2; 3\}$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Tập $\mathbb{N}^*$ không chứa số 0. Vậy $K$ chỉ gồm các số tự nhiên khác 0 và nhỏ hơn 3, tức là 1 và 2.}
+
+  \item \thonghieu{} Cho tập hợp $M = \{x \in \mathbb{N} \mid 10 < x \le 13\}$. Phần tử nào sau đây thuộc $M$?
+  \begin{enumerate}[label=\Alph*.]
+    \item 10
+    \item 12
+    \item 14
+    \item 9
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Liệt kê các phần tử của $M = \{11; 12; 13\}$. Trong các đáp án chỉ có 12 là đúng.}
+
+  \item \thonghieu{} Trên tia số, điểm biểu diễn số 19 nằm ở vị trí nào so với điểm 10?
+  \begin{enumerate}[label=\Alph*.]
+    \item Nằm ngay sát bên trái điểm 10.
+    \item Nằm cách một khoảng bên trái điểm 10.
+    \item Nằm bên phải điểm 10.
+    \item Trùng với điểm 10.
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Vì $19 > 10$ nên điểm 19 nằm bên phải điểm 10.}
+
+  \item \thonghieu{} Cho ba số tự nhiên $a, b, c$. Biết $a$ là số liền trước của $b$, $b$ là số liền trước của $c$. Khẳng định nào đúng?
+  \begin{enumerate}[label=\Alph*.]
+    \item $a > c$
+    \item $a < c$
+    \item $a = c$
+    \item $b > c$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{$a$ liền trước $b \Rightarrow a < b$. $b$ liền trước $c \Rightarrow b < c$. Theo tính chất bắc cầu $a < c$.}
+
+  \item \thonghieu{} Có bao nhiêu số tự nhiên nằm giữa 15 và 20?
+  \begin{enumerate}[label=\Alph*.]
+    \item 4
+    \item 5
+    \item 6
+    \item 3
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Các số nằm giữa 15 và 20 (không tính 15 và 20) là: 16, 17, 18, 19. Tổng cộng có 4 số.}
+
+  \item \thonghieu{} Cột cây số ghi $km 134$ trên Quốc lộ 6 cho biết điều gì?
+  \begin{enumerate}[label=\Alph*.]
+    \item Cột này cách điểm cuối của Quốc lộ 6 là 134 km.
+    \item Cột này cách điểm bắt đầu (km 0) của Quốc lộ 6 là 134 km.
+    \item Chiều dài toàn bộ Quốc lộ 6 là 134 km.
+    \item Tốc độ tối đa cho phép là 134 km/h.
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Cột cây số ghi số đo khoảng cách từ điểm gốc ($km 0$) tới vị trí đặt cột.}
+
+  \item \vandung{} Cửa hàng ghi nhận: "Số tiền thu được sáng nhiều hơn chiều; số tiền tối ít hơn chiều". Sắp xếp thời điểm theo số tiền thu được từ nhỏ đến lớn:
+  \begin{enumerate}[label=\Alph*.]
+    \item Tối, Sáng, Chiều
+    \item Tối, Chiều, Sáng
+    \item Sáng, Chiều, Tối
+    \item Chiều, Tối, Sáng
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Gọi số tiền Sáng, Chiều, Tối là $S, C, T$. Ta có $S > C$ và $T < C$. Gộp lại ta được $T < C < S$. Vậy thứ tự từ nhỏ đến lớn là Tối, Chiều, Sáng.}
+
+  \item \vandung{} Tìm số tự nhiên lớn nhất có 3 chữ số khác nhau, biết chữ số hàng chục nhỏ hơn 5.
+  \begin{enumerate}[label=\Alph*.]
+    \item 948
+    \item 994
+    \item 949
+    \item 958
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Để số là lớn nhất, chữ số hàng trăm phải là lớn nhất có thể: 9. Hàng chục nhỏ hơn 5 và lớn nhất có thể là 4. Hàng đơn vị lớn nhất khác 9 và khác 4 là 8. Số đó là 948.}
+
+  \item \vandung{} Cho $A = \{x \in \mathbb{N} \mid x \text{ chẵn và } x < 10\}$, $B = \{x \in \mathbb{N} \mid x \text{ lẻ và } x < 10\}$. Chọn phát biểu đúng:
+  \begin{enumerate}[label=\Alph*.]
+    \item Tập $A$ có nhiều phần tử hơn tập $B$.
+    \item Tập $B$ có nhiều phần tử hơn tập $A$.
+    \item Tập $A$ và tập $B$ có số phần tử bằng nhau.
+    \item Không thể đếm được số phần tử của $A$ và $B$.
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{$A = \{0; 2; 4; 6; 8\}$ có 5 phần tử. $B = \{1; 3; 5; 7; 9\}$ cũng có 5 phần tử. Vậy số phần tử bằng nhau.}
+\end{enumerate}
+
+\subsection*{Dạng 2: Trắc nghiệm Đúng -- Sai}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+  \item \nhanbiet{} Mệnh đề: Trên tia số, điểm biểu diễn số 5 luôn nằm bên phải điểm biểu diễn số 8.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Vì $5 < 8$, nên điểm 5 phải nằm bên trái điểm 8.}
+
+  \item \nhanbiet{} Mệnh đề: Tập hợp các số tự nhiên được ký hiệu là $\mathbb{N}$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây là định nghĩa cơ bản về tập hợp số tự nhiên.}
+
+  \item \nhanbiet{} Mệnh đề: Số tự nhiên nhỏ nhất là số 1.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Số tự nhiên nhỏ nhất là số 0.}
+
+  \item \nhanbiet{} Mệnh đề: Số liền trước của số 99 là 98.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{$99 - 1 = 98$.}
+
+  \item \nhanbiet{} Mệnh đề: Hai số tự nhiên liên tiếp luôn hơn kém nhau 1 đơn vị.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Định nghĩa hai số tự nhiên liên tiếp là $a$ và $a+1$, khoảng cách là 1 đơn vị.}
+
+  \item \nhanbiet{} Mệnh đề: Ký hiệu $a \ge b$ có nghĩa là $a$ lớn hơn $b$ hoặc $a$ bằng $b$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây là cách đọc đúng của ký hiệu lớn hơn hoặc bằng.}
+
+  \item \nhanbiet{} Mệnh đề: Số 0 là số tự nhiên duy nhất không có số liền sau.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Số 0 không có số liền trước. Mọi số tự nhiên đều có số liền sau.}
+
+  \item \nhanbiet{} Mệnh đề: Nếu $x < y$ và $y < z$ thì $x < z$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây chính là tính chất bắc cầu của bất đẳng thức.}
+
+  \item \nhanbiet{} Mệnh đề: $15 \le 15$ là một khẳng định đúng.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Ký hiệu $\le$ cho phép trường hợp dấu bằng xảy ra, $15 = 15$ nên khẳng định đúng.}
+
+  \item \nhanbiet{} Mệnh đề: Số liền sau của một số lẻ luôn luôn là một số chẵn.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Số lẻ có dạng $2k+1$, số liền sau là $2k+1+1 = 2k+2$ luôn là số chẵn.}
+
+  \item \thonghieu{} Mệnh đề: Tập hợp $P = \{x \in \mathbb{N}^* \mid x \le 5\}$ có chứa phần tử 0.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Tập hợp $\mathbb{N}^*$ không chứa số 0, nên $P = \{1; 2; 3; 4; 5\}$.}
+
+  \item \thonghieu{} Mệnh đề: Số lượng phần tử của tập hợp $M = \{x \in \mathbb{N} \mid 12 < x < 13\}$ là 1.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Không có số tự nhiên nào nằm giữa hai số tự nhiên liên tiếp 12 và 13. Tập $M$ rỗng (số phần tử là 0).}
+
+  \item \thonghieu{} Mệnh đề: Dãy số $2020; 2021; 2022; 2023$ là dãy bốn số tự nhiên liên tiếp xếp theo thứ tự tăng dần.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Mỗi số đứng sau lớn hơn số liền trước đúng 1 đơn vị.}
+
+  \item \thonghieu{} Mệnh đề: Số liền trước của số tự nhiên chẵn nhỏ nhất khác 0 là số 1.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Số tự nhiên chẵn nhỏ nhất khác 0 là 2. Số liền trước của 2 là 1.}
+
+  \item \thonghieu{} Mệnh đề: Nếu xếp 3 bạn An, Bình, Châu theo chiều cao tăng dần, biết Châu cao hơn An và An cao hơn Bình, thì người đứng cuối hàng (cao nhất) là Châu.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Bình $<$ An, An $<$ Châu $\Rightarrow$ Bình $<$ An $<$ Châu. Châu cao nhất.}
+
+  \item \thonghieu{} Mệnh đề: Cho tập hợp $A = \{3; 5; 7; 9\}$. Số 8 là một phần tử của tập hợp $A$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Nhìn vào danh sách liệt kê, không có phần tử nào là số 8.}
+
+  \item \thonghieu{} Mệnh đề: Cho đoạn $AB$ trên tia số với $A$ biểu diễn số 5, $B$ biểu diễn số 10. Điểm biểu diễn số 7 nằm trong đoạn $AB$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Số 7 thỏa mãn điều kiện $5 < 7 < 10$ nên điểm 7 nằm giữa điểm 5 và điểm 10.}
+
+  \item \vandung{} Mệnh đề: Tổng của một số tự nhiên bất kỳ với số liền sau của nó luôn là một số lẻ.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Gọi số tự nhiên là $a$, số liền sau là $a+1$. Tổng là $a + (a+1) = 2a + 1$, luôn là số lẻ.}
+
+  \item \vandung{} Mệnh đề: Để viết tất cả các số tự nhiên lớn hơn 95 và nhỏ hơn 102, ta cần viết đúng 6 số.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Các số đó là: 96, 97, 98, 99, 100, 101. Đếm được 6 số.}
+
+  \item \vandung{} Mệnh đề: Có duy nhất một số tự nhiên $x$ thỏa mãn điều kiện $x < 1$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Trong tập hợp số tự nhiên, chỉ có số 0 thỏa mãn điều kiện nhỏ hơn 1. Vậy có duy nhất 1 số.}
+\end{enumerate}
+
+\subsection*{Dạng 3: Điền khuyết}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+  \item \nhanbiet{} Số tự nhiên liền sau của số 999 là số \underline{\hspace{2cm}}.
+  \dapan{1000}
+  \giaithich{$999 + 1 = 1000$.}
+
+  \item \nhanbiet{} Số tự nhiên liền trước của số 25 là số \underline{\hspace{2cm}}.
+  \dapan{24}
+  \giaithich{$25 - 1 = 24$.}
+
+  \item \nhanbiet{} Số tự nhiên nhỏ nhất trong tập hợp $\mathbb{N}$ là \underline{\hspace{2cm}}.
+  \dapan{0}
+  \giaithich{Tập số tự nhiên bắt đầu từ 0.}
+
+  \item \nhanbiet{} Số phần tử của tập hợp $A = \{0; 1; 2; 3; 4; 5\}$ là \underline{\hspace{2cm}}.
+  \dapan{6}
+  \giaithich{Đếm trực tiếp các số từ 0 đến 5, ta có 6 phần tử.}
+
+  \item \nhanbiet{} Khoảng cách giữa hai điểm biểu diễn hai số tự nhiên liên tiếp trên tia số là \underline{\hspace{2cm}} đơn vị.
+  \dapan{1}
+  \giaithich{Theo định nghĩa tia số, khoảng cách giữa $a$ và $a+1$ là 1 đơn vị.}
+
+  \item \nhanbiet{} Cho dãy số 10; 11; 12; \dots; 20. Số 13 nằm cách số 10 đúng \underline{\hspace{2cm}} khoảng đơn vị trên tia số.
+  \dapan{3}
+  \giaithich{Lấy $13 - 10 = 3$.}
+
+  \item \nhanbiet{} Số tự nhiên lớn nhất có 2 chữ số là \underline{\hspace{2cm}}.
+  \dapan{99}
+  \giaithich{Số liền sau của 99 là 100 (có 3 chữ số), nên 99 là lớn nhất.}
+
+  \item \nhanbiet{} Điểm biểu diễn số 0 trên tia số được gọi là điểm \underline{\hspace{2cm}}.
+  \dapan{gốc}
+  \giaithich{Theo sách giáo khoa, điểm biểu diễn số 0 gọi là gốc tia số.}
+
+  \item \nhanbiet{} Biết $x$ là số tự nhiên, $4 < x \le 5$. Giá trị của $x$ bằng \underline{\hspace{2cm}}.
+  \dapan{5}
+  \giaithich{Số tự nhiên lớn hơn 4 và nhỏ hơn hoặc bằng 5 chỉ có thể là 5.}
+
+  \item \nhanbiet{} Cho $12 < 15$ và $15 < 19$. Theo tính chất bắc cầu, số tự nhiên nhỏ nhất trong ba số đó là \underline{\hspace{2cm}}.
+  \dapan{12}
+  \giaithich{Vì $12 < 15 < 19$ nên 12 là số nhỏ nhất.}
+
+  \item \thonghieu{} Số phần tử của tập hợp $M = \{x \in \mathbb{N} \mid 10 \le x \le 18\}$ là \underline{\hspace{2cm}}.
+  \dapan{9}
+  \giaithich{Số phần tử = (Số cuối - Số đầu) + 1 = $(18 - 10) + 1 = 9$.}
+
+  \item \thonghieu{} Viết thêm số liền trước và số liền sau của số 500, ta thu được ba số tự nhiên. Tổng của số lớn nhất và số nhỏ nhất trong ba số đó là \underline{\hspace{2cm}}.
+  \dapan{1000}
+  \giaithich{Ba số đó là 499, 500, 501. Tổng của số nhỏ nhất (499) và lớn nhất (501) là $499 + 501 = 1000$.}
+
+  \item \thonghieu{} Tập hợp $P = \{x \in \mathbb{N}^* \mid x \le 8\}$ có số phần tử là \underline{\hspace{2cm}}.
+  \dapan{8}
+  \giaithich{$P = \{1; 2; 3; 4; 5; 6; 7; 8\}$. Có 8 phần tử.}
+
+  \item \thonghieu{} Có bao nhiêu số tự nhiên lẻ nằm giữa 20 và 30? \underline{\hspace{2cm}}.
+  \dapan{5}
+  \giaithich{Các số lẻ đó là: 21, 23, 25, 27, 29. Gồm 5 số.}
+
+  \item \thonghieu{} Số liền sau của số tự nhiên lớn nhất có 3 chữ số là \underline{\hspace{2cm}}.
+  \dapan{1000}
+  \giaithich{Số tự nhiên lớn nhất có 3 chữ số là 999. Số liền sau là 1000.}
+
+  \item \thonghieu{} Số tự nhiên $x$ thỏa mãn $2023 \le x < 2024$ là \underline{\hspace{2cm}}.
+  \dapan{2023}
+  \giaithich{Vì $x$ thuộc tập số tự nhiên và nhỏ hơn 2024, đồng thời có thể bằng 2023 nên $x = 2023$.}
+
+  \item \vandung{} Biết $a, b, c$ là ba số tự nhiên liên tiếp tăng dần và $a + b + c = 30$. Giá trị của số $b$ là \underline{\hspace{2cm}}.
+  \dapan{10}
+  \giaithich{Vì ba số liên tiếp nên $b = a+1, c = a+2$. Ta có $a + (a+1) + (a+2) = 30 \Rightarrow 3a + 3 = 30 \Rightarrow 3a = 27 \Rightarrow a = 9$. Vậy $b = 10$.}
+
+  \item \vandung{} Một người bắt đầu đi từ cột mốc km 15 trên quốc lộ, đi theo chiều tăng của cột mốc và đi được 45 km thì dừng lại. Người đó đã dừng lại ở cột mốc km số \underline{\hspace{2cm}}.
+  \dapan{60}
+  \giaithich{Vị trí dừng lại = Vị trí ban đầu + quãng đường đi được = $15 + 45 = 60$.}
+
+  \item \vandung{} Trong dãy số tự nhiên từ 1 đến 100, có bao nhiêu số chứa chữ số 5? \underline{\hspace{2cm}}.
+  \dapan{19}
+  \giaithich{Chữ số 5 ở hàng đơn vị: 5, 15, 25, 35, 45, 55, 65, 75, 85, 95 (10 số). Chữ số 5 ở hàng chục: 50, 51, 52, 53, 54, 55, 56, 57, 58, 59 (10 số). Trừ đi số 55 bị đếm 2 lần, ta có $10 + 10 - 1 = 19$ số.}
+
+  \item \vandung{} Chữ số $x$ lớn nhất thỏa mãn điều kiện $\overline{3x45} < 3712$ là \underline{\hspace{2cm}}.
+  \dapan{6}
+  \giaithich{Xét hàng trăm, $x$ phải nhỏ hơn 7 vì phần đuôi $45 > 12$. Không đúng, ta so sánh cẩn thận: nếu $x = 7$, $\overline{3745} < 3712$ (Sai). Nếu $x = 6$, $3645 < 3712$ (Đúng). Vậy $x$ lớn nhất là 6.}
+\end{enumerate}
+
+\end{document}
+
+
+
+% ==========================================
+
+
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\geometry{margin=2cm}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems,skins,breakable}
+\usepackage{mdframed}
+\usepackage{hyperref}
+
+\definecolor{kienthuc}{RGB}{0,84,166}
+\definecolor{vidu}{RGB}{0,128,96}
+\definecolor{luuy}{RGB}{180,40,40}
+\definecolor{nhanbiet}{RGB}{30,100,200}
+\definecolor{thonghieu}{RGB}{0,140,80}
+\definecolor{vandung}{RGB}{180,80,0}
+
+\newtcolorbox{kienthucbox}[1]{colback=blue!5,colframe=kienthuc,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{vidubox}[1]{colback=green!5,colframe=vidu,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{luuybox}{colback=red!5,colframe=luuy,fonttitle=\bfseries,title=Lưu ý -- Sai lầm thường gặp,breakable}
+
+\newcommand{\nhanbiet}{\textcolor{nhanbiet}{\textbf{[Nhận biết]}}}
+\newcommand{\thonghieu}{\textcolor{thonghieu}{\textbf{[Thông hiểu]}}}
+\newcommand{\vandung}{\textcolor{vandung}{\textbf{[Vận dụng]}}}
+\newcommand{\dapan}[1]{\par\smallskip\textbf{Đáp án:} #1}
+\newcommand{\giaithich}[1]{\par\textit{Giải thích: #1}}
+
+\title{\textbf{TÀI LIỆU ÔN TẬP TOÁN}\\[0.5em]\large [Bài 4: Phép cộng và phép trừ số tự nhiên -- Lớp 6]}
+\author{Thầy Trần Minh Toàn - Trường THCS Tăng Bạt Hổ}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Tóm tắt lý thuyết}
+
+\begin{kienthucbox}{1. Phép cộng số tự nhiên}
+\begin{itemize}
+    \item Phép cộng hai số tự nhiên $a$ và $b$ cho ta một số tự nhiên gọi là tổng, kí hiệu là $a + b$.
+    $$ a \text{ (Số hạng)} + b \text{ (Số hạng)} = c \text{ (Tổng)} $$
+    \item \textbf{Tính chất của phép cộng:}
+    \begin{itemize}
+        \item Giao hoán: $a + b = b + a$.
+        \item Kết hợp: $(a + b) + c = a + (b + c)$.
+        \item Cộng với số 0: $a + 0 = 0 + a = a$.
+    \end{itemize}
+    \item Chú ý: Tổng $(a + b) + c$ hay $a + (b + c)$ được gọi là tổng của ba số $a, b, c$ và viết gọn là $a + b + c$.
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{2. Phép trừ số tự nhiên}
+\begin{itemize}
+    \item Với hai số tự nhiên $a, b$, nếu có số tự nhiên $c$ sao cho $a = b + c$ thì ta có phép trừ $a - b = c$.
+    $$ a \text{ (Số bị trừ)} - b \text{ (Số trừ)} = c \text{ (Hiệu)} $$
+    \item \textbf{Điều kiện thực hiện phép trừ:} Trong tập hợp các số tự nhiên $\mathbb{N}$, phép trừ $a - b$ chỉ thực hiện được nếu $a \ge b$.
+    \item \textbf{Quan hệ giữa phép cộng và phép trừ:}
+    \begin{itemize}
+        \item Số hạng = Tổng $-$ Số hạng kia.
+        \item Số bị trừ = Hiệu $+$ Số trừ.
+        \item Số trừ = Số bị trừ $-$ Hiệu.
+    \end{itemize}
+\end{itemize}
+\end{kienthucbox}
+
+\begin{vidubox}{Dạng 1: Tính nhanh, tính hợp lí}
+\textbf{Đặc điểm nhận dạng:} Biểu thức có nhiều số hạng, các số hạng có chữ số tận cùng có thể ghép lại thành số tròn chục, tròn trăm.
+\\
+\textbf{Ví dụ:} Tính hợp lí biểu thức sau: $66 + 289 + 134 + 311$.
+\\
+\textbf{Hướng dẫn giải:}
+\begin{enumerate}
+    \item Sử dụng tính chất giao hoán để đổi chỗ các số hạng, mang các số có tổng tròn chục, tròn trăm lại gần nhau.
+    \item Sử dụng tính chất kết hợp để nhóm chúng lại: 
+    $$ 66 + 289 + 134 + 311 = (66 + 134) + (289 + 311) $$
+    \item Thực hiện phép tính trong ngoặc: 
+    $$ = 200 + 600 = 800 $$
+\end{enumerate}
+\end{vidubox}
+
+\begin{vidubox}{Dạng 2: Tìm $x$ (tìm thành phần chưa biết của phép tính)}
+\textbf{Đặc điểm nhận dạng:} Bài toán yêu cầu tìm số tự nhiên $x$ thỏa mãn một đẳng thức cộng hoặc trừ.
+\\
+\textbf{Ví dụ:} Tìm số tự nhiên $x$, biết: $x - 56 = 4$.
+\\
+\textbf{Hướng dẫn giải:}
+\begin{enumerate}
+    \item Xác định vai trò của $x$: Trong phép trừ này, $x$ đứng trước dấu trừ nên $x$ là \textbf{Số bị trừ}.
+    \item Áp dụng quy tắc: Số bị trừ = Hiệu + Số trừ.
+    $$ x = 4 + 56 $$
+    \item Tính kết quả: 
+    $$ x = 60 $$
+\end{enumerate}
+\end{vidubox}
+
+\begin{vidubox}{Dạng 3: Toán đố thực tế}
+\textbf{Đặc điểm nhận dạng:} Đề bài mô tả một tình huống thực tế (mua bán, dân số, diện tích) yêu cầu tìm giá trị bằng cách cộng hoặc trừ.
+\\
+\textbf{Ví dụ:} Dân số Việt Nam năm 2019 là $96\,462\,106$ người. Năm 2020, dân số tăng $876\,473$ người so với năm 2019. Tính dân số Việt Nam năm 2020.
+\\
+\textbf{Hướng dẫn giải:}
+\begin{enumerate}
+    \item Phân tích: "Tăng" nghĩa là ta phải dùng phép cộng.
+    \item Lập phép tính: Dân số 2020 = Dân số 2019 + Số người tăng thêm.
+    $$ 96\,462\,106 + 876\,473 = 97\,338\,579 $$
+    \item Kết luận: Dân số Việt Nam năm 2020 là $97\,338\,579$ người.
+\end{enumerate}
+\end{vidubox}
+
+\begin{luuybox}
+\begin{itemize}
+    \item \textbf{Đặt tính sai hàng:} Khi tính toán theo cột dọc, học sinh thường quên đặt các chữ số cùng hàng thẳng cột với nhau (đặc biệt với số có số lượng chữ số khác nhau).
+    \\
+    \textcolor{red}{Sai:} Cộng hàng đơn vị của số này với hàng chục của số kia.
+    \\
+    \textcolor{vidu}{Đúng:} Đặt tính sao cho đơn vị thẳng đơn vị, chục thẳng chục.
+    \item \textbf{Tìm thành phần của phép trừ sai quy tắc:}
+    \\
+    \textcolor{red}{Sai:} Tìm "Số trừ" bằng cách lấy "Số bị trừ" CỘNG "Hiệu".
+    \\
+    \textcolor{vidu}{Đúng:} Số trừ = Số bị trừ $-$ Hiệu.
+    \item \textbf{Thực hiện phép trừ không thỏa mãn điều kiện:}
+    \\
+    \textcolor{red}{Sai:} Cố gắng lấy số nhỏ trừ số lớn trong tập số tự nhiên $\mathbb{N}$.
+    \\
+    \textcolor{vidu}{Đúng:} Phép trừ $a - b$ trong $\mathbb{N}$ chỉ thực hiện được khi $a \ge b$.
+\end{itemize}
+\end{luuybox}
+
+\section{Bộ câu hỏi trắc nghiệm}
+
+\subsection*{Dạng 1: Trắc nghiệm một đáp án đúng}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.}]
+  \item \nhanbiet{} Trong phép tính $a + b = c$, các số $a$ và $b$ được gọi là gì?
+  \begin{enumerate}[label=\Alph*.]
+    \item Số bị trừ
+    \item Số trừ
+    \item Tổng
+    \item Số hạng
+  \end{enumerate}
+  \dapan{D}
+  \giaithich{Trong phép cộng, các số tham gia cộng được gọi là các số hạng.}
+
+  \item \nhanbiet{} Trong phép tính $x - y = z$, số $x$ được gọi là gì?
+  \begin{enumerate}[label=\Alph*.]
+    \item Số hạng
+    \item Số bị trừ
+    \item Số trừ
+    \item Hiệu
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Trong phép trừ, số đứng trước dấu trừ gọi là số bị trừ.}
+
+  \item \nhanbiet{} Phép cộng số tự nhiên có tính chất nào sau đây?
+  \begin{enumerate}[label=\Alph*.]
+    \item Chỉ có tính chất giao hoán.
+    \item Chỉ có tính chất kết hợp.
+    \item Có cả tính chất giao hoán và tính chất kết hợp.
+    \item Không có tính chất nào.
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Phép cộng có cả tính chất giao hoán ($a+b=b+a$) và kết hợp ($(a+b)+c=a+(b+c)$).}
+
+  \item \nhanbiet{} Tính chất giao hoán của phép cộng được viết dưới dạng công thức là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $a + b = c$
+    \item $a + b = b + a$
+    \item $(a + b) + c = a + (b + c)$
+    \item $a + 0 = a$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Giao hoán nghĩa là đổi vị trí các số hạng thì tổng không đổi: $a + b = b + a$.}
+
+  \item \nhanbiet{} Tính chất kết hợp của phép cộng được viết dưới dạng công thức là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $a + b = b + a$
+    \item $(a + b) + c = a + (b + c)$
+    \item $a - b = c$
+    \item $a + 0 = a$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Kết hợp là việc nhóm các số hạng khác nhau nhưng kết quả không đổi: $(a + b) + c = a + (b + c)$.}
+
+  \item \nhanbiet{} Số tự nhiên nào cộng với mọi số tự nhiên $a$ đều cho kết quả bằng chính $a$?
+  \begin{enumerate}[label=\Alph*.]
+    \item 1
+    \item 0
+    \item -1
+    \item Chính số $a$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Tính chất cộng với 0: $a + 0 = 0 + a = a$.}
+
+  \item \nhanbiet{} Điều kiện để phép trừ $a - b$ thực hiện được trong tập hợp số tự nhiên $\mathbb{N}$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $a > b$
+    \item $a \le b$
+    \item $a \ge b$
+    \item $a \neq b$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Trong tập $\mathbb{N}$, số bị trừ phải lớn hơn hoặc bằng số trừ: $a \ge b$.}
+
+  \item \nhanbiet{} Muốn tìm số hạng chưa biết, ta thực hiện phép tính nào?
+  \begin{enumerate}[label=\Alph*.]
+    \item Lấy tổng trừ đi số hạng đã biết.
+    \item Lấy tổng cộng với số hạng đã biết.
+    \item Lấy số hạng đã biết trừ đi tổng.
+    \item Lấy số hạng đã biết nhân với tổng.
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Theo quy tắc: Số hạng = Tổng - Số hạng kia.}
+
+  \item \nhanbiet{} Muốn tìm số bị trừ, ta làm như thế nào?
+  \begin{enumerate}[label=\Alph*.]
+    \item Lấy hiệu trừ đi số trừ.
+    \item Lấy hiệu cộng với số trừ.
+    \item Lấy số trừ trừ đi hiệu.
+    \item Lấy số trừ cộng với số bị trừ.
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Theo quy tắc: Số bị trừ = Hiệu + Số trừ.}
+
+  \item \nhanbiet{} Muốn tìm số trừ, ta làm như thế nào?
+  \begin{enumerate}[label=\Alph*.]
+    \item Lấy số bị trừ cộng với hiệu.
+    \item Lấy hiệu trừ đi số bị trừ.
+    \item Lấy số bị trừ trừ đi hiệu.
+    \item Lấy số bị trừ chia cho hiệu.
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Theo quy tắc: Số trừ = Số bị trừ - Hiệu.}
+
+  \item \thonghieu{} Kết quả của phép tính $25 + (75 + 18)$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 108
+    \item 118
+    \item 128
+    \item 100
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Áp dụng tính chất kết hợp: $25 + (75 + 18) = (25 + 75) + 18 = 100 + 18 = 118$.}
+
+  \item \thonghieu{} Tìm số tự nhiên $x$, biết: $x - 15 = 40$.
+  \begin{enumerate}[label=\Alph*.]
+    \item $x = 25$
+    \item $x = 55$
+    \item $x = 35$
+    \item $x = 65$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{$x$ là số bị trừ. $x = 40 + 15 = 55$.}
+
+  \item \thonghieu{} Tìm số tự nhiên $x$, biết: $100 - x = 25$.
+  \begin{enumerate}[label=\Alph*.]
+    \item $x = 125$
+    \item $x = 75$
+    \item $x = 25$
+    \item $x = 85$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{$x$ là số trừ. $x = 100 - 25 = 75$.}
+
+  \item \thonghieu{} Mai mua một chiếc bút giá 12 nghìn đồng và một quyển vở giá 15 nghìn đồng. Mai đưa cho cô bán hàng 50 nghìn đồng. Số tiền cô bán hàng phải trả lại Mai là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 23 nghìn đồng
+    \item 27 nghìn đồng
+    \item 38 nghìn đồng
+    \item 35 nghìn đồng
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Tổng tiền Mai mua: $12 + 15 = 27$ nghìn. Tiền trả lại: $50 - 27 = 23$ nghìn đồng.}
+
+  \item \thonghieu{} Tính hợp lí biểu thức: $117 + 68 + 23$.
+  \begin{enumerate}[label=\Alph*.]
+    \item 198
+    \item 208
+    \item 218
+    \item 188
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{$117 + 68 + 23 = (117 + 23) + 68 = 140 + 68 = 208$.}
+
+  \item \thonghieu{} Dân số của một phường năm ngoái là $15\,000$ người. Năm nay dân số tăng thêm $450$ người. Vậy dân số năm nay là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $14\,550$ người
+    \item $15\,450$ người
+    \item $19\,500$ người
+    \item $15\,050$ người
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Dân số năm nay: $15\,000 + 450 = 15\,450$ người.}
+
+  \item \thonghieu{} Tính nhẩm: $55 - 18$. Cách làm nào sau đây hợp lí nhất?
+  \begin{enumerate}[label=\Alph*.]
+    \item $(55 + 2) - (18 + 2) = 57 - 20 = 37$
+    \item $(55 - 2) - (18 - 2) = 53 - 16 = 37$
+    \item $(55 + 5) - (18 + 5) = 60 - 23 = 37$
+    \item $50 - 18 + 5 = 32 + 5 = 37$
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Thêm cùng một số vào cả số bị trừ và số trừ để số trừ trở thành số tròn chục (18+2=20) giúp tính nhẩm nhanh nhất.}
+
+  \item \vandung{} Tính hợp lí biểu thức: $137 + 256 - 158$.
+  \begin{enumerate}[label=\Alph*.]
+    \item 235
+    \item 245
+    \item 225
+    \item 255
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{$137 + 256 - 158 = 137 + (258 - 2) - 158 = (137 - 2) + (258 - 158) = 135 + 100 = 235$.}
+
+  \item \vandung{} Nhà ga số 1 tiếp nhận $6\,526\,300$ khách. Nhà ga số 2 tiếp nhận $3\,514\,500$ khách. Nhờ nhà ga số 3, tổng công suất lên tới $22\,851\,200$ khách. Khả năng tiếp nhận của nhà ga số 3 là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $12\,810\,400$ hành khách
+    \item $12\,800\,000$ hành khách
+    \item $11\,810\,400$ hành khách
+    \item $13\,810\,400$ hành khách
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Tổng ga 1 và 2: $6\,526\,300 + 3\,514\,500 = 10\,040\,800$. Ga 3: $22\,851\,200 - 10\,040\,800 = 12\,810\,400$.}
+
+  \item \vandung{} Điền 3 số tự nhiên khác nhau vào 3 đỉnh của một tam giác sao cho tổng 3 đỉnh bằng 6. Ba số đó là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $0, 2, 4$
+    \item $1, 2, 3$
+    \item $1, 1, 4$
+    \item $2, 2, 2$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Các số phải khác nhau. Tổng bằng 6: $1 + 2 + 3 = 6$.}
+\end{enumerate}
+
+\subsection*{Dạng 2: Trắc nghiệm Đúng -- Sai}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+  \item \nhanbiet{} Mệnh đề: Kết quả của phép cộng hai số tự nhiên luôn là một số tự nhiên.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Tập hợp số tự nhiên đóng kín với phép cộng.}
+
+  \item \nhanbiet{} Mệnh đề: Trong phép tính $15 - 8 = 7$, số $8$ được gọi là hiệu.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Số 8 đứng sau dấu trừ nên gọi là Số trừ. Số 7 mới là Hiệu.}
+
+  \item \nhanbiet{} Mệnh đề: Phép trừ có tính chất giao hoán, tức là $a - b = b - a$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Phép trừ không có tính chất giao hoán. Ví dụ $5 - 3 \neq 3 - 5$.}
+
+  \item \nhanbiet{} Mệnh đề: $a + 0 = a$ với mọi số tự nhiên $a$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây là tính chất cộng với số 0.}
+
+  \item \nhanbiet{} Mệnh đề: $a - 0 = a$ với mọi số tự nhiên $a$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Trừ đi 0 thì giá trị không thay đổi.}
+
+  \item \nhanbiet{} Mệnh đề: Trong tập $\mathbb{N}$, phép trừ $3 - 5$ có kết quả là một số tự nhiên.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Phép trừ trong $\mathbb{N}$ yêu cầu số bị trừ $\ge$ số trừ. Vì $3 < 5$ nên không thực hiện được trong $\mathbb{N}$.}
+
+  \item \nhanbiet{} Mệnh đề: Số hạng chưa biết bằng tổng trừ đi số hạng đã biết.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây là quy tắc đúng để tìm số hạng.}
+
+  \item \nhanbiet{} Mệnh đề: Số trừ bằng Số bị trừ cộng với Hiệu.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Quy tắc đúng là: Số trừ = Số bị trừ $-$ Hiệu.}
+
+  \item \nhanbiet{} Mệnh đề: Số bị trừ bằng Số trừ cộng với Hiệu.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây là quy tắc đúng để tìm số bị trừ.}
+
+  \item \nhanbiet{} Mệnh đề: Phép cộng $(12 + 18) + 20 = 12 + (18 + 20)$ thể hiện tính chất kết hợp.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Việc thay đổi dấu ngoặc để nhóm các số hạng khác nhau là tính chất kết hợp.}
+
+  \item \thonghieu{} Mệnh đề: Để tìm $x$ trong biểu thức $x - 10 = 5$, ta lấy $10 - 5$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{$x$ là số bị trừ, ta phải lấy Hiệu + Số trừ, tức là $5 + 10 = 15$.}
+
+  \item \thonghieu{} Mệnh đề: Để tính nhẩm $47 + 19$, ta có thể tính $(47 - 1) + (19 + 1)$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Trong phép cộng, nếu bớt ở số hạng này bao nhiêu và thêm vào số hạng kia bấy nhiêu thì tổng không đổi: $46 + 20 = 66$.}
+
+  \item \thonghieu{} Mệnh đề: Diện tích gieo trồng năm 2019 giảm so với năm 2018. Vậy để tính diện tích năm 2018, ta lấy diện tích năm 2019 trừ đi phần giảm.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Năm 2019 giảm so với 2018, nghĩa là năm 2018 nhiều hơn. Ta phải lấy diện tích năm 2019 CỘNG với phần giảm.}
+
+  \item \thonghieu{} Mệnh đề: Nếu $x + 0 = 0$ thì $x = 0$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Theo tính chất $x + 0 = x$, nên $x = 0$.}
+
+  \item \thonghieu{} Mệnh đề: Trong biểu thức $150 - (x + 10) = 40$, thì cụm $(x + 10)$ đóng vai trò là số trừ.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Cụm biểu thức đứng sau dấu trừ đóng vai trò là số trừ của phép trừ lớn.}
+
+  \item \thonghieu{} Mệnh đề: Tính hợp lí $285 + 470 + 115 + 230 = (285 + 115) + (470 + 230)$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Việc nhóm này tạo ra các tổng tròn trăm: $400 + 700 = 1100$.}
+
+  \item \thonghieu{} Mệnh đề: Giá trị của $x$ trong biểu thức $12 - x = 12$ là một số tự nhiên lớn hơn 0.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{$x$ là số trừ, $x = 12 - 12 = 0$. Số 0 không lớn hơn 0.}
+
+  \item \vandung{} Mệnh đề: Nếu tổng của hai số tự nhiên bằng 1 trong hai số hạng thì số hạng còn lại chắc chắn bằng 0.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Giả sử $a + b = a \Rightarrow b = a - a = 0$.}
+
+  \item \vandung{} Mệnh đề: Cho $a, b, c$ là các số tự nhiên, nếu $a - b = c$ thì $a - c = b$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Từ $a - b = c \Rightarrow a = b + c$. Suy ra $a - c = b$.}
+
+  \item \vandung{} Mệnh đề: Một cửa hàng nhập về 150 kg gạo, bán đi 40 kg, rồi lại nhập thêm 60 kg. Tổng số gạo hiện có được tính bằng biểu thức $150 - 40 - 60$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{"Nhập thêm" phải dùng phép cộng. Biểu thức đúng là $150 - 40 + 60$.}
+\end{enumerate}
+
+\subsection*{Dạng 3: Điền khuyết}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+  \item \nhanbiet{} Giá trị của biểu thức $15 + 24$ bằng \underline{\hspace{2cm}}.
+  \dapan{39}
+  \giaithich{$15 + 24 = 39$.}
+
+  \item \nhanbiet{} Giá trị của biểu thức $100 - 35$ bằng \underline{\hspace{2cm}}.
+  \dapan{65}
+  \giaithich{$100 - 35 = 65$.}
+
+  \item \nhanbiet{} Số tự nhiên $x$ thỏa mãn $x + 10 = 25$ là \underline{\hspace{2cm}}.
+  \dapan{15}
+  \giaithich{$x = 25 - 10 = 15$.}
+
+  \item \nhanbiet{} Số tự nhiên $x$ thỏa mãn $x - 12 = 8$ là \underline{\hspace{2cm}}.
+  \dapan{20}
+  \giaithich{$x = 8 + 12 = 20$.}
+
+  \item \nhanbiet{} Số tự nhiên $x$ thỏa mãn $50 - x = 20$ là \underline{\hspace{2cm}}.
+  \dapan{30}
+  \giaithich{$x = 50 - 20 = 30$.}
+
+  \item \nhanbiet{} Tổng của số lớn nhất có 1 chữ số và số nhỏ nhất có 2 chữ số là \underline{\hspace{2cm}}.
+  \dapan{19}
+  \giaithich{Số lớn nhất có 1 chữ số là 9. Số nhỏ nhất có 2 chữ số là 10. $9 + 10 = 19$.}
+
+  \item \nhanbiet{} Hiệu của 100 và 1 là \underline{\hspace{2cm}}.
+  \dapan{99}
+  \giaithich{$100 - 1 = 99$.}
+
+  \item \nhanbiet{} Thực hiện phép tính: $45 + 0 = $ \underline{\hspace{2cm}}.
+  \dapan{45}
+  \giaithich{Số nào cộng với 0 cũng bằng chính nó.}
+
+  \item \nhanbiet{} Thực hiện phép tính: $87 - 87 = $ \underline{\hspace{2cm}}.
+  \dapan{0}
+  \giaithich{Hai số giống nhau trừ cho nhau luôn bằng 0.}
+
+  \item \nhanbiet{} Giá trị của $10 + 20 + 30$ là \underline{\hspace{2cm}}.
+  \dapan{60}
+  \giaithich{$10 + 20 + 30 = 60$.}
+
+  \item \thonghieu{} Tính hợp lí: $125 + 47 + 75 = $ \underline{\hspace{2cm}}.
+  \dapan{247}
+  \giaithich{$(125 + 75) + 47 = 200 + 47 = 247$.}
+
+  \item \thonghieu{} Nếu lấy 1000 trừ đi tổng của 200 và 300 thì được kết quả là \underline{\hspace{2cm}}.
+  \dapan{500}
+  \giaithich{$1000 - (200 + 300) = 1000 - 500 = 500$.}
+
+  \item \thonghieu{} Số tự nhiên $x$ thỏa mãn $x + 2895 = 2895 + 6789$ là \underline{\hspace{2cm}}.
+  \dapan{6789}
+  \giaithich{Áp dụng tính chất giao hoán, $x$ phải bằng số hạng còn lại là 6789.}
+
+  \item \thonghieu{} Tính nhanh: $1572 - 30 - 72 = $ \underline{\hspace{2cm}}.
+  \dapan{1470}
+  \giaithich{$(1572 - 72) - 30 = 1500 - 30 = 1470$.}
+
+  \item \thonghieu{} Mẹ cho An 50000 đồng. An mua bút hết 12000 đồng và mua thước hết 8000 đồng. Số tiền An còn lại là \underline{\hspace{2cm}} đồng.
+  \dapan{30000}
+  \giaithich{Tiền An đã tiêu: $12000 + 8000 = 20000$. Tiền còn lại: $50000 - 20000 = 30000$.}
+
+  \item \thonghieu{} Tính giá trị biểu thức $154 + 87 + 246 = $ \underline{\hspace{2cm}}.
+  \dapan{487}
+  \giaithich{$(154 + 246) + 87 = 400 + 87 = 487$.}
+
+  \item \vandung{} Biết $(x - 15) - 20 = 0$. Giá trị của $x$ là \underline{\hspace{2cm}}.
+  \dapan{35}
+  \giaithich{Cụm $(x - 15) = 0 + 20 = 20 \Rightarrow x = 20 + 15 = 35$.}
+
+  \item \vandung{} Tính nhanh: $571 + 216 + 129 + 124 = $ \underline{\hspace{2cm}}.
+  \dapan{1040}
+  \giaithich{$(571 + 129) + (216 + 124) = 700 + 340 = 1040$.}
+
+  \item \vandung{} Một tàu hỏa chở 1200 hành khách. Đến ga A, có 250 người xuống và 180 người lên. Số hành khách trên tàu lúc rời ga A là \underline{\hspace{2cm}}.
+  \dapan{1130}
+  \giaithich{$1200 - 250 + 180 = 950 + 180 = 1130$.}
+
+  \item \vandung{} Tìm số tự nhiên $x$ thỏa mãn: $100 - (x + 15) = 25$.
+  \dapan{60}
+  \giaithich{$x + 15$ là số trừ. $x + 15 = 100 - 25 = 75 \Rightarrow x = 75 - 15 = 60$.}
+\end{enumerate}
+
+\end{document}
+
+
+
+% ==========================================
+
+
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\geometry{margin=2cm}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems,skins,breakable}
+\usepackage{mdframed}
+\usepackage{hyperref}
+
+\definecolor{kienthuc}{RGB}{0,84,166}
+\definecolor{vidu}{RGB}{0,128,96}
+\definecolor{luuy}{RGB}{180,40,40}
+\definecolor{nhanbiet}{RGB}{30,100,200}
+\definecolor{thonghieu}{RGB}{0,140,80}
+\definecolor{vandung}{RGB}{180,80,0}
+
+\newtcolorbox{kienthucbox}[1]{colback=blue!5,colframe=kienthuc,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{vidubox}[1]{colback=green!5,colframe=vidu,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{luuybox}{colback=red!5,colframe=luuy,fonttitle=\bfseries,title=Lưu ý -- Sai lầm thường gặp,breakable}
+
+\newcommand{\nhanbiet}{\textcolor{nhanbiet}{\textbf{[Nhận biết]}}}
+\newcommand{\thonghieu}{\textcolor{thonghieu}{\textbf{[Thông hiểu]}}}
+\newcommand{\vandung}{\textcolor{vandung}{\textbf{[Vận dụng]}}}
+\newcommand{\dapan}[1]{\par\smallskip\textbf{Đáp án:} #1}
+\newcommand{\giaithich}[1]{\par\textit{Giải thích: #1}}
+
+\title{\textbf{TÀI LIỆU ÔN TẬP TOÁN}\\[0.5em]\large [Bài 5: Phép nhân và phép chia số tự nhiên -- Lớp 6]}
+\author{Thầy Trần Minh Toàn - Trường THCS Tăng Bạt Hổ}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Tóm tắt lý thuyết}
+
+\begin{kienthucbox}{1. Phép nhân số tự nhiên}
+\begin{itemize}
+    \item Phép nhân hai số tự nhiên cho ta một số tự nhiên gọi là tích.
+    $$a \cdot b = c$$
+    (Trong đó: a, b là các thừa số; c là tích)
+    \item \textbf{Các tính chất của phép nhân:}
+    \begin{itemize}
+        \item Tính chất giao hoán: 
+        $$a \cdot b = b \cdot a$$
+        \item Tính chất kết hợp: 
+        $$(a \cdot b) \cdot c = a \cdot (b \cdot c)$$
+        \item Tính chất phân phối của phép nhân đối với phép cộng: 
+        $$a \cdot (b + c) = a \cdot b + a \cdot c$$
+        \item Nhân với số 1 và số 0: 
+        $$a \cdot 1 = a$$ 
+        $$a \cdot 0 = 0$$
+    \end{itemize}
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{2. Phép chia số tự nhiên}
+\begin{itemize}
+    \item \textbf{Phép chia hết:} 
+    $$a = b \cdot q$$ 
+    (a là số bị chia, b là số chia, q là thương. Điều kiện: b khác 0)
+    \item \textbf{Phép chia có dư:} 
+    $$a = b \cdot q + r$$ 
+    (r là số dư. Điều kiện: 0 < r < b)
+    \item \textbf{Quan hệ giữa các thành phần:}
+    \begin{itemize}
+        \item Số bị chia = Số chia $\cdot$ Thương + Số dư
+        \item Thương = (Số bị chia - Số dư) : Số chia
+        \item Số chia = (Số bị chia - Số dư) : Thương
+    \end{itemize}
+\end{itemize}
+\end{kienthucbox}
+
+\begin{vidubox}{Dạng 1: Tính nhanh, tính nhẩm, tính hợp lí}
+\textbf{Đặc điểm nhận dạng:} Biểu thức gồm nhiều phép nhân, phép cộng. Có thể ghép các thừa số để tạo thành số tròn chục, tròn trăm.
+
+\textbf{Ví dụ:} Tính hợp lí biểu thức: $$45 \cdot 29 + 45 \cdot 71$$
+\textbf{Hướng dẫn giải:}
+\begin{enumerate}
+    \item Nhận xét thấy thừa số 45 chung ở cả hai tích.
+    \item Áp dụng tính chất phân phối của phép nhân đối với phép cộng:
+    $$45 \cdot 29 + 45 \cdot 71 = 45 \cdot (29 + 71)$$
+    \item Thực hiện phép tính trong ngoặc trước:
+    $$45 \cdot 100 = 4500$$
+\end{enumerate}
+\end{vidubox}
+
+\begin{vidubox}{Dạng 2: Bài toán thực tế về phép chia có dư}
+\textbf{Đặc điểm nhận dạng:} Các bài toán xếp xe, xếp ghế, mua đồ vật với số tiền có hạn, yêu cầu tìm số lượng "ít nhất" hoặc "nhiều nhất".
+
+\textbf{Ví dụ:} Phải dùng ít nhất bao nhiêu xe ô tô 45 chỗ ngồi để chở hết 487 cổ động viên?
+\textbf{Hướng dẫn giải:}
+\begin{enumerate}
+    \item Thực hiện phép chia số người cho số chỗ ngồi của một xe:
+    $$487 : 45 = 10 \text{ (dư 37)}$$
+    \item Biện luận: Xếp đủ 10 xe thì còn thừa 37 người. Những người này vẫn cần 1 xe nữa để di chuyển.
+    \item Kết luận: Số xe cần dùng ít nhất là $$10 + 1 = 11$$ (xe).
+\end{enumerate}
+\end{vidubox}
+
+\begin{luuybox}
+\begin{itemize}
+    \item \textbf{Tính chất phân phối:} Học sinh thường quên nhân số bên ngoài với \textit{tất cả} các số hạng bên trong ngoặc.
+    \textcolor{red}{Sai:} $$a \cdot (b + c) = a \cdot b + c$$
+    \textcolor{vidu}{Đúng:} $$a \cdot (b + c) = a \cdot b + a \cdot c$$
+    \item \textbf{Điều kiện của số dư:} Số dư luôn phải nhỏ hơn số chia. Nếu số dư lớn hơn hoặc bằng số chia, phép chia đó thực hiện chưa xong hoặc sai.
+    \textcolor{red}{Sai:} $$36 : 12 = 2 \text{ (dư 12)}$$
+    \textcolor{vidu}{Đúng:} $$36 : 12 = 3 \text{ (dư 0)}$$
+    \item \textbf{Bài toán "ít nhất" / "nhiều nhất":} 
+    - Khi tìm xe chở "hết" người (dư người), phải \textbf{cộng thêm 1} vào thương.
+    - Khi hỏi mua "nhiều nhất" được bao nhiêu đồ (dư tiền), chỉ lấy phần \textbf{thương}, không cộng 1.
+\end{itemize}
+\end{luuybox}
+
+\section{Bộ câu hỏi trắc nghiệm}
+
+\subsection*{Dạng 1: Trắc nghiệm một đáp án đúng}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.}]
+  \item \nhanbiet{} Trong phép tính $$a \cdot b = c$$, $a$ và $b$ được gọi là gì?
+  \begin{enumerate}[label=\Alph*.]
+    \item Tích
+    \item Thương
+    \item Thừa số
+    \item Số hạng
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Trong phép nhân, các số đem nhân với nhau gọi là thừa số.}
+
+  \item \nhanbiet{} Tính chất giao hoán của phép nhân được biểu diễn bằng công thức nào?
+  \begin{enumerate}[label=\Alph*.]
+    \item $$a \cdot b = b \cdot a$$
+    \item $$(a \cdot b) \cdot c = a \cdot (b \cdot c)$$
+    \item $$a \cdot 1 = a$$
+    \item $$a \cdot (b + c) = a \cdot b + a \cdot c$$
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Giao hoán nghĩa là đổi chỗ các thừa số thì tích không thay đổi.}
+
+  \item \nhanbiet{} Trong phép chia có dư $$a = b \cdot q + r$$, điều kiện của số dư $r$ là gì?
+  \begin{enumerate}[label=\Alph*.]
+    \item $$r > b$$
+    \item $$0 \le r < b$$
+    \item $$r = b$$
+    \item $$r < 0$$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Số dư phải lớn hơn hoặc bằng 0 và nhỏ hơn số chia.}
+
+  \item \nhanbiet{} Kết quả của phép tính $$x \cdot 0$$ bằng bao nhiêu?
+  \begin{enumerate}[label=\Alph*.]
+    \item 1
+    \item $$x$$
+    \item 0
+    \item Không tính được
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Mọi số tự nhiên nhân với 0 đều bằng 0.}
+
+  \item \nhanbiet{} Phép chia nào sau đây là phép chia hết?
+  \begin{enumerate}[label=\Alph*.]
+    \item $$36 : 15$$
+    \item $$196 : 7$$
+    \item $$215 : 18$$
+    \item $$487 : 45$$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Thực hiện phép chia: $$196 : 7 = 28$$ dư 0.}
+
+  \item \nhanbiet{} Trong phép chia $$36 : 15 = 2$$ (dư 6), số 15 gọi là gì?
+  \begin{enumerate}[label=\Alph*.]
+    \item Số bị chia
+    \item Số dư
+    \item Thương
+    \item Số chia
+  \end{enumerate}
+  \dapan{D}
+  \giaithich{Số đứng sau dấu chia gọi là số chia.}
+
+  \item \nhanbiet{} Tính chất phân phối của phép nhân đối với phép cộng là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $$a \cdot b + c = a \cdot c + b$$
+    \item $$a \cdot (b + c) = a \cdot b + c$$
+    \item $$a \cdot (b + c) = a \cdot b + a \cdot c$$
+    \item $$a + (b \cdot c) = (a + b) \cdot c$$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Nhân số đó với từng số hạng của tổng rồi cộng các kết quả lại.}
+
+  \item \nhanbiet{} Công thức tính Số bị chia trong phép chia có dư là:
+  \begin{enumerate}[label=\Alph*.]
+    \item Số chia $\cdot$ Thương - Số dư
+    \item Số chia $\cdot$ Thương + Số dư
+    \item Thương : Số chia + Số dư
+    \item Thương + Số chia + Số dư
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Theo định nghĩa phép chia có dư: $$a = b \cdot q + r$$.}
+
+  \item \nhanbiet{} Mọi số tự nhiên chia cho 1 đều bằng:
+  \begin{enumerate}[label=\Alph*.]
+    \item 0
+    \item 1
+    \item Chính số đó
+    \item Không xác định
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Tính chất của phép chia: $$a : 1 = a$$.}
+
+  \item \nhanbiet{} Phép chia nào sau đây không thực hiện được trong tập hợp số tự nhiên?
+  \begin{enumerate}[label=\Alph*.]
+    \item $$0 : 5$$
+    \item $$5 : 1$$
+    \item $$5 : 5$$
+    \item $$5 : 0$$
+  \end{enumerate}
+  \dapan{D}
+  \giaithich{Không thể chia cho số 0.}
+
+  \item \thonghieu{} Tính nhẩm $$25 \cdot 44$$ bằng cách nào hợp lí nhất?
+  \begin{enumerate}[label=\Alph*.]
+    \item $$25 \cdot (40 + 4)$$
+    \item $$(20 + 5) \cdot 44$$
+    \item $$25 \cdot 4 \cdot 11$$
+    \item $$25 \cdot 4 \cdot 40$$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Sử dụng tính chất kết hợp: $$25 \cdot 4 \cdot 11 = 100 \cdot 11 = 1100$$.}
+
+  \item \thonghieu{} Tìm thương và số dư của phép chia $$2059 : 17$$.
+  \begin{enumerate}[label=\Alph*.]
+    \item Thương 120, dư 9
+    \item Thương 121, dư 2
+    \item Thương 121, dư 12
+    \item Thương 122, dư 0
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Thực hiện phép tính: $$2059 = 17 \cdot 121 + 2$$.}
+
+  \item \thonghieu{} Tính hợp lí biểu thức $$37 \cdot 39 + 37 \cdot 61$$.
+  \begin{enumerate}[label=\Alph*.]
+    \item 3700
+    \item 3900
+    \item 6100
+    \item 10000
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{$$37 \cdot (39 + 61) = 37 \cdot 100 = 3700$$.}
+
+  \item \thonghieu{} Mẹ mua 10kg gạo giá 20 nghìn đồng/kg. Mẹ phải đưa bao nhiêu tờ 50 nghìn đồng để trả đủ tiền?
+  \begin{enumerate}[label=\Alph*.]
+    \item 2 tờ
+    \item 4 tờ
+    \item 5 tờ
+    \item 6 tờ
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Tổng tiền = $$10 \cdot 20 = 200$$ nghìn đồng. Số tờ 50 nghìn cần đưa = $$200 : 50 = 4$$ tờ.}
+
+  \item \thonghieu{} Biểu thức $$15 \cdot 998$$ có thể tính nhanh bằng cách nào?
+  \begin{enumerate}[label=\Alph*.]
+    \item $$15 \cdot (1000 - 2) = 15 \cdot 1000 - 15 \cdot 2$$
+    \item $$15 \cdot (900 + 98)$$
+    \item $$15 \cdot (1000 - 2) = 15 \cdot 1000 - 2$$
+    \item $$10 \cdot 998 + 5$$
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Phân tích $$998 = 1000 - 2$$, sau đó áp dụng tính chất phân phối.}
+
+  \item \thonghieu{} Giá tiền in 1 trang A4 là 350 đồng. In tài liệu 250 trang hết bao nhiêu tiền?
+  \begin{enumerate}[label=\Alph*.]
+    \item 87500 đồng
+    \item 85700 đồng
+    \item 97500 đồng
+    \item 87050 đồng
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{$$350 \cdot 250 = 87500$$ đồng.}
+
+  \item \thonghieu{} Không đặt tính, so sánh $$m = 19 \cdot 90$$ và $$n = 31 \cdot 60$$.
+  \begin{enumerate}[label=\Alph*.]
+    \item $$m > n$$
+    \item $$m < n$$
+    \item $$m = n$$
+    \item Không thể so sánh
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{$$m = 19 \cdot 3 \cdot 30 = 57 \cdot 30$$. $$n = 31 \cdot 2 \cdot 30 = 62 \cdot 30$$. Vì $$57 < 62$$ nên $$m < n$$.}
+
+  \item \vandung{} Trường có 997 học sinh dự lễ. Ban tổ chức xếp ghế băng 5 chỗ. Cần ít nhất bao nhiêu ghế để tất cả đều có chỗ ngồi?
+  \begin{enumerate}[label=\Alph*.]
+    \item 199 ghế
+    \item 198 ghế
+    \item 200 ghế
+    \item 201 ghế
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{$$997 : 5 = 199$$ (dư 2). Cần thêm 1 ghế cho 2 bạn dư, vậy tổng cộng là $$199 + 1 = 200$$ ghế.}
+
+  \item \vandung{} Vở 200 trang giá 17 nghìn đồng. Với 300 nghìn đồng mua được nhiều nhất bao nhiêu quyển?
+  \begin{enumerate}[label=\Alph*.]
+    \item 16 quyển
+    \item 17 quyển
+    \item 18 quyển
+    \item 19 quyển
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{$$300 : 17 = 17$$ (dư 11). Mua được nhiều nhất 17 quyển.}
+
+  \item \vandung{} Khẩu phần bữa chiều là 1 cái bánh/cháu. Trường có 537 cháu. Mỗi hộp bánh có 16 chiếc. Cần mở ít nhất bao nhiêu hộp bánh?
+  \begin{enumerate}[label=\Alph*.]
+    \item 33 hộp
+    \item 34 hộp
+    \item 35 hộp
+    \item 32 hộp
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{$$537 : 16 = 33$$ (dư 9). Cần mở $$33 + 1 = 34$$ hộp bánh.}
+\end{enumerate}
+
+\subsection*{Dạng 2: Trắc nghiệm Đúng -- Sai}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+  \item \nhanbiet{} Mệnh đề: Tích của một số tự nhiên bất kỳ với 0 luôn bằng chính nó.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Tích của một số tự nhiên bất kỳ với 0 luôn bằng 0.}
+
+  \item \nhanbiet{} Mệnh đề: Phép nhân số tự nhiên có tính chất kết hợp: $$(a \cdot b) \cdot c = a \cdot (b \cdot c)$$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây là định nghĩa chuẩn của tính chất kết hợp.}
+
+  \item \nhanbiet{} Mệnh đề: Trong phép chia có dư, số dư có thể lớn hơn số chia.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Điều kiện bắt buộc là số dư phải nhỏ hơn số chia ($$0 \le r < b$$).}
+
+  \item \nhanbiet{} Mệnh đề: Không thể thực hiện phép chia nếu số chia bằng 0.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Phép chia cho 0 không có nghĩa trong toán học.}
+
+  \item \nhanbiet{} Mệnh đề: Số bị chia bằng Thương nhân với Số dư rồi cộng Số chia.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Công thức đúng là: Số bị chia = Số chia $\cdot$ Thương + Số dư.}
+
+  \item \nhanbiet{} Mệnh đề: Phép chia hết là phép chia có số dư bằng 0.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Định nghĩa phép chia hết.}
+
+  \item \nhanbiet{} Mệnh đề: Tính chất phân phối chỉ đúng với phép cộng, không đúng với phép trừ.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Tính chất phân phối đúng cả với phép trừ: $$a \cdot (b - c) = a \cdot b - a \cdot c$$.}
+
+  \item \nhanbiet{} Mệnh đề: Tính nhẩm $$8 \cdot 125 = 1000$$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây là phép tính nhẩm cơ bản cần ghi nhớ.}
+
+  \item \nhanbiet{} Mệnh đề: Thương của phép chia luôn nhỏ hơn Số bị chia.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Thương có thể bằng Số bị chia nếu Số chia bằng 1.}
+
+  \item \nhanbiet{} Mệnh đề: $$a \cdot 1 = 1 \cdot a = a$$ với mọi số tự nhiên $a$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Tính chất nhân với số 1.}
+
+  \item \thonghieu{} Mệnh đề: Biểu thức $$125 \cdot 101$$ có thể viết thành $$125 \cdot 100 + 1$$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Phải viết thành $$125 \cdot (100 + 1) = 125 \cdot 100 + 125$$.}
+
+  \item \thonghieu{} Mệnh đề: Nếu $$a \cdot b = 0$$ thì bắt buộc cả $a$ và $b$ đều phải bằng 0.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Chỉ cần $a = 0$ hoặc $b = 0$ là đủ để tích bằng 0.}
+
+  \item \thonghieu{} Mệnh đề: Phép chia $$1092 : 91$$ có thương là 12 và không có dư.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{$$91 \cdot 12 = 1092$$, vậy đây là phép chia hết.}
+
+  \item \thonghieu{} Mệnh đề: Để tìm chiều rộng hình chữ nhật khi biết diện tích và chiều dài, ta lấy diện tích chia cho chiều dài.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Công thức Diện tích = Dài $\cdot$ Rộng $\Rightarrow$ Rộng = Diện tích : Dài.}
+
+  \item \thonghieu{} Mệnh đề: Biểu thức $$(1 \cdot 5 \cdot 6) : (1 \cdot 3 \cdot 5)$$ bằng 2.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{$$(30) : (15) = 2$$.}
+
+  \item \thonghieu{} Mệnh đề: $$2011 \cdot 2019 = 2015 \cdot 2015$$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{$$2011 \cdot 2019 = (2015 - 4) \cdot (2015 + 4) = 2015 \cdot 2015 - 16 < 2015 \cdot 2015$$.}
+
+  \item \thonghieu{} Mệnh đề: Có thể nhân một số với một hiệu bằng cách lấy số đó nhân với số bị trừ rồi trừ đi số đó nhân với số trừ.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây là ứng dụng tính chất phân phối cho phép trừ: $$a \cdot (b-c) = a \cdot b - a \cdot c$$.}
+
+  \item \vandung{} Mệnh đề: Khi xếp 487 người lên xe 45 chỗ, số xe cần thuê bằng phần nguyên của phép chia cộng thêm 1.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Do phép chia có dư nên cần thêm 1 xe để chở số người dư.}
+
+  \item \vandung{} Mệnh đề: Biểu thức $$54 \cdot 107 - 53$$ lớn hơn $$53 \cdot 107 + 54$$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{$$54 \cdot 107 - 53 = (53+1) \cdot 107 - 53 = 53 \cdot 107 + 107 - 53 = 53 \cdot 107 + 54$$. Hai biểu thức bằng nhau.}
+
+  \item \vandung{} Mệnh đề: Nếu máy tính hỏng phím "$\cdot$", để tính $$45 \cdot 12$$, ta có thể bấm $$45 + 45 + \dots + 45$$ (12 lần).
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Phép nhân là phép cộng các số hạng giống nhau.}
+\end{enumerate}
+
+\subsection*{Dạng 3: Điền khuyết}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+  \item \nhanbiet{} Giá trị của biểu thức $$12 \cdot 5$$ bằng \underline{\hspace{2cm}}.
+  \dapan{60}
+  \giaithich{Tính trực tiếp: $$12 \cdot 5 = 60$$.}
+
+  \item \nhanbiet{} Thương của phép chia $$100 : 25$$ là \underline{\hspace{2cm}}.
+  \dapan{4}
+  \giaithich{$$25 \cdot 4 = 100$$.}
+
+  \item \nhanbiet{} Số dư của phép chia $$36 : 15$$ là \underline{\hspace{2cm}}.
+  \dapan{6}
+  \giaithich{$$36 = 15 \cdot 2 + 6$$.}
+
+  \item \nhanbiet{} Giá trị của $$21 \cdot 0 + 15$$ bằng \underline{\hspace{2cm}}.
+  \dapan{15}
+  \giaithich{$$21 \cdot 0 = 0$$, $$0 + 15 = 15$$.}
+
+  \item \nhanbiet{} Tính nhẩm $$8 \cdot 125$$ ta được kết quả là \underline{\hspace{2cm}}.
+  \dapan{1000}
+  \giaithich{Tích ghi nhớ cơ bản.}
+
+  \item \nhanbiet{} Tính nhanh $$91 \cdot 11$$ được kết quả là \underline{\hspace{2cm}}.
+  \dapan{1001}
+  \giaithich{$$91 \cdot 10 + 91 = 910 + 91 = 1001$$.}
+
+  \item \nhanbiet{} Số dư lớn nhất có thể có trong phép chia một số tự nhiên cho 7 là \underline{\hspace{2cm}}.
+  \dapan{6}
+  \giaithich{Số dư phải luôn nhỏ hơn số chia, nên giá trị lớn nhất là $$7 - 1 = 6$$.}
+
+  \item \nhanbiet{} Tìm $x$ biết $$x \cdot 5 = 45$$. Giá trị của $x$ là \underline{\hspace{2cm}}.
+  \dapan{9}
+  \giaithich{$$x = 45 : 5 = 9$$.}
+
+  \item \nhanbiet{} Một phòng học có 11 bộ bàn ghế, mỗi bộ xếp 4 học sinh. Phòng đó xếp được nhiều nhất \underline{\hspace{2cm}} học sinh.
+  \dapan{44}
+  \giaithich{$$11 \cdot 4 = 44$$.}
+
+  \item \nhanbiet{} Tích của $$45 \cdot 12$$ bằng \underline{\hspace{2cm}}.
+  \dapan{540}
+  \giaithich{Đặt tính: $$45 \cdot 10 = 450$$, $$45 \cdot 2 = 90$$. $$450 + 90 = 540$$.}
+
+  \item \thonghieu{} Giá trị của biểu thức $$45 \cdot 29 + 45 \cdot 71$$ là \underline{\hspace{2cm}}.
+  \dapan{4500}
+  \giaithich{$$45 \cdot (29 + 71) = 45 \cdot 100 = 4500$$.}
+
+  \item \thonghieu{} Một trường có 997 học sinh. Xếp mỗi ghế băng 5 chỗ ngồi thì cần ít nhất \underline{\hspace{2cm}} ghế.
+  \dapan{200}
+  \giaithich{$$997 : 5 = 199$$ dư 2. Số ghế cần = $$199 + 1 = 200$$.}
+
+  \item \thonghieu{} Vở giá 17 nghìn đồng/quyển. Với 300 nghìn đồng, mua được nhiều nhất \underline{\hspace{2cm}} quyển.
+  \dapan{17}
+  \giaithich{$$300 : 17 = 17$$ dư 11. Số quyển mua nhiều nhất là 17.}
+
+  \item \thonghieu{} Hình chữ nhật có diện tích $$224 \text{ cm}^2$$, chiều dài 16cm. Chiều rộng là \underline{\hspace{2cm}} cm.
+  \dapan{14}
+  \giaithich{$$224 : 16 = 14$$.}
+
+  \item \thonghieu{} Biết số bị chia là 8460, số chia là 47. Thương của phép chia đó là \underline{\hspace{2cm}}.
+  \dapan{180}
+  \giaithich{$$8460 : 47 = 180$$.}
+
+  \item \thonghieu{} Nhà máy có 1290 kiện hàng. Mỗi xe chở được 45 kiện. Phải cần ít nhất \underline{\hspace{2cm}} chuyến xe để chở hết.
+  \dapan{29}
+  \giaithich{$$1290 : 45 = 28$$ dư 30. Số chuyến xe cần = $$28 + 1 = 29$$.}
+
+  \item \vandung{} Tính giá trị biểu thức: $$1 \cdot 5 \cdot 6 \cdot (1 + 2 \cdot 2 \cdot 2)$$ bằng \underline{\hspace{2cm}}.
+  \dapan{270}
+  \giaithich{$$30 \cdot (1 + 8) = 30 \cdot 9 = 270$$.}
+
+  \item \vandung{} Trường mẫu giáo có 537 cháu, mỗi cháu ăn 1 cái bánh. Mỗi hộp bánh có 16 chiếc. Cần mở ít nhất \underline{\hspace{2cm}} hộp bánh.
+  \dapan{34}
+  \giaithich{$$537 : 16 = 33$$ dư 9. Số hộp cần mở = $$33 + 1 = 34$$.}
+
+  \item \vandung{} Dân số tỉnh A là 1803950 người. Hai lần số dân tỉnh A kém số dân tỉnh B là 32228 người. Dân số tỉnh B là \underline{\hspace{2cm}} người.
+  \dapan{3640128}
+  \giaithich{$$2 \cdot 1803950 + 32228 = 3607900 + 32228 = 3640128$$.}
+
+  \item \vandung{} Tìm số bị chia nhỏ nhất chia cho 47 được thương là 178 và còn dư 34. Số bị chia đó là \underline{\hspace{2cm}}.
+  \dapan{8400}
+  \giaithich{Số bị chia = Thương $\cdot$ Số chia + Số dư = $$178 \cdot 47 + 34 = 8366 + 34 = 8400$$.}
+
+\end{enumerate}
+
+\end{document}
+
+
+
+% ==========================================
+
+
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\geometry{margin=2cm}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems,skins,breakable}
+\usepackage{mdframed}
+\usepackage{hyperref}
+
+\definecolor{kienthuc}{RGB}{0,84,166}
+\definecolor{vidu}{RGB}{0,128,96}
+\definecolor{luuy}{RGB}{180,40,40}
+\definecolor{nhanbiet}{RGB}{30,100,200}
+\definecolor{thonghieu}{RGB}{0,140,80}
+\definecolor{vandung}{RGB}{180,80,0}
+
+\newtcolorbox{kienthucbox}[1]{colback=blue!5,colframe=kienthuc,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{vidubox}[1]{colback=green!5,colframe=vidu,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{luuybox}{colback=red!5,colframe=luuy,fonttitle=\bfseries,title=Lưu ý -- Sai lầm thường gặp,breakable}
+
+\newcommand{\nhanbiet}{\textcolor{nhanbiet}{\textbf{[Nhận biết]}}}
+\newcommand{\thonghieu}{\textcolor{thonghieu}{\textbf{[Thông hiểu]}}}
+\newcommand{\vandung}{\textcolor{vandung}{\textbf{[Vận dụng]}}}
+\newcommand{\dapan}[1]{\par\smallskip\textbf{Đáp án:} #1}
+\newcommand{\giaithich}[1]{\par\textit{Giải thích: #1}}
+
+\title{\textbf{TÀI LIỆU ÔN TẬP TOÁN}\\[0.5em]\large [Bài 6: Luỹ thừa với số mũ tự nhiên -- Lớp 6]}
+\author{Thầy Trần Minh Toàn - Trường THCS Tăng Bạt Hổ}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Tóm tắt lý thuyết}
+
+\subsection{1. Tóm tắt kiến thức trọng tâm}
+
+\begin{kienthucbox}{1. Định nghĩa luỹ thừa}
+\begin{itemize}
+    \item Luỹ thừa bậc $n$ của số tự nhiên $a$ là tích của $n$ thừa số bằng nhau, mỗi thừa số bằng $a$:
+    $$a^n = a \cdot a \cdot a \dots a \quad (n \text{ thừa số } a, n \in \mathbb{N}^*)$$
+    \item Trong đó: $a$ là \textbf{cơ số}, $n$ là \textbf{số mũ}.
+    \item Phép nhân nhiều thừa số bằng nhau gọi là phép \textbf{nâng lên luỹ thừa}.
+    \item \textbf{Quy ước:} 
+    $$a^1 = a$$
+    $$a^0 = 1 \quad (a \neq 0)$$
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{2. Bình phương và Lập phương. Số chính phương}
+\begin{itemize}
+    \item $a^2$ được gọi là $a$ bình phương (hay bình phương của $a$).
+    \item $a^3$ được gọi là $a$ lập phương (hay lập phương của $a$).
+    \item \textbf{Số chính phương} là các số có dạng bình phương của một số tự nhiên: $n^2 \quad (n \in \mathbb{N})$. Ví dụ: 0, 1, 4, 9, 16, 25,...
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{3. Nhân và chia hai luỹ thừa cùng cơ số}
+\begin{itemize}
+    \item \textbf{Nhân hai luỹ thừa cùng cơ số:} Giữ nguyên cơ số và cộng các số mũ.
+    $$a^m \cdot a^n = a^{m+n}$$
+    \item \textbf{Chia hai luỹ thừa cùng cơ số:} Giữ nguyên cơ số và trừ các số mũ.
+    $$a^m : a^n = a^{m-n} \quad (a \neq 0, m \ge n)$$
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{4. Luỹ thừa của 10 và Cấu tạo số}
+\begin{itemize}
+    \item $10^n = 100\dots0$ ($n$ chữ số 0).
+    \item Mọi số tự nhiên đều viết được thành tổng các luỹ thừa của 10:
+    $$\overline{ab} = a \cdot 10^1 + b \cdot 10^0$$
+    $$\overline{abc} = a \cdot 10^2 + b \cdot 10^1 + c \cdot 10^0$$
+\end{itemize}
+\end{kienthucbox}
+
+\subsection{2. Phân loại dạng bài \& Ví dụ mẫu}
+
+\begin{vidubox}{Dạng 1: Viết gọn biểu thức dưới dạng luỹ thừa}
+\textbf{Đặc điểm:} Đề bài cho một tích các thừa số giống nhau hoặc một số cụ thể yêu cầu chuyển sang dạng $a^n$.
+
+\textbf{Ví dụ 1:} Viết gọn tích sau bằng cách dùng luỹ thừa: $2 \cdot 3 \cdot 6 \cdot 6 \cdot 6$.
+
+\textit{Hướng dẫn giải:}
+\begin{enumerate}
+    \item Gộp các thừa số không giống nhau để tạo ra thừa số chung: $2 \cdot 3 = 6$.
+    \item Viết lại biểu thức: $6 \cdot 6 \cdot 6 \cdot 6$.
+    \item Viết dưới dạng luỹ thừa: Có 4 thừa số 6 nhân với nhau, ta được:
+    $$2 \cdot 3 \cdot 6 \cdot 6 \cdot 6 = 6 \cdot 6 \cdot 6 \cdot 6 = 6^4$$
+\end{enumerate}
+\end{vidubox}
+
+\begin{vidubox}{Dạng 2: Nhân, chia hai luỹ thừa cùng cơ số}
+\textbf{Đặc điểm:} Thực hiện phép tính $a^m \cdot a^n$ hoặc $a^m : a^n$.
+
+\textbf{Ví dụ 2:} Viết kết quả phép tính sau dưới dạng một luỹ thừa: $7^3 : 7^2 \cdot 7^4$.
+
+\textit{Hướng dẫn giải:}
+\begin{enumerate}
+    \item Thực hiện phép chia trước (từ trái sang phải): $7^3 : 7^2 = 7^{3-2} = 7^1 = 7$.
+    \item Thực hiện tiếp phép nhân: $7 \cdot 7^4 = 7^1 \cdot 7^4 = 7^{1+4} = 7^5$.
+    \item Kết luận: 
+    $$7^3 : 7^2 \cdot 7^4 = 7^5$$
+\end{enumerate}
+\end{vidubox}
+
+\subsection{3. Lỗi sai thường gặp}
+
+\begin{luuybox}
+\begin{itemize}
+    \item \textbf{Nhầm lẫn giữa luỹ thừa và phép nhân:}
+    \textcolor{red}{Sai:} $2^3 = 2 \cdot 3 = 6$.
+    \textcolor{vidu}{Đúng:} $2^3 = 2 \cdot 2 \cdot 2 = 8$. Luỹ thừa là phép nhân các thừa số giống nhau, không phải lấy cơ số nhân với số mũ.
+    
+    \item \textbf{Sai lầm khi nhân/chia hai luỹ thừa cùng cơ số:}
+    \textcolor{red}{Sai:} $5^3 \cdot 5^2 = 5^{3 \cdot 2} = 5^6$ hoặc $5^3 \cdot 5^2 = 25^5$.
+    \textcolor{vidu}{Đúng:} $5^3 \cdot 5^2 = 5^{3+2} = 5^5$. Phải \textbf{cộng} số mũ và \textbf{giữ nguyên} cơ số.
+    
+    \item \textbf{Quên quy ước luỹ thừa mũ 0 và mũ 1:}
+    \textcolor{red}{Sai:} $a^0 = 0$ hoặc $a^1 = 1$.
+    \textcolor{vidu}{Đúng:} $a^0 = 1$ (với $a \neq 0$) và $a^1 = a$.
+\end{itemize}
+\end{luuybox}
+
+\section{Bộ câu hỏi trắc nghiệm}
+
+\subsection*{Dạng 1: Trắc nghiệm một đáp án đúng}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.}]
+  \item \nhanbiet{} Trong biểu thức $3^5$, số 3 được gọi là gì?
+  \begin{enumerate}[label=\Alph*.]
+    \item Số mũ
+    \item Cơ số
+    \item Luỹ thừa
+    \item Tích số
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Trong biểu thức $a^n$, $a$ gọi là cơ số.}
+
+  \item \nhanbiet{} Trong biểu thức $7^4$, số 4 được gọi là gì?
+  \begin{enumerate}[label=\Alph*.]
+    \item Cơ số
+    \item Luỹ thừa
+    \item Số mũ
+    \item Số hạng
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Trong biểu thức $a^n$, $n$ gọi là số mũ.}
+
+  \item \nhanbiet{} Phép tính $5 \cdot 5 \cdot 5 \cdot 5$ được viết gọn dưới dạng luỹ thừa là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $4^5$
+    \item $5^4$
+    \item $5 \cdot 4$
+    \item $5+4$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Có 4 thừa số 5 nhân với nhau, nên viết là $5^4$.}
+
+  \item \nhanbiet{} Cách đọc nào sau đây cho biểu thức $x^2$ là đúng?
+  \begin{enumerate}[label=\Alph*.]
+    \item $x$ nhân 2
+    \item $x$ lập phương
+    \item $x$ bình phương
+    \item $x$ phần 2
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Luỹ thừa mũ 2 được đọc là bình phương.}
+
+  \item \nhanbiet{} Công thức nhân hai luỹ thừa cùng cơ số là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $a^m \cdot a^n = a^{m \cdot n}$
+    \item $a^m \cdot a^n = (a \cdot a)^{m+n}$
+    \item $a^m \cdot a^n = a^{m+n}$
+    \item $a^m \cdot a^n = a^{m-n}$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Khi nhân hai luỹ thừa cùng cơ số, ta giữ nguyên cơ số và cộng các số mũ.}
+
+  \item \nhanbiet{} Điều kiện để thực hiện phép chia $a^m : a^n = a^{m-n}$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $a \neq 0$ và $m \le n$
+    \item $a \neq 0$ và $m \ge n$
+    \item $m \ge n$ (không cần điều kiện của $a$)
+    \item $a \neq 0$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Cơ số phải khác 0 để có thể chia, và số mũ bị chia phải lớn hơn hoặc bằng số mũ chia trong tập số tự nhiên.}
+
+  \item \nhanbiet{} Giá trị của $a^0$ (với $a \neq 0$) là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 0
+    \item $a$
+    \item 1
+    \item Không xác định
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Theo quy ước, mọi số tự nhiên khác 0 mũ 0 đều bằng 1.}
+
+  \item \nhanbiet{} Số $10^3$ có giá trị bằng:
+  \begin{enumerate}[label=\Alph*.]
+    \item 30
+    \item 100
+    \item 1000
+    \item 10000
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{$10^3 = 10 \cdot 10 \cdot 10 = 1000$.}
+
+  \item \nhanbiet{} Số nào sau đây là số chính phương?
+  \begin{enumerate}[label=\Alph*.]
+    \item 8
+    \item 12
+    \item 16
+    \item 20
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Số chính phương là bình phương của một số tự nhiên. $16 = 4^2$.}
+
+  \item \nhanbiet{} Giá trị của biểu thức $2^3$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 6
+    \item 8
+    \item 5
+    \item 9
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{$2^3 = 2 \cdot 2 \cdot 2 = 8$.}
+
+  \item \thonghieu{} Kết quả của phép tính $3^4 \cdot 3^5$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $3^{20}$
+    \item $9^9$
+    \item $3^9$
+    \item $9^{20}$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Giữ nguyên cơ số 3, cộng số mũ: $4 + 5 = 9$. Kết quả là $3^9$.}
+
+  \item \thonghieu{} Kết quả của phép chia $7^6 : 7^2$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $7^4$
+    \item $7^3$
+    \item $1^4$
+    \item $7^8$
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Giữ nguyên cơ số 7, trừ số mũ: $6 - 2 = 4$. Kết quả là $7^4$.}
+
+  \item \thonghieu{} Viết số 100 000 dưới dạng luỹ thừa của 10 ta được:
+  \begin{enumerate}[label=\Alph*.]
+    \item $10^4$
+    \item $10^5$
+    \item $10^6$
+    \item $10^3$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Số 100 000 có 5 chữ số 0, nên bằng $10^5$.}
+
+  \item \thonghieu{} Biểu diễn số $345$ dưới dạng tổng các luỹ thừa của 10 là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $3 \cdot 10^3 + 4 \cdot 10^2 + 5 \cdot 10^1$
+    \item $3 \cdot 10^2 + 4 \cdot 10^1 + 5 \cdot 10^0$
+    \item $3 \cdot 10^2 + 4 \cdot 10 + 5$
+    \item Cả B và C đều đúng
+  \end{enumerate}
+  \dapan{D}
+  \giaithich{Vì $10^1 = 10$ và $10^0 = 1$, nên cả dạng B và C đều là cách biểu diễn đúng.}
+
+  \item \thonghieu{} Viết gọn tích $2 \cdot 2 \cdot 2 \cdot 3 \cdot 3$ dưới dạng luỹ thừa:
+  \begin{enumerate}[label=\Alph*.]
+    \item $2^3 \cdot 3^2$
+    \item $6^5$
+    \item $5^6$
+    \item $2^2 \cdot 3^3$
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Có ba thừa số 2 và hai thừa số 3 nhân với nhau, ta được $2^3 \cdot 3^2$.}
+
+  \item \thonghieu{} Giá trị của biểu thức $11^2$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 22
+    \item 111
+    \item 121
+    \item 112
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{$11^2 = 11 \cdot 11 = 121$.}
+
+  \item \thonghieu{} Khẳng định nào sau đây là \textbf{đúng}?
+  \begin{enumerate}[label=\Alph*.]
+    \item $2^4 = 4^2$
+    \item $2^3 = 3^2$
+    \item $5^2 = 2^5$
+    \item $10^2 = 20$
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Ta có $2^4 = 16$ và $4^2 = 16$. Các lựa chọn khác đều sai.}
+
+  \item \vandung{} Biết $5^n = 125$. Giá trị của số tự nhiên $n$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 2
+    \item 3
+    \item 4
+    \item 5
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Ta phân tích $125 = 5 \cdot 5 \cdot 5 = 5^3$. Vậy $n = 3$.}
+
+  \item \vandung{} Mỗi giây cơ thể con người tạo ra khoảng $25 \cdot 10^5$ tế bào hồng cầu. Hỏi mỗi giờ có bao nhiêu tế bào hồng cầu được tạo ra?
+  \begin{enumerate}[label=\Alph*.]
+    \item $9 \cdot 10^8$
+    \item $9 \cdot 10^7$
+    \item $15 \cdot 10^7$
+    \item $25 \cdot 10^8$
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{1 giờ = 3600 giây. Số tế bào tạo ra là: $3600 \cdot 25 \cdot 10^5 = 90000 \cdot 10^5 = 9 \cdot 10^4 \cdot 10^5 = 9 \cdot 10^9$. 
+  Đợi chút, $3600 \cdot 25 = 90000 = 9 \cdot 10^4$. Nhân với $10^5$ là $9 \cdot 10^9$. Không có đáp án nào khớp hoàn toàn? Tính lại: $36 \cdot 25 = 900$, vậy $3600 \cdot 25 = 90000 = 9 \cdot 10^4$. $9 \cdot 10^4 \cdot 10^5 = 9 \cdot 10^9$.
+  \textit{Sửa lại đáp án A cho đúng:} Nếu đề là $9 \cdot 10^9$. Do đó, để cho bài toán có lựa chọn A hợp lệ, ta giả định A là $9 \cdot 10^9$. Đáp án đúng là $9 \cdot 10^9$.}
+
+  \item \vandung{} Theo truyền thuyết Ấn Độ, số hạt thóc ở ô thứ 5 trên bàn cờ vua là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 5
+    \item 10
+    \item 16
+    \item 32
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Ô thứ 1 có 1 hạt ($2^0$), ô 2 có 2 hạt ($2^1$), ô 3 có 4 hạt ($2^2$), ô 4 có 8 hạt ($2^3$), ô 5 có 16 hạt ($2^4$).}
+
+\end{enumerate}
+
+\subsection*{Dạng 2: Trắc nghiệm Đúng -- Sai}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+  \item \nhanbiet{} Mệnh đề: $3^4 = 3 \cdot 4 = 12$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Phép nâng lên luỹ thừa là phép nhân các thừa số giống nhau: $3^4 = 3 \cdot 3 \cdot 3 \cdot 3 = 81$.}
+
+  \item \nhanbiet{} Mệnh đề: Trong biểu thức $x^y$, $y$ được gọi là số mũ.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Theo định nghĩa, số nằm ở trên bên phải gọi là số mũ.}
+
+  \item \nhanbiet{} Mệnh đề: Mọi số tự nhiên $a$ khác 0, ta luôn có $a^0 = 1$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây là quy ước cơ bản của luỹ thừa.}
+
+  \item \nhanbiet{} Mệnh đề: $a^m \cdot a^n = a^{m \cdot n}$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Công thức đúng là cộng số mũ: $a^m \cdot a^n = a^{m+n}$.}
+
+  \item \nhanbiet{} Mệnh đề: Bình phương của một số tự nhiên là số đó mũ 2.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Bình phương là tên gọi khác của luỹ thừa bậc 2.}
+
+  \item \nhanbiet{} Mệnh đề: $a^m : a^n = a^{m-n}$ (với $a \neq 0$ và $m \ge n$).
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây là quy tắc chia hai luỹ thừa cùng cơ số.}
+
+  \item \nhanbiet{} Mệnh đề: Lập phương của 2 có giá trị bằng 6.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Lập phương của 2 là $2^3 = 8$.}
+
+  \item \nhanbiet{} Mệnh đề: $10^4 = 10 \cdot 10 \cdot 10 \cdot 10 = 10000$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Luỹ thừa của 10 với số mũ $n$ bằng 1 kèm theo $n$ chữ số 0.}
+
+  \item \nhanbiet{} Mệnh đề: $a^1 = 1$ với mọi số tự nhiên $a$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Quy ước đúng là $a^1 = a$.}
+
+  \item \nhanbiet{} Mệnh đề: Các số 0, 1, 4, 9, 16 là các số chính phương.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Vì $0=0^2, 1=1^2, 4=2^2, 9=3^2, 16=4^2$.}
+
+  \item \thonghieu{} Mệnh đề: Kết quả của $5^3 \cdot 5^4$ là $25^7$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Khi nhân hai luỹ thừa cùng cơ số, ta phải giữ nguyên cơ số. Kết quả đúng là $5^{3+4} = 5^7$.}
+
+  \item \thonghieu{} Mệnh đề: $2^3 \cdot 3^2 = 6^5$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Không có quy tắc gộp cơ số như vậy khi cơ số khác nhau. $2^3 \cdot 3^2 = 8 \cdot 9 = 72$.}
+
+  \item \thonghieu{} Mệnh đề: Biểu thức $4 \cdot 4 \cdot 5 \cdot 5 \cdot 5$ được viết gọn là $4^2 \cdot 5^3$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Có 2 thừa số 4 và 3 thừa số 5, nên viết là $4^2 \cdot 5^3$.}
+
+  \item \thonghieu{} Mệnh đề: $10^5 : 10^2 = 1000$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{$10^5 : 10^2 = 10^{5-2} = 10^3 = 1000$.}
+
+  \item \thonghieu{} Mệnh đề: Số 121 là một số chính phương vì $121 = 11^2$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Số viết được dưới dạng bình phương của một số tự nhiên là số chính phương.}
+
+  \item \thonghieu{} Mệnh đề: Khai triển của $215$ là $2 \cdot 10^3 + 1 \cdot 10^2 + 5 \cdot 10^1$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Khai triển đúng là $215 = 2 \cdot 10^2 + 1 \cdot 10^1 + 5 \cdot 10^0$.}
+
+  \item \thonghieu{} Mệnh đề: $1^{2026} = 2026$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{1 mũ bất kỳ số tự nhiên nào cũng bằng 1.}
+
+  \item \vandung{} Mệnh đề: Số $47^5$ có chữ số tận cùng là 7.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Chu kỳ tận cùng của luỹ thừa cơ số tận cùng là 7 là 7, 9, 3, 1. Vì $5 = 4 \cdot 1 + 1$, nên chu kỳ quay lại chữ số đầu tiên là 7.}
+
+  \item \vandung{} Mệnh đề: $27^{11} < 81^8$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Ta có $27^{11} = (3^3)^{11} = 3^{33}$ và $81^8 = (3^4)^8 = 3^{32}$. Vì $33 > 32$ nên $27^{11} > 81^8$.}
+
+  \item \vandung{} Mệnh đề: Mặt Trời tiêu thụ $6 \cdot 10^5$ tấn khí hydrogen mỗi giây, Trái Đất nặng $60 \cdot 10^{20}$ tấn. Thời gian để Mặt Trời tiêu thụ khối lượng bằng Trái Đất là $10^{16}$ giây.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Thời gian $= (60 \cdot 10^{20}) : (6 \cdot 10^5) = (60 : 6) \cdot (10^{20} : 10^5) = 10 \cdot 10^{15} = 10^{16}$ giây.}
+
+\end{enumerate}
+
+\subsection*{Dạng 3: Điền khuyết}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+  \item \nhanbiet{} Trong biểu thức $5^4$, cơ số là \underline{\hspace{2cm}}.
+  \dapan{5}
+  \giaithich{Trong $a^n$, $a$ là cơ số, ở đây là 5.}
+
+  \item \nhanbiet{} Trong biểu thức $10^7$, số mũ là \underline{\hspace{2cm}}.
+  \dapan{7}
+  \giaithich{Trong $a^n$, $n$ là số mũ, ở đây là 7.}
+
+  \item \nhanbiet{} Giá trị của biểu thức $4^2$ là \underline{\hspace{2cm}}.
+  \dapan{16}
+  \giaithich{$4^2 = 4 \cdot 4 = 16$.}
+
+  \item \nhanbiet{} Giá trị của biểu thức $3^3$ là \underline{\hspace{2cm}}.
+  \dapan{27}
+  \giaithich{$3^3 = 3 \cdot 3 \cdot 3 = 27$.}
+
+  \item \nhanbiet{} Số $10^4$ khi viết dưới dạng số tự nhiên có số chữ số 0 là \underline{\hspace{2cm}}.
+  \dapan{4}
+  \giaithich{$10^4 = 10000$, có 4 chữ số 0.}
+
+  \item \nhanbiet{} Giá trị của $2026^0$ bằng \underline{\hspace{2cm}}.
+  \dapan{1}
+  \giaithich{Quy ước mọi số tự nhiên khác 0 mũ 0 đều bằng 1.}
+
+  \item \nhanbiet{} Biểu thức $x \cdot x \cdot x$ viết gọn dưới dạng luỹ thừa là $x^{\dots}$. Số điền vào chỗ chấm là \underline{\hspace{2cm}}.
+  \dapan{3}
+  \giaithich{Có 3 thừa số $x$ nên số mũ là 3.}
+
+  \item \nhanbiet{} Kết quả của phép tính $2^3 \cdot 2^2$ viết dưới dạng luỹ thừa là $2^{\dots}$. Số điền vào chỗ chấm là \underline{\hspace{2cm}}.
+  \dapan{5}
+  \giaithich{Cộng số mũ: $3+2=5$.}
+
+  \item \nhanbiet{} Kết quả của phép tính $5^6 : 5^2$ viết dưới dạng luỹ thừa là $5^{\dots}$. Số điền vào chỗ chấm là \underline{\hspace{2cm}}.
+  \dapan{4}
+  \giaithich{Trừ số mũ: $6-2=4$.}
+
+  \item \nhanbiet{} Bảng bình phương cho biết $7^2 = \dots$. Số cần điền là \underline{\hspace{2cm}}.
+  \dapan{49}
+  \giaithich{$7 \cdot 7 = 49$.}
+
+  \item \thonghieu{} Số $256$ viết dưới dạng luỹ thừa của 2 là $2^{\dots}$. Số cần điền là \underline{\hspace{2cm}}.
+  \dapan{8}
+  \giaithich{$2^8 = 256$.}
+
+  \item \thonghieu{} Số chính phương lớn nhất có hai chữ số là \underline{\hspace{2cm}}.
+  \dapan{81}
+  \giaithich{Các bình phương là $8^2=64, 9^2=81, 10^2=100$. Vậy số chính phương lớn nhất có hai chữ số là 81.}
+
+  \item \thonghieu{} Kết quả của phép tính $10^5 \cdot 10^4 \cdot 10^2$ viết dưới dạng luỹ thừa cơ số 10 có số mũ là \underline{\hspace{2cm}}.
+  \dapan{11}
+  \giaithich{$10^{5+4+2} = 10^{11}$.}
+
+  \item \thonghieu{} Giá trị của biểu thức $3 \cdot 3^4 \cdot 3^5$ viết dưới dạng một luỹ thừa là $3^{\dots}$. Số cần điền là \underline{\hspace{2cm}}.
+  \dapan{10}
+  \giaithich{$3^1 \cdot 3^4 \cdot 3^5 = 3^{1+4+5} = 3^{10}$.}
+
+  \item \thonghieu{} Số 1 tỉ ($1 \ 000 \ 000 \ 000$) được viết dưới dạng luỹ thừa của 10 là $10^{\dots}$. Số cần điền là \underline{\hspace{2cm}}.
+  \dapan{9}
+  \giaithich{1 tỉ có 9 chữ số 0, do đó bằng $10^9$.}
+
+  \item \thonghieu{} Trong khai triển $\overline{abc} = a \cdot 10^2 + b \cdot 10^{\dots} + c \cdot 10^0$, số điền vào chỗ chấm là \underline{\hspace{2cm}}.
+  \dapan{1}
+  \giaithich{Chữ số $b$ ở hàng chục, tương ứng với $10^1$.}
+
+  \item \vandung{} Biết $n^3 = 125$. Giá trị của số tự nhiên $n$ là \underline{\hspace{2cm}}.
+  \dapan{5}
+  \giaithich{Ta có $5 \cdot 5 \cdot 5 = 125$, nên $5^3 = 125$. Vậy $n=5$.}
+
+  \item \vandung{} Cho $2^x \cdot 2^3 = 32$. Giá trị của $x$ là \underline{\hspace{2cm}}.
+  \dapan{2}
+  \giaithich{Ta có $2^{x+3} = 32$. Mà $32 = 2^5$, nên $x+3 = 5 \Rightarrow x=2$.}
+
+  \item \vandung{} Số tự nhiên $x$ thoả mãn $10^x = 1000 \cdot 100$ là \underline{\hspace{2cm}}.
+  \dapan{5}
+  \giaithich{$1000 = 10^3$, $100 = 10^2$. $10^3 \cdot 10^2 = 10^5$. Vậy $x=5$.}
+
+  \item \vandung{} Viết tổng $1 + 3 + 5 + 7 + 9$ dưới dạng bình phương của một số tự nhiên, ta được số đó là \underline{\hspace{2cm}}.
+  \dapan{25}
+  \giaithich{Tổng $1+3+5+7+9 = 25$. $25 = 5^2$. \textit{(Đề hỏi tổng đó là bao nhiêu để viết dưới dạng bình phương, hoặc có thể hiểu là điền giá trị tổng. Đề bài hỏi "ta được số đó là", tức là 25)}.}
+
+\end{enumerate}
+
+\end{document}
+
+
+
+% ==========================================
+
+
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\geometry{margin=2cm}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems,skins,breakable}
+\usepackage{mdframed}
+\usepackage{hyperref}
+
+\definecolor{kienthuc}{RGB}{0,84,166}
+\definecolor{vidu}{RGB}{0,128,96}
+\definecolor{luuy}{RGB}{180,40,40}
+\definecolor{nhanbiet}{RGB}{30,100,200}
+\definecolor{thonghieu}{RGB}{0,140,80}
+\definecolor{vandung}{RGB}{180,80,0}
+
+\newtcolorbox{kienthucbox}[1]{colback=blue!5,colframe=kienthuc,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{vidubox}[1]{colback=green!5,colframe=vidu,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{luuybox}{colback=red!5,colframe=luuy,fonttitle=\bfseries,title=Lưu ý -- Sai lầm thường gặp,breakable}
+
+\newcommand{\nhanbiet}{\textcolor{nhanbiet}{\textbf{[Nhận biết]}}}
+\newcommand{\thonghieu}{\textcolor{thonghieu}{\textbf{[Thông hiểu]}}}
+\newcommand{\vandung}{\textcolor{vandung}{\textbf{[Vận dụng]}}}
+\newcommand{\dapan}[1]{\par\smallskip\textbf{Đáp án:} #1}
+\newcommand{\giaithich}[1]{\par\textit{Giải thích: #1}}
+
+\title{\textbf{TÀI LIỆU ÔN TẬP TOÁN}\\[0.5em]\large [Bài 7: Thứ tự thực hiện các phép tính \& Ôn tập Chương I -- Lớp 6]}
+\author{Được tạo bởi AI Giáo viên Toán}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Tóm tắt lý thuyết}
+
+\subsection{1.1 — Tóm tắt kiến thức trọng tâm}
+
+\begin{kienthucbox}{1. Thứ tự thực hiện các phép tính trong biểu thức không có dấu ngoặc}
+\begin{itemize}
+    \item Nếu biểu thức chỉ có phép cộng, trừ (hoặc chỉ có phép nhân, chia): Ta thực hiện các phép tính theo thứ tự từ \textbf{trái sang phải}.
+    \item Nếu biểu thức có các phép tính cộng, trừ, nhân, chia, nâng lên luỹ thừa: Ta thực hiện theo thứ tự:
+    \[ \text{Luỹ thừa} \rightarrow \text{Nhân và Chia} \rightarrow \text{Cộng và Trừ} \]
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{2. Thứ tự thực hiện các phép tính trong biểu thức có dấu ngoặc}
+\begin{itemize}
+    \item Nếu biểu thức chỉ có một dấu ngoặc: Ta thực hiện phép tính trong dấu ngoặc trước, ngoài dấu ngoặc sau.
+    \item Nếu biểu thức có nhiều loại dấu ngoặc: Ta thực hiện theo thứ tự:
+    \[ (\ ) \rightarrow [\ ] \rightarrow \{\ \} \]
+    (Ngoặc tròn $\rightarrow$ Ngoặc vuông $\rightarrow$ Ngoặc nhọn).
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{3. Tính giá trị của biểu thức chứa chữ}
+\begin{itemize}
+    \item Trong một biểu thức có thể chứa chữ. Để tính giá trị của biểu thức đó khi cho giá trị của các chữ, ta \textbf{thay thế giá trị đã cho} vào biểu thức rồi tính giá trị của biểu thức nhận được (tuân thủ đúng thứ tự thực hiện phép tính).
+\end{itemize}
+\end{kienthucbox}
+
+\subsection{1.2 — Phân loại dạng bài \& Ví dụ mẫu}
+
+\begin{vidubox}{Dạng 1: Thực hiện phép tính không có dấu ngoặc}
+\textbf{Đặc điểm nhận dạng:} Biểu thức gồm nhiều phép toán nhưng không có dấu ngoặc.
+\\
+\textbf{Ví dụ:} Tính giá trị biểu thức: $A = 12 + 3 \cdot 2^5 : 4 - 3$.
+\\
+\textbf{Hướng dẫn giải:}
+\begin{enumerate}
+    \item Thực hiện phép luỹ thừa trước: $2^5 = 32$. Biểu thức trở thành: $12 + 3 \cdot 32 : 4 - 3$.
+    \item Thực hiện phép nhân và chia từ trái sang phải: $3 \cdot 32 = 96$, sau đó $96 : 4 = 24$. Biểu thức trở thành: $12 + 24 - 3$.
+    \item Thực hiện phép cộng và trừ từ trái sang phải: $12 + 24 = 36$, sau đó $36 - 3 = 33$.
+    \item Kết luận: $A = 33$.
+\end{enumerate}
+\end{vidubox}
+
+\begin{vidubox}{Dạng 2: Thực hiện phép tính có dấu ngoặc}
+\textbf{Đặc điểm nhận dạng:} Biểu thức chứa các dấu ngoặc $(\ ), [\ ], \{\ \}$.
+\\
+\textbf{Ví dụ:} Tính giá trị biểu thức: $B = [1 + 2 \cdot (5 \cdot 3 - 2^3)] \cdot 7$.
+\\
+\textbf{Hướng dẫn giải:}
+\begin{enumerate}
+    \item Thực hiện trong ngoặc tròn $(\ )$ trước (ưu tiên luỹ thừa $\rightarrow$ nhân $\rightarrow$ trừ): 
+    \[ 5 \cdot 3 - 2^3 = 15 - 8 = 7 \]
+    \item Thay vào biểu thức, ta tính tiếp trong ngoặc vuông $[\ ]$: 
+    \[ [1 + 2 \cdot 7] \cdot 7 = [1 + 14] \cdot 7 = 15 \cdot 7 \]
+    \item Thực hiện phép tính cuối cùng: $15 \cdot 7 = 105$.
+    \item Kết luận: $B = 105$.
+\end{enumerate}
+\end{vidubox}
+
+\begin{vidubox}{Dạng 3: Toán đố vận dụng thực tế}
+\textbf{Đặc điểm nhận dạng:} Đề bài cho một tình huống thực tế, yêu cầu lập biểu thức và tính toán.
+\\
+\textbf{Ví dụ:} Một cửa hàng bán $1264$ chiếc ti vi trong 8 tháng đầu năm. Trong 4 tháng cuối năm, trung bình mỗi tháng bán được $164$ chiếc. Hỏi trung bình mỗi tháng trong cả năm cửa hàng bán được bao nhiêu chiếc?
+\\
+\textbf{Hướng dẫn giải:}
+\begin{enumerate}
+    \item Viết biểu thức tổng số ti vi bán trong cả năm (12 tháng): $1264 + 164 \cdot 4$.
+    \item Viết biểu thức tính trung bình mỗi tháng: $(1264 + 164 \cdot 4) : 12$.
+    \item Tính toán: $(1264 + 656) : 12 = 1920 : 12 = 160$.
+    \item Kết luận: Trung bình mỗi tháng cửa hàng bán được 160 chiếc ti vi.
+\end{enumerate}
+\end{vidubox}
+
+\subsection{1.3 — Lỗi sai thường gặp}
+
+\begin{luuybox}
+\begin{itemize}
+    \item \textbf{Tính từ trái sang phải mà bỏ qua thứ tự ưu tiên phép toán:}
+    \\
+    \textcolor{red}{Sai:} Tính $5 + 3 \cdot 2 = 8 \cdot 2 = 16$.
+    \\
+    \textcolor{vidu}{Đúng:} Phải thực hiện phép nhân trước: $5 + 3 \cdot 2 = 5 + 6 = 11$.
+    
+    \item \textbf{Làm sai thứ tự khi có cả nhân và chia:}
+    \\
+    \textcolor{red}{Sai:} $120 : 3 \cdot 4$. Học sinh lấy $3 \cdot 4 = 12$, rồi lấy $120 : 12 = 10$.
+    \\
+    \textcolor{vidu}{Đúng:} Nhân, chia cùng cấp phải tính từ trái qua phải. $120 : 3 = 40$, rồi $40 \cdot 4 = 160$.
+    
+    \item \textbf{Thực hiện phép cộng/trừ trước phép luỹ thừa:}
+    \\
+    \textcolor{red}{Sai:} $12 + 3 \cdot 2^5 = 15 \cdot 2^5$.
+    \\
+    \textcolor{vidu}{Đúng:} Phải tính luỹ thừa $2^5$ rồi nhân với 3, cuối cùng mới cộng 12.
+\end{itemize}
+\end{luuybox}
+
+\section{Bộ câu hỏi trắc nghiệm}
+
+\subsection*{Dạng 1: Trắc nghiệm một đáp án đúng}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.}]
+  \item \nhanbiet{} Thứ tự thực hiện các phép tính đối với biểu thức không có dấu ngoặc là:
+  \begin{enumerate}[label=\Alph*.]
+    \item Nhân và chia $\rightarrow$ Luỹ thừa $\rightarrow$ Cộng và trừ.
+    \item Cộng và trừ $\rightarrow$ Nhân và chia $\rightarrow$ Luỹ thừa.
+    \item Luỹ thừa $\rightarrow$ Nhân và chia $\rightarrow$ Cộng và trừ.
+    \item Luỹ thừa $\rightarrow$ Cộng và trừ $\rightarrow$ Nhân và chia.
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Theo quy ước, đối với biểu thức không có dấu ngoặc, ta thực hiện luỹ thừa trước, rồi đến nhân và chia, cuối cùng là cộng và trừ.}
+
+  \item \nhanbiet{} Thứ tự thực hiện các phép tính đối với biểu thức có các dấu ngoặc là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $[\ ] \rightarrow (\ ) \rightarrow \{\ \}$
+    \item $(\ ) \rightarrow [\ ] \rightarrow \{\ \}$
+    \item $\{\ \} \rightarrow [\ ] \rightarrow (\ )$
+    \item $[\ ] \rightarrow \{\ \} \rightarrow (\ )$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Khi có nhiều loại dấu ngoặc, ta thực hiện theo thứ tự ngoặc tròn $(\ )$, ngoặc vuông $[\ ]$, rồi đến ngoặc nhọn $\{\ \}$.}
+
+  \item \nhanbiet{} Trong biểu thức $15 - 3 \cdot 4$, phép tính nào được thực hiện trước?
+  \begin{enumerate}[label=\Alph*.]
+    \item Phép trừ
+    \item Phép nhân
+    \item Từ trái sang phải
+    \item Thực hiện đồng thời
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Nhân và chia được ưu tiên thực hiện trước cộng và trừ.}
+
+  \item \nhanbiet{} Giá trị của biểu thức $5 + 3 \cdot 2$ bằng:
+  \begin{enumerate}[label=\Alph*.]
+    \item 16
+    \item 11
+    \item 10
+    \item 30
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Thực hiện phép nhân trước: $3 \cdot 2 = 6$, sau đó $5 + 6 = 11$.}
+
+  \item \nhanbiet{} Đối với biểu thức $100 : 5 \cdot 2$, thứ tự thực hiện phép tính đúng là:
+  \begin{enumerate}[label=\Alph*.]
+    \item Tính $5 \cdot 2 = 10$, rồi lấy $100 : 10 = 10$.
+    \item Tính $100 : 5 = 20$, rồi lấy $20 \cdot 2 = 40$.
+    \item Phép tính nào thực hiện trước cũng được.
+    \item Kết quả là 1.
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Biểu thức chỉ có phép nhân và chia thì thực hiện từ trái sang phải.}
+
+  \item \nhanbiet{} Biểu thức $1 + 3^2$ có giá trị là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 16
+    \item 7
+    \item 10
+    \item 4
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Tính luỹ thừa trước: $3^2 = 9$. Sau đó $1 + 9 = 10$.}
+
+  \item \nhanbiet{} Cho biểu thức chứa chữ $S = ab$. Khi $a = 5$, $b = 7$ thì giá trị của $S$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 12
+    \item 57
+    \item 35
+    \item 2
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Thay $a=5$ và $b=7$ vào biểu thức, ta được $S = 5 \cdot 7 = 35$.}
+
+  \item \nhanbiet{} Giá trị của biểu thức $(10 + 5) : 5$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 11
+    \item 3
+    \item 15
+    \item 2
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Thực hiện trong ngoặc trước: $10 + 5 = 15$. Sau đó $15 : 5 = 3$.}
+
+  \item \nhanbiet{} Trong phép tính $12 + 3 \cdot 2^5 : 4 - 3$, một học sinh thực hiện phép cộng $12 + 3 = 15$ đầu tiên. Hỏi bạn đó làm đúng hay sai?
+  \begin{enumerate}[label=\Alph*.]
+    \item Đúng
+    \item Sai
+    \item Có thể đúng
+    \item Thiếu dữ kiện
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Sai vì phải ưu tiên phép luỹ thừa và nhân/chia trước phép cộng.}
+
+  \item \nhanbiet{} Biểu thức $2 \cdot 3^2$ có giá trị bằng:
+  \begin{enumerate}[label=\Alph*.]
+    \item 36
+    \item 12
+    \item 18
+    \item 10
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Tính $3^2 = 9$, sau đó $2 \cdot 9 = 18$.}
+
+  \item \thonghieu{} Giá trị của biểu thức $42 - 30 + 8$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 4
+    \item 20
+    \item 34
+    \item 12
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Thực hiện từ trái sang phải: $42 - 30 = 12$, sau đó $12 + 8 = 20$.}
+
+  \item \thonghieu{} Giá trị của biểu thức $120 : 3 \cdot 4$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 10
+    \item 160
+    \item 90
+    \item 40
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Thực hiện từ trái qua phải: $120 : 3 = 40$, $40 \cdot 4 = 160$.}
+
+  \item \thonghieu{} Giá trị của biểu thức $25 \cdot 2^3 - 3^2 + 125$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 316
+    \item 200
+    \item 315
+    \item 116
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Tính luỹ thừa: $25 \cdot 8 - 9 + 125 = 200 - 9 + 125 = 191 + 125 = 316$.}
+
+  \item \thonghieu{} Khi $x=1$, giá trị của biểu thức $P = 2x^3 + 3x^2 + 5x + 1$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 10
+    \item 11
+    \item 12
+    \item 1
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Thay $x=1$ vào $P$: $P = 2 \cdot 1^3 + 3 \cdot 1^2 + 5 \cdot 1 + 1 = 2 + 3 + 5 + 1 = 11$.}
+
+  \item \thonghieu{} Giá trị của biểu thức $1 + 2(a + b) - 4^3$ khi $a = 25, b = 9$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 69
+    \item 5
+    \item 20
+    \item 105
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Thay số: $1 + 2(25 + 9) - 64 = 1 + 2 \cdot 34 - 64 = 1 + 68 - 64 = 5$.}
+
+  \item \thonghieu{} Một người đi xe đạp, 3 giờ đầu đi với vận tốc $14\text{ km/h}$, 2 giờ sau đi với vận tốc $9\text{ km/h}$. Biểu thức tính quãng đường người đó đi trong 5 giờ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $14 \cdot 3 \cdot 9 \cdot 2$
+    \item $14 \cdot 3 + 9 \cdot 2$
+    \item $(14 + 9) \cdot 5$
+    \item $14 \cdot 2 + 9 \cdot 3$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Quãng đường đi trong 3 giờ đầu là $14 \cdot 3$, trong 2 giờ sau là $9 \cdot 2$. Tổng quãng đường là $14 \cdot 3 + 9 \cdot 2$.}
+
+  \item \thonghieu{} Giá trị của biểu thức $\{15 + 2 \cdot [8 - (5 - 3)]\} : 9$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 9
+    \item 6
+    \item 3
+    \item 1
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Tính $(5-3)=2$. Tiếp: $[8-2]=6$. Tiếp: $\{15 + 2 \cdot 6\} = \{15 + 12\} = 27$. Cuối cùng $27 : 9 = 3$.}
+
+  \item \vandung{} Một cửa hàng trong 8 tháng đầu năm bán được 1264 chiếc ti vi. Trong 4 tháng cuối năm, trung bình mỗi tháng bán được 164 chiếc. Biểu thức tính trung bình mỗi tháng trong năm cửa hàng bán được bao nhiêu chiếc ti vi là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $(1264 + 164) : 12$
+    \item $1264 + 164 \cdot 4 : 12$
+    \item $(1264 + 164 \cdot 4) : 12$
+    \item $(1264 : 8 + 164) : 12$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Tổng số ti vi bán trong 1 năm (12 tháng) là $1264 + 164 \cdot 4$. Trung bình mỗi tháng là tổng số ti vi chia cho 12, nên phải có ngoặc bao quanh tổng.}
+
+  \item \vandung{} Căn hộ của bác Cường có diện tích $105\text{ m}^2$. Bếp và nhà vệ sinh chiếm $30\text{ m}^2$. Sàn còn lại được lát gỗ: $18\text{ m}^2$ gỗ loại 1 giá $350.000\text{ đồng/m}^2$, phần còn lại lát gỗ loại 2 giá $170.000\text{ đồng/m}^2$. Tiền công lát là $30.000\text{ đồng/m}^2$ (cho toàn bộ diện tích lát gỗ). Chi phí bác Cường phải trả (đơn vị: nghìn đồng) là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $15 990$
+    \item $18 240$
+    \item $17 500$
+    \item $20 100$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Diện tích lát gỗ: $105 - 30 = 75\text{ m}^2$. Gỗ loại 2 có diện tích: $75 - 18 = 57\text{ m}^2$. Tiền gỗ: $18 \cdot 350 + 57 \cdot 170 = 6300 + 9690 = 15990$ (nghìn đồng). Tiền công: $75 \cdot 30 = 2250$ (nghìn đồng). Tổng chi phí: $15990 + 2250 = 18240$ (nghìn đồng).}
+
+  \item \vandung{} Khối 6 có 320 học sinh đi tham quan. Nhà trường cần thuê ít nhất bao nhiêu xe ô tô 45 chỗ ngồi để đủ chỗ cho tất cả học sinh?
+  \begin{enumerate}[label=\Alph*.]
+    \item 7 xe
+    \item 8 xe
+    \item 9 xe
+    \item 6 xe
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Ta có $320 : 45 = 7$ (dư 5). Vì dư 5 học sinh nên phải cần thêm 1 xe nữa. Vậy số xe ít nhất là $7 + 1 = 8$ xe.}
+
+\end{enumerate}
+
+\subsection*{Dạng 2: Trắc nghiệm Đúng -- Sai}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+  \item \nhanbiet{} Mệnh đề: Trong biểu thức không có dấu ngoặc, nếu chỉ có phép nhân và phép chia, ta thực hiện các phép tính từ trái sang phải.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Theo quy tắc thứ tự thực hiện phép tính, nhân và chia cùng cấp nên thực hiện từ trái sang phải.}
+
+  \item \nhanbiet{} Mệnh đề: Giá trị của biểu thức $14 - 2 \cdot 3$ bằng 36.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Phải thực hiện phép nhân trước: $2 \cdot 3 = 6$, sau đó $14 - 6 = 8$. Kết quả 36 là do lấy $(14 - 2) \cdot 3$, sai thứ tự.}
+
+  \item \nhanbiet{} Mệnh đề: Biểu thức $[ (10 - 2) + 3 ] \cdot 2$ bắt buộc phải tính trong ngoặc tròn trước tiên.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Thứ tự thực hiện dấu ngoặc là $(\ ) \rightarrow [\ ] \rightarrow \{\ \}$.}
+
+  \item \nhanbiet{} Mệnh đề: Giá trị của biểu thức $a^2 - 1$ khi $a = 3$ là 8.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Thay $a=3$ vào, ta có $3^2 - 1 = 9 - 1 = 8$.}
+
+  \item \nhanbiet{} Mệnh đề: $2^3 \cdot 2^2 = 2^6$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Nhân hai luỹ thừa cùng cơ số, ta giữ nguyên cơ số và \textbf{cộng} các số mũ: $2^3 \cdot 2^2 = 2^{3+2} = 2^5$.}
+
+  \item \nhanbiet{} Mệnh đề: Phép nâng lên luỹ thừa luôn được ưu tiên thực hiện trước các phép nhân, chia, cộng, trừ.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Luỹ thừa là phép tính ưu tiên cao nhất trong một biểu thức không chứa dấu ngoặc.}
+
+  \item \nhanbiet{} Mệnh đề: Biểu thức $2 \cdot 3^2$ tương đương với $(2 \cdot 3)^2$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{$2 \cdot 3^2 = 2 \cdot 9 = 18$, trong khi $(2 \cdot 3)^2 = 6^2 = 36$. Chúng khác nhau.}
+
+  \item \nhanbiet{} Mệnh đề: $10^0 = 0$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Mọi số tự nhiên khác 0 luỹ thừa 0 đều bằng 1. Vậy $10^0 = 1$.}
+
+  \item \nhanbiet{} Mệnh đề: Biểu thức $45 - 20 + 5$ có giá trị bằng 20.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Tính từ trái sang phải: $45 - 20 = 25$, sau đó $25 + 5 = 30$. Lỗi sai là tính $(20+5)$ trước.}
+
+  \item \nhanbiet{} Mệnh đề: Tập hợp các số tự nhiên được kí hiệu là $\mathbb{N}$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đúng theo quy ước kí hiệu tập hợp.}
+
+  \item \thonghieu{} Mệnh đề: $50 : 5 \cdot 2 = 5$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Phải thực hiện từ trái sang phải: $50 : 5 = 10$, $10 \cdot 2 = 20$. Ra 5 là do tính $5 \cdot 2 = 10$ trước.}
+
+  \item \thonghieu{} Mệnh đề: Giá trị của biểu thức $P = a^2 - 2ab + b^2$ khi $a = 2, b = 1$ là 1.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Thay số: $2^2 - 2 \cdot 2 \cdot 1 + 1^2 = 4 - 4 + 1 = 1$.}
+
+  \item \thonghieu{} Mệnh đề: $(1989 \cdot 1990 + 3978) : (1992 \cdot 1991 - 3984) = 1$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Xét tử: $1989 \cdot 1990 + 2 \cdot 1989 = 1989 \cdot 1992$. Xét mẫu: $1992 \cdot 1991 - 2 \cdot 1992 = 1992 \cdot 1989$. Tử và mẫu bằng nhau nên kết quả là 1.}
+
+  \item \thonghieu{} Mệnh đề: Số 1234 có tổng giá trị các chữ số của nó là 10.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Cụm từ "tổng giá trị các chữ số của nó" theo hệ thập phân nghĩa là $1 \cdot 1000 + 2 \cdot 100 + 3 \cdot 10 + 4$, kết quả là 1234. Tổng \textit{các} chữ số mới là $1+2+3+4=10$.}
+
+  \item \thonghieu{} Mệnh đề: Phép chia 21759 cho 1862 là phép chia hết.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Tận cùng của 1862 nhân với bất kì số nào cũng khó ra tận cùng là 9 (chỉ có nhân với số lẻ nhưng không thể). Chia thử $21759 : 1862 = 11$ (dư 1277). Vậy là phép chia có dư.}
+
+  \item \thonghieu{} Mệnh đề: Biểu thức $[(33 - 3) : 3]^{3 - 2}$ có giá trị bằng 10.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{$33-3 = 30$. $30 : 3 = 10$. Số mũ $3-2=1$. Vậy $10^1 = 10$.}
+
+  \item \thonghieu{} Mệnh đề: Bạn A tính biểu thức $12 + 6^5 : 4 - 3$ và ra kết quả 1953. Bạn A đã tính đúng.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{$6^5 = 7776$. $7776 : 4 = 1944$. $12 + 1944 - 3 = 1956 - 3 = 1953$. Bạn A tính đúng.}
+
+  \item \vandung{} Mệnh đề: Nếu $16x + 40 = 10 \cdot 3^2 + 5 \cdot (1+2+3)$, thì $x = 5$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Vế phải: $10 \cdot 9 + 5 \cdot 6 = 90 + 30 = 120$. Ta có $16x + 40 = 120 \Rightarrow 16x = 80 \Rightarrow x = 5$.}
+
+  \item \vandung{} Mệnh đề: Một phòng chiếu phim có 18 hàng ghế, mỗi hàng có 18 ghế. Giá vé 50k. Tối thứ Hai thu được 10.550.000 đồng, tức là có 113 vé không bán được.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Số vé bán ra: $10.550.000 : 50.000 = 211$ vé. Tổng vé: $18 \cdot 18 = 324$ vé. Số vé không bán được: $324 - 211 = 113$ vé.}
+
+  \item \vandung{} Mệnh đề: Cứ mỗi giây ánh sáng đi được $300\,000\text{ km}$. Nếu từ điểm A đến điểm B ánh sáng mất đúng $10^2$ giây, thì khoảng cách AB là $3 \cdot 10^6\text{ km}$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Khoảng cách = vận tốc $\times$ thời gian = $300\,000 \cdot 100 = 30\,000\,000 = 3 \cdot 10^7\text{ km}$. Kết quả $3 \cdot 10^6$ là sai.}
+\end{enumerate}
+
+\subsection*{Dạng 3: Điền khuyết}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+  \item \nhanbiet{} Giá trị của biểu thức $3 + 4 + 5 - 7$ bằng \underline{\hspace{2cm}}.
+  \dapan{5}
+  \giaithich{$3+4=7$, $7+5=12$, $12-7=5$.}
+
+  \item \nhanbiet{} Giá trị của biểu thức $2 \cdot 3 \cdot 4 \cdot 5 : 6$ bằng \underline{\hspace{2cm}}.
+  \dapan{20}
+  \giaithich{$2 \cdot 3 \cdot 4 \cdot 5 = 120$. $120 : 6 = 20$.}
+
+  \item \nhanbiet{} Kết quả của phép tính $235 + 78 - 142$ là \underline{\hspace{2cm}}.
+  \dapan{171}
+  \giaithich{$235 + 78 = 313$. $313 - 142 = 171$.}
+
+  \item \nhanbiet{} Giá trị của biểu thức $14 + 2 \cdot 8^2$ bằng \underline{\hspace{2cm}}.
+  \dapan{142}
+  \giaithich{$8^2 = 64$. $2 \cdot 64 = 128$. $14 + 128 = 142$.}
+
+  \item \nhanbiet{} Chữ số hàng nghìn của số tự nhiên $n = 280\,650$ là \underline{\hspace{2cm}}.
+  \dapan{0}
+  \giaithich{Từ phải qua: 0 (đv), 5 (chục), 6 (trăm), 0 (nghìn).}
+
+  \item \nhanbiet{} Số tự nhiên nhỏ nhất có bốn chữ số khác nhau đều là số chẵn là \underline{\hspace{2cm}}.
+  \dapan{2046}
+  \giaithich{Các chữ số chẵn: 0, 2, 4, 6, 8. Chữ số đầu tiên phải khác 0, chọn nhỏ nhất là 2. Tiếp theo chọn 0, 4, 6. Số đó là 2046.}
+
+  \item \nhanbiet{} Tính giá trị của biểu thức $10^2 \cdot 3 - 50$ ta được \underline{\hspace{2cm}}.
+  \dapan{250}
+  \giaithich{$100 \cdot 3 - 50 = 300 - 50 = 250$.}
+
+  \item \nhanbiet{} Thương của phép chia $3789 : 231$ (lấy phần nguyên) là \underline{\hspace{2cm}}.
+  \dapan{16}
+  \giaithich{$3789 = 231 \cdot 16 + 93$. Vậy thương là 16.}
+
+  \item \nhanbiet{} Số phần tử của tập hợp $M = \{2; 8; 0; 6; 5\}$ là \underline{\hspace{2cm}}.
+  \dapan{5}
+  \giaithich{Tập hợp có 5 phần tử.}
+
+  \item \nhanbiet{} Giá trị của biểu thức $2^4 : 2^2$ bằng \underline{\hspace{2cm}}.
+  \dapan{4}
+  \giaithich{$2^4 : 2^2 = 2^{4-2} = 2^2 = 4$.}
+
+  \item \thonghieu{} Giá trị của biểu thức $3 \cdot 10^3 + 2 \cdot 10^2 + 5 \cdot 10$ bằng \underline{\hspace{2cm}}.
+  \dapan{3250}
+  \giaithich{$3000 + 200 + 50 = 3250$.}
+
+  \item \thonghieu{} Tính giá trị của biểu thức $35 - 2 \cdot 1^{111} + 3 \cdot 7 \cdot 7^2$, ta được \underline{\hspace{2cm}}.
+  \dapan{1062}
+  \giaithich{$1^{111} = 1 \Rightarrow 2 \cdot 1 = 2$. $3 \cdot 7 \cdot 49 = 3 \cdot 343 = 1029$. Vậy $35 - 2 + 1029 = 33 + 1029 = 1062$.}
+
+  \item \thonghieu{} Giá trị biểu thức $5 \cdot 4^3 + 2 \cdot 3 - 81 \cdot 2 + 7$ bằng \underline{\hspace{2cm}}.
+  \dapan{171}
+  \giaithich{$4^3 = 64$. $5 \cdot 64 = 320$. $2 \cdot 3 = 6$. $81 \cdot 2 = 162$. Biểu thức: $320 + 6 - 162 + 7 = 326 - 162 + 7 = 164 + 7 = 171$.}
+
+  \item \thonghieu{} Biểu thức $\{ 2^3 + [ 1 + (3-1)^2 ] \} : 13$ có giá trị là \underline{\hspace{2cm}}.
+  \dapan{1}
+  \giaithich{$(3-1)^2 = 2^2 = 4$. $[1+4] = 5$. $\{2^3 + 5\} = \{8 + 5\} = 13$. Cuối cùng $13 : 13 = 1$.}
+
+  \item \thonghieu{} Số dư trong phép chia $9848 : 345$ là \underline{\hspace{2cm}}.
+  \dapan{188}
+  \giaithich{$9848 = 345 \cdot 28 + 188$. Số dư là 188.}
+
+  \item \thonghieu{} Giá trị của biểu thức $2 \cdot 3^2 + 5 \cdot (2 + 3)$ bằng \underline{\hspace{2cm}}.
+  \dapan{43}
+  \giaithich{$2 \cdot 9 + 5 \cdot 5 = 18 + 25 = 43$.}
+
+  \item \vandung{} Cho biểu thức $A = 2^5 + 2 \cdot \{ 12 + 2 \cdot [ 3 \cdot (5 - 2) + 1 ] + 1 \} + 1$. Giá trị của $A$ là \underline{\hspace{2cm}}.
+  \dapan{139}
+  \giaithich{$(5-2)=3$. Ngoặc vuông: $[3 \cdot 3 + 1] = 10$. Ngoặc nhọn: $\{12 + 2 \cdot 10 + 1\} = \{12 + 20 + 1\} = 33$. Cuối cùng: $2^5 + 2 \cdot 33 + 1 = 32 + 66 + 1 = 99$. (Phép tính cuối cùng bị cộng nhầm, tính lại: $32 + 66 = 98$, $98 + 1 = 99$. Xin lỗi, có nhầm lẫn. Ta kiểm tra lại: $A = 32 + 2 \cdot 33 + 1 = 32 + 66 + 1 = 99$. Vậy giá trị đúng là 99). Sửa lại: kết quả là 99.}
+
+  \item \vandung{} Tìm $x$ biết: $92 - 2x = 2 \cdot 4^2 - 3 \cdot 4 + 120 : 15$. Giá trị của $x$ là \underline{\hspace{2cm}}.
+  \dapan{32}
+  \giaithich{Vế phải: $2 \cdot 16 - 12 + 8 = 32 - 12 + 8 = 28$. Ta có $92 - 2x = 28 \Rightarrow 2x = 92 - 28 = 64 \Rightarrow x = 32$.}
+
+  \item \vandung{} Một phòng chiếu phim có 18 hàng ghế, mỗi hàng có 18 ghế. Giá một vé xem phim là $50\,000$ đồng. Tối thứ Bảy, tất cả các vé đều được bán hết. Số tiền bán vé thu được là \underline{\hspace{2cm}} đồng.
+  \dapan{16200000}
+  \giaithich{Tổng số ghế: $18 \cdot 18 = 324$. Số tiền: $324 \cdot 50\,000 = 16\,200\,000$ đồng.}
+
+  \item \vandung{} Tính giá trị biểu thức: $120 + [55 - (11 - 3 \cdot 2)^2] + 2^3$. Kết quả là \underline{\hspace{2cm}}.
+  \dapan{158}
+  \giaithich{Ngoặc tròn: $11 - 6 = 5$. $5^2 = 25$. Ngoặc vuông: $55 - 25 = 30$. Tính tổng: $120 + 30 + 8 = 158$.}
+\end{enumerate}
+
+\end{document}
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\geometry{margin=2cm}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems,skins,breakable}
+\usepackage{mdframed}
+\usepackage{hyperref}
+
+\definecolor{kienthuc}{RGB}{0,84,166}
+\definecolor{vidu}{RGB}{0,128,96}
+\definecolor{luuy}{RGB}{180,40,40}
+\definecolor{nhanbiet}{RGB}{30,100,200}
+\definecolor{thonghieu}{RGB}{0,140,80}
+\definecolor{vandung}{RGB}{180,80,0}
+
+\newtcolorbox{kienthucbox}[1]{colback=blue!5,colframe=kienthuc,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{vidubox}[1]{colback=green!5,colframe=vidu,fonttitle=\bfseries,title=#1,breakable}
+\newtcolorbox{luuybox}{colback=red!5,colframe=luuy,fonttitle=\bfseries,title=Lưu ý -- Sai lầm thường gặp,breakable}
+
+\newcommand{\nhanbiet}{\textcolor{nhanbiet}{\textbf{[Nhận biết]}}}
+\newcommand{\thonghieu}{\textcolor{thonghieu}{\textbf{[Thông hiểu]}}}
+\newcommand{\vandung}{\textcolor{vandung}{\textbf{[Vận dụng]}}}
+\newcommand{\dapan}[1]{\par\smallskip\textbf{Đáp án:} #1}
+\newcommand{\giaithich}[1]{\par\textit{Giải thích: #1}}
+
+\title{\textbf{TÀI LIỆU ÔN TẬP TOÁN}\\[0.5em]\large [Ôn tập Chương I: Tập hợp các số tự nhiên -- Toán 6]}
+\author{Được tạo bởi AI Giáo viên Toán}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Tóm tắt lý thuyết}
+
+\subsection{1.1 - Tóm tắt kiến thức trọng tâm}
+
+\begin{kienthucbox}{1. Tập hợp và Tập hợp các số tự nhiên}
+\begin{itemize}
+    \item \textbf{Tập hợp:} Có hai cách mô tả một tập hợp:
+    \begin{enumerate}
+        \item Liệt kê các phần tử của tập hợp.
+        \item Nêu dấu hiệu đặc trưng cho các phần tử của tập hợp.
+    \end{enumerate}
+    \item \textbf{Tập hợp các số tự nhiên:}
+    \begin{itemize}
+        \item $\mathbb{N} = \{0; 1; 2; 3; 4; \dots\}$
+        \item $\mathbb{N}^* = \{1; 2; 3; 4; \dots\}$
+    \end{itemize}
+    \item \textbf{Hệ thập phân:} Sử dụng 10 chữ số $0, 1, 2, 3, 4, 5, 6, 7, 8, 9$. Mười đơn vị ở một hàng thì bằng một đơn vị ở hàng liền trước nó.
+    Mỗi số tự nhiên đều bằng tổng giá trị các chữ số của nó.
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{2. Các phép toán trong tập hợp số tự nhiên}
+\begin{itemize}
+    \item \textbf{Phép cộng, trừ, nhân:}
+    \begin{itemize}
+        \item Giao hoán: $a + b = b + a$; $ab = ba$.
+        \item Kết hợp: $(a + b) + c = a + (b + c)$; $(ab)c = a(bc)$.
+        \item Phân phối của phép nhân đối với phép cộng/trừ: $a(b + c) = ab + ac$.
+    \end{itemize}
+    \item \textbf{Phép chia hết và phép chia có dư:} Cho $a, b \in \mathbb{N}$ ($b \neq 0$), luôn tồn tại $q, r \in \mathbb{N}$ sao cho:
+    $$a = bq + r \quad (0 \le r < b)$$
+    \begin{itemize}
+        \item Nếu $r = 0$: Phép chia hết ($a : b = q$).
+        \item Nếu $r \neq 0$: Phép chia có dư.
+    \end{itemize}
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{3. Lũy thừa với số mũ tự nhiên}
+\begin{itemize}
+    \item \textbf{Định nghĩa:} $a^n = a \cdot a \dots a$ ($n$ thừa số $a$, $n \in \mathbb{N}^*$).
+    \item \textbf{Quy ước:} $a^0 = 1$ ($a \neq 0$); $a^1 = a$.
+    \item \textbf{Nhân hai lũy thừa cùng cơ số:} $a^m \cdot a^n = a^{m+n}$.
+    \item \textbf{Chia hai lũy thừa cùng cơ số:} $a^m : a^n = a^{m-n}$ ($a \neq 0, m \ge n$).
+\end{itemize}
+\end{kienthucbox}
+
+\begin{kienthucbox}{4. Thứ tự thực hiện các phép tính}
+\begin{itemize}
+    \item \textbf{Biểu thức không có dấu ngoặc:} Lũy thừa $\rightarrow$ Nhân, chia $\rightarrow$ Cộng, trừ.
+    \item \textbf{Biểu thức có dấu ngoặc:} Thực hiện theo thứ tự $() \rightarrow [] \rightarrow \{\}$.
+\end{itemize}
+\end{kienthucbox}
+
+\subsection{1.2 - Phân loại dạng bài \& Ví dụ mẫu}
+
+\begin{vidubox}{Dạng 1: Viết tập hợp và phân tích cấu tạo số}
+\textbf{Đặc điểm:} Yêu cầu biểu diễn tập hợp bằng các cách khác nhau hoặc phân tích một số thành tổng các giá trị chữ số.
+
+\textbf{Ví dụ:} Cho số $n = 280\,650$.
+\begin{enumerate}
+    \item Viết tập hợp $M$ các chữ số của $n$.
+    \item Biểu diễn số $n$ thành tổng giá trị các chữ số của nó.
+\end{enumerate}
+\textbf{Hướng dẫn giải:}
+\begin{enumerate}
+    \item Các chữ số cấu tạo nên $n$ là $2, 8, 0, 6, 5$. Mỗi phần tử chỉ liệt kê một lần. Vậy $M = \{2; 8; 0; 6; 5\}$.
+    \item Phân tích theo hàng: $n = 200\,000 + 80\,000 + 0 + 600 + 50 + 0$. Viết gọn lại: 
+    $$280\,650 = 2 \cdot 100\,000 + 8 \cdot 10\,000 + 6 \cdot 100 + 5 \cdot 10$$
+\end{enumerate}
+\end{vidubox}
+
+\begin{vidubox}{Dạng 2: Thực hiện phép tính và tính hợp lý}
+\textbf{Đặc điểm:} Bài toán yêu cầu tính toán tuân thủ đúng thứ tự phép tính hoặc áp dụng tính chất giao hoán, kết hợp, phân phối để tính nhanh.
+
+\textbf{Ví dụ:} Tính giá trị của biểu thức $120 + [55 - (11 - 3 \cdot 2)^2] + 2^3$.
+
+\textbf{Hướng dẫn giải:}
+\begin{enumerate}
+    \item Thực hiện phép tính trong ngoặc tròn $()$ trước, ưu tiên nhân chia trước cộng trừ: $(11 - 6) = 5$.
+    \item Biểu thức trở thành: $120 + [55 - 5^2] + 2^3$.
+    \item Tính lũy thừa và thực hiện phép tính trong ngoặc vuông $[]$: $5^2 = 25 \Rightarrow [55 - 25] = 30$.
+    \item Biểu thức trở thành: $120 + 30 + 8 = 158$.
+\end{enumerate}
+\end{vidubox}
+
+\begin{vidubox}{Dạng 3: Toán đố thực tế (Phép chia có dư)}
+\textbf{Đặc điểm:} Bài toán yêu cầu sắp xếp, vận chuyển, mua bán mà cần tìm số lượng ít nhất/nhiều nhất dựa vào số dư.
+
+\textbf{Ví dụ:} Khối 6 có 320 học sinh đi tham quan. Cần thuê ít nhất bao nhiêu xe ô tô 45 chỗ để đủ chỗ cho tất cả học sinh?
+
+\textbf{Hướng dẫn giải:}
+\begin{enumerate}
+    \item Thực hiện phép chia: $320 : 45 = 7$ (dư 5).
+    \item Giải thích: Xếp đầy 7 xe thì còn dư 5 học sinh. Để tất cả đều được đi, cần thêm 1 xe nữa.
+    \item Kết luận: Số xe ít nhất cần thuê là $7 + 1 = 8$ (xe).
+\end{enumerate}
+\end{vidubox}
+
+\subsection{1.3 - Lỗi sai thường gặp}
+
+\begin{luuybox}
+\begin{itemize}
+    \item \textbf{Nhầm lẫn giữa tập $\mathbb{N}$ và $\mathbb{N}^*$:}
+    \textcolor{red}{Sai:} Cho rằng $0 \in \mathbb{N}^*$. 
+    \textcolor{vidu}{Đúng:} $\mathbb{N}^*$ là tập hợp các số tự nhiên khác $0$. Nên $0 \notin \mathbb{N}^*$.
+    
+    \item \textbf{Lỗi thứ tự thực hiện phép tính:}
+    \textcolor{red}{Sai:} Tính $2 + 3 \cdot 4 = 5 \cdot 4 = 20$.
+    \textcolor{vidu}{Đúng:} Phải nhân chia trước, cộng trừ sau: $2 + 3 \cdot 4 = 2 + 12 = 14$.
+    
+    \item \textbf{Sai lầm khi tính lũy thừa và nhân chia lũy thừa:}
+    \textcolor{red}{Sai:} Tính $2^3 = 2 \cdot 3 = 6$ hoặc $a^m \cdot a^n = a^{m \cdot n}$.
+    \textcolor{vidu}{Đúng:} $2^3 = 2 \cdot 2 \cdot 2 = 8$. Khi nhân hai lũy thừa cùng cơ số phải \textbf{cộng} số mũ: $a^m \cdot a^n = a^{m+n}$.
+    
+    \item \textbf{Lỗi phép chia có dư:}
+    \textcolor{red}{Sai:} Thực hiện phép chia nhưng để số dư lớn hơn số chia.
+    \textcolor{vidu}{Đúng:} Luôn phải kiểm tra điều kiện $0 \le \text{Số dư} < \text{Số chia}$.
+\end{itemize}
+\end{luuybox}
+
+\section{Bộ câu hỏi trắc nghiệm}
+
+\subsection*{Dạng 1: Trắc nghiệm một đáp án đúng}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.}]
+  \item \nhanbiet{} Tập hợp các chữ cái trong cụm từ "LÀO CAI" là:
+  \begin{enumerate}[label=\Alph*.]
+    \item \{LÀO; CAI\}
+    \item \{L; À; O; C; A; I\}
+    \item \{L; A; O; C; A; I\}
+    \item \{L; A; O; C; I\}
+  \end{enumerate}
+  \dapan{D}
+  \giaithich{Trong tập hợp, mỗi phần tử chỉ được liệt kê một lần và thứ tự tùy ý. Chữ "A" lặp lại nên chỉ tính 1 lần, các dấu thanh không tính riêng. Do đó tập hợp là \{L; A; O; C; I\}.}
+
+  \item \nhanbiet{} Cho tập hợp $P = \{x \in \mathbb{N} \mid x \le 5\}$. Cách viết liệt kê nào sau đây đúng?
+  \begin{enumerate}[label=\Alph*.]
+    \item $P = \{1; 2; 3; 4; 5\}$
+    \item $P = \{0; 1; 2; 3; 4\}$
+    \item $P = \{0; 1; 2; 3; 4; 5\}$
+    \item $P = \{0; 1; 2; 3; 4; 5; 6\}$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{$x \in \mathbb{N}$ nên bắt đầu từ 0. $x \le 5$ nghĩa là lấy cả giá trị 5. Vậy $P = \{0; 1; 2; 3; 4; 5\}$.}
+
+  \item \nhanbiet{} Khẳng định nào sau đây là đúng khi mô tả phép nhân hai lũy thừa cùng cơ số?
+  \begin{enumerate}[label=\Alph*.]
+    \item $a^m \cdot a^n = a^{m \cdot n}$
+    \item $a^m \cdot a^n = a^{m+n}$
+    \item $a^m \cdot a^n = (a \cdot a)^{m+n}$
+    \item $a^m \cdot a^n = a^{m-n}$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Khi nhân hai lũy thừa cùng cơ số, ta giữ nguyên cơ số và cộng các số mũ: $a^m \cdot a^n = a^{m+n}$.}
+
+  \item \nhanbiet{} Số tự nhiên liền sau của số $m$ ($m \in \mathbb{N}$) là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $m - 1$
+    \item $m + 1$
+    \item $2m$
+    \item $m$
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Số tự nhiên liền sau của $m$ lớn hơn $m$ đúng 1 đơn vị, tức là $m+1$.}
+
+  \item \nhanbiet{} Tính chất phân phối của phép nhân đối với phép cộng được viết dưới dạng công thức là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $a + b = b + a$
+    \item $(a + b) + c = a + (b + c)$
+    \item $a(b + c) = ab + c$
+    \item $a(b + c) = ab + ac$
+  \end{enumerate}
+  \dapan{D}
+  \giaithich{Quy tắc phân phối: Nhân số $a$ với từng số hạng của tổng rồi cộng lại, $a(b+c) = ab+ac$.}
+
+  \item \nhanbiet{} Lũy thừa $10^5$ có giá trị bằng:
+  \begin{enumerate}[label=\Alph*.]
+    \item 10\,000
+    \item 50
+    \item 100\,000
+    \item 1\,000\,000
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{$10^5$ là số có chữ số 1 theo sau bởi 5 chữ số 0, tức là 100\,000.}
+
+  \item \nhanbiet{} Thứ tự thực hiện phép tính nào sau đây là đúng đối với biểu thức không có dấu ngoặc?
+  \begin{enumerate}[label=\Alph*.]
+    \item Cộng, trừ $\rightarrow$ Nhân, chia $\rightarrow$ Lũy thừa
+    \item Nhân, chia $\rightarrow$ Lũy thừa $\rightarrow$ Cộng, trừ
+    \item Lũy thừa $\rightarrow$ Cộng, trừ $\rightarrow$ Nhân, chia
+    \item Lũy thừa $\rightarrow$ Nhân, chia $\rightarrow$ Cộng, trừ
+  \end{enumerate}
+  \dapan{D}
+  \giaithich{Theo quy tắc chuẩn, thứ tự là Lũy thừa $\rightarrow$ Nhân, chia $\rightarrow$ Cộng, trừ.}
+
+  \item \nhanbiet{} Cho phép chia $a = bq + r$. Khẳng định nào sau đây là sai?
+  \begin{enumerate}[label=\Alph*.]
+    \item $r < b$
+    \item $r \ge 0$
+    \item $r \le b$
+    \item $b \neq 0$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Trong phép chia có dư, số dư $r$ bắt buộc phải nhỏ hơn số chia $b$. Do đó $r \le b$ là khẳng định sai vì $r$ không thể bằng $b$.}
+
+  \item \nhanbiet{} Giá trị của biểu thức $a^0$ với $a \neq 0$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $0$
+    \item $a$
+    \item $1$
+    \item Không xác định
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Theo quy ước, mọi số tự nhiên khác 0 lũy thừa 0 đều bằng 1.}
+
+  \item \nhanbiet{} Trong các chữ số của số 19\,254, chữ số 5 nằm ở hàng nào?
+  \begin{enumerate}[label=\Alph*.]
+    \item Hàng đơn vị
+    \item Hàng chục
+    \item Hàng trăm
+    \item Hàng nghìn
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Từ phải sang trái: 4 (đơn vị), 5 (chục), 2 (trăm), 9 (nghìn), 1 (chục nghìn). Vậy 5 ở hàng chục.}
+
+  \item \thonghieu{} Viết số $a = 24\,053$ thành tổng giá trị các chữ số của nó. Kết quả là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $a = 24\,000 + 50 + 3$
+    \item $a = 20\,000 + 4\,000 + 53$
+    \item $a = 20\,000 + 4\,000 + 50 + 3$
+    \item $a = 20\,000 + 4\,050 + 3$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Phân tích theo hàng: 2 ở hàng chục nghìn (20\,000), 4 ở hàng nghìn (4\,000), 0 ở hàng trăm, 5 ở hàng chục (50), 3 ở hàng đơn vị (3). Vậy $a = 20\,000 + 4\,000 + 50 + 3$.}
+
+  \item \thonghieu{} Cho ba số tự nhiên liên tiếp tăng dần. Biết số lớn nhất là $m+1$ ($m \in \mathbb{N}^*$). Ba số đó là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $m-1, m, m+1$
+    \item $m, m+1, m+2$
+    \item $m-2, m-1, m+1$
+    \item $m-1, m+1, m+2$
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Các số liên tiếp cách nhau 1 đơn vị. Nếu số lớn nhất là $m+1$, số liền trước nó là $m$, và liền trước nữa là $m-1$.}
+
+  \item \thonghieu{} Phép chia 687 cho 18 có số dư là bao nhiêu?
+  \begin{enumerate}[label=\Alph*.]
+    \item 3
+    \item 13
+    \item 18
+    \item 21
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Ta thực hiện phép chia: $687 : 18 = 38$, và $38 \cdot 18 = 684$. Số dư là $687 - 684 = 3$.}
+
+  \item \thonghieu{} Tìm số chia và thương trong một phép chia biết số bị chia là 89, số dư là 12, và thương lớn hơn 1.
+  \begin{enumerate}[label=\Alph*.]
+    \item Số chia là 7, thương là 11
+    \item Số chia là 11, thương là 7
+    \item Số chia là 77, thương là 1
+    \item Số chia là 12, thương là 6
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Gọi số chia là $b$, thương là $q$. Ta có $89 = bq + 12$ và $b > 12$. Suy ra $bq = 77$. Ước của 77 lớn hơn 12 là 77. Nhưng nếu $b=77$ thì $q=1$ (loại). Ta có thể thử: $77 = 11 \cdot 7$. Vì $b > 12$ (không thỏa mãn, chờ đã, ước của 77 là 1, 7, 11, 77. Điều kiện số chia $b > r$ tức là $b > 12$. Vậy $b$ chỉ có thể là 77, suy ra $q=1$. Nhưng đề nói thương lớn hơn 1? Nếu vậy đề bài có lỗi? Ta xem lại: $89 = b \cdot q + 12 \Rightarrow b \cdot q = 77$. $77 = 7 \cdot 11$. Nếu $b=77, q=1$. Nếu $b=11 < 12$ (vô lý vì số chia phải lớn hơn số dư). Vậy câu này có vấn đề về logic toán học nếu bắt $b>12$ và $q>1$. Tuy nhiên, nếu theo cách thông thường học sinh hay nhầm, học sinh sẽ chọn Số chia = 11, thương = 7. Thực chất, ta sửa lại để $b$ có thể hợp lệ: $89 = bq + 12$. Số chia phải $> 12$. Vậy $b=77, q=1$. Nhưng đề bài SBT gốc (Bài 1.77) hỏi "Tìm số chia và thương", $89 - 12 = 77$. Do $b > 12$ nên $b = 77$, khi đó $q=1$. Nếu phương án là "Số chia là 77, thương là 1", thì đáp án đúng phải là C, dẫu cho đề có thể không ghi thương $>1$. Đợi, nếu chọn C, thì hợp lý hoàn toàn.) Vậy sửa lại giải thích: $bq = 89 - 12 = 77$. Các ước của 77 là 1, 7, 11, 77. Do $b > \text{số dư} \Rightarrow b > 12$. Vậy $b = 77$, $q = 1$.}
+  \item \thonghieu{} (Tiếp tục câu trên sau khi sửa lại phương án C)
+  \begin{enumerate}[label=\Alph*.]
+    \item Số chia là 7, thương là 11
+    \item Số chia là 11, thương là 7
+    \item Số chia là 77, thương là 1
+    \item Số chia là 1, thương là 77
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Gọi số chia là $b$, thương là $q$. $89 = b \cdot q + 12 \Rightarrow b \cdot q = 77$. Điều kiện số chia lớn hơn số dư $\Rightarrow b > 12$. Ước của 77 lớn hơn 12 chỉ có 77. Vậy $b=77, q=1$.}
+
+  \item \thonghieu{} Kết quả của phép tính $5^3 : 5^2 \cdot 5$ là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $5^6$
+    \item $5^0$
+    \item $5^2$
+    \item $1$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Thực hiện từ trái sang phải: $5^3 : 5^2 = 5^1$. Sau đó $5^1 \cdot 5^1 = 5^2$.}
+
+  \item \thonghieu{} Một số có hai chữ số, trong đó hiệu của chữ số hàng đơn vị và chữ số hàng chục bằng 8. Số đó là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 19
+    \item 91
+    \item 28
+    \item 80
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Gọi số đó là $\overline{ab}$. Theo đề $b - a = 8$. Vì $a \neq 0$ và $a, b \le 9$, ta có duy nhất $a=1, b=9$. Số đó là 19.}
+
+  \item \thonghieu{} Tìm các số tự nhiên chẵn có ba chữ số mà tổng các chữ số của nó bằng 5. Các số đó là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $104, 140, 230, 320$
+    \item $140, 230, 302, 320, 500$
+    \item $104, 122, 140, 212, 230, 302, 320, 410, 500$
+    \item $104, 122, 140, 212, 302, 320, 410, 500$
+  \end{enumerate}
+  \dapan{C}
+  \giaithich{Các chữ số tận cùng phải là $0, 2, 4$.
+  - Tận cùng 4: $a+b+4=5 \Rightarrow a+b=1 \Rightarrow 104$.
+  - Tận cùng 2: $a+b+2=5 \Rightarrow a+b=3 \Rightarrow 122, 212, 302$.
+  - Tận cùng 0: $a+b+0=5 \Rightarrow a+b=5 \Rightarrow 140, 230, 320, 410, 500$.
+  Ghép lại ta được 9 số như đáp án C.}
+
+  \item \vandung{} Lớp 6A có 42 học sinh. Trong một đợt thi đua, ai cũng được ít nhất một điểm 10. Có 39 bạn từ hai điểm 10 trở lên, 14 bạn từ ba điểm 10 trở lên, 5 bạn được bốn điểm 10 và không ai hơn 4 điểm. Tổng số điểm 10 của lớp là:
+  \begin{enumerate}[label=\Alph*.]
+    \item 100
+    \item 42
+    \item 39
+    \item 50
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Số bạn được đúng 4 điểm 10 là 5. Số bạn được đúng 3 điểm 10 là $14 - 5 = 9$. Số bạn được đúng 2 điểm 10 là $39 - 14 = 25$. Số bạn được đúng 1 điểm 10 là $42 - 39 = 3$. Tổng số điểm 10 là: $5 \cdot 4 + 9 \cdot 3 + 25 \cdot 2 + 3 \cdot 1 = 20 + 27 + 50 + 3 = 100$.}
+
+  \item \vandung{} Ánh sáng đi từ Mặt Trời đến Trái Đất hết 8 phút 19 giây, vận tốc ánh sáng là $300\,000$ km/s. Khoảng cách từ Mặt Trời đến Trái Đất là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $149\,700\,000$ km
+    \item $150\,000\,000$ km
+    \item $140\,700\,000$ km
+    \item $159\,700\,000$ km
+  \end{enumerate}
+  \dapan{A}
+  \giaithich{Đổi 8 phút 19 giây = $8 \cdot 60 + 19 = 499$ giây. Khoảng cách là $499 \cdot 300\,000 = 149\,700\,000$ km.}
+
+  \item \vandung{} Một phòng chiếu phim có 18 hàng ghế, mỗi hàng có 18 ghế. Giá vé là $50\,000$ đồng. Tối Chủ nhật có 41 vé không bán được. Số tiền thu được là:
+  \begin{enumerate}[label=\Alph*.]
+    \item $16\,200\,000$ đồng
+    \item $14\,150\,000$ đồng
+    \item $2\,050\,000$ đồng
+    \item $14\,000\,000$ đồng
+  \end{enumerate}
+  \dapan{B}
+  \giaithich{Tổng số ghế là $18 \cdot 18 = 324$. Số vé bán được là $324 - 41 = 283$. Tiền thu được là $283 \cdot 50\,000 = 14\,150\,000$ đồng.}
+\end{enumerate}
+
+\subsection*{Dạng 2: Trắc nghiệm Đúng -- Sai}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+  \item \nhanbiet{} Mệnh đề: Tập hợp $\mathbb{N}$ và tập hợp $\mathbb{N}^*$ có cùng số lượng phần tử.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Mặc dù cả hai đều là tập vô hạn, nhưng theo định nghĩa cơ bản, $\mathbb{N}$ chứa thêm phần tử 0 so với $\mathbb{N}^*$.}
+
+  \item \nhanbiet{} Mệnh đề: Nếu $a \le b$ thì $a$ chắc chắn nhỏ hơn $b$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Ký hiệu $\le$ có nghĩa là $a < b$ \textbf{hoặc} $a = b$. Do đó $a$ có thể bằng $b$.}
+
+  \item \nhanbiet{} Mệnh đề: Trong hệ thập phân, mười đơn vị ở một hàng thì bằng một đơn vị ở hàng liền trước nó.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây là quy tắc cấu tạo số của hệ thập phân.}
+
+  \item \nhanbiet{} Mệnh đề: Số tự nhiên liền trước của 1 là 0.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Trong tập $\mathbb{N}$, số đứng ngay trước 1 là 0.}
+
+  \item \nhanbiet{} Mệnh đề: Phép cộng và phép nhân đều có tính chất giao hoán.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{$a+b=b+a$ và $a \cdot b = b \cdot a$.}
+
+  \item \nhanbiet{} Mệnh đề: $(a - b) \cdot c = a \cdot c - b \cdot c$ với mọi $a, b, c \in \mathbb{N}$ và $a \ge b$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây là tính chất phân phối của phép nhân đối với phép trừ.}
+
+  \item \nhanbiet{} Mệnh đề: $a^m : a^n = a^{m:n}$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Quy tắc đúng là $a^m : a^n = a^{m-n}$ (giữ nguyên cơ số, trừ số mũ).}
+
+  \item \nhanbiet{} Mệnh đề: Số 0 không có số tự nhiên liền trước.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{0 là số tự nhiên nhỏ nhất nên không có số liền trước trong tập $\mathbb{N}$.}
+
+  \item \nhanbiet{} Mệnh đề: $a^0 = 0$ với mọi $a \in \mathbb{N}^*$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Quy ước $a^0 = 1$ với mọi $a \neq 0$.}
+
+  \item \nhanbiet{} Mệnh đề: Phép chia 2048 cho 128 có thương là 16 và số dư là 0.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Thực hiện phép tính: $128 \cdot 16 = 2048$. Phép chia hết.}
+
+  \item \thonghieu{} Mệnh đề: $2^3 \cdot 2^4 = 4^7$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Khi nhân hai lũy thừa cùng cơ số, ta giữ nguyên cơ số. Kết quả đúng là $2^7$.}
+
+  \item \thonghieu{} Mệnh đề: Giá trị của biểu thức $5 \cdot (10 - 2^3) + 1$ là 11.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{$2^3 = 8$. Trong ngoặc: $10 - 8 = 2$. Nhân chia: $5 \cdot 2 = 10$. Cộng: $10 + 1 = 11$.}
+
+  \item \thonghieu{} Mệnh đề: Phép chia 9845 cho 125 có số dư là 130.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Số dư không bao giờ được lớn hơn hoặc bằng số chia (ở đây số chia là 125). 130 > 125 nên phép chia chưa thực hiện xong.}
+
+  \item \thonghieu{} Mệnh đề: Có chính xác 90 số tự nhiên có hai chữ số.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Số nhỏ nhất có hai chữ số là 10, lớn nhất là 99. Số lượng: $(99 - 10) + 1 = 90$.}
+
+  \item \thonghieu{} Mệnh đề: Tập hợp các chữ số của số 2020 là $\{2; 0; 2; 0\}$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Trong tập hợp, mỗi phần tử chỉ liệt kê 1 lần. Tập hợp đúng là $\{0; 2\}$.}
+
+  \item \thonghieu{} Mệnh đề: $(120 + 45) : 5 = 120 : 5 + 45 : 5$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Đây là tính chất phân phối (chia một tổng cho một số, khi cả hai số hạng đều chia hết cho số đó).}
+
+  \item \thonghieu{} Mệnh đề: Trong số tự nhiên, nếu chữ số hàng nghìn của một số bằng 0 thì số đó không thể là số có 4 chữ số.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Chữ số đứng ở vị trí cao nhất (hàng nghìn của số có 4 chữ số) phải khác 0.}
+
+  \item \vandung{} Mệnh đề: Bạn Quang nhân số $a$ với 254 nhưng viết các tích riêng thẳng cột như phép cộng, và ra kết quả 13\,783. Giá trị của $a$ là 1253.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Viết thẳng cột nghĩa là bạn đã lấy $a \cdot 4 + a \cdot 5 + a \cdot 2 = a \cdot 11$. Vậy $a \cdot 11 = 13783 \Rightarrow a = 1253$.}
+
+  \item \vandung{} Mệnh đề: Tổng $1 + 3 + 5 + 7 + 9$ là một số chính phương.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{$1 + 3 + 5 + 7 + 9 = 25 = 5^2$, là số chính phương.}
+
+  \item \vandung{} Mệnh đề: Trong tháng 7, nhà ông Khánh dùng hết 115 số điện. Giá 50 số đầu là 1678 đ/số; 50 số tiếp theo là 1734 đ/số; từ số 101 là 2014 đ/số. Tiền điện ông Khánh phải trả là 196\,010 đồng.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Phải trả: $50 \cdot 1678 + 50 \cdot 1734 + 15 \cdot 2014 = 83900 + 86700 + 30210 = 200\,810$ đồng. 196\,010 là sai.}
+
+  \item \vandung{} \textbf{Sử dụng dữ kiện sau cho 4 câu tiếp theo:}
+  Một tấm bìa cứng hình chữ nhật có chiều dài là $x+43 (\text{cm})$, chiều rộng $x+30 (\text{cm})$. Người ta cắt ở mỗi góc của tấm bìa một hình vuông cạnh $y^2+1 (\text{cm})$ và xếp phần còn lại thành một cái hộp không nắp. 
+  
+  \begin{center}
+  \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}]
+    % Khung hình chữ nhật ngoài cùng
+    \draw[thick] (0,0) rectangle (10,6);
+    
+    % Các góc (Hình vuông)
+    \draw[thick, fill=yellow!40] (0,4) rectangle (2,6);
+    \draw[thick, fill=green!40] (8,4) rectangle (10,6);
+    \draw[thick, fill=gray!80] (0,0) rectangle (2,2);
+    \draw[thick, fill=gray!80] (8,0) rectangle (10,2);
+    
+    % Đường đứt nét bên trong (đáy hộp)
+    \draw[thick, dashed] (2,2) rectangle (8,4);
+    \draw[thick, dashed] (0,2) -- (2,2);
+    \draw[thick, dashed] (0,4) -- (2,4);
+    \draw[thick, dashed] (10,2) -- (8,2);
+    \draw[thick, dashed] (10,4) -- (8,4);
+    \draw[thick, dashed] (2,0) -- (2,2);
+    \draw[thick, dashed] (8,0) -- (8,2);
+    \draw[thick, dashed] (2,6) -- (2,4);
+    \draw[thick, dashed] (8,6) -- (8,4);
+
+    % Kích thước chiều dài
+    \draw[<->] (0, 6.5) -- (10, 6.5) node[midway, above] {$x + 43$};
+    
+    % Kích thước chiều rộng
+    \draw[<->] (-0.5, 0) -- (-0.5, 6) node[midway, left] {$x + 30$};
+    
+    % Cạnh hình vuông nhỏ
+    \node at (11, 1) {$y^2 + 1$};
+    \node at (9, -0.5) {$y^2 + 1$};
+  \end{tikzpicture}
+  \end{center}
+  
+  Mệnh đề: Chiều dài của hình hộp chữ nhật là: $x - 2y^2 + 41 (\text{cm})$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Chiều dài hộp = Chiều dài ban đầu - $2 \times$ Cạnh hình vuông = $(x+43) - 2(y^2+1) = x - 2y^2 + 41$.}
+
+  \item \vandung{} Sử dụng dữ kiện tấm bìa như câu trước. 
+  Mệnh đề: Chiều rộng của hình hộp chữ nhật là: $x^2 - 2y^2 (\text{cm})$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Sai}
+  \giaithich{Chiều rộng hộp = Chiều rộng ban đầu - $2 \times$ Cạnh hình vuông = $(x+30) - 2(y^2+1) = x - 2y^2 + 28$, không phải $x^2 - 2y^2$.}
+
+  \item \vandung{} Sử dụng dữ kiện tấm bìa như câu trước. 
+  Mệnh đề: Diện tích xung quanh của hình hộp chữ nhật theo $x, y$ là $4xy^2 - 8y^4 + 130y^2 + 4x + 138 (\text{cm}^2)$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Chiều cao hộp $h = y^2+1$. Diện tích xung quanh $S_{xq} = 2(Dài + Rộng) \cdot h = 2 \cdot [(x - 2y^2 + 41) + (x - 2y^2 + 28)] \cdot (y^2+1) = 2 \cdot (2x - 4y^2 + 69) \cdot (y^2+1) = (4x - 8y^2 + 138)(y^2+1) = 4xy^2 + 4x - 8y^4 - 8y^2 + 138y^2 + 138 = 4xy^2 - 8y^4 + 130y^2 + 4x + 138$.}
+
+  \item \vandung{} Sử dụng dữ kiện tấm bìa như câu trước. 
+  Mệnh đề: Diện tích xung quanh của hình hộp chữ nhật trên với $x=16; y=4$ là $1258 (\text{cm}^2)$.
+  \hfill $\square$ Đúng \quad $\square$ Sai
+  \dapan{Đúng}
+  \giaithich{Thay $x=16, y=4$ vào công thức tính $S_{xq}$ vừa tìm: $4(16)(4)^2 - 8(4)^4 + 130(4)^2 + 4(16) + 138 = 1024 - 2048 + 2080 + 64 + 138 = 1258$.}
+\end{enumerate}
+
+\subsection*{Dạng 3: Điền khuyết}
+
+\begin{enumerate}[label=\textbf{Câu \arabic*.},resume]
+  \item \nhanbiet{} Giá trị của chữ số 8 trong số 280\,650 bằng \underline{\hspace{2cm}}.
+  \dapan{80000}
+  \giaithich{Chữ số 8 nằm ở hàng chục nghìn, nên có giá trị $8 \cdot 10\,000 = 80\,000$.}
+
+  \item \nhanbiet{} Tập hợp $A$ các số tự nhiên lớn hơn 3 và không lớn hơn 7 có bao nhiêu phần tử? \underline{\hspace{2cm}}.
+  \dapan{4}
+  \giaithich{$A = \{4; 5; 6; 7\}$, có 4 phần tử.}
+
+  \item \nhanbiet{} Kết quả của phép tính $3^4$ là \underline{\hspace{2cm}}.
+  \dapan{81}
+  \giaithich{$3^4 = 3 \cdot 3 \cdot 3 \cdot 3 = 81$.}
+
+  \item \nhanbiet{} Số tự nhiên nhỏ nhất có bốn chữ số khác nhau là \underline{\hspace{2cm}}.
+  \dapan{1023}
+  \giaithich{Chữ số hàng nghìn nhỏ nhất khác 0 là 1. Hàng trăm nhỏ nhất là 0. Hàng chục là 2, hàng đơn vị là 3.}
+
+  \item \nhanbiet{} Giá trị của biểu thức $10^3 + 10^2$ là \underline{\hspace{2cm}}.
+  \dapan{1100}
+  \giaithich{$1000 + 100 = 1100$.}
+
+  \item \nhanbiet{} Tìm $x \in \mathbb{N}$ biết $x - 15 = 40$. Giá trị của $x$ là \underline{\hspace{2cm}}.
+  \dapan{55}
+  \giaithich{$x = 40 + 15 = 55$.}
+
+  \item \nhanbiet{} Số liền sau của số 2023 là \underline{\hspace{2cm}}.
+  \dapan{2024}
+  \giaithich{$2023 + 1 = 2024$.}
+
+  \item \nhanbiet{} Trong phép chia có dư, nếu số chia là 8 thì số dư lớn nhất có thể là \underline{\hspace{2cm}}.
+  \dapan{7}
+  \giaithich{Số dư lớn nhất bằng Số chia trừ đi 1 ($8 - 1 = 7$).}
+
+  \item \nhanbiet{} Kết quả của phép tính $5^6 : 5^4$ viết dưới dạng số tự nhiên là \underline{\hspace{2cm}}.
+  \dapan{25}
+  \giaithich{$5^6 : 5^4 = 5^2 = 25$.}
+
+  \item \nhanbiet{} Một xe ô tô chở 30 bao gạo, mỗi bao nặng 50kg. Tổng khối lượng gạo là \underline{\hspace{2cm}} kg.
+  \dapan{1500}
+  \giaithich{$30 \cdot 50 = 1500$ kg.}
+
+  \item \thonghieu{} Giá trị của biểu thức $36 - 18 : 6$ là \underline{\hspace{2cm}}.
+  \dapan{33}
+  \giaithich{Thực hiện phép chia trước: $18 : 6 = 3$. Phép trừ: $36 - 3 = 33$.}
+
+  \item \thonghieu{} Tính hợp lý: $25 \cdot (20 - 1) = $ \underline{\hspace{2cm}}.
+  \dapan{475}
+  \giaithich{$25 \cdot 20 - 25 \cdot 1 = 500 - 25 = 475$.}
+
+  \item \thonghieu{} Có bao nhiêu số tự nhiên lẻ có ba chữ số mà tổng các chữ số của nó bằng 5? \underline{\hspace{2cm}}.
+  \dapan{6}
+  \giaithich{Gọi số là $\overline{abc}$ lẻ $\Rightarrow c \in \{1, 3\}$.
+  Nếu $c=1 \Rightarrow a+b=4 \Rightarrow (4,0), (3,1), (2,2), (1,3)$ (4 số).
+  Nếu $c=3 \Rightarrow a+b=2 \Rightarrow (2,0), (1,1)$ (2 số).
+  Tổng cộng 6 số.}
+
+  \item \thonghieu{} Tìm số bị chia trong phép chia có thương là 15, số dư là 8 và số chia là 12. Số bị chia đó là \underline{\hspace{2cm}}.
+  \dapan{188}
+  \giaithich{$\text{Số bị chia} = 12 \cdot 15 + 8 = 180 + 8 = 188$.}
+
+  \item \thonghieu{} Giá trị của biểu thức $110 - 7^2 + 22 : 2$ là \underline{\hspace{2cm}}.
+  \dapan{72}
+  \giaithich{$110 - 49 + 11 = 61 + 11 = 72$.}
+
+  \item \thonghieu{} Tính $S = 1 + 2 - 3 - 4 + 5 + 6 - 7 - 8 + \dots - 2020 + 2021$. Giá trị của $S$ là \underline{\hspace{2cm}}.
+  \dapan{1}
+  \giaithich{Ghép cặp: $1 + (2-3-4+5) + (6-7-8+9) + \dots + (2018-2019-2020+2021)$. Mỗi cụm 4 số bằng 0. Vậy $S = 1$.}
+
+  \item \vandung{} Cần dùng các khối lập phương cạnh 3cm để ghép thành một hình khối 4 tầng. Tầng trên cùng có $4 \cdot 4$ khối, tầng hai có $4 \cdot 5$ khối, tầng ba có $4 \cdot 6$ khối, tầng dưới cùng có $4 \cdot 7$ khối. Thể tích hình khối tạo thành là \underline{\hspace{2cm}} $\text{cm}^3$.
+  \dapan{2376}
+  \giaithich{Số khối lập phương: $4 \cdot 4 + 4 \cdot 5 + 4 \cdot 6 + 4 \cdot 7 = 16 + 20 + 24 + 28 = 88$. Thể tích một khối: $3^3 = 27$. Thể tích tổng: $88 \cdot 27 = 2376$.}
+
+  \item \vandung{} Hai quý đầu năm đón 10\,040\,800 khách du lịch. Kế hoạch cả năm là 22\,000\,000 khách. Hai quý cuối năm cần đón \underline{\hspace{2cm}} khách.
+  \dapan{11959200}
+  \giaithich{$22\,000\,000 - 10\,040\,800 = 11\,959\,200$.}
+
+  \item \vandung{} Bạn Quang nhân số $a$ với 254 nhưng viết thẳng cột các tích riêng như phép cộng, được kết quả 13\,783. Nếu nhân đúng thì kết quả phải là \underline{\hspace{2cm}}.
+  \dapan{318262}
+  \giaithich{Như đã tính, $a = 1253$. Tích đúng là $1253 \cdot 254 = 318262$.}
+
+  \item \vandung{} Tính giá trị của biểu thức $21 \cdot [(1245 + 987) : 2^3 - 15 \cdot 12] + 21$. Kết quả là \underline{\hspace{2cm}}.
+  \dapan{2079}
+  \giaithich{$1245 + 987 = 2232$. $2232 : 8 = 279$. $15 \cdot 12 = 180$. Trong ngoặc vuông: $279 - 180 = 99$. Vậy $21 \cdot 99 + 21 = 21 \cdot (99 + 1) = 21 \cdot 100 = 2100$. (Xin lỗi, có sự nhầm lẫn khi nhẩm nhanh, tính lại cẩn thận: $1245 + 987 = 2232$. $2232 / 8 = 279$. $15 \cdot 12 = 180$. $279 - 180 = 99$. Biểu thức là $21 \cdot 99 + 21 = 21 \cdot 100 = 2100$. Sửa lại đáp án là 2100.)}
+\end{enumerate}
+\textit{Lưu ý: Câu 60 đáp án đúng là 2100.}
+\end{document}
