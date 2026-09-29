@@ -12,11 +12,12 @@ interface TuLuyenMenuViewProps {
   startLesson: (lessonId: string, questions: any[]) => void;
   unlockedLessons: string[];
   correctIds: Record<string, string[]>;
+  isAdmin?: boolean;
 }
 
 const ALL_QUESTIONS_IN_LESSON: Record<string, any[]> = {};
 
-export const TuLuyenMenuView: React.FC<TuLuyenMenuViewProps> = ({ setView, startLesson, unlockedLessons, correctIds }) => {
+export const TuLuyenMenuView: React.FC<TuLuyenMenuViewProps> = ({ setView, startLesson, unlockedLessons, correctIds, isAdmin }) => {
   const lessons = [
     { id: 'B1',     name: 'Bài 1: Tập hợp (Demo)',                                  questions: demoTuLuyenData },
     { id: 'B2',     name: 'Bài 2: Cách ghi số tự nhiên',                             questions: chuong1ThucTeData.filter(q => q.id.includes('THUC_TE_B2')) },
@@ -112,7 +113,7 @@ export const TuLuyenMenuView: React.FC<TuLuyenMenuViewProps> = ({ setView, start
       {/* Lesson grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-5xl pb-8">
         {lessons.map((lesson, index) => {
-          const isUnlocked = unlockedLessons.includes(lesson.id);
+          const isUnlocked = isAdmin || unlockedLessons.includes(lesson.id);
           const correctCount = correctIds[lesson.id]?.length || 0;
           const total = lesson.questions.length;
           const isCompleted = total > 0 && correctCount >= total;

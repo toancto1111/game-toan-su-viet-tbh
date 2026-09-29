@@ -2272,7 +2272,7 @@ const App: React.FC = () => {
                else if (c === 3) isMathDone = unlockedLessons.includes('C3_B13');
                else if (c === 4) isMathDone = unlockedLessons.includes('C4');
 
-               const isUnlocked = isCombatDone && isMathDone;
+               const isUnlocked = (isCombatDone && isMathDone) || player?.playerName?.toLowerCase() === 'admin';
 
                return (
                  <button key={c}
@@ -2677,7 +2677,7 @@ const App: React.FC = () => {
         </div>
       );
       case 'admin': return <AdminView setView={(v: any) => setView(v)} />;
-      case 'tu-luyen-menu': return <TuLuyenMenuView setView={(v: any) => setView(v)} startLesson={startLessonTuLuyen} unlockedLessons={player.tuLuyenUnlockedLessons || ['B1']} correctIds={player.tuLuyenCorrectIds || {}} />;
+      case 'tu-luyen-menu': return <TuLuyenMenuView setView={(v: any) => setView(v)} startLesson={startLessonTuLuyen} unlockedLessons={player.tuLuyenUnlockedLessons || ['B1']} correctIds={player.tuLuyenCorrectIds || {}} isAdmin={player?.playerName?.toLowerCase() === 'admin'} />;
       case 'tu-luyen-play': return <QuizPlayView question={currentQuestions[currentIdx]} idx={currentIdx} total={currentQuestions.length} showFeedback={showFeedback} userAnswers={userAnswers} setUserAnswers={setUserAnswers} onAnswer={handleQuizAnswer} lastReward={lastReward} setView={setView} autoNext={autoNext} onAutoNextChange={setAutoNext} onNext={() => { setShowFeedback(false); if (currentIdx < currentQuestions.length - 1) setCurrentIdx(c => c + 1); else handleTuLuyenResult(correctTotal, currentQuestions.length); }} tuLuyenLessonId={activeLessonId} />;
       case 'kinh-luan-grade': return <GradeView player={player} setGrade={setSelectedGrade} setView={setView} />;
       case 'kinh-luan-topic': return <TopicView grade={selectedGrade} setChapterIdx={setSelectedMathChapterIdx} setView={setView} player={player} />;
@@ -6176,7 +6176,7 @@ const LessonListView = ({ grade, chapterIdx, setLessonIdx, setView, progress, pl
 
           <div className="grid grid-cols-1 gap-3 custom-scrollbar pr-1">
              {chapter.lessons.map((lesson: any, idx: number) => {
-               const isUnlocked = idx <= unlockedCount;
+               const isUnlocked = idx <= unlockedCount || player?.playerName?.toLowerCase() === 'admin';
                const isDone = idx < unlockedCount;
                const allQ = getQuestionsForLesson(grade, chapterIdx, idx);
                const totalQ = allQ.length > 0 ? allQ.length : 60;
