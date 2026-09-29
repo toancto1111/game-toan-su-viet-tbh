@@ -76,7 +76,7 @@ export const GlobalChatWidget: React.FC<GlobalChatWidgetProps> = ({ player }) =>
       {!isOpen && (
         <div
           onClick={() => setIsOpen(true)}
-          className="fixed top-[460px] right-[24px] z-50 group flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
+          className="fixed top-[180px] left-[24px] z-50 group flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
           title="Kênh Thế Giới"
         >
           <div className="relative bg-gradient-to-br from-amber-600 to-amber-800 text-white w-[68px] h-[68px] rounded-full shadow-[0_0_15px_rgba(217,119,6,0.5)] flex flex-col items-center justify-center border-2 border-amber-400">
@@ -92,7 +92,7 @@ export const GlobalChatWidget: React.FC<GlobalChatWidgetProps> = ({ player }) =>
       )}
 
       {isOpen && (
-        <div className="fixed inset-0 md:inset-auto md:top-[90px] md:right-[100px] z-50 w-full h-full md:w-[400px] md:h-[600px] flex flex-col bg-stone-900/95 backdrop-blur-xl md:border-2 md:border-amber-900/50 md:rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 md:inset-auto md:top-[90px] md:left-[100px] z-50 w-full h-full md:w-[400px] md:h-[600px] flex flex-col bg-stone-900/95 backdrop-blur-xl md:border-2 md:border-amber-900/50 md:rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
           
           <div className="bg-gradient-to-r from-amber-900 to-stone-900 p-3 md:p-4 border-b border-amber-700/50 flex justify-between items-center shrink-0">
             <div className="flex items-center gap-2">
