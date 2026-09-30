@@ -1853,7 +1853,7 @@ const App: React.FC = () => {
     setSummonResults(newResults);
     newResults.forEach(h => {
         if (h.rarity === 'UR') {
-            sendAnnouncement(`🎉 Chúc mừng ${player.playerName || 'Chúa công'} đã triệu hồi được Thần Tướng UR: ${h.name}! 🎉`);
+            sendAnnouncement(`🎉 Chúc mừng ${player.playerName || 'Chúa công'} đã triệu hồi được Thần Tướng: ${h.name}! 🎉`);
         }
     });
   };
