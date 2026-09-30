@@ -47,7 +47,7 @@ import {
   ShoppingBag, Star, UserCheck, Plus, Minus, School, Tent, Crosshair,
   Lightbulb, Zap, Info, FastForward, Swords as SwordIcon, Users, ScrollText, Scissors, ArrowUpCircle,
   Music, Play, Pause, SkipForward, Volume2, VolumeX, Package, LogOut, Crown, Shield, Moon, Gem, Snowflake, Flag, Disc, X, Database, MountainSnow, Recycle,
-  HeartCrack, Skull, Wind, Heart, Frown, Flame, Droplets, ShieldOff, Ban, TrendingDown, Target, ShieldCheck, Syringe, RefreshCw, Link2, ShieldAlert, Hourglass, HeartPulse, User, Maximize, Minimize, MessageCircle, Send, AlertTriangle
+  HeartCrack, Skull, Wind, Heart, Frown, Flame, Droplets, ShieldOff, Ban, TrendingDown, Target, ShieldCheck, Syringe, RefreshCw, Link2, ShieldAlert, Hourglass, HeartPulse, User, Maximize, Minimize, MessageCircle, Send, AlertTriangle, Video, VideoOff
 } from 'lucide-react';
 import { ProfileModal } from './ProfileModal';
 import { DailyQuestsModal } from './DailyQuestsModal';
@@ -3593,6 +3593,16 @@ const determineSkillEffect = (hero: Hero): string => {
 const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active, setActive, setView, speed, setSpeed, onWin, chapter, combatMode, arenaMatchData, onArenaEnd }: any) => {
     const [turnQueue, setTurnQueue] = useState<any[]>([]);
 
+    const [skipVideo, setSkipVideo] = useState<boolean>(() => {
+        return localStorage.getItem('skipSkillVideo') === 'true';
+    });
+    
+    const toggleSkipVideo = () => {
+        const newVal = !skipVideo;
+        setSkipVideo(newVal);
+        localStorage.setItem('skipSkillVideo', newVal.toString());
+    };
+
     const arenaEndHandled = React.useRef(false);
     React.useEffect(() => {
         if (combatMode === 'arena' && result && onArenaEnd && !arenaEndHandled.current) {
@@ -3919,7 +3929,7 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
         setDamagePopups([]);
 
         // ===== VIDEO CUT-IN: Nếu là Tuyệt chiêu và tướng có video =====
-        const hasSkillVideo = isUltimate && currentActorState.skillVideoUrl && speed < 99;
+        const hasSkillVideo = isUltimate && currentActorState.skillVideoUrl && speed < 99 && !skipVideo;
         if (hasSkillVideo) {
             setActiveSkillVideo(currentActorState.skillVideoUrl!);
         }
@@ -5077,6 +5087,10 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                     <SwordIcon size={18} className="animate-pulse" />
                 </div>
                 <div className="flex gap-1 sm:gap-2">
+                    <button onClick={toggleSkipVideo} className={`text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-1 rounded-md border transition-colors relative z-[60] flex items-center gap-1 ${skipVideo ? 'bg-red-900/50 text-red-400 border-red-700/50' : 'bg-stone-800 text-stone-400 border-stone-600 hover:bg-stone-700'}`}>
+                        {skipVideo ? <VideoOff size={14} /> : <Video size={14} />} 
+                        <span className="hidden sm:inline">{skipVideo ? 'Tắt Video' : 'Bật Video'}</span>
+                    </button>
                     <button onClick={() => setSpeed(s => s === 1 ? 2 : s === 2 ? 4 : s === 4 ? 8 : s === 8 ? 16 : 1)} className="text-stone-300 font-black text-[10px] sm:text-xs bg-stone-800 px-2 sm:px-3 py-1 rounded-md border border-stone-600 hover:bg-stone-700 w-12 sm:w-16 text-center relative z-[60]">
                         x{speed}
                     </button>
