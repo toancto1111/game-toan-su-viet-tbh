@@ -1018,7 +1018,7 @@ export const ARTIFACTS: Artifact[] = [
   { id: 'art_mu_dau_mau', name: 'Mũ Đâu Mâu Vuốt Rồng', description: 'Tăng 20% Tốc độ, +15% Tránh né. Lối đánh du kích Dạ Trạch.', price: 50000, bonusSpdPc: 20, exclusiveTo: ['h3_2'], image: './items/artifacts/art_mu_dau_mau.png', effectDesc: 'Miễn sát thương (20% tỷ lệ né tránh hoàn toàn)', specialEffect: 'immune', effectChance: 20 },
   { id: 'art_hich_tam_thien', name: 'Hịch Lệnh Tam Thiên', description: 'Tăng 20% HP. Sức mạnh thu phục nhân tâm.', price: 50000, bonusHpPc: 20, exclusiveTo: ['h3_9'], image: './items/artifacts/art_hich_tam_thien.png', effectDesc: 'Hồi máu (Hồi 25% max HP sau khi đánh, 25% tỷ lệ)', specialEffect: 'heal', effectChance: 25 },
   { id: 'art_coc_bach_dang', name: 'Hải Trấn Mộc Cọc', description: 'Tăng 20% Phòng thủ, +1000 HP. Kế sách đánh giặc lẫy lừng.', price: 50000, bonusDefPc: 20, bonusHp: 1000, exclusiveTo: ['h4_1'], image: './items/artifacts/art_coc_bach_dang.png', effectDesc: 'Gây choáng (20% tỷ lệ khiến địch mắc kẹt)', specialEffect: 'stun', effectChance: 20 },
-  { id: 'art_co_lau', name: 'Cờ Lau Vạn Thắng', description: 'Tăng 15% tất cả chỉ số. Lá cờ dẹp loạn 12 sứ quân.', price: 50000, bonusAtkPc: 15, bonusDefPc: 15, bonusHpPc: 15, bonusSpdPc: 15, exclusiveTo: ['h4_0'], image: './items/artifacts/art_co_lau.png', effectDesc: 'Thêm lượt đánh (15% tỷ lệ bách chiến bách thắng)', specialEffect: 'extra_turn', effectChance: 15 },
+  { id: 'art_co_lau', name: 'Cờ Lau Vạn Thắng', description: 'Tăng 15% tất cả chỉ số. Lá cờ dẹp loạn 12 sứ quân.', price: 50000, bonusAtkPc: 15, bonusDefPc: 15, bonusHpPc: 15, bonusSpdPc: 15, exclusiveTo: ['h4_2'], image: './items/artifacts/art_co_lau.png', effectDesc: 'Thêm lượt đánh (15% tỷ lệ bách chiến bách thắng)', specialEffect: 'extra_turn', effectChance: 15 },
   { id: 'art_ao_bao', name: 'Long Bào Thập Đạo', description: 'Tăng 25% HP, +200 Phòng thủ. Áo bào quyền lực của Lê Hoàn.', price: 50000, bonusHpPc: 25, bonusDef: 200, exclusiveTo: ['h4_2'], image: './items/artifacts/art_ao_bao.png', effectDesc: 'Miễn sát thương (15% tỷ lệ chân mệnh thiên tử)', specialEffect: 'immune', effectChance: 15 },
   { id: 'art_thieu_doi_do', name: 'Thăng Long Thiên Chiếu', description: 'Tăng 30% HP. Hào quang chiến lược ngàn năm.', price: 50000, bonusHpPc: 30, exclusiveTo: ['h5_1'], image: './items/artifacts/art_thieu_doi_do.png', effectDesc: 'Hồi máu (Hồi 30% max HP, 20% tỷ lệ)', specialEffect: 'heal', effectChance: 20 },
   { id: 'art_nam_quoc', name: 'Thiên Thư Trấn Quốc', description: 'Tăng 20% Tấn công, +500 Phòng thủ. Uy lực vô song từ Thần thơ.', price: 50000, bonusAtkPc: 20, bonusDef: 500, exclusiveTo: ['h5_2'], image: './items/artifacts/art_nam_quoc.png', effectDesc: 'Gây choáng (Bẻ gãy tâm lý, 25% tỷ lệ)', specialEffect: 'stun', effectChance: 25 },
@@ -1155,11 +1155,11 @@ export const SYNERGIES: Synergy[] = [
   {
     id: 'thong_nhat_son_ha',
     name: 'Thống Nhất Sơn Hà',
-    heroIds: ['h4_0', 'h4_3'],
+    heroIds: ['h4_2', 'h4_5'],
     description: 'Đinh Bộ Lĩnh và Nguyễn Bặc cùng xuất trận. Đinh Bộ Lĩnh +15 ATK, Nguyễn Bặc +15 DEF.',
     applyEffect: (activeUnits, addLog) => {
-      const dbl = activeUnits.find(u => u.id.startsWith('h4_0_'));
-      const nb = activeUnits.find(u => u.id.startsWith('h4_3_'));
+      const dbl = activeUnits.find(u => u.id.startsWith('h4_2_'));
+      const nb = activeUnits.find(u => u.id.startsWith('h4_5_'));
       if (dbl && nb) {
         dbl.atk += 15;
         nb.def += 15;
@@ -1167,7 +1167,6 @@ export const SYNERGIES: Synergy[] = [
       }
     }
   },
-  // ── Duyên Phận Chương 9 (Tam Phân Thiên Hạ) ──
   {
     id: 'bac_trieu_tru_cot',
     name: 'Bắc Triều Trụ Cột',
@@ -1199,32 +1198,297 @@ export const SYNERGIES: Synergy[] = [
     }
   },
   {
-    id: 'dang_trong_khai_quoc',
-    name: 'Đàng Trong Khai Quốc',
-    heroIds: ['h9_26', 'h9_29'],
-    description: 'Nguyễn Hoàng và Đào Duy Từ cùng xuất trận. Cả hai +15 Phòng Thủ, +15% Máu tối đa.',
+    id: 'tu_tru_trieu_dinh',
+    name: 'Tứ Trụ Triều Đinh',
+    heroIds: ['h4_2', 'h4_4', 'h4_5'],
+    description: 'Đinh Bộ Lĩnh, Đinh Điền, Nguyễn Bặc cùng xuất trận. Toàn đội được truyền lửa, +10% Tấn Công và +10% Phòng Thủ.',
     applyEffect: (activeUnits, addLog) => {
-      const nh = activeUnits.find(u => u.id.startsWith('h9_26_'));
-      const ddt = activeUnits.find(u => u.id.startsWith('h9_29_'));
-      if (nh && ddt) {
-        nh.def += 15; nh.maxHp += Math.floor(nh.maxHp * 0.15); nh.hp = nh.maxHp;
-        ddt.def += 15; ddt.maxHp += Math.floor(ddt.maxHp * 0.15); ddt.hp = ddt.maxHp;
-        addLog('【Duyên Phận】 Đàng Trong Khai Quốc: Nguyễn Hoàng & Đào Duy Từ +15 DEF, +15% HP!');
+      const dbl = activeUnits.find(u => u.id.startsWith('h4_2_'));
+      const dd = activeUnits.find(u => u.id.startsWith('h4_4_'));
+      const nb = activeUnits.find(u => u.id.startsWith('h4_5_'));
+      if (dbl && dd && nb) {
+        activeUnits.forEach(u => {
+          if (u.faction === dbl.faction) {
+            u.atk = Math.floor(u.atk * 1.1);
+            u.def = Math.floor(u.def * 1.1);
+          }
+        });
+        addLog('【Duyên Phận】 Tứ Trụ Triều Đinh: Sức mạnh quân Đinh bùng nổ, toàn đội +10% ATK & DEF!');
       }
     }
   },
   {
-    id: 'bach_van_su_do',
-    name: 'Bạch Vân Sư Đồ',
-    heroIds: ['h9_1', 'h9_8'],
-    description: 'Trạng Trình Nguyễn Bỉnh Khiêm và Nguyễn Dữ cùng xuất trận. Cả hai +20 Tấn Công, +20 Tốc Độ.',
+    id: 'long_bao_khoac_vai',
+    name: 'Long Bào Khoác Vai',
+    heroIds: ['h4_16', 'h4_3'],
+    description: 'Dương Vân Nga và Lê Hoàn cùng xuất trận. Lê Hoàn được bảo hộ, miễn nhiễm mọi hiệu ứng Xấu và +20 Tốc Độ.',
     applyEffect: (activeUnits, addLog) => {
-      const nbk = activeUnits.find(u => u.id.startsWith('h9_1_'));
-      const nd = activeUnits.find(u => u.id.startsWith('h9_8_'));
-      if (nbk && nd) {
-        nbk.atk += 20; nbk.spd += 20;
-        nd.atk += 20; nd.spd += 20;
-        addLog('【Duyên Phận】 Bạch Vân Sư Đồ: Nguyễn Bỉnh Khiêm & Nguyễn Dữ +20 ATK, +20 SPD!');
+      const dvn = activeUnits.find(u => u.id.startsWith('h4_16_'));
+      const lh = activeUnits.find(u => u.id.startsWith('h4_3_'));
+      if (dvn && lh) {
+        lh.spd += 20;
+        lh.isImmuneCC = true; lh.immuneCCTurns = 99;
+        addLog('【Duyên Phận】 Long Bào Khoác Vai: Lê Hoàn nhận mệnh trời, +20 Tốc Độ và Miễn Khống Chế!');
+      }
+    }
+  },
+  {
+    id: 'no_than_lien_chau',
+    name: 'Nỏ Thần Liên Châu',
+    heroIds: ['h1_10', 'h1_13'],
+    description: 'An Dương Vương và Cao Lỗ cùng xuất trận. Xạ tiễn vô địch, An Dương Vương +20% Tấn Công, Cao Lỗ +20% Tấn Công.',
+    applyEffect: (activeUnits, addLog) => {
+      const adv = activeUnits.find(u => u.id.startsWith('h1_10_'));
+      const cl = activeUnits.find(u => u.id.startsWith('h1_13_'));
+      if (adv && cl) {
+        adv.atk = Math.floor(adv.atk * 1.2);
+        cl.atk = Math.floor(cl.atk * 1.2);
+        addLog('【Duyên Phận】 Nỏ Thần Liên Châu: An Dương Vương & Cao Lỗ bạo kích, +20% ATK!');
+      }
+    }
+  },
+  {
+    id: 'nu_tuong_tien_phong',
+    name: 'Nữ Kiệt Tiên Phong',
+    heroIds: ['h2_4', 'h2_5'],
+    description: 'Lê Chân và Bát Nàn cùng xuất trận. Khí thế nữ kiệt, Lê Chân và Bát Nàn +15 Tốc Độ, +15 Tấn Công.',
+    applyEffect: (activeUnits, addLog) => {
+      const lc = activeUnits.find(u => u.id.startsWith('h2_4_'));
+      const bn = activeUnits.find(u => u.id.startsWith('h2_5_'));
+      if (lc && bn) {
+        lc.spd += 15; lc.atk += 15;
+        bn.spd += 15; bn.atk += 15;
+        addLog('【Duyên Phận】 Nữ Kiệt Tiên Phong: Lê Chân & Bát Nàn xung phong, +15 SPD & ATK!');
+      }
+    }
+  },
+  {
+    id: 'binh_chiem_phat_tong',
+    name: 'Bình Chiêm Phạt Tống',
+    heroIds: ['h5_2', 'h5_3'],
+    description: 'Lý Thường Kiệt và Tôn Đản cùng xuất trận. Thế công như chẻ tre, Lý Thường Kiệt +20 ATK, Tôn Đản +20 DEF.',
+    applyEffect: (activeUnits, addLog) => {
+      const ltk = activeUnits.find(u => u.id.startsWith('h5_2_'));
+      const td = activeUnits.find(u => u.id.startsWith('h5_3_'));
+      if (ltk && td) {
+        ltk.atk += 20;
+        td.def += 20;
+        addLog('【Duyên Phận】 Bình Chiêm Phạt Tống: Lý Thường Kiệt +20 ATK, Tôn Đản +20 DEF!');
+      }
+    }
+  },
+  {
+    id: 'nhiem_chinh_y_lan',
+    name: 'Ỷ Lan Nhiếp Chính',
+    heroIds: ['h5_4', 'h5_5'],
+    description: 'Ỷ Lan và Lý Nhân Tông cùng xuất trận. Ỷ Lan buff cho toàn đội +15% HP tối đa.',
+    applyEffect: (activeUnits, addLog) => {
+      const yl = activeUnits.find(u => u.id.startsWith('h5_4_'));
+      const lnt = activeUnits.find(u => u.id.startsWith('h5_5_'));
+      if (yl && lnt) {
+        activeUnits.forEach(u => {
+          if (u.faction === yl.faction) {
+            u.maxHp = Math.floor(u.maxHp * 1.15);
+            u.hp = Math.floor(u.hp * 1.15);
+          }
+        });
+        addLog('【Duyên Phận】 Ỷ Lan Nhiếp Chính: Hậu phương vững chắc, toàn đội +15% HP tối đa!');
+      }
+    }
+  },
+  {
+    id: 'hao_khi_dong_a',
+    name: 'Hào Khí Đông A',
+    heroIds: ['h6_5', 'h6_4', 'h6_6'],
+    description: 'Trần Hưng Đạo, Trần Quang Khải, Trần Nhật Duật cùng xuất trận. Hào khí nhà Trần bừng sáng, toàn đội +15% mọi chỉ số.',
+    applyEffect: (activeUnits, addLog) => {
+      const thd = activeUnits.find(u => u.id.startsWith('h6_5_'));
+      const tqk = activeUnits.find(u => u.id.startsWith('h6_4_'));
+      const tnd = activeUnits.find(u => u.id.startsWith('h6_6_'));
+      if (thd && tqk && tnd) {
+        activeUnits.forEach(u => {
+          if (u.faction === thd.faction) {
+            u.atk = Math.floor(u.atk * 1.15);
+            u.def = Math.floor(u.def * 1.15);
+            u.spd = Math.floor(u.spd * 1.15);
+            u.maxHp = Math.floor(u.maxHp * 1.15);
+            u.hp = Math.floor(u.hp * 1.15);
+          }
+        });
+        addLog('【Duyên Phận】 Hào Khí Đông A: Ba vị đại tướng hội tụ, toàn đội +15% mọi chỉ số!');
+      }
+    }
+  },
+  {
+    id: 'yet_kieu_da_tuong',
+    name: 'Yết Kiêu Dã Tượng',
+    heroIds: ['h6_8', 'h6_9'],
+    description: 'Yết Kiêu và Dã Tượng cùng xuất trận. Bộ đôi tùy tướng trung thành: Yết Kiêu +20 Tốc Độ, Dã Tượng +20 Phòng Thủ.',
+    applyEffect: (activeUnits, addLog) => {
+      const yk = activeUnits.find(u => u.id.startsWith('h6_8_'));
+      const dt = activeUnits.find(u => u.id.startsWith('h6_9_'));
+      if (yk && dt) {
+        yk.spd += 20;
+        dt.def += 20;
+        addLog('【Duyên Phận】 Yết Kiêu Dã Tượng: Yết Kiêu +20 SPD, Dã Tượng +20 DEF!');
+      }
+    }
+  },
+  {
+    id: 'sat_that',
+    name: 'Sát Thát',
+    heroIds: ['h6_10', 'h6_7'],
+    description: 'Trần Bình Trọng và Phạm Ngũ Lão cùng xuất trận. Ý chí diệt giặc: Cả hai +20% Tấn Công và +10 Tốc Độ.',
+    applyEffect: (activeUnits, addLog) => {
+      const tbt = activeUnits.find(u => u.id.startsWith('h6_10_'));
+      const pnl = activeUnits.find(u => u.id.startsWith('h6_7_'));
+      if (tbt && pnl) {
+        tbt.atk = Math.floor(tbt.atk * 1.2); tbt.spd += 10;
+        pnl.atk = Math.floor(pnl.atk * 1.2); pnl.spd += 10;
+        addLog('【Duyên Phận】 Sát Thát: Trần Bình Trọng & Phạm Ngũ Lão dâng cao ý chí, +20% ATK, +10 SPD!');
+      }
+    }
+  },
+  {
+    id: 'pha_cuong_dich',
+    name: 'Phá Cường Địch Báo Hoàng Ân',
+    heroIds: ['h6_11', 'h6_5'],
+    description: 'Trần Quốc Toản và Trần Hưng Đạo cùng xuất trận. Hoài Văn Hầu xông pha: +30% Tấn Công.',
+    applyEffect: (activeUnits, addLog) => {
+      const tqt = activeUnits.find(u => u.id.startsWith('h6_11_'));
+      const thd = activeUnits.find(u => u.id.startsWith('h6_5_'));
+      if (tqt && thd) {
+        tqt.atk = Math.floor(tqt.atk * 1.3);
+        addLog('【Duyên Phận】 Báo Hoàng Ân: Trần Quốc Toản xông pha chiến trận, +30% ATK!');
+      }
+    }
+  },
+  {
+    id: 'khai_quoc_nha_tran',
+    name: 'Khai Quốc Nhà Trần',
+    heroIds: ['h6_1', 'h6_12'],
+    description: 'Trần Thái Tông và Trần Thủ Độ cùng xuất trận. Vua tôi đồng lòng: Cả hai +15 ATK, +15 DEF.',
+    applyEffect: (activeUnits, addLog) => {
+      const ttt = activeUnits.find(u => u.id.startsWith('h6_1_'));
+      const ttd = activeUnits.find(u => u.id.startsWith('h6_12_'));
+      if (ttt && ttd) {
+        ttt.atk += 15; ttt.def += 15;
+        ttd.atk += 15; ttd.def += 15;
+        addLog('【Duyên Phận】 Khai Quốc Nhà Trần: Thái Tông & Thủ Độ +15 ATK & DEF!');
+      }
+    }
+  },
+  {
+    id: 'binh_ngo_dai_cao',
+    name: 'Bình Ngô Đại Cáo',
+    heroIds: ['h8_1', 'h8_2'],
+    description: 'Lê Lợi và Nguyễn Trãi cùng xuất trận. Văn võ song toàn: Lê Lợi +20 ATK, Nguyễn Trãi +20 Tốc Độ.',
+    applyEffect: (activeUnits, addLog) => {
+      const ll = activeUnits.find(u => u.id.startsWith('h8_1_'));
+      const nt = activeUnits.find(u => u.id.startsWith('h8_2_'));
+      if (ll && nt) {
+        ll.atk += 20;
+        nt.spd += 20;
+        addLog('【Duyên Phận】 Bình Ngô Đại Cáo: Lê Lợi +20 ATK, Nguyễn Trãi +20 Tốc Độ!');
+      }
+    }
+  },
+  {
+    id: 'lieu_minh_cuu_chua',
+    name: 'Liều Mình Cứu Chúa',
+    heroIds: ['h8_1', 'h8_3'],
+    description: 'Lê Lợi và Lê Lai cùng xuất trận. Lê Lai đỡ đòn thay Lê Lợi (Lê Lai +30% HP tối đa), Lê Lợi +15% Tấn Công.',
+    applyEffect: (activeUnits, addLog) => {
+      const ll = activeUnits.find(u => u.id.startsWith('h8_1_'));
+      const llai = activeUnits.find(u => u.id.startsWith('h8_3_'));
+      if (ll && llai) {
+        ll.atk = Math.floor(ll.atk * 1.15);
+        llai.maxHp = Math.floor(llai.maxHp * 1.3);
+        llai.hp = Math.floor(llai.hp * 1.3);
+        addLog('【Duyên Phận】 Liều Mình Cứu Chúa: Lê Lai +30% HP bảo vệ Lê Lợi, Lê Lợi +15% ATK!');
+      }
+    }
+  },
+  {
+    id: 'lam_son_tu_nghia',
+    name: 'Lam Sơn Tụ Nghĩa',
+    heroIds: ['h8_4', 'h8_8'],
+    description: 'Trần Nguyên Hãn và Nguyễn Chích cùng xuất trận. Hai danh tướng kiệt xuất: Cả hai +15% Tấn Công.',
+    applyEffect: (activeUnits, addLog) => {
+      const tnh = activeUnits.find(u => u.id.startsWith('h8_4_'));
+      const nc = activeUnits.find(u => u.id.startsWith('h8_8_'));
+      if (tnh && nc) {
+        tnh.atk = Math.floor(tnh.atk * 1.15);
+        nc.atk = Math.floor(nc.atk * 1.15);
+        addLog('【Duyên Phận】 Lam Sơn Tụ Nghĩa: Trần Nguyên Hãn & Nguyễn Chích +15% ATK!');
+      }
+    }
+  },
+  {
+    id: 'tay_son_tam_kiet',
+    name: 'Tây Sơn Tam Kiệt',
+    heroIds: ['h10_1', 'h10_4', 'h10_5'],
+    description: 'Nguyễn Nhạc, Nguyễn Huệ, Nguyễn Lữ cùng xuất trận. Uy chấn thiên hạ, toàn đội +20% Tấn Công.',
+    applyEffect: (activeUnits, addLog) => {
+      const qt = activeUnits.find(u => u.id.startsWith('h10_1_'));
+      const nn = activeUnits.find(u => u.id.startsWith('h10_4_'));
+      const nl = activeUnits.find(u => u.id.startsWith('h10_5_'));
+      if (qt && nn && nl) {
+        activeUnits.forEach(u => {
+          if (u.faction === qt.faction) {
+            u.atk = Math.floor(u.atk * 1.2);
+          }
+        });
+        addLog('【Duyên Phận】 Tây Sơn Tam Kiệt: Ba anh em xuất trận, toàn đội +20% ATK!');
+      }
+    }
+  },
+  {
+    id: 'tay_son_nu_tuong',
+    name: 'Tây Sơn Nữ Kiệt',
+    heroIds: ['h10_3', 'h10_2'],
+    description: 'Bùi Thị Xuân và Ngọc Hân cùng xuất trận. Bùi Thị Xuân +20% Tấn Công, Ngọc Hân +20% HP.',
+    applyEffect: (activeUnits, addLog) => {
+      const btx = activeUnits.find(u => u.id.startsWith('h10_3_'));
+      const nh = activeUnits.find(u => u.id.startsWith('h10_2_'));
+      if (btx && nh) {
+        btx.atk = Math.floor(btx.atk * 1.2);
+        nh.maxHp = Math.floor(nh.maxHp * 1.2);
+        nh.hp = Math.floor(nh.hp * 1.2);
+        addLog('【Duyên Phận】 Tây Sơn Nữ Kiệt: Bùi Thị Xuân +20% ATK, Ngọc Hân +20% HP!');
+      }
+    }
+  },
+  {
+    id: 'tay_son_song_tuan',
+    name: 'Tây Sơn Song Tuấn',
+    heroIds: ['h10_6', 'h10_7'],
+    description: 'Trần Quang Diệu và Vũ Văn Dũng cùng xuất trận. Đôi bạn sinh tử: Cả hai +15% Tấn Công, +15% Phòng Thủ.',
+    applyEffect: (activeUnits, addLog) => {
+      const tqd = activeUnits.find(u => u.id.startsWith('h10_6_'));
+      const vvd = activeUnits.find(u => u.id.startsWith('h10_7_'));
+      if (tqd && vvd) {
+        tqd.atk = Math.floor(tqd.atk * 1.15); tqd.def = Math.floor(tqd.def * 1.15);
+        vvd.atk = Math.floor(vvd.atk * 1.15); vvd.def = Math.floor(vvd.def * 1.15);
+        addLog('【Duyên Phận】 Tây Sơn Song Tuấn: Trần Quang Diệu & Vũ Văn Dũng +15% ATK & DEF!');
+      }
+    }
+  },
+  {
+    id: 'chu_dong_tu_tien_dung',
+    name: 'Chữ Đồng Tử - Tiên Dung',
+    heroIds: ['h1_6', 'h1_12'],
+    description: 'Chử Đồng Tử và Tiên Dung cùng xuất trận. Mối tình bất tử, +20% HP tối đa cho toàn đội.',
+    applyEffect: (activeUnits, addLog) => {
+      const cdt = activeUnits.find(u => u.id.startsWith('h1_6_'));
+      const td = activeUnits.find(u => u.id.startsWith('h1_12_'));
+      if (cdt && td) {
+        activeUnits.forEach(u => {
+          if (u.faction === cdt.faction) {
+            u.maxHp = Math.floor(u.maxHp * 1.2); u.hp = Math.floor(u.hp * 1.2);
+          }
+        });
+        addLog('【Duyên Phận】 Chử Đồng Tử - Tiên Dung: Lan tỏa phúc lành, toàn đội +20% HP tối đa!');
       }
     }
   }
