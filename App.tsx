@@ -133,7 +133,6 @@ export const HERO_HISTORICAL_PASSIVES: Record<string, string[]> = {
   'h2_1': ['berserk', 'extra_turn'], // Trưng Trắc
   'h2_2': ['berserk', 'extra_turn'], // Trưng Nhị
   'h4_2': ['extra_turn', 'execute'], // Đinh Bộ Lĩnh
-  'h4_2': ['extra_turn', 'execute'], // Đinh Bộ Lĩnh (legacy)
   'h8_1': ['endure', 'lifesteal'], // Lê Lợi
 };
 
