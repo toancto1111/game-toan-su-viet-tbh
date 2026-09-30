@@ -1512,7 +1512,8 @@ const App: React.FC = () => {
   const TU_LUYEN_LESSON_ORDER = [
     'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7',
     'B8', 'B9_10', 'B11', 'B12', 'B13',
-    'C3_B13', 'C3_B14', 'C3_B15', 'C3_B16', 'C3_B17', 'C4'
+    'C3_B13', 'C3_B14', 'C3_B15', 'C3_B16', 'C3_B17', 'C4',
+    'C5', 'C6', 'C7', 'C8', 'C9', 'C10'
   ];
 
   const startLessonTuLuyen = (lessonId: string, allQuestions: any[]) => {
@@ -2252,7 +2253,7 @@ const App: React.FC = () => {
                   <div className="text-amber-400 font-cinzel font-black text-sm uppercase tracking-widest mb-1">Chương {lockedChapterToast.chapterNum} — Chưa mở khóa</div>
                   <div className="text-stone-300 text-sm leading-snug">
                     {lockedChapterToast.reason === 'math' ? (
-                      <>Chúa công vui lòng <b>hoàn thành Toán Chương {lockedChapterToast.chapterNum - 1}</b> trong mục Kinh Luân để mở khóa!</>
+                      <>Chúa công vui lòng <b>hoàn thành Toán Chương {lockedChapterToast.chapterNum - 1}</b> trong Thí Luyện Đường để mở khóa!</>
                     ) : (
                       <>Chúa công vui lòng <b>chinh phục Bản đồ Chương {lockedChapterToast.chapterNum - 1}</b> để mở khóa!</>
                     )}
@@ -2300,18 +2301,18 @@ const App: React.FC = () => {
                // Kiểm tra điều kiện Combat cho chương này
                const isCombatDone = (player.unlockedChapters || [1]).includes(c);
                
-               // Kiểm tra điều kiện Học Toán cho chương này (dựa vào Kinh Luân - mathProgress)
+               // Kiểm tra điều kiện Học Toán cho chương này (dựa vào Thí Luyện Đường)
                let isMathDone = true;
-               if (c > 1) {
-                 const prevMathChapterIdx = c - 2; 
-                 const currentGrade = player.grade || 6;
-                 const prevKey = `g${currentGrade}-c${prevMathChapterIdx}`;
-                 const prevUnlocked = player.mathProgress?.[prevKey] || 0;
-                 const prevTotal = MATH_DATA[currentGrade]?.[prevMathChapterIdx]?.lessons?.length || 1;
-                 if (prevUnlocked < prevTotal) {
-                   isMathDone = false;
-                 }
-               }
+               const unlockedLessons = player.tuLuyenUnlockedLessons || ['B1'];
+               if (c === 2) isMathDone = unlockedLessons.includes('B8');
+               else if (c === 3) isMathDone = unlockedLessons.includes('C3_B13');
+               else if (c === 4) isMathDone = unlockedLessons.includes('C4');
+               else if (c === 5) isMathDone = unlockedLessons.includes('C5');
+               else if (c === 6) isMathDone = unlockedLessons.includes('C6');
+               else if (c === 7) isMathDone = unlockedLessons.includes('C7');
+               else if (c === 8) isMathDone = unlockedLessons.includes('C8');
+               else if (c === 9) isMathDone = unlockedLessons.includes('C9');
+               else if (c === 10) isMathDone = unlockedLessons.includes('C10');
                const isUnlocked = (isCombatDone && isMathDone) || player?.playerName?.toLowerCase() === 'admin';
 
                return (
