@@ -1839,6 +1839,11 @@ const App: React.FC = () => {
   };
 
   const initCombat = () => {
+    const isCleared = player.clearedCampaigns?.includes(activeChapter) || (player.unlockedChapters && activeChapter < Math.max(...(player.unlockedChapters || [1])));
+    if (isCleared) {
+       return alert("Chúa công đã bình định được nghịch tặc, hãy tiếp tục thí luyện để mở chương tiếp theo chinh phạt!");
+    }
+
     setCombatMode('campaign');
     if (player.lineup.filter(Boolean).length === 0) return alert("Danh Trại trống không! Chúa công cần vào mục Kinh Luân để kiếm lệnh bài chiêu mộ quân đội.");
 
@@ -1965,6 +1970,10 @@ const App: React.FC = () => {
       }
       if (nextChapter <= 10) {
          newState.progress = { ...(newState.progress || {}), [nextChapter]: 1 };
+      }
+      const currentCleared = newState.clearedCampaigns || [];
+      if (!currentCleared.includes(activeChapter)) {
+          newState.clearedCampaigns = [...currentCleared, activeChapter];
       }
       return newState;
     });
