@@ -836,7 +836,7 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
     const accounts = getAccounts();
     const account = accounts[key];
     if (!account) {
-      setError('Tài khoản không tồn tại. Hãy đăng ký mới.');
+      setError('Tài khoản không tồn tại. Hãy đăng ký mới.\nLưu ý: Tên tài khoản chỉ gồm chữ tiếng Anh (a-z), số và dấu _ (không khoảng trắng, không dấu).');
       setLoading(false);
       return;
     }
@@ -852,6 +852,9 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
     setLoading(false);
   };
 
+  // Regex chỉ cho phép: chữ cái a-z, số 0-9, gạch dưới _
+  const VALID_USERNAME_REGEX = /^[a-z0-9_]+$/;
+
   const handleRegister = async () => {
     setError('');
     if (!fullName.trim()) { setError('Vui lòng nhập họ và tên học sinh.'); return; }
@@ -859,9 +862,15 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
     if (!playerName.trim()) { setError('Vui lòng nhập tên Chúa công (Tên ingame).'); return; }
     if (!username.trim() || !password) { setError('Vui lòng nhập đầy đủ tên tài khoản và mật khẩu.'); return; }
     if (username.trim().length < 3) { setError('Tên tài khoản phải có ít nhất 3 ký tự.'); return; }
+    // Kiểm tra định dạng tài khoản hợp lệ: chỉ chữ cái tiếng Anh thường, số, dấu _
+    const usernameRaw = username.trim().toLowerCase();
+    if (!VALID_USERNAME_REGEX.test(usernameRaw)) {
+      setError('Tên tài khoản không hợp lệ! Chỉ được dùng chữ cái tiếng Anh (a-z), số (0-9) và dấu gạch dưới (_). Không được dùng tiếng Việt có dấu, khoảng trắng, hoặc ký tự đặc biệt.');
+      return;
+    }
     if (password.length < 4) { setError('Mật khẩu phải có ít nhất 4 ký tự.'); return; }
     if (password !== confirmPassword) { setError('Mật khẩu xác nhận không khớp. Vui lòng kiểm tra lại.'); return; }
-    const key = username.trim().toLowerCase();
+    const key = usernameRaw;
     setLoading(true);
 
     // Kiểm tra tên đã tồn tại trên Cloud
@@ -1076,9 +1085,15 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
 
             <div>
               <label className="text-[10px] font-black uppercase text-amber-900/70 mb-1 block tracking-wider">Tên tài khoản (đăng nhập) (*)</label>
-              <input id="reg-username" type="text" placeholder="Ít nhất 3 ký tự (viết liền không dấu)..."
-                className="w-full bg-white/80 border-2 border-amber-900/30 p-2.5 rounded-xl font-bold text-sm outline-none focus:border-amber-900 transition-colors"
-                value={username} onChange={e => setUsername(e.target.value)} />
+              <input id="reg-username" type="text" placeholder="VD: hocsinh123 hoặc tran_van_an"
+                className="w-full bg-white/80 border-2 border-amber-900/30 p-2.5 rounded-xl font-bold text-sm outline-none focus:border-amber-900 transition-colors lowercase"
+                value={username}
+                onChange={e => {
+                  // Chỉ cho phép nhập a-z, 0-9, _ — tự động loại bỏ ký tự khác
+                  const raw = e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, '');
+                  setUsername(raw);
+                }} />
+              <p className="text-[10px] text-amber-900/50 mt-1 leading-tight">⚠ Chỉ dùng chữ tiếng Anh <b>không dấu</b>, số và dấu <b>_</b>. Viết liền, không khoảng trắng.<br/>Ví dụ hợp lệ: <b>lamtieubao</b>, <b>nguyen_van_a</b>, <b>hocsinh2025</b></p>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
