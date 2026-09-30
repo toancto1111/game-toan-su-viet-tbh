@@ -1360,9 +1360,17 @@ const App: React.FC = () => {
   // ========= THEO DÕI SESSION (KICK OUT NẾU ĐĂNG NHẬP THIẾT BỊ KHÁC) =========
   useEffect(() => {
     if (currentUser && !currentUser.startsWith('guest_') && isFirebaseReady() && sessionAsserted) {
+      // Cooldown 15 giây sau khi login để tránh false positive từ script/admin
+      const cooldownMs = 15000;
+      const startedAt = Date.now();
       const unsubscribe = listenToAccountSession(currentUser, localSessionIdRef.current, () => {
+        // Chỉ kick nếu đã qua thời gian cooldown
+        if (Date.now() - startedAt < cooldownMs) {
+          console.log('[Session] Bỏ qua kick vì còn trong cooldown 15s (có thể do sync script)');
+          return;
+        }
         // Callback khi bị kick out
-        alert("Tài khoản của bạn đã được đăng nhập ở một thiết bị khác! Vui lòng tải lại trang hoặc đăng nhập lại.");
+        alert("\u{1F6A8} Tài khoản của bạn đã được đăng nhập ở một thiết bị khác! Vui lòng tải lại trang hoặc đăng nhập lại.");
         setCurrentUser(null);
         clearSession();
         setView('auth');
@@ -1371,7 +1379,7 @@ const App: React.FC = () => {
         if (unsubscribe) unsubscribe();
       };
     }
-  }, [currentUser]);
+  }, [currentUser, sessionAsserted]);
 
   // ========= CLOUD SYNC STATE =========
   const [syncStatus, setSyncStatus] = useState<'idle' | 'saving' | 'saved' | 'offline'>('idle');
