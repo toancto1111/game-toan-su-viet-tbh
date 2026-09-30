@@ -2931,7 +2931,7 @@ const App: React.FC = () => {
       {/* AI Chatbot - ẩn khi chiến đấu nhưng giữ nguyên state để không bị reset */}
       {view !== 'auth' && (
         <div style={{ display: view === 'chapter-hub' ? 'block' : 'none' }}>
-          <ChatbotWidget />
+          <ChatbotWidget player={player} />
         </div>
       )}
       

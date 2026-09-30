@@ -55,11 +55,14 @@ export const GlobalChatWidget: React.FC<GlobalChatWidgetProps> = ({ player }) =>
 
     const filteredText = filterProfanity(inputText.trim());
 
+    const currentAvatarHero = (player.inventory || []).find(h => h.id === player.avatarId);
+    const avatarToSave = player.customAvatar || (currentAvatarHero ? currentAvatarHero.image : './heroes/default_ally.png');
+
     const success = await sendGlobalChatMessage({
       senderId: player.username || 'unknown',
       senderName: player.playerName || 'Người Chơi',
       senderGrade: player.grade ? `Lớp ${player.grade}` : 'Tân Binh',
-      avatar: player.customAvatar || (player.avatarId ? `./avatars/${player.avatarId}.png` : './heroes/h1_0.png'),
+      avatar: avatarToSave,
       text: filteredText
     });
 
@@ -69,13 +72,21 @@ export const GlobalChatWidget: React.FC<GlobalChatWidgetProps> = ({ player }) =>
     }
   };
 
+  const handleOpen = () => {
+    if (player && player.username?.startsWith('guest_')) {
+      alert("Vui lòng tạo tài khoản để có thể hiệu lệnh thiên hạ");
+      return;
+    }
+    setIsOpen(true);
+  };
+
   if (!player) return null;
 
   return (
     <>
       {!isOpen && (
         <div
-          onClick={() => setIsOpen(true)}
+          onClick={handleOpen}
           className="fixed top-[180px] left-[24px] z-50 group flex flex-col items-center hover:scale-110 transition-transform cursor-pointer"
           title="Kênh Thế Giới"
         >
@@ -121,7 +132,12 @@ export const GlobalChatWidget: React.FC<GlobalChatWidgetProps> = ({ player }) =>
                     <div className="flex items-end gap-2 max-w-[90%] md:max-w-[85%]">
                       {!isMe && (
                          <div className="w-10 h-10 rounded-full border-2 border-amber-900 overflow-hidden shrink-0 bg-stone-800 shadow-sm">
-                           <img src={msg.avatar || './heroes/h1_0.png'} alt="avatar" className="w-full h-full object-cover" />
+                           <img 
+                             src={msg.avatar && msg.avatar !== './heroes/h1_0.png' ? msg.avatar : './heroes/default_ally.png'} 
+                             onError={(e) => { e.currentTarget.src = './heroes/default_ally.png'; }} 
+                             alt="avatar" 
+                             className="w-full h-full object-cover" 
+                           />
                          </div>
                       )}
                       

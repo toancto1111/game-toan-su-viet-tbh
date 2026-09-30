@@ -5,7 +5,7 @@ import { CHATBOT_SYSTEM_PROMPT, CHATBOT_WELCOME_MESSAGE } from './chatbotPrompt'
 import { INITIAL_HEROES as heroes } from './constants';
 import { getAICache, saveAICache, saveChatSession, getPlayerChatSessions, ChatSession } from './firebaseService';
 import { CHAPTER_NAMES } from './geminiService';
-import { Hero } from './types';
+import { Hero, PlayerState } from './types';
 import { GeometryRenderer } from './GeometryRenderer';
 
 // ─── Cấu hình Gemini Multi-Key Pool (Tối ưu hóa tải & chống nghẽn) ──────────
@@ -540,7 +540,7 @@ const cyrb53 = (str: string, seed = 0) => {
   return 4294967296 * (2097151 & h2) + (h1 >>> 0);
 };
 
-export const ChatbotWidget: React.FC = () => {
+export const ChatbotWidget: React.FC<{ player?: PlayerState | null }> = ({ player }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentSessionId, setCurrentSessionId] = useState<string>(() => 'session-' + Date.now());
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
@@ -1297,6 +1297,14 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
 
   const hasRealKeys = API_KEYS_POOL.length > 0;
 
+  const handleOpen = () => {
+    if (player && player.username?.startsWith('guest_')) {
+      alert("Vui lòng tạo tài khoản để có thể hiệu lệnh thiên hạ");
+      return;
+    }
+    setIsOpen(true);
+  };
+
   return (
     <>
       <style>{styles}</style>
@@ -1304,12 +1312,12 @@ Hãy giải đáp chuẩn xác theo sách giáo khoa Lịch sử Việt Nam, sin
         {/* FAB button */}
         {!isOpen && (
           <div className="flex flex-col items-center">
-            <button className="cb-fab" onClick={() => setIsOpen(true)} title="Mở trợ lý học tập">
+            <button className="cb-fab" onClick={handleOpen} title="Mở trợ lý học tập">
               <span className="cb-fab-pulse" />
               <GraduationCap size={26} />
               <span className="cb-badge" />
             </button>
-            <span className="mt-1.5 px-2.5 py-0.5 rounded-full bg-stone-900/90 border border-indigo-700/50 text-[10px] font-black text-indigo-400 uppercase tracking-widest drop-shadow whitespace-nowrap cursor-pointer" onClick={() => setIsOpen(true)}>Hỏi AI</span>
+            <span className="mt-1.5 px-2.5 py-0.5 rounded-full bg-stone-900/90 border border-indigo-700/50 text-[10px] font-black text-indigo-400 uppercase tracking-widest drop-shadow whitespace-nowrap cursor-pointer" onClick={handleOpen}>Hỏi AI</span>
           </div>
         )}
 
