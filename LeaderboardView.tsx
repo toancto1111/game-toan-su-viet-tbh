@@ -60,7 +60,7 @@ export const LeaderboardView: React.FC<{
   const [activeTab, setActiveTab] = useState<'knowledge' | 'combat' | 'trial' | 'diligent'>('knowledge');
   // Mặc định lọc theo đúng khối lớp của học sinh đang đăng nhập
   const [gradeFilter, setGradeFilter] = useState<number | 'all'>(player.grade || 'all');
-  const [includeMockSeeds, setIncludeMockSeeds] = useState<boolean>(true);
+  const [includeMockSeeds, setIncludeMockSeeds] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [inspectTarget, setInspectTarget] = useState<LeaderboardEntry | null>(null);
   const [onlineEntries, setOnlineEntries] = useState<LeaderboardEntry[]>([]);
