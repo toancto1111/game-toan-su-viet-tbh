@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageCircle, Send, X } from 'lucide-react';
-import { listenToGlobalChat, sendGlobalChatMessage, ChatMessage } from './firebaseService';
+import { listenToGlobalChat, sendGlobalChatMessage, ChatMessage, fetchOnlineLeaderboard } from './firebaseService';
 import { PlayerState } from './types';
 
 const BANNED_WORDS = ['đmm', 'đm', 'vcl', 'vl', 'cc', 'cặc', 'lồn', 'địt', 'đụ', 'fuck', 'shit', 'bitch'];
@@ -16,6 +16,7 @@ export const GlobalChatWidget: React.FC<GlobalChatWidgetProps> = ({ player }) =>
   const [lastSentTime, setLastSentTime] = useState<number>(0);
   const [unreadCount, setUnreadCount] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [topRanks, setTopRanks] = useState<Record<string, { title: string, ring: string }>>({});
 
   useEffect(() => {
     const unsubscribe = listenToGlobalChat((msgs) => {
@@ -25,6 +26,43 @@ export const GlobalChatWidget: React.FC<GlobalChatWidgetProps> = ({ player }) =>
       }
     });
     return () => unsubscribe();
+  }, [isOpen]);
+
+  useEffect(() => {
+    const loadRanks = async () => {
+       const entries = await fetchOnlineLeaderboard('combat'); 
+       const rankMap: Record<string, { title: string, ring: string }> = {};
+       const getSafeName = (e: any) => (e?.playerName || e?.uid || "").toLowerCase();
+       
+       // Diligent
+       const diliSorted = [...entries].sort((a, b) => (b.questionsAnswered || 0) - (a.questionsAnswered || 0));
+       if (diliSorted[2]) rankMap[getSafeName(diliSorted[2])] = { title: "Cần Mẫn Quốc Sĩ", ring: "ring-[2px] ring-green-400 shadow-[0_0_10px_rgba(74,222,128,0.8)]" };
+       if (diliSorted[1]) rankMap[getSafeName(diliSorted[1])] = { title: "Văn Xương Đế Quân", ring: "ring-[2px] ring-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.8)]" };
+       if (diliSorted[0]) rankMap[getSafeName(diliSorted[0])] = { title: "Cần Vương Bảng Nhất", ring: "ring-[2px] ring-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.8)]" };
+
+       // Trial
+       const trialSorted = [...entries].sort((a, b) => (b.trialStage || 0) - (a.trialStage || 0));
+       if (trialSorted[2]) rankMap[getSafeName(trialSorted[2])] = { title: "Đại Tư Mã", ring: "ring-[2px] ring-green-400 shadow-[0_0_10px_rgba(74,222,128,0.8)]" };
+       if (trialSorted[1]) rankMap[getSafeName(trialSorted[1])] = { title: "Thượng Tướng Quân", ring: "ring-[2px] ring-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.8)]" };
+       if (trialSorted[0]) rankMap[getSafeName(trialSorted[0])] = { title: "Đại Đô Đốc", ring: "ring-[2px] ring-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.8)]" };
+
+       // Knowledge
+       const knowSorted = [...entries].sort((a, b) => (b.knowledgeScore || 0) - (a.knowledgeScore || 0));
+       if (knowSorted[2]) rankMap[getSafeName(knowSorted[2])] = { title: "Thám Hoa", ring: "ring-[2px] ring-amber-600 shadow-[0_0_10px_rgba(217,119,6,0.8)]" };
+       if (knowSorted[1]) rankMap[getSafeName(knowSorted[1])] = { title: "Bảng Nhãn", ring: "ring-[2px] ring-gray-300 shadow-[0_0_10px_rgba(209,213,219,0.8)]" };
+       if (knowSorted[0]) rankMap[getSafeName(knowSorted[0])] = { title: "Trạng Nguyên", ring: "ring-[2px] ring-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.8)]" };
+
+       // Combat
+       const combatSorted = [...entries].sort((a, b) => (b.combatPower || 0) - (a.combatPower || 0));
+       if (combatSorted[2]) rankMap[getSafeName(combatSorted[2])] = { title: "Thừa Tướng", ring: "ring-[2px] ring-green-400 shadow-[0_0_10px_rgba(74,222,128,0.8)]" };
+       if (combatSorted[1]) rankMap[getSafeName(combatSorted[1])] = { title: "Quốc Sư", ring: "ring-[2px] ring-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.8)]" };
+       if (combatSorted[0]) rankMap[getSafeName(combatSorted[0])] = { title: "Cửu Ngũ Chí Tôn", ring: "ring-[2px] ring-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.8)]" };
+
+       setTopRanks(rankMap);
+    };
+    if (isOpen) {
+       loadRanks();
+    }
   }, [isOpen]);
 
   useEffect(() => {
@@ -127,11 +165,13 @@ export const GlobalChatWidget: React.FC<GlobalChatWidgetProps> = ({ player }) =>
             ) : (
               messages.map((msg) => {
                 const isMe = msg.senderId === player.username;
+                const senderKey = (msg.senderName || msg.senderId || "").toLowerCase();
+                const rankInfo = topRanks[senderKey];
                 return (
                   <div key={msg.id} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
                     <div className="flex items-end gap-2 max-w-[90%] md:max-w-[85%]">
                       {!isMe && (
-                         <div className="w-10 h-10 rounded-full border-2 border-amber-900 overflow-hidden shrink-0 bg-stone-800 shadow-sm">
+                         <div className={`w-10 h-10 rounded-full overflow-hidden shrink-0 bg-stone-800 ${rankInfo ? rankInfo.ring : 'border-2 border-amber-900 shadow-sm'}`}>
                            <img 
                              src={msg.avatar && msg.avatar !== './heroes/h1_0.png' ? msg.avatar : './heroes/default_ally.png'} 
                              onError={(e) => { e.currentTarget.src = './heroes/default_ally.png'; }} 
@@ -143,9 +183,20 @@ export const GlobalChatWidget: React.FC<GlobalChatWidgetProps> = ({ player }) =>
                       
                       <div className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
                         <div className="flex items-center gap-1.5 mb-1 px-1">
-                          <span className="text-[10px] md:text-xs font-bold text-amber-500 bg-amber-950/80 px-1.5 py-0.5 rounded uppercase border border-amber-900/50 shadow-sm">
+                          <span className="text-[10px] md:text-xs font-bold text-amber-500 bg-amber-950/80 px-1.5 py-0.5 rounded uppercase border border-amber-900/50 shadow-sm shrink-0">
                             {msg.senderGrade}
                           </span>
+                          {rankInfo && (
+                            <span className={`text-[10px] md:text-xs font-bold px-1.5 py-0.5 rounded uppercase border shadow-sm shrink-0 ${
+                                rankInfo.title.includes('Tôn') || rankInfo.title.includes('Nguyên') || rankInfo.title.includes('Nhất') || rankInfo.title.includes('Đốc')
+                                ? 'bg-yellow-900/80 text-yellow-400 border-yellow-500/50' 
+                                : rankInfo.title.includes('Sư') || rankInfo.title.includes('Quân') || rankInfo.title.includes('Nhãn') 
+                                ? 'bg-blue-900/80 text-blue-400 border-blue-500/50'
+                                : 'bg-green-900/80 text-green-400 border-green-500/50'
+                            }`}>
+                                {rankInfo.title}
+                            </span>
+                          )}
                           <span className="text-xs md:text-sm font-bold text-stone-300">{msg.senderName}</span>
                         </div>
                         
