@@ -728,3 +728,37 @@ export const sendGlobalChatMessage = async (message: Omit<ChatMessage, 'id' | 't
     return false;
   }
 };
+
+export interface SystemAnnouncement {
+  id: string;
+  text: string;
+  timestamp: number;
+}
+export const listenToAnnouncements = (callback: (anns: SystemAnnouncement[]) => void) => {
+  if (!db) return () => {};
+  const docRef = doc(db, 'global_announcements', 'main');
+  return onSnapshot(docRef, (docSnap) => {
+    if (docSnap.exists()) {
+      callback(docSnap.data().items || []);
+    } else {
+      callback([]);
+    }
+  }, () => {});
+};
+export const sendAnnouncement = async (text: string) => {
+  if (!db) return false;
+  try {
+    const docRef = doc(db, 'global_announcements', 'main');
+    const newAnn = { id: crypto.randomUUID(), text, timestamp: Date.now() };
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      await setDoc(docRef, { items: [newAnn] });
+    } else {
+      let items = (docSnap.data().items as SystemAnnouncement[]) || [];
+      if (items.length >= 10) items = items.slice(items.length - 9);
+      items.push(newAnn);
+      await updateDoc(docRef, { items });
+    }
+    return true;
+  } catch(e) { return false; }
+};

@@ -29,7 +29,7 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
 import { PlayerState, Rarity, Question, Hero, Artifact, TrialRecord } from './types';
 import { INITIAL_HEROES, ARTIFACTS, ENEMY_HEROES, DEFAULT_ALLY_IMG, DEFAULT_ENEMY_IMG, SYNERGIES, AVAILABLE_VIDEOS } from './constants';
 import { CHAPTER_NAMES, MATH_DATA, getMathQuestions, getQuestionsForLesson } from './geminiService';
-import { saveTrialRecord, syncPlayerToLeaderboard, savePlayerProgress, loadPlayerDataFromCloud, updateStudentAnalytics, isFirebaseReady, getCloudAccount, saveCloudAccount , updateArenaScore, listenToAccountSession } from './firebaseService';
+import { saveTrialRecord, syncPlayerToLeaderboard, savePlayerProgress, loadPlayerDataFromCloud, updateStudentAnalytics, isFirebaseReady, getCloudAccount, saveCloudAccount , updateArenaScore, listenToAccountSession, listenToAnnouncements, sendAnnouncement, fetchOnlineLeaderboard } from './firebaseService';
 import { AdminView } from './AdminView';
 import { demoTuLuyenData } from './demo_tu_luyen_data';
 import * as XLSX from 'xlsx';
@@ -1150,6 +1150,21 @@ const App: React.FC = () => {
   // isLandscape = true khi màn hình ngang — bao gồm cả điện thoại xoay ngang
   const [isLandscape, setIsLandscape] = useState(() => window.innerWidth > window.innerHeight);
 
+  const [announcement, setAnnouncement] = useState<string | null>(null);
+  const lastAnnRef = useRef(Date.now());
+
+  useEffect(() => {
+     return listenToAnnouncements((anns) => {
+         const newAnns = anns.filter(a => a.timestamp > lastAnnRef.current);
+         if (newAnns.length > 0) {
+             const latest = newAnns[newAnns.length - 1];
+             setAnnouncement(latest.text);
+             lastAnnRef.current = latest.timestamp;
+             setTimeout(() => setAnnouncement(null), 15000);
+         }
+     });
+  }, []);
+
   const [customAlert, setCustomAlert] = useState<{message: string, visible: boolean}>({ message: '', visible: false });
   const [customConfirm, setCustomConfirm] = useState<{message: string, visible: boolean, onConfirm: () => void}>({ message: '', visible: false, onConfirm: () => {} });
 
@@ -1836,6 +1851,11 @@ const App: React.FC = () => {
        }
     }
     setSummonResults(newResults);
+    newResults.forEach(h => {
+        if (h.rarity === 'UR') {
+            sendAnnouncement(`🎉 Chúc mừng ${player.playerName || 'Chúa công'} đã triệu hồi được Thần Tướng UR: ${h.name}! 🎉`);
+        }
+    });
   };
 
   const initCombat = () => {
@@ -2085,6 +2105,9 @@ const App: React.FC = () => {
   };
 
   const initTrialCombat = (stageId: number, trialEnemies: Hero[]) => {
+    if ((player.heroTrialProgress || 0) >= stageId) {
+        return alert("Ải này đã được vượt qua! Chúa công hãy tiếp tục chinh phục các ải cao hơn nhé.");
+    }
     setActiveTrialStage(stageId);
     setCombatMode('hero-trial');
     if ((player.permLineup || []).filter(Boolean).length === 0) return alert("Không có Tướng vĩnh viễn nào trong Quân đoàn!");
@@ -2213,6 +2236,16 @@ const App: React.FC = () => {
           setCurrentUser(username);
           setPlayer(playerData);
           setView('chapter-select');
+
+          setTimeout(async () => {
+              try {
+                  const lbs = await fetchOnlineLeaderboard('combat');
+                  const top1 = lbs[0];
+                  if (top1 && top1.username === username.toLowerCase()) {
+                      sendAnnouncement(`👑 Cung nghênh Đệ Nhất Cao Thủ [${playerData.playerName || username}] đã đăng nhập! 👑`);
+                  }
+              } catch(e) {}
+          }, 2000);
         }} />
       );
       case 'chapter-select': return (
@@ -2816,6 +2849,13 @@ const App: React.FC = () => {
   return (
     <>
       <div className={`relative z-0 has-bottom-nav ${view !== 'auth' ? 'pb-[72px] md:pb-0' : ''}`} style={{ height: '100%' }}>
+        {announcement && (
+           <div className="absolute top-0 left-0 right-0 z-[9999] overflow-hidden bg-gradient-to-r from-transparent via-red-900/80 to-transparent py-1 border-b border-amber-500/50 pointer-events-none">
+              <div className="animate-marquee whitespace-nowrap text-amber-300 font-cinzel font-black uppercase text-sm md:text-base tracking-widest drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]">
+                  {announcement}
+              </div>
+           </div>
+        )}
         {renderView()}
       </div>
 
