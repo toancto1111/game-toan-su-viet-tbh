@@ -92,6 +92,12 @@ export const syncPlayerToLeaderboard = async (entry: LeaderboardEntry): Promise<
   }
   if (entry.uid && entry.uid.startsWith('guest_')) return false;
 
+  // Không xếp hạng các tài khoản admin để nhường top cho người chơi
+  const safeName = (entry.playerName || entry.uid || "").toLowerCase();
+  if (safeName === 'admin' || safeName === 'tmt') {
+      return false;
+  }
+
   try {
     const safeId = (entry.uid || entry.playerName || "player").toLowerCase().replace(/[^a-z0-9_-]/g, '_');
     const docRef = doc(db, "leaderboards", safeId);
@@ -133,7 +139,11 @@ export const fetchOnlineLeaderboard = async (
         const querySnapshot = await getDocs(q);
         const fetched: LeaderboardEntry[] = [];
         querySnapshot.forEach((docSnap) => {
-          fetched.push(docSnap.data() as LeaderboardEntry);
+          const data = docSnap.data() as LeaderboardEntry;
+          const safeName = (data.playerName || data.uid || "").toLowerCase();
+          if (safeName !== 'admin' && safeName !== 'tmt') {
+             fetched.push(data);
+          }
         });
         if (fetched.length > 0) {
           entries = fetched;
@@ -535,6 +545,9 @@ export const getArenaOpponents = async (currentElo: number = 1000, excludeUid: s
 export const updateArenaScore = async (uid: string, newScore: number): Promise<boolean> => {
   if (!db) return false;
   if (uid.startsWith('guest_')) return false;
+  
+  const safeName = uid.toLowerCase();
+  if (safeName === 'admin' || safeName === 'tmt') return false;
 
   try {
     const safeId = uid.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
