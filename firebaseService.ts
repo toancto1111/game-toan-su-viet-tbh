@@ -297,7 +297,7 @@ export const saveCloudAccount = async (username: string, passwordHash: string, p
 /**
  * Lấy thông tin tài khoản từ Cloud Firestore (dùng khi đăng nhập)
  */
-export const getCloudAccount = async (username: string): Promise<{ passwordHash: string; playerData: any } | null> => {
+export const getCloudAccount = async (username: string): Promise<{ passwordHash: string; playerData: any; updatedAt?: number; isBanned?: boolean; bannedFromChat?: boolean; banReason?: string } | null> => {
   if (!db) return null;
   try {
     const docRef = doc(db, "accounts", username.toLowerCase());
@@ -307,7 +307,10 @@ export const getCloudAccount = async (username: string): Promise<{ passwordHash:
     return { 
       passwordHash: data.passwordHash, 
       playerData: data.playerData,
-      updatedAt: data.updatedAt || 0
+      updatedAt: data.updatedAt || 0,
+      isBanned: !!data.isBanned,
+      bannedFromChat: !!data.bannedFromChat,
+      banReason: data.banReason || ''
     };
   } catch (error) {
     console.error("Lỗi lấy tài khoản từ Cloud:", error);
@@ -676,7 +679,7 @@ export const saveAICache = async (questionHash: string, question: string, answer
   }
 };
 
-// ================= GLOBAL CHAT (TỐI ƯU CHI PHÍ) =================
+// ================= GLOBAL CHAT (TỐI ƯU CHI PHÍ) & MODERATION =================
 export interface ChatMessage {
   id: string;
   senderId: string;
@@ -687,7 +690,151 @@ export interface ChatMessage {
   timestamp: number;
 }
 
+export interface ModerationRules {
+  bannedChatUsers: string[];    // Danh sách username bị cấm chat
+  bannedAccounts: string[];     // Danh sách username bị khóa tài khoản
+  updatedAt?: number;
+}
+
 const GLOBAL_CHAT_ROOM_ID = 'main_room';
+
+/**
+ * Lắng nghe danh sách cấm chat & khóa tài khoản theo thời gian thực (1 doc duy nhất)
+ */
+export const listenToModerationRules = (callback: (rules: ModerationRules) => void) => {
+  if (!db) return () => {};
+  const docRef = doc(db, 'system_moderation', 'rules');
+  return onSnapshot(docRef, (docSnap) => {
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      callback({
+        bannedChatUsers: (data.bannedChatUsers as string[]) || [],
+        bannedAccounts: (data.bannedAccounts as string[]) || [],
+        updatedAt: data.updatedAt
+      });
+    } else {
+      callback({ bannedChatUsers: [], bannedAccounts: [] });
+    }
+  }, (err) => {
+    console.error("Lỗi lắng nghe moderation rules:", err);
+  });
+};
+
+/**
+ * Lấy quy tắc kiểm duyệt 1 lần
+ */
+export const getModerationRules = async (): Promise<ModerationRules> => {
+  if (!db) return { bannedChatUsers: [], bannedAccounts: [] };
+  try {
+    const docRef = doc(db, 'system_moderation', 'rules');
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      return {
+        bannedChatUsers: (data.bannedChatUsers as string[]) || [],
+        bannedAccounts: (data.bannedAccounts as string[]) || [],
+        updatedAt: data.updatedAt
+      };
+    }
+    return { bannedChatUsers: [], bannedAccounts: [] };
+  } catch (e) {
+    console.error("Lỗi lấy moderation rules:", e);
+    return { bannedChatUsers: [], bannedAccounts: [] };
+  }
+};
+
+/**
+ * Cấm chat hoặc Bỏ cấm chat một tài khoản
+ */
+export const banUserFromChat = async (rawUsername: string, banned: boolean, reason?: string): Promise<boolean> => {
+  if (!db) return false;
+  const username = rawUsername.trim().toLowerCase();
+  if (!username) return false;
+  try {
+    const rulesRef = doc(db, 'system_moderation', 'rules');
+    const rulesSnap = await getDoc(rulesRef);
+    let bannedChatUsers: string[] = [];
+    let bannedAccounts: string[] = [];
+    if (rulesSnap.exists()) {
+      const data = rulesSnap.data();
+      bannedChatUsers = (data.bannedChatUsers as string[]) || [];
+      bannedAccounts = (data.bannedAccounts as string[]) || [];
+    }
+
+    if (banned) {
+      if (!bannedChatUsers.includes(username)) bannedChatUsers.push(username);
+    } else {
+      bannedChatUsers = bannedChatUsers.filter(u => u.toLowerCase() !== username);
+    }
+
+    await setDoc(rulesRef, { bannedChatUsers, bannedAccounts, updatedAt: Date.now() }, { merge: true });
+
+    // Đồng bộ vào tài khoản cá nhân
+    const accRef = doc(db, 'accounts', username);
+    await setDoc(accRef, { bannedFromChat: banned, chatBanReason: reason || '', updatedAt: Date.now() }, { merge: true });
+
+    return true;
+  } catch (e) {
+    console.error("Lỗi cấm chat:", e);
+    return false;
+  }
+};
+
+/**
+ * Khóa hoặc Mở khóa tài khoản hoàn toàn
+ */
+export const banAccount = async (rawUsername: string, banned: boolean, reason?: string): Promise<boolean> => {
+  if (!db) return false;
+  const username = rawUsername.trim().toLowerCase();
+  if (!username) return false;
+  try {
+    const rulesRef = doc(db, 'system_moderation', 'rules');
+    const rulesSnap = await getDoc(rulesRef);
+    let bannedChatUsers: string[] = [];
+    let bannedAccounts: string[] = [];
+    if (rulesSnap.exists()) {
+      const data = rulesSnap.data();
+      bannedChatUsers = (data.bannedChatUsers as string[]) || [];
+      bannedAccounts = (data.bannedAccounts as string[]) || [];
+    }
+
+    if (banned) {
+      if (!bannedAccounts.includes(username)) bannedAccounts.push(username);
+    } else {
+      bannedAccounts = bannedAccounts.filter(u => u.toLowerCase() !== username);
+    }
+
+    await setDoc(rulesRef, { bannedChatUsers, bannedAccounts, updatedAt: Date.now() }, { merge: true });
+
+    // Đồng bộ vào tài khoản cá nhân
+    const accRef = doc(db, 'accounts', username);
+    await setDoc(accRef, { isBanned: banned, banReason: reason || '', updatedAt: Date.now() }, { merge: true });
+
+    return true;
+  } catch (e) {
+    console.error("Lỗi khóa tài khoản:", e);
+    return false;
+  }
+};
+
+/**
+ * Xóa 1 tin nhắn khỏi Kênh Thế Giới
+ */
+export const deleteGlobalChatMessage = async (messageId: string): Promise<boolean> => {
+  if (!db || !messageId) return false;
+  try {
+    const docRef = doc(db, 'global_chat', GLOBAL_CHAT_ROOM_ID);
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) return false;
+    const currentMessages = (docSnap.data().messages as ChatMessage[]) || [];
+    const updatedMessages = currentMessages.filter(m => m.id !== messageId);
+    await updateDoc(docRef, { messages: updatedMessages });
+    return true;
+  } catch (e) {
+    console.error("Lỗi xóa tin nhắn chat:", e);
+    return false;
+  }
+};
 
 /**
  * Lắng nghe tin nhắn mới.
@@ -711,11 +858,25 @@ export const listenToGlobalChat = (callback: (messages: ChatMessage[]) => void) 
 
 /**
  * Gửi tin nhắn mới.
- * Tự động loại bỏ tin nhắn cũ nếu mảng > 100 phần tử để giảm dung lượng Document.
+ * Tự động kiểm tra cấm chat và loại bỏ tin nhắn cũ nếu mảng > 100 phần tử để giảm dung lượng Document.
  */
 export const sendGlobalChatMessage = async (message: Omit<ChatMessage, 'id' | 'timestamp'>): Promise<boolean> => {
   if (!db) return false;
   try {
+    const sender = (message.senderId || '').trim().toLowerCase();
+    
+    // Kiểm tra cấm chat trước khi gửi
+    const rulesRef = doc(db, 'system_moderation', 'rules');
+    const rulesSnap = await getDoc(rulesRef);
+    if (rulesSnap.exists()) {
+      const rules = rulesSnap.data();
+      const bannedUsers: string[] = rules.bannedChatUsers || [];
+      if (bannedUsers.some(u => u.toLowerCase() === sender)) {
+        console.warn(`Tài khoản ${sender} đã bị cấm chat trên Kênh Thế Giới.`);
+        return false;
+      }
+    }
+
     const docRef = doc(db, 'global_chat', GLOBAL_CHAT_ROOM_ID);
     const newMsg: ChatMessage = {
       ...message,

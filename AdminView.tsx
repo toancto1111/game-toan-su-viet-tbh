@@ -1,9 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, Download, Database } from 'lucide-react';
-import { getAllTrialRecords, getAllChatSessions, ChatSession , fetchCloudGiftCodes, saveCloudGiftCode, deleteCloudGiftCode, fetchAllStudentAnalytics, StudentAnalytics } from './firebaseService';
+import { ChevronLeft, Download, Database, Plus, Trash2, Gift, Code, ShieldAlert, VolumeX, Volume2, Lock, Unlock, MessageSquare, AlertTriangle, UserX, Check } from 'lucide-react';
+import { 
+  getAllTrialRecords, 
+  getAllChatSessions, 
+  ChatSession, 
+  fetchCloudGiftCodes, 
+  saveCloudGiftCode, 
+  deleteCloudGiftCode, 
+  fetchAllStudentAnalytics, 
+  StudentAnalytics,
+  listenToGlobalChat,
+  listenToModerationRules,
+  banUserFromChat,
+  banAccount,
+  deleteGlobalChatMessage,
+  ChatMessage,
+  ModerationRules
+} from './firebaseService';
 import * as XLSX from 'xlsx';
 import { GiftCode, GiftCodeReward } from './types';
-import { Plus, Trash2, Gift, Code } from 'lucide-react';
 
 const PILLS = [
   { id: 'pill1', name: 'Nhất Tinh Tụ Khí Đan' },
@@ -26,7 +41,7 @@ const ITEM_OPTIONS = [
 export const AdminView: React.FC<{ setView: (v: string) => void }> = ({ setView }) => {
   const [loading, setLoading] = useState(false);
   const [records, setRecords] = useState<any[]>([]);
-  const [activeTab, setActiveTab] = useState<'thi_luyen' | 'giftcode' | 'analytics' | 'chat-logs'>('analytics');
+  const [activeTab, setActiveTab] = useState<'thi_luyen' | 'giftcode' | 'analytics' | 'chat-logs' | 'chat-moderation'>('analytics');
   const [chatSessions, setChatSessions] = useState<ChatSession[]>([]);
   const [selectedChatSession, setSelectedChatSession] = useState<ChatSession | null>(null);
   const [giftCodes, setGiftCodes] = useState<GiftCode[]>([]);
@@ -37,6 +52,13 @@ export const AdminView: React.FC<{ setView: (v: string) => void }> = ({ setView 
   const [expiresAtDate, setExpiresAtDate] = useState<string>('');
   const [isPrivate, setIsPrivate] = useState(false);
   const [allowedPlayersText, setAllowedPlayersText] = useState(''); // Mỗi dòng 1 tên tài khoản
+
+  // Moderation state
+  const [globalChatMessages, setGlobalChatMessages] = useState<ChatMessage[]>([]);
+  const [moderationRules, setModerationRules] = useState<ModerationRules>({ bannedChatUsers: [], bannedAccounts: [] });
+  const [manualUsername, setManualUsername] = useState('');
+  const [manualBanReason, setManualBanReason] = useState('');
+  const [modSuccessMsg, setModSuccessMsg] = useState('');
 
   // Analytics state
   const [analytics, setAnalytics] = useState<StudentAnalytics[]>([]);
@@ -148,6 +170,40 @@ export const AdminView: React.FC<{ setView: (v: string) => void }> = ({ setView 
     loadChats();
   }, [activeTab]);
 
+  // Load Global Chat & Moderation Rules theo thời gian thực khi chuyển sang tab chat-moderation
+  useEffect(() => {
+    if (activeTab !== 'chat-moderation') return;
+    const unsubChat = listenToGlobalChat((msgs) => setGlobalChatMessages(msgs));
+    const unsubRules = listenToModerationRules((rules) => setModerationRules(rules));
+    return () => {
+      unsubChat();
+      unsubRules();
+    };
+  }, [activeTab]);
+
+  const showModSuccess = (msg: string) => {
+    setModSuccessMsg(msg);
+    setTimeout(() => setModSuccessMsg(''), 4000);
+  };
+
+  const handleManualAction = async (actionType: 'mute' | 'ban') => {
+    const raw = manualUsername.trim().toLowerCase();
+    if (!raw) return alert('Vui lòng nhập tên tài khoản');
+    if (raw === 'admin' || raw === 'tmt') return alert('Không thể xử phạt tài khoản Admin!');
+
+    setLoading(true);
+    if (actionType === 'mute') {
+      const ok = await banUserFromChat(raw, true, manualBanReason);
+      if (ok) showModSuccess(`Đã CẤM CHAT thành công tài khoản [${raw}]`);
+    } else {
+      const ok = await banAccount(raw, true, manualBanReason);
+      if (ok) showModSuccess(`Đã KHÓA TÀI KHOẢN thành công tài khoản [${raw}]`);
+    }
+    setManualUsername('');
+    setManualBanReason('');
+    setLoading(false);
+  };
+
   const handleExportAnalytics = () => {
     if (analytics.length === 0) return alert('Không có dữ liệu!');
     const rows = analytics.map(s => ({
@@ -247,6 +303,9 @@ export const AdminView: React.FC<{ setView: (v: string) => void }> = ({ setView 
 
       <div className="flex border-b border-stone-800 bg-stone-900/50">
         <button onClick={() => setActiveTab('analytics')} className={`flex-1 py-4 font-bold tracking-wider uppercase transition-colors ${activeTab === 'analytics' ? 'text-emerald-400 border-b-2 border-emerald-400 bg-emerald-500/10' : 'text-stone-400 hover:text-stone-200'}`}>📊 Analytics Học Sinh</button>
+        <button onClick={() => setActiveTab('chat-moderation')} className={`flex-1 py-4 font-bold tracking-wider uppercase transition-colors flex items-center justify-center gap-1.5 ${activeTab === 'chat-moderation' ? 'text-red-400 border-b-2 border-red-400 bg-red-500/10' : 'text-stone-400 hover:text-stone-200'}`}>
+          <ShieldAlert size={18} /> Kiểm Duyệt Chat & Xử Phạt
+        </button>
         <button onClick={() => setActiveTab('chat-logs')} className={`flex-1 py-4 font-bold tracking-wider uppercase transition-colors ${activeTab === 'chat-logs' ? 'text-amber-500 border-b-2 border-amber-500 bg-amber-500/10' : 'text-stone-400 hover:text-stone-200'}`}>Giám sát AI Chat</button>
         <button onClick={() => setActiveTab('thi_luyen')} className={`flex-1 py-4 font-bold tracking-wider uppercase transition-colors ${activeTab === 'thi_luyen' ? 'text-amber-500 border-b-2 border-amber-500 bg-amber-500/10' : 'text-stone-400 hover:text-stone-200'}`}>Dữ Liệu Thí Luyện</button>
         <button onClick={() => setActiveTab('giftcode')} className={`flex-1 py-4 font-bold tracking-wider uppercase transition-colors ${activeTab === 'giftcode' ? 'text-amber-500 border-b-2 border-amber-500 bg-amber-500/10' : 'text-stone-400 hover:text-stone-200'}`}>Quản Lý Giftcode</button>
@@ -545,6 +604,251 @@ export const AdminView: React.FC<{ setView: (v: string) => void }> = ({ setView 
                    </div>
                  ))}
                </div>
+            </div>
+          </div>
+        )}
+        {/* ===== TAB: KIỂM DUYỆT CHAT & XỬ PHẠT TÀI KHOẢN ===== */}
+        {activeTab === 'chat-moderation' && (
+          <div className="space-y-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-stone-800/80 p-5 rounded-2xl border border-red-900/40">
+              <div>
+                <h2 className="text-xl font-black text-red-400 flex items-center gap-2">
+                  <ShieldAlert size={24} /> KIỂM DUYỆT KÊNH THẾ GIỚI & XỬ PHẠT TÀI KHOẢN
+                </h2>
+                <p className="text-stone-400 text-xs md:text-sm mt-1">
+                  Nhận diện danh tính người chat theo <b>Tên đăng nhập (Username)</b> thật. Cấm chat Kênh Thế Giới hoặc Khóa tài khoản vi phạm thuần phong mỹ tục.
+                </p>
+              </div>
+              {modSuccessMsg && (
+                <div className="bg-emerald-950 border border-emerald-500 text-emerald-300 px-4 py-2 rounded-xl text-xs md:text-sm flex items-center gap-2 animate-in fade-in">
+                  <Check size={16} /> {modSuccessMsg}
+                </div>
+              )}
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* CỘT 1 & 2: TIN NHẮN REALTIME TRÊN KÊNH THẾ GIỚI */}
+              <div className="lg:col-span-2 bg-stone-800/90 border border-stone-700 rounded-2xl p-5 flex flex-col shadow-xl" style={{ height: '700px' }}>
+                <div className="flex justify-between items-center mb-4 pb-3 border-b border-stone-700">
+                  <h3 className="font-bold text-amber-400 flex items-center gap-2 text-base">
+                    <MessageSquare size={18} /> Tin Nhắn Kênh Thế Giới Gần Nhất ({globalChatMessages.length} tin)
+                  </h3>
+                  <span className="text-xs text-stone-400 italic">Tự động cập nhật thời gian thực</span>
+                </div>
+
+                <div className="flex-1 overflow-y-auto space-y-3 pr-2 scroll-bg">
+                  {globalChatMessages.length === 0 ? (
+                    <div className="text-center text-stone-500 py-20 italic">Chưa có tin nhắn nào trên Kênh Thế Giới.</div>
+                  ) : (
+                    [...globalChatMessages].reverse().map((msg) => {
+                      const msgUser = (msg.senderId || '').toLowerCase();
+                      const isChatBanned = moderationRules.bannedChatUsers?.some(u => u.toLowerCase() === msgUser);
+                      const isAccBanned = moderationRules.bannedAccounts?.some(u => u.toLowerCase() === msgUser);
+
+                      return (
+                        <div key={msg.id} className="bg-stone-900/90 border border-stone-700/70 p-3.5 rounded-xl hover:border-amber-600/50 transition-colors">
+                          <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <span className="text-[10px] font-bold text-amber-500 bg-amber-950/80 px-2 py-0.5 rounded border border-amber-900/50">
+                                {msg.senderGrade}
+                              </span>
+                              <span className="font-bold text-stone-200 text-sm">{msg.senderName}</span>
+                              <span className="text-xs font-mono font-bold bg-black/60 text-amber-400 px-2 py-0.5 rounded border border-amber-600/40">
+                                TK: {msg.senderId}
+                              </span>
+
+                              {isChatBanned && (
+                                <span className="text-[10px] font-bold bg-yellow-950 text-yellow-400 border border-yellow-600 px-1.5 py-0.5 rounded">
+                                  🔇 Đang cấm chat
+                                </span>
+                              )}
+                              {isAccBanned && (
+                                <span className="text-[10px] font-bold bg-red-950 text-red-400 border border-red-600 px-1.5 py-0.5 rounded">
+                                  🔒 Đã khóa nick
+                                </span>
+                              )}
+                            </div>
+
+                            <span className="text-[11px] text-stone-500">
+                              {new Date(msg.timestamp).toLocaleString('vi-VN')}
+                            </span>
+                          </div>
+
+                          <div className="bg-stone-950/60 p-2.5 rounded-lg border border-stone-800 text-stone-200 text-sm mb-3 break-words">
+                            {msg.text}
+                          </div>
+
+                          {/* ACTION BUTTONS */}
+                          <div className="flex flex-wrap items-center gap-2 justify-end pt-1 border-t border-stone-800">
+                            <button
+                              onClick={async () => {
+                                if (!confirm(`Xóa tin nhắn này khỏi Kênh Thế Giới?`)) return;
+                                await deleteGlobalChatMessage(msg.id);
+                                showModSuccess('Đã xóa tin nhắn vi phạm khỏi Kênh Thế Giới');
+                              }}
+                              className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-red-300 border border-stone-600 flex items-center gap-1.5 transition-colors"
+                              title="Xóa tin nhắn này"
+                            >
+                              <Trash2 size={13} className="text-red-400" /> Xóa tin
+                            </button>
+
+                            {msgUser !== 'admin' && msgUser !== 'tmt' && (
+                              <>
+                                <button
+                                  onClick={async () => {
+                                    const actionText = isChatBanned ? "MỞ CẤM CHAT" : "CẤM CHAT";
+                                    if (!confirm(`Bạn có chắc muốn ${actionText} tài khoản [${msgUser}]?`)) return;
+                                    await banUserFromChat(msgUser, !isChatBanned);
+                                    showModSuccess(`Đã cập nhật cấm chat cho [${msgUser}]`);
+                                  }}
+                                  className={`px-2.5 py-1.5 rounded-lg text-xs font-bold border flex items-center gap-1.5 transition-colors ${
+                                    isChatBanned
+                                      ? 'bg-emerald-950 hover:bg-emerald-900 border-emerald-600 text-emerald-300'
+                                      : 'bg-yellow-950 hover:bg-yellow-900 border-yellow-600 text-yellow-300'
+                                  }`}
+                                >
+                                  {isChatBanned ? <Volume2 size={13} /> : <VolumeX size={13} />}
+                                  {isChatBanned ? 'Gỡ Cấm Chat' : 'Cấm Chat'}
+                                </button>
+
+                                <button
+                                  onClick={async () => {
+                                    const actionText = isAccBanned ? "MỞ KHÓA TÀI KHOẢN" : "KHÓA NICK HOÀN TOÀN";
+                                    if (!confirm(`CẢNH BÁO: Bạn có chắc muốn ${actionText} [${msgUser}]?`)) return;
+                                    await banAccount(msgUser, !isAccBanned);
+                                    showModSuccess(`Đã cập nhật trạng thái khóa nick cho [${msgUser}]`);
+                                  }}
+                                  className={`px-2.5 py-1.5 rounded-lg text-xs font-bold border flex items-center gap-1.5 transition-colors ${
+                                    isAccBanned
+                                      ? 'bg-emerald-950 hover:bg-emerald-900 border-emerald-600 text-emerald-300'
+                                      : 'bg-red-950 hover:bg-red-900 border-red-600 text-red-300'
+                                  }`}
+                                >
+                                  {isAccBanned ? <Unlock size={13} /> : <Lock size={13} />}
+                                  {isAccBanned ? 'Mở Khóa Nick' : 'Khóa Nick'}
+                                </button>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
+
+              {/* CỘT 3: XỬ PHẠT THỦ CÔNG & DANH SÁCH BỊ PHẠT */}
+              <div className="space-y-6">
+                {/* FORM XỬ PHẠT THỦ CÔNG */}
+                <div className="bg-stone-800/90 border border-stone-700 rounded-2xl p-5 shadow-xl">
+                  <h3 className="font-bold text-amber-400 flex items-center gap-2 text-base mb-3 pb-2 border-b border-stone-700">
+                    <UserX size={18} className="text-red-400" /> Xử Phạt Thủ Công Theo Tên TK
+                  </h3>
+                  <div className="space-y-3">
+                    <div>
+                      <label className="text-xs text-stone-300 font-bold block mb-1">Tên tài khoản (Username):</label>
+                      <input
+                        type="text"
+                        value={manualUsername}
+                        onChange={(e) => setManualUsername(e.target.value)}
+                        placeholder="Nhập username (VD: hocsinh123)..."
+                        className="w-full bg-stone-900 border border-stone-600 rounded-xl p-2.5 text-sm text-white font-mono focus:border-amber-500 outline-none"
+                      />
+                      <span className="text-[10px] text-stone-400 italic">Lưu ý: Nhập tên đăng nhập gốc, không phải tên nhân vật</span>
+                    </div>
+
+                    <div>
+                      <label className="text-xs text-stone-300 font-bold block mb-1">Lý do vi phạm (tùy chọn):</label>
+                      <input
+                        type="text"
+                        value={manualBanReason}
+                        onChange={(e) => setManualBanReason(e.target.value)}
+                        placeholder="Spam, lời lẽ thô tục..."
+                        className="w-full bg-stone-900 border border-stone-600 rounded-xl p-2.5 text-sm text-white focus:border-amber-500 outline-none"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 pt-2">
+                      <button
+                        onClick={() => handleManualAction('mute')}
+                        disabled={loading || !manualUsername.trim()}
+                        className="bg-yellow-800 hover:bg-yellow-700 disabled:opacity-50 text-white font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 border border-yellow-600 transition-colors"
+                      >
+                        <VolumeX size={14} /> CẤM CHAT
+                      </button>
+                      <button
+                        onClick={() => handleManualAction('ban')}
+                        disabled={loading || !manualUsername.trim()}
+                        className="bg-red-800 hover:bg-red-700 disabled:opacity-50 text-white font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 border border-red-600 transition-colors"
+                      >
+                        <Lock size={14} /> KHÓA ACC
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* DANH SÁCH BỊ CẤM CHAT */}
+                <div className="bg-stone-800/90 border border-stone-700 rounded-2xl p-5 shadow-xl">
+                  <div className="flex justify-between items-center mb-3 pb-2 border-b border-stone-700">
+                    <h3 className="font-bold text-yellow-400 flex items-center gap-2 text-sm">
+                      <VolumeX size={16} /> Đang Bị Cấm Chat ({moderationRules.bannedChatUsers?.length || 0})
+                    </h3>
+                  </div>
+
+                  <div className="max-h-48 overflow-y-auto space-y-2 pr-1 scroll-bg">
+                    {!moderationRules.bannedChatUsers || moderationRules.bannedChatUsers.length === 0 ? (
+                      <div className="text-xs text-stone-500 italic text-center py-4">Không có tài khoản nào bị cấm chat.</div>
+                    ) : (
+                      moderationRules.bannedChatUsers.map((u) => (
+                        <div key={u} className="flex justify-between items-center bg-stone-900 p-2.5 rounded-xl border border-yellow-900/40">
+                          <span className="font-mono text-xs font-bold text-yellow-300">{u}</span>
+                          <button
+                            onClick={async () => {
+                              if (!confirm(`Gỡ cấm chat cho tài khoản [${u}]?`)) return;
+                              await banUserFromChat(u, false);
+                              showModSuccess(`Đã gỡ cấm chat cho [${u}]`);
+                            }}
+                            className="bg-stone-800 hover:bg-emerald-900 border border-stone-700 hover:border-emerald-600 text-stone-300 hover:text-emerald-300 px-2 py-1 rounded text-[11px] font-bold transition-colors"
+                          >
+                            Gỡ cấm
+                          </button>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+
+                {/* DANH SÁCH BỊ KHÓA NICK */}
+                <div className="bg-stone-800/90 border border-stone-700 rounded-2xl p-5 shadow-xl">
+                  <div className="flex justify-between items-center mb-3 pb-2 border-b border-stone-700">
+                    <h3 className="font-bold text-red-400 flex items-center gap-2 text-sm">
+                      <Lock size={16} /> Đang Bị Khóa Nick ({moderationRules.bannedAccounts?.length || 0})
+                    </h3>
+                  </div>
+
+                  <div className="max-h-48 overflow-y-auto space-y-2 pr-1 scroll-bg">
+                    {!moderationRules.bannedAccounts || moderationRules.bannedAccounts.length === 0 ? (
+                      <div className="text-xs text-stone-500 italic text-center py-4">Không có tài khoản nào bị khóa.</div>
+                    ) : (
+                      moderationRules.bannedAccounts.map((u) => (
+                        <div key={u} className="flex justify-between items-center bg-stone-900 p-2.5 rounded-xl border border-red-900/40">
+                          <span className="font-mono text-xs font-bold text-red-300">{u}</span>
+                          <button
+                            onClick={async () => {
+                              if (!confirm(`Mở khóa tài khoản [${u}]?`)) return;
+                              await banAccount(u, false);
+                              showModSuccess(`Đã mở khóa tài khoản [${u}]`);
+                            }}
+                            className="bg-stone-800 hover:bg-emerald-900 border border-stone-700 hover:border-emerald-600 text-stone-300 hover:text-emerald-300 px-2 py-1 rounded text-[11px] font-bold transition-colors"
+                          >
+                            Mở khóa
+                          </button>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )}

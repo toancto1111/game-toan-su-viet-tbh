@@ -27,9 +27,10 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
 }
 
 import { PlayerState, Rarity, Question, Hero, Artifact, TrialRecord } from './types';
+import { migratePlayerData, mergeCloudAndLocal, createDefaultPlayerState, CURRENT_SCHEMA_VERSION } from './playerMigration';
 import { INITIAL_HEROES, ARTIFACTS, ENEMY_HEROES, DEFAULT_ALLY_IMG, DEFAULT_ENEMY_IMG, SYNERGIES, AVAILABLE_VIDEOS } from './constants';
 import { CHAPTER_NAMES, MATH_DATA, getMathQuestions, getQuestionsForLesson } from './geminiService';
-import { saveTrialRecord, syncPlayerToLeaderboard, savePlayerProgress, loadPlayerDataFromCloud, updateStudentAnalytics, isFirebaseReady, getCloudAccount, saveCloudAccount , updateArenaScore, listenToAccountSession, listenToAnnouncements, sendAnnouncement, fetchOnlineLeaderboard } from './firebaseService';
+import { saveTrialRecord, syncPlayerToLeaderboard, savePlayerProgress, loadPlayerDataFromCloud, updateStudentAnalytics, isFirebaseReady, getCloudAccount, saveCloudAccount , updateArenaScore, listenToAccountSession, listenToAnnouncements, sendAnnouncement, fetchOnlineLeaderboard, listenToModerationRules } from './firebaseService';
 import { AdminView } from './AdminView';
 import { demoTuLuyenData } from './demo_tu_luyen_data';
 import * as XLSX from 'xlsx';
@@ -753,6 +754,13 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
     const cloudAccount = await getCloudAccount(key);
 
     if (cloudAccount || localAccount) {
+      // 0. Kiểm tra tài khoản có bị khóa không
+      if (cloudAccount && cloudAccount.isBanned) {
+        setError('Tài khoản này đã bị KHÓA do vi phạm quy chuẩn cộng đồng hoặc quy định trò chơi. Vui lòng liên hệ Admin để được hỗ trợ.');
+        setLoading(false);
+        return;
+      }
+
       // Bỏ qua kiểm tra mã băm cho tài khoản admin nếu đúng mật khẩu gốc
       if (key === 'admin' && password === 'Toantrang2011@') {
          // Cho phép đăng nhập
@@ -1240,19 +1248,18 @@ const App: React.FC = () => {
     if (sess) {
       const accts = getAccounts();
       if (accts[sess]) {
-        const pd = JSON.parse(JSON.stringify(accts[sess].playerData));
-        if (!pd.permLineup) pd.permLineup = [null, null, null, null, null, null];
-        if (pd.legionTickets === undefined) pd.legionTickets = 0;
-        // Khởi tạo trường tiến trình mở khóa nếu chưa có (tài khoản cũ)
-        if (!pd.unlockedChapters) pd.unlockedChapters = [1];
-        if (!pd.tuLuyenCorrectIds) pd.tuLuyenCorrectIds = {};
-        if (!pd.tuLuyenUnlockedLessons) pd.tuLuyenUnlockedLessons = ['B1'];
-        
-        // Force sync inventory with latest game data (stats & text descriptions)
+        const rawData = JSON.parse(JSON.stringify(accts[sess].playerData));
+
+        // ==== DATA MIGRATION SYSTEM (v như Clash Royale / Onmyoji) ====
+        // Tự động nâng cấp dữ liệu cũ lên schema mới nhất — tài khoản KHÔNG BAO GIỜ mất dữ liệu
+        const pd = migratePlayerData(rawData);
+
+        // Force sync inventory stats với dữ liệu game mới nhất
         if (pd.inventory) {
           pd.inventory = syncHeroInventoryStats(pd.inventory);
         }
-        
+
+        // Reset nhiệm vụ hàng ngày nếu sang ngày mới
         const _d = new Date();
         const todayStr = `${_d.getFullYear()}-${String(_d.getMonth() + 1).padStart(2, '0')}-${String(_d.getDate()).padStart(2, '0')}`;
         if (pd.lastLoginDate !== todayStr) {
@@ -1264,37 +1271,25 @@ const App: React.FC = () => {
           if (!pd.dailyQuestProgress) pd.dailyQuestProgress = { 'q_login': 1 };
           else pd.dailyQuestProgress['q_login'] = 1;
         }
-        
+
+        // Lưu lại sau khi migrate để localStorage cũng được cập nhật
+        if ((rawData.schemaVersion ?? 0) < CURRENT_SCHEMA_VERSION) {
+          try {
+            const accts2 = getAccounts();
+            if (accts2[sess]) {
+              accts2[sess].playerData = pd;
+              accts2[sess].updatedAt = Date.now();
+              saveAccounts(accts2);
+              console.log(`[Migration] LocalStorage đã được nâng cấp lên v${CURRENT_SCHEMA_VERSION}`);
+            }
+          } catch (e) { console.warn('[Migration] Lỗi lưu localStorage sau migrate:', e); }
+        }
+
         return pd;
       }
     }
-    const _d = new Date();
-    const todayStr = `${_d.getFullYear()}-${String(_d.getMonth() + 1).padStart(2, '0')}-${String(_d.getDate()).padStart(2, '0')}`;
-    return {
-      playerName: '',
-      legionName: '',
-      gold: 0,
-      normalTickets: 0,
-      premiumTickets: 0,
-      artifactTickets: 0,
-      legionTickets: 0,
-      permArtifacts: [],
-      jade: 0,
-      inventory: [], 
-      lineup: [null, null, null, null, null, null],
-      permLineup: [null, null, null, null, null, null],
-      currentChapter: 1,
-      progress: { 1: 1 },
-      mathProgress: {}, 
-      seenMathQuestions: [],
-      dailyQuestProgress: { 'q_login': 1 },
-      dailyQuestClaimed: [],
-      lastLoginDate: todayStr,
-      consecutiveCorrectAnswers: 0,
-      unlockedChapters: [1],
-      tuLuyenCorrectIds: {},
-      tuLuyenUnlockedLessons: ['B1'],
-    };
+    // Tài khoản mới hoàn toàn
+    return createDefaultPlayerState();
   });
 
   // ========= AUTO-SYNC TỪ CLOUD (ĐỒNG BỘ ĐA THIẾT BỊ PC & MOBILE) =========
@@ -1303,42 +1298,30 @@ const App: React.FC = () => {
       loadPlayerDataFromCloud(currentUser).then(cloudData => {
         if (cloudData) {
           setPlayer(prev => {
-            // So sánh thời gian cập nhật, nếu Cloud mới hơn thì lấy Cloud (tính năng đồng bộ như game Top 1)
-            const cloudTime = cloudData.updatedAt || 0;
-            const localTime = prev.updatedAt || 0;
-            let finalData = prev;
-            
-            if (cloudTime > localTime) {
-              console.log("Đã phát hiện dữ liệu mới hơn từ Cloud! Đang đồng bộ...");
-              const merged = {
-                ...cloudData,
-                permLineup: cloudData.permLineup || [null, null, null, null, null, null],
-                legionTickets: cloudData.legionTickets ?? 0,
-                unlockedChapters: cloudData.unlockedChapters || [1],
-                tuLuyenCorrectIds: cloudData.tuLuyenCorrectIds || {},
-                tuLuyenUnlockedLessons: cloudData.tuLuyenUnlockedLessons || ['B1'],
-              };
-              if (merged.inventory) {
-                merged.inventory = syncHeroInventoryStats(merged.inventory);
-              }
-              // Cập nhật lại localStorage để mượt cho lần sau
-              const accts = getAccounts();
-              if (accts[currentUser]) {
-                accts[currentUser].playerData = merged;
-                accts[currentUser].updatedAt = cloudTime;
-                saveAccounts(accts);
-              }
-              finalData = merged;
+            // ==== MIGRATION + MERGE CLOUD vs LOCAL (Cloud-first strategy) ====
+            // Dùng mergeCloudAndLocal để đảm bảo:
+            //  - Dữ liệu mới hơn (Cloud hoặc Local) được ưu tiên
+            //  - Tài nguyên lấy giá trị cao nhất (không mất vàng khi offline)
+            //  - Tất cả trường đều qua migration pipeline
+            const finalData = mergeCloudAndLocal(cloudData as any, prev as any);
+
+            // Force sync inventory với stats game mới nhất
+            if (finalData.inventory) {
+              finalData.inventory = syncHeroInventoryStats(finalData.inventory);
             }
 
-            // MIGRATION: Chuyển dữ liệu cũ 'artifacts' → 'permArtifacts' (nếu còn sót)
-            const fdAny = finalData as any;
-            if (fdAny.artifacts && Array.isArray(fdAny.artifacts) && fdAny.artifacts.length > 0) {
-              const migratedArts = [...new Set([...(finalData.permArtifacts || []), ...fdAny.artifacts])];
-              finalData = { ...finalData, permArtifacts: migratedArts };
-              delete (finalData as any).artifacts;
-            }
+            // Cập nhật localStorage để mượt cho lần sau
+            try {
+              const accts = getAccounts();
+              if (accts[currentUser]) {
+                accts[currentUser].playerData = finalData;
+                accts[currentUser].updatedAt = Date.now();
+                saveAccounts(accts);
+              }
+            } catch (e) { console.warn('[CloudSync] Lỗi lưu localStorage:', e); }
+
             
+
             // ÉP CẬP NHẬT SESSION ID LÊN CLOUD NGAY KHI MỞ GAME (KICK THIẾT BỊ KHÁC NGAY LẬP TỨC)
             savePlayerProgress(currentUser, finalData, localSessionIdRef.current)
               .then(() => setSessionAsserted(true))
@@ -1380,6 +1363,21 @@ const App: React.FC = () => {
       };
     }
   }, [currentUser, sessionAsserted]);
+
+  // ========= THEO DÕI QUY TẮC KHÓA NICK (REALTIME MODERATION) =========
+  useEffect(() => {
+    if (!currentUser || currentUser.startsWith('guest_') || !isFirebaseReady()) return;
+    const unsub = listenToModerationRules((rules) => {
+      if (rules.bannedAccounts?.some(u => u.toLowerCase() === currentUser.toLowerCase())) {
+        alert('Tài khoản của bạn đã bị KHÓA bởi Quản trị viên do vi phạm quy định trò chơi.');
+        clearSession();
+        setCurrentUser(null);
+        setPlayer(null);
+        setView('auth');
+      }
+    });
+    return () => unsub();
+  }, [currentUser]);
 
   // ========= CLOUD SYNC STATE =========
   const [syncStatus, setSyncStatus] = useState<'idle' | 'saving' | 'saved' | 'offline'>('idle');
@@ -2218,27 +2216,16 @@ const App: React.FC = () => {
   const renderView = () => {
     switch (view) {
       case 'auth': return (
-        <AuthView onLogin={async (username: string, playerData: PlayerState) => {
+        <AuthView onLogin={async (username: string, rawPlayerData: PlayerState) => {
           // Khởi tạo các trường mặc định trước
-          if (!playerData) {
+          if (!rawPlayerData) {
             console.error("Lỗi: playerData null sau login!");
             return;
           }
-          if (!playerData.permLineup) playerData.permLineup = [null, null, null, null, null, null];
-          if (playerData.legionTickets === undefined) playerData.legionTickets = 0;
-          if (!playerData.unlockedChapters) playerData.unlockedChapters = [1];
-          if (!playerData.tuLuyenCorrectIds) playerData.tuLuyenCorrectIds = {};
-          if (!playerData.tuLuyenUnlockedLessons) playerData.tuLuyenUnlockedLessons = ['B1'];
 
-          // MIGRATION: Chuyển dữ liệu cũ từ 'artifacts' → 'permArtifacts' (bug cũ lưu sai field)
-          const pdAny = playerData as any;
-          if (pdAny.artifacts && Array.isArray(pdAny.artifacts) && pdAny.artifacts.length > 0) {
-            const merged = [...new Set([...(playerData.permArtifacts || []), ...pdAny.artifacts])];
-            playerData.permArtifacts = merged;
-            delete pdAny.artifacts; // Xóa field cũ
-            console.log(`[Migration] Đã chuyển ${pdAny.artifacts?.length || merged.length} thần khí từ 'artifacts' → 'permArtifacts'`);
-          }
-          if (!playerData.permArtifacts) playerData.permArtifacts = [];
+          // ==== DATA MIGRATION SYSTEM ====
+          // Tự động nâng cấp dữ liệu cũ lên schema mới nhất khi đăng nhập
+          const playerData = migratePlayerData(rawPlayerData as any);
 
           // Sync hero stats từ game data mới nhất
           if (playerData.inventory) {

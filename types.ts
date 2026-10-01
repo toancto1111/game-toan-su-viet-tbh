@@ -128,6 +128,12 @@ export interface PlayerState {
   tuLuyenCorrectIds?: Record<string, string[]>; // { lessonId: [questionId,...] } - câu đã trả lời đúng
   tuLuyenUnlockedLessons?: string[];      // Danh sách lessonId đã mở (mặc định ['B1'])
   mathCorrectQuestions?: Record<string, string[]>; // { 'g6-c0-l0': [questionId,...] } - câu đã trả lời đúng trong Kinh Luân Thí Luyện
+
+  // === SYSTEM MIGRATION METADATA ===
+  /** Phiên bản schema dữ liệu — dùng để tự động nâng cấp khi cấu trúc thay đổi */
+  schemaVersion?: number;
+  /** Timestamp lần cuối cập nhật dữ liệu (ms) — dùng để so sánh Cloud vs Local */
+  updatedAt?: number;
 }
 
 export interface GiftCodeReward {
