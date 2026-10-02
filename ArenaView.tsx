@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { PlayerState, LeaderboardEntry, Hero } from './types';
 import { ChevronLeft, Swords, Trophy, Shield, Star, Users, Zap, Skull, User, Search, Crown } from 'lucide-react';
 import { getArenaOpponents, swapArenaRanks, updateArenaDefenseFormation, getTopArenaPlayers } from './firebaseService';
+import { calculateHeroStatsWithStar } from './App';
 
 interface ArenaViewProps {
   playerData: PlayerState;
@@ -62,8 +63,9 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
     // Convert to full hero objects for Firebase Leaderboard sync
     const fullFormation = formation.map(id => {
       if (!id) return null;
-      const h = playerData.inventory.find(hero => hero.id === id);
-      if (!h) return null;
+      const rawHero = playerData.inventory.find(hero => hero.id === id);
+      if (!rawHero) return null;
+      const h = calculateHeroStatsWithStar(rawHero, rawHero.star || 1);
       return {
         id: h.id,
         name: h.name,
@@ -275,8 +277,9 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
                   <img src={selectedHeroPreview.image} className="w-full h-full object-cover" />
                 </div>
                 <h3 className="text-2xl font-bold text-center text-amber-500 font-cinzel mb-1">{selectedHeroPreview.name}</h3>
-                <div className="flex justify-center mb-4">
-                  {[...Array(Math.min(5, Math.ceil((selectedHeroPreview.star || 1)/5)))].map((_, i) => <Star key={i} size={16} className="text-yellow-400 fill-yellow-400" />)}
+                <div className="flex items-center justify-center gap-1.5 mb-4 bg-amber-950/40 w-fit mx-auto px-4 py-1.5 rounded-full border border-amber-500/30">
+                  <Star size={18} className="text-yellow-400 fill-yellow-400" />
+                  <span className="text-amber-400 font-bold">{selectedHeroPreview.star || 1} Sao</span>
                 </div>
                 
                 <div className="space-y-3 bg-slate-950/50 p-4 rounded-xl border border-slate-800/80">
@@ -409,7 +412,11 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
           if (initArenaCombat) {
               const enemyLineup = selectedOpponent?.arenaDefenseFormation || [];
               const myLineup = formation
-                .map(id => playerData.inventory.find((h: any) => h.id === id))
+                .map(id => {
+                  const raw = playerData.inventory.find((h: any) => h.id === id);
+                  if (!raw) return null;
+                  return calculateHeroStatsWithStar(raw, raw.star || 1);
+                })
                 .filter(Boolean);
               initArenaCombat(myLineup, enemyLineup, matchData);
           } else {
