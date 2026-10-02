@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { PlayerState, LeaderboardEntry, Hero } from './types';
-import { ChevronLeft, Swords, Trophy, Shield, Star, Users, Zap, Skull, User, Search } from 'lucide-react';
-import { getArenaOpponents, swapArenaRanks, updateArenaDefenseFormation } from './firebaseService';
+import { ChevronLeft, Swords, Trophy, Shield, Star, Users, Zap, Skull, User, Search, Crown } from 'lucide-react';
+import { getArenaOpponents, swapArenaRanks, updateArenaDefenseFormation, getTopArenaPlayers } from './firebaseService';
 
 interface ArenaViewProps {
   playerData: PlayerState;
@@ -16,6 +16,7 @@ type ArenaScreen = 'LOBBY' | 'SELECT_DEFENSE' | 'SELECT_ATTACK' | 'COMBAT';
 export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData, setView, saveData, initArenaCombat }) => {
   const [screen, setScreen] = useState<ArenaScreen>('LOBBY');
   const [opponents, setOpponents] = useState<LeaderboardEntry[]>([]);
+  const [topPlayers, setTopPlayers] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedOpponent, setSelectedOpponent] = useState<LeaderboardEntry | null>(null);
   const [attackFormation, setAttackFormation] = useState<(string | null)[]>([]);
@@ -34,9 +35,11 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
     if (rank <= 9000) return { name: 'Bạc', color: 'text-slate-300', bg: 'bg-slate-300/20' };
     return { name: 'Đồng', color: 'text-amber-700', bg: 'bg-amber-700/20' };
   };
-
   const rankInfo = getRankInfo(currentRank);
 
+  useEffect(() => {
+    getTopArenaPlayers().then(setTopPlayers);
+  }, []);
   const fetchOpponents = async () => {
     setLoading(true);
     const ops = await getArenaOpponents(currentRank, playerData.username || 'guest');
@@ -104,114 +107,162 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
           <div className="w-[100px]"></div>
         </div>
 
-        {/* Player Stats */}
-        <div className="w-full max-w-4xl bg-slate-900 border border-slate-700 rounded-2xl p-6 flex items-center justify-between mb-8 shadow-xl">
-          <div className="flex items-center gap-6">
-            <div className={`w-24 h-24 rounded-full flex items-center justify-center ${rankInfo.bg} border-4 border-slate-800`}>
-              <Trophy size={48} className={rankInfo.color} />
-            </div>
-            <div>
-              <div className="text-slate-400 text-sm uppercase tracking-wider mb-1">Xếp hạng hiện tại</div>
-              <div className={`text-4xl font-black ${rankInfo.color} font-cinzel`}>{rankInfo.name}</div>
-              <div className="text-xl font-bold text-white mt-1">Top {currentRank} <span className="text-slate-400 text-base font-normal">Đấu Trường</span></div>
-            </div>
-          </div>
+      <div className="flex-1 overflow-y-auto p-4 md:p-8">
+        {/* Main Content Area */}
+        <div className="w-full max-w-6xl mx-auto flex flex-col lg:flex-row gap-6 items-start">
           
-          <div className="flex flex-col gap-3">
-            <button 
-              onClick={() => setScreen('SELECT_DEFENSE')}
-              className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center gap-2 border border-slate-600 transition-colors"
-            >
-              <Shield size={20} className="text-blue-400" />
-              Thiết lập Đội hình Phòng thủ
-            </button>
-            <button 
-              onClick={() => setScreen('SELECT_ATTACK_LOBBY')}
-              className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center gap-2 border border-slate-600 transition-colors"
-            >
-              <Swords size={20} className="text-red-400" />
-              Thiết lập Đội hình Tấn công
-            </button>
-            <button 
-              onClick={fetchOpponents}
-              className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center gap-2 border border-slate-600 transition-colors"
-            >
-              <Zap size={20} className="text-yellow-400" />
-              Tìm đối thủ mới
-            </button>
-          </div>
-        </div>
+          {/* Cột Trái (Chính) */}
+          <div className="flex-1 flex flex-col w-full">
+            {/* Player Stats */}
+            <div className="w-full bg-slate-900 border border-slate-700 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 mb-8 shadow-xl">
+              <div className="flex items-center gap-6">
+                <div className={`w-24 h-24 rounded-full flex items-center justify-center ${rankInfo.bg} border-4 border-slate-800 shrink-0`}>
+                  <Trophy size={48} className={rankInfo.color} />
+                </div>
+                <div>
+                  <div className="text-slate-400 text-sm uppercase tracking-wider mb-1">Xếp hạng hiện tại</div>
+                  <div className={`text-4xl font-black ${rankInfo.color} font-cinzel leading-tight`}>{rankInfo.name}</div>
+                  <div className="text-xl font-bold text-white mt-1">Top {currentRank} <span className="text-slate-400 text-base font-normal">Đấu Trường</span></div>
+                </div>
+              </div>
+              
+              <div className="flex flex-col gap-3 w-full md:w-auto">
+                <button 
+                  onClick={() => setScreen('SELECT_DEFENSE')}
+                  className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center justify-center gap-2 border border-slate-600 transition-colors"
+                >
+                  <Shield size={20} className="text-blue-400" />
+                  Đội hình Phòng thủ
+                </button>
+                <button 
+                  onClick={() => setScreen('SELECT_ATTACK_LOBBY')}
+                  className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center justify-center gap-2 border border-slate-600 transition-colors"
+                >
+                  <Swords size={20} className="text-red-400" />
+                  Đội hình Tấn công
+                </button>
+                <button 
+                  onClick={fetchOpponents}
+                  className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center justify-center gap-2 border border-slate-600 transition-colors"
+                >
+                  <Zap size={20} className="text-yellow-400" />
+                  Tìm đối thủ mới
+                </button>
+              </div>
+            </div>
 
-        {/* Opponents List */}
-        <div className="w-full max-w-4xl">
-          <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-            <Users className="text-red-400" /> Danh sách Thách Đấu
-          </h2>
-          
-          {loading ? (
-            <div className="text-center text-slate-400 py-12">Đang dò tìm đối thủ...</div>
-          ) : opponents.length === 0 ? (
-            <div className="text-center text-slate-400 py-12">Không tìm thấy đối thủ phù hợp. Hãy thử lại sau.</div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {opponents.map((op, idx) => {
-                const opRankNum = op.arenaRank || 10000;
-                const opRank = getRankInfo(opRankNum);
-                return (
-                  <div key={idx} className="bg-slate-900 border border-slate-700 rounded-xl p-5 hover:border-red-500/50 transition-colors flex flex-col items-center relative overflow-hidden">
-                    {/* Rank Badge */}
-                    <div className="absolute top-2 right-2 bg-slate-800 border border-slate-600 px-2 py-1 rounded text-xs font-bold text-white shadow-lg">
-                      Hạng {opRankNum}
-                    </div>
-                    
-                    <div className="w-16 h-16 rounded-full bg-slate-800 border-2 border-slate-600 overflow-hidden mb-3 mt-2 cursor-pointer hover:border-amber-500 transition-colors shadow-md"
-                         onClick={() => setInspectTarget(op)}>
-                      <img src={op.avatarUrl || "https://i.imgur.com/kS5lW6H.png"} alt="avatar" className="w-full h-full object-cover" />
-                    </div>
-                    <div className="font-bold text-lg text-white text-center cursor-pointer hover:text-amber-400 transition-colors"
-                         onClick={() => setInspectTarget(op)}>
-                      {op.playerName || op.uid}
-                    </div>
-                    <div className={`text-sm font-semibold ${opRank.color} mb-4`}>{opRank.name}</div>
-                    
-                    {/* Defense preview */}
-                    <div className="flex justify-center gap-1 mb-6 w-full flex-wrap">
-                      {op.arenaDefenseFormation?.slice(0, 6).map((hero, i) => (
-                        <div key={i} 
-                             className="w-10 h-10 bg-slate-800 rounded border border-slate-700 overflow-hidden flex-shrink-0 cursor-pointer hover:border-amber-500 hover:scale-110 transition-all z-10 relative group"
-                             onClick={() => { if (hero) setSelectedHeroPreview(hero); }}>
-                          {hero ? (
-                            <>
-                              <img src={hero.image} alt="hero" className="w-full h-full object-cover" />
-                              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                                <Search size={14} className="text-white" />
-                              </div>
-                            </>
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center opacity-30"><User size={20} className="text-slate-400" /></div>
-                          )}
+            {/* Opponents List */}
+            <div className="w-full">
+              <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                <Users className="text-red-400" /> Danh sách Thách Đấu
+              </h2>
+              
+              {loading ? (
+                <div className="text-center text-slate-400 py-12">Đang dò tìm đối thủ...</div>
+              ) : opponents.length === 0 ? (
+                <div className="text-center text-slate-400 py-12">Không tìm thấy đối thủ phù hợp. Hãy thử lại sau.</div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {opponents.map((op, idx) => {
+                    const opRankNum = op.arenaRank || 10000;
+                    const opRank = getRankInfo(opRankNum);
+                    return (
+                      <div key={idx} className="bg-slate-900 border border-slate-700 rounded-xl p-5 hover:border-red-500/50 transition-colors flex flex-col items-center relative overflow-hidden group">
+                        {/* Rank Badge */}
+                        <div className="absolute top-2 right-2 bg-slate-800 border border-slate-600 px-2 py-1 rounded text-xs font-bold text-white shadow-lg z-20">
+                          Hạng {opRankNum}
                         </div>
-                      ))}
+                        
+                        <div className="w-16 h-16 rounded-full bg-slate-800 border-2 border-slate-600 overflow-hidden mb-3 mt-2 cursor-pointer hover:border-amber-500 transition-colors shadow-md z-20"
+                             onClick={() => setInspectTarget(op)}>
+                          <img src={op.avatarUrl || "https://i.imgur.com/kS5lW6H.png"} alt="avatar" className="w-full h-full object-cover" />
+                        </div>
+                        <div className="font-bold text-lg text-white text-center cursor-pointer hover:text-amber-400 transition-colors z-20"
+                             onClick={() => setInspectTarget(op)}>
+                          {op.playerName || op.uid}
+                        </div>
+                        <div className={`text-sm font-semibold ${opRank.color} mb-4 z-20`}>{opRank.name}</div>
+                        
+                        {/* Defense preview */}
+                        <div className="flex justify-center gap-1 mb-6 w-full flex-wrap z-20">
+                          {op.arenaDefenseFormation?.slice(0, 6).map((hero, i) => (
+                            <div key={i} 
+                                 className="w-10 h-10 bg-slate-800 rounded border border-slate-700 overflow-hidden flex-shrink-0 cursor-pointer hover:border-amber-500 hover:scale-110 transition-all relative group/hero"
+                                 onClick={() => { if (hero) setSelectedHeroPreview(hero); }}>
+                              {hero ? (
+                                <>
+                                  <img src={hero.image} alt="hero" className="w-full h-full object-cover" />
+                                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/hero:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                                    <Search size={14} className="text-white" />
+                                  </div>
+                                </>
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center opacity-30"><User size={20} className="text-slate-400" /></div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                        
+                        <div className="w-full z-20">
+                          <button 
+                            onClick={() => setInspectTarget(op)}
+                            className="w-full py-2 bg-slate-800 hover:bg-slate-700 text-stone-300 rounded-lg font-bold flex justify-center items-center gap-2 border border-slate-700 transition-all text-sm mb-2"
+                          >
+                            <Search size={16} /> SOI ĐỘI HÌNH
+                          </button>
+                          <button 
+                            onClick={() => { setSelectedOpponent(op); setScreen('SELECT_ATTACK'); }}
+                            className="w-full py-3 bg-red-600 hover:bg-red-500 text-white rounded-lg font-bold flex justify-center items-center gap-2 shadow-[0_0_15px_rgba(220,38,38,0.4)] transition-all"
+                          >
+                            <Swords size={18} /> THÁCH ĐẤU
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Cột Phải (Sidebar) - Bảng Vàng */}
+          <div className="w-full lg:w-[320px] flex-shrink-0 flex flex-col gap-6">
+            <div className="bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden shadow-2xl flex flex-col">
+              <div className="bg-gradient-to-r from-amber-600 to-amber-800 p-4 border-b border-amber-900">
+                <h3 className="text-lg font-cinzel font-black text-white uppercase flex items-center gap-2 drop-shadow-md">
+                  <Crown size={20} className="text-yellow-300" /> Bảng Vàng
+                </h3>
+              </div>
+              <div className="p-4 flex flex-col gap-3 flex-1 min-h-[300px]">
+                {topPlayers.map((p, i) => (
+                  <div key={i} 
+                       className="flex items-center gap-3 bg-slate-950/50 p-2 rounded-lg border border-slate-800 hover:border-amber-500/30 transition-colors cursor-pointer"
+                       onClick={() => setInspectTarget(p)}>
+                    <div className="w-8 h-8 rounded bg-slate-800 border border-slate-700 font-black text-amber-500 flex items-center justify-center text-sm shrink-0 shadow-inner">
+                      {i + 1}
                     </div>
-                    
-                      <button 
-                        onClick={() => setInspectTarget(op)}
-                        className="w-full py-2 bg-slate-800 hover:bg-slate-700 text-stone-300 rounded-lg font-bold flex justify-center items-center gap-2 border border-slate-700 transition-all text-sm mb-2"
-                      >
-                        <Search size={16} /> SOI ĐỘI HÌNH
-                      </button>
-                      <button 
-                        onClick={() => { setSelectedOpponent(op); setScreen('SELECT_ATTACK'); }}
-                        className="w-full py-3 bg-red-600 hover:bg-red-500 text-white rounded-lg font-bold flex justify-center items-center gap-2 shadow-[0_0_15px_rgba(220,38,38,0.4)] transition-all"
-                      >
-                        <Swords size={18} /> THÁCH ĐẤU
-                      </button>
+                    <div className="w-10 h-10 rounded-full border border-amber-600/50 overflow-hidden shrink-0 bg-slate-800">
+                      <img src={p.avatarUrl || "https://i.imgur.com/kS5lW6H.png"} alt="avt" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-bold text-stone-200 truncate">{p.playerName}</div>
+                      <div className="text-[10px] text-amber-400 font-bold">Lực: {(p.combatPower || 0).toLocaleString()}</div>
                     </div>
                   </div>
-                );
-              })}
+                ))}
+                
+                {topPlayers.length === 0 && (
+                  <div className="text-center text-slate-500 text-sm py-4 h-full flex items-center justify-center">Đang tải...</div>
+                )}
+              </div>
+              <div className="bg-slate-950 p-4 border-t border-slate-800 text-center">
+                <div className="text-xs text-slate-400 uppercase tracking-widest mb-1">Thứ Hạng Của Bạn</div>
+                <div className="text-xl font-black text-amber-500 font-cinzel">HẠNG {currentRank}</div>
+              </div>
             </div>
-          )}
+          </div>
+
+        </div>
 
           {/* Hero Preview Modal */}
           {selectedHeroPreview && (

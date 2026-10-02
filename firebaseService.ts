@@ -574,6 +574,28 @@ export const getArenaOpponents = async (currentRank: number = 10000, excludeUid:
 };
 
 /**
+ * Lấy top 5 người chơi xuất sắc nhất trên Đấu Trường
+ */
+export const getTopArenaPlayers = async (): Promise<LeaderboardEntry[]> => {
+  if (!db) return [];
+  try {
+    const q = query(
+      collection(db, "leaderboards"),
+      where("arenaRank", ">", 0),
+      orderBy("arenaRank", "asc"),
+      limit(5)
+    );
+    const snap = await getDocs(q);
+    const results: LeaderboardEntry[] = [];
+    snap.forEach(docSnap => results.push(docSnap.data() as LeaderboardEntry));
+    return results;
+  } catch (error) {
+    console.error("Lỗi lấy Top Arena:", error);
+    return [];
+  }
+};
+
+/**
  * Đổi hạng (Rank) giữa 2 người chơi khi Kẻ Thách Đấu chiến thắng
  */
 export const swapArenaRanks = async (
