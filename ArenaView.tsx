@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { PlayerState, LeaderboardEntry, Hero } from './types';
 import { ChevronLeft, Swords, Trophy, Shield, Star, Users, Zap, Skull, User } from 'lucide-react';
-import { getArenaOpponents, updateArenaScore, updateArenaDefenseFormation } from './firebaseService';
+import { getArenaOpponents, swapArenaRanks, updateArenaDefenseFormation } from './firebaseService';
 
 interface ArenaViewProps {
   playerData: PlayerState;
@@ -20,22 +20,24 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
   const [selectedOpponent, setSelectedOpponent] = useState<LeaderboardEntry | null>(null);
   const [attackFormation, setAttackFormation] = useState<(string | null)[]>([]);
   
-  const currentElo = playerData.arenaScore || 1000;
+  // Mặc định người mới xếp hạng 10000
+  const currentRank = playerData.arenaRank || 10000;
   
-  const getRankInfo = (elo: number) => {
-    if (elo >= 2000) return { name: 'Bá Vương', color: 'text-red-500', bg: 'bg-red-500/20' };
-    if (elo >= 1600) return { name: 'Kim Cương', color: 'text-cyan-400', bg: 'bg-cyan-400/20' };
-    if (elo >= 1400) return { name: 'Bạch Kim', color: 'text-emerald-400', bg: 'bg-emerald-400/20' };
-    if (elo >= 1200) return { name: 'Vàng', color: 'text-yellow-400', bg: 'bg-yellow-400/20' };
-    if (elo >= 1100) return { name: 'Bạc', color: 'text-slate-300', bg: 'bg-slate-300/20' };
-    return { name: 'Đồng', color: 'text-amber-600', bg: 'bg-amber-600/20' };
+  const getRankInfo = (rank: number) => {
+    if (rank <= 10) return { name: 'Thách Đấu', color: 'text-red-500', bg: 'bg-red-500/20' };
+    if (rank <= 100) return { name: 'Bá Vương', color: 'text-amber-500', bg: 'bg-amber-500/20' };
+    if (rank <= 500) return { name: 'Kim Cương', color: 'text-cyan-400', bg: 'bg-cyan-400/20' };
+    if (rank <= 1000) return { name: 'Bạch Kim', color: 'text-emerald-400', bg: 'bg-emerald-400/20' };
+    if (rank <= 5000) return { name: 'Vàng', color: 'text-yellow-400', bg: 'bg-yellow-400/20' };
+    if (rank <= 9000) return { name: 'Bạc', color: 'text-slate-300', bg: 'bg-slate-300/20' };
+    return { name: 'Đồng', color: 'text-amber-700', bg: 'bg-amber-700/20' };
   };
 
-  const rankInfo = getRankInfo(currentElo);
+  const rankInfo = getRankInfo(currentRank);
 
   const fetchOpponents = async () => {
     setLoading(true);
-    const ops = await getArenaOpponents(currentElo, playerData.username || 'guest');
+    const ops = await getArenaOpponents(currentRank, playerData.username || 'guest');
     setOpponents(ops);
     setLoading(false);
   };
@@ -76,7 +78,7 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
     // Sanitize to remove any undefined fields before saving to Firestore
     const sanitizedFormation = JSON.parse(JSON.stringify(fullFormation));
     
-    updateArenaDefenseFormation(playerData.username || 'guest', playerData.playerName || playerData.username || 'Khuyết Danh', sanitizedFormation, playerData.arenaScore || 1000);
+    updateArenaDefenseFormation(playerData.username || 'guest', playerData.playerName || playerData.username || 'Khuyết Danh', sanitizedFormation, currentRank);
     
     setScreen('LOBBY');
   };
@@ -109,7 +111,7 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
             <div>
               <div className="text-slate-400 text-sm uppercase tracking-wider mb-1">Xếp hạng hiện tại</div>
               <div className={`text-4xl font-black ${rankInfo.color} font-cinzel`}>{rankInfo.name}</div>
-              <div className="text-xl font-bold text-white mt-1">{currentElo} <span className="text-slate-400 text-base font-normal">Điểm ELO</span></div>
+              <div className="text-xl font-bold text-white mt-1">Top {currentRank} <span className="text-slate-400 text-base font-normal">Đấu Trường</span></div>
             </div>
           </div>
           
@@ -151,14 +153,20 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {opponents.map((op, idx) => {
-                const opRank = getRankInfo(op.arenaScore || 1000);
+                const opRankNum = op.arenaRank || 10000;
+                const opRank = getRankInfo(opRankNum);
                 return (
-                  <div key={idx} className="bg-slate-900 border border-slate-700 rounded-xl p-5 hover:border-red-500/50 transition-colors flex flex-col items-center">
-                    <div className="w-16 h-16 rounded-full bg-slate-800 border-2 border-slate-600 overflow-hidden mb-3">
+                  <div key={idx} className="bg-slate-900 border border-slate-700 rounded-xl p-5 hover:border-red-500/50 transition-colors flex flex-col items-center relative overflow-hidden">
+                    {/* Rank Badge */}
+                    <div className="absolute top-2 right-2 bg-slate-800 border border-slate-600 px-2 py-1 rounded text-xs font-bold text-white shadow-lg">
+                      Hạng {opRankNum}
+                    </div>
+                    
+                    <div className="w-16 h-16 rounded-full bg-slate-800 border-2 border-slate-600 overflow-hidden mb-3 mt-2">
                       <img src={op.avatarUrl || "https://i.imgur.com/kS5lW6H.png"} alt="avatar" className="w-full h-full object-cover" />
                     </div>
                     <div className="font-bold text-lg text-white text-center">{op.playerName || op.uid}</div>
-                    <div className={`text-sm font-semibold ${opRank.color} mb-4`}>{opRank.name} ({op.arenaScore || 1000})</div>
+                    <div className={`text-sm font-semibold ${opRank.color} mb-4`}>{opRank.name}</div>
                     
                     {/* Defense preview */}
                     <div className="flex justify-center gap-1 mb-6 w-full flex-wrap">
@@ -207,7 +215,7 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
           setPlayerData(newData);
           saveData(newData);
           const matchData = {
-              opponentScore: selectedOpponent?.arenaScore || 1000,
+              opponentRank: selectedOpponent?.arenaRank || 10000,
               opponentUid: selectedOpponent?.uid,
               opponentName: selectedOpponent?.playerName
           };
@@ -233,14 +241,19 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
       playerData={playerData}
       attackFormation={attackFormation}
       opponent={selectedOpponent}
-      onFinish={(isWin, newElo) => {
-        const newData = { ...playerData, arenaScore: newElo };
-        setPlayerData(newData);
-        saveData(newData);
-        // Sync to firebase explicitly because it's an important stat
-        updateArenaScore(playerData.username || 'guest', newElo);
+      onFinish={async (isWin) => {
+        if (isWin) {
+          const myRank = playerData.arenaRank || 10000;
+          const opponentRank = selectedOpponent.arenaRank || 10000;
+          if (opponentRank < myRank) {
+            const newData = { ...playerData, arenaRank: opponentRank };
+            setPlayerData(newData);
+            saveData(newData);
+            await swapArenaRanks(playerData.username || 'guest', myRank, selectedOpponent.uid, opponentRank);
+          }
+        }
         setScreen('LOBBY');
-        // Refresh opponents so we get new ones if elo changes a lot
+        // Refresh opponents so we get new ones based on new rank
         fetchOpponents();
       }}
     />
@@ -428,7 +441,7 @@ const ArenaCombat: React.FC<{
   playerData: PlayerState;
   attackFormation: (string | null)[];
   opponent: LeaderboardEntry;
-  onFinish: (isWin: boolean, newElo: number) => void;
+  onFinish: (isWin: boolean) => void;
 }> = ({ playerData, attackFormation, opponent, onFinish }) => {
   const [phase, setPhase] = useState<'VS' | 'FIGHT' | 'RESULT'>('VS');
   const [result, setResult] = useState<'WIN' | 'LOSE' | null>(null);
@@ -513,20 +526,18 @@ const ArenaCombat: React.FC<{
             </div>
             
             <div className="bg-slate-900 border border-slate-700 p-8 rounded-2xl flex flex-col items-center min-w-[300px]">
-              <div className="text-slate-400 uppercase tracking-widest mb-2">Điểm ELO</div>
+              <div className="text-slate-400 uppercase tracking-widest mb-2">Xếp Hạng Đấu Trường</div>
               <div className="flex items-center gap-4 text-3xl font-bold text-white mb-6">
-                <span>{playerData.arenaScore || 1000}</span>
+                <span>Top {playerData.arenaRank || 10000}</span>
                 <ChevronLeft className="rotate-180 text-slate-500" />
-                <span className={result === 'WIN' ? 'text-emerald-400' : 'text-red-400'}>
-                  {result === 'WIN' ? '+' : '-'}{result === 'WIN' ? 25 : 15}
+                <span className={result === 'WIN' ? 'text-emerald-400' : 'text-slate-500'}>
+                  {result === 'WIN' ? `Top ${opponent.arenaRank || 10000}` : 'Giữ nguyên'}
                 </span>
               </div>
               
               <button 
                 onClick={() => {
-                  const currentElo = playerData.arenaScore || 1000;
-                  const change = result === 'WIN' ? 25 : -15;
-                  onFinish(result === 'WIN', Math.max(0, currentElo + change));
+                  onFinish(result === 'WIN');
                 }}
                 className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 rounded-xl text-white font-bold text-lg"
               >

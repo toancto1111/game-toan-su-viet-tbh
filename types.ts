@@ -112,7 +112,8 @@ export interface PlayerState {
   grade?: number;                 // Khối lớp học sinh đang học (6, 7, 8, 9)
   customAvatar?: string;          // Ảnh đại diện tải lên từ máy tính (Data URL/Base64)
   username?: string;              // Tên tài khoản đăng nhập
-  arenaScore?: number;            // Điểm ELO Đấu Trường Bá Vương
+  arenaScore?: number;            // Điểm ELO Đấu Trường Bá Vương (Legacy)
+  arenaRank?: number;             // Xếp hạng Đấu Trường
   arenaTickets?: number;          // Vé tham gia Đấu Trường
   arenaDefenseFormation?: (string | null)[]; // Đội hình phòng thủ Đấu Trường
   arenaLastRefreshDate?: string;  // Ngày reset vé (YYYY-MM-DD)
@@ -207,7 +208,8 @@ export interface LeaderboardEntry {
   grade: number; // 6, 7, 8, 9
   combatPower: number; // Tổng chiến lực 6 tướng mạnh nhất
   knowledgeScore: number; // Điểm Khoa Cử (Toán + Sử)
-  arenaScore?: number; // Điểm ELO Đấu Trường
+  arenaScore?: number; // Điểm ELO Đấu Trường (Legacy)
+  arenaRank?: number; // Xếp hạng Đấu Trường (1 = Top 1)
   arenaDefenseFormation?: {
     id: string;
     name: string;

@@ -510,34 +510,52 @@ export const fetchAllStudentAnalytics = async (
   }
 };
 
-// ==================== ĐẤU TRƯỜNG BÁ VƯƠNG (ARENA) ====================
+// ==================== ĐẤU TRƯỜNG BÁ VƯƠNG (ARENA - RANK SWAP SYSTEM) ====================
 
 /**
- * Lấy danh sách đối thủ ngẫu nhiên từ BXH (có ELO gần với người chơi nhất)
+ * Lấy danh sách đối thủ có Hạng (Rank) cao hơn người chơi hiện tại một chút
  */
-export const getArenaOpponents = async (currentElo: number = 1000, excludeUid: string): Promise<LeaderboardEntry[]> => {
+export const getArenaOpponents = async (currentRank: number = 10000, excludeUid: string): Promise<LeaderboardEntry[]> => {
   if (!db) return [];
   try {
-    const q = query(collection(db, "leaderboards"), orderBy("arenaScore", "desc"), limit(150));
+    // Kéo 300 người chơi có đội hình phòng thủ (do số lượng chưa quá lớn)
+    const q = query(collection(db, "leaderboards"), limit(300));
     const snapshot = await getDocs(q);
     const allPlayers: LeaderboardEntry[] = [];
     snapshot.forEach(docSnap => {
       const data = docSnap.data() as LeaderboardEntry;
       if (data.uid !== excludeUid && data.arenaDefenseFormation && data.arenaDefenseFormation.length > 0) {
+        // Nếu người chơi cũ chưa có arenaRank, mặc định là 10000
+        if (!data.arenaRank) data.arenaRank = 10000;
         allPlayers.push(data);
       }
     });
 
-    // Lọc lấy những người có ELO gần nhất (chênh lệch +- 400)
-    let candidates = allPlayers.filter(p => Math.abs((p.arenaScore || 1000) - currentElo) <= 400);
+    // Lọc những người có rank TỐT HƠN (số nhỏ hơn) hoặc BẰNG currentRank
+    // Để cho phép người hạng 10000 đánh người hạng 9999, 9998...
+    let betterPlayers = allPlayers.filter(p => p.arenaRank! <= currentRank && p.arenaRank! >= currentRank - 500);
     
-    // Nếu quá ít, nới lỏng điều kiện
-    if (candidates.length < 3) {
-      candidates = allPlayers;
+    // Sắp xếp theo rank tăng dần (từ cao xuống thấp)
+    betterPlayers.sort((a, b) => a.arenaRank! - b.arenaRank!);
+
+    // Chọn ra 3 đối thủ ngẫu nhiên trong khoảng gần nhất
+    // Nếu là top 1, không có ai tốt hơn, lấy những người bám đuổi
+    if (betterPlayers.length === 0) {
+       betterPlayers = allPlayers.filter(p => p.arenaRank! >= currentRank);
     }
 
-    // Chọn ngẫu nhiên 3 người
-    const shuffled = candidates.sort(() => 0.5 - Math.random());
+    if (betterPlayers.length < 3) {
+      // Fake bot nếu không đủ người
+      const fakeBots: LeaderboardEntry[] = [
+        { uid: 'bot1', playerName: 'Vô Danh Tiền Bối', grade: 9, combatPower: 50000, knowledgeScore: 0, arenaRank: Math.max(1, currentRank - 10), trialStage: 1, questionsAnswered: 0, studyStreak: 0, topHeroStar: 5 },
+        { uid: 'bot2', playerName: 'Ẩn Danh Cao Thủ', grade: 9, combatPower: 45000, knowledgeScore: 0, arenaRank: Math.max(1, currentRank - 50), trialStage: 1, questionsAnswered: 0, studyStreak: 0, topHeroStar: 4 },
+        { uid: 'bot3', playerName: 'Huyền Thoại Võ Lâm', grade: 9, combatPower: 60000, knowledgeScore: 0, arenaRank: Math.max(1, currentRank - 100), trialStage: 1, questionsAnswered: 0, studyStreak: 0, topHeroStar: 6 },
+      ];
+      return fakeBots.slice(0, 3);
+    }
+
+    // Chọn ngẫu nhiên 3 người trong top những người rank tốt hơn
+    const shuffled = betterPlayers.slice(0, 10).sort(() => 0.5 - Math.random());
     return shuffled.slice(0, 3);
   } catch (error) {
     console.error("Lỗi lấy đối thủ Đấu Trường:", error);
@@ -545,30 +563,56 @@ export const getArenaOpponents = async (currentElo: number = 1000, excludeUid: s
   }
 };
 
-export const updateArenaScore = async (uid: string, newScore: number): Promise<boolean> => {
+/**
+ * Đổi hạng (Rank) giữa 2 người chơi khi Kẻ Thách Đấu chiến thắng
+ */
+export const swapArenaRanks = async (
+  challengerUid: string, 
+  challengerCurrentRank: number,
+  defenderUid: string, 
+  defenderCurrentRank: number
+): Promise<boolean> => {
   if (!db) return false;
-  if (uid.startsWith('guest_')) return false;
+  if (challengerUid.startsWith('guest_')) return false;
   
-  const safeName = uid.toLowerCase();
-  if (safeName === 'admin' || safeName === 'tmt') return false;
-
   try {
-    const safeId = uid.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
-    const docRef = doc(db, "leaderboards", safeId);
-    await setDoc(docRef, {
-      arenaScore: newScore,
-      updatedAt: Date.now()
-    }, { merge: true });
+    const challengerId = challengerUid.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
+    const challengerRef = doc(db, "leaderboards", challengerId);
+    
+    // Nếu đánh thắng Bot, chỉ cập nhật rank của bản thân
+    if (defenderUid.startsWith('bot')) {
+      await setDoc(challengerRef, {
+        arenaRank: defenderCurrentRank,
+        updatedAt: Date.now()
+      }, { merge: true });
+      leaderboardMemoryCache = null;
+      return true;
+    }
+
+    // Nếu đánh thắng người chơi thật, HOÁN ĐỔI RANK
+    const defenderId = defenderUid.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
+    const defenderRef = doc(db, "leaderboards", defenderId);
+
+    // Dùng batch hoặc cập nhật song song
+    await Promise.all([
+      setDoc(challengerRef, { arenaRank: defenderCurrentRank, updatedAt: Date.now() }, { merge: true }),
+      setDoc(defenderRef, { arenaRank: challengerCurrentRank, updatedAt: Date.now() }, { merge: true })
+    ]);
     
     leaderboardMemoryCache = null;
     return true;
   } catch (error) {
-    console.error("Lỗi cập nhật điểm Đấu Trường:", error);
+    console.error("Lỗi hoán đổi hạng Đấu Trường:", error);
     return false;
   }
 };
 
-export const updateArenaDefenseFormation = async (uid: string, playerName: string, formation: any[], currentScore: number): Promise<boolean> => {
+// Giữ lại hàm cũ để tránh lỗi tương thích nếu còn gọi ở đâu đó
+export const updateArenaScore = async (uid: string, newScore: number): Promise<boolean> => {
+  return false; 
+};
+
+export const updateArenaDefenseFormation = async (uid: string, playerName: string, formation: any[], currentRank: number): Promise<boolean> => {
   if (!db) return false;
   if (uid.startsWith('guest_')) return false;
 
@@ -579,7 +623,7 @@ export const updateArenaDefenseFormation = async (uid: string, playerName: strin
       uid: safeId,
       playerName: playerName,
       arenaDefenseFormation: formation,
-      arenaScore: currentScore, // Ensure field exists so orderBy("arenaScore") does not exclude it
+      arenaRank: currentRank,
       updatedAt: Date.now()
     }, { merge: true });
     

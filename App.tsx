@@ -2032,32 +2032,24 @@ const App: React.FC = () => {
     if (!arenaMatchData) return;
     const isWin = resultStr === 'win';
     
-    // ELO logic
-    const kFactor = 32;
-    const expectedScore = 1 / (1 + Math.pow(10, ((arenaMatchData.opponentScore || 1000) - (player.arenaScore || 1000)) / 400));
-    const scoreDiff = Math.round(kFactor * ((isWin ? 1 : 0) - expectedScore));
-    const pointChange = isWin ? Math.max(10, scoreDiff) : Math.min(-10, scoreDiff);
+    const myRank = player.arenaRank || 10000;
+    const opponentRank = arenaMatchData.opponentRank || 10000;
     
-    const newScore = Math.max(0, (player.arenaScore || 1000) + pointChange);
-
-    // Update opponent's score
-    const opponentExpected = 1 - expectedScore;
-    const opponentScoreDiff = Math.round(kFactor * ((isWin ? 0 : 1) - opponentExpected));
-    // Opponent point change should be opposite
-    const opponentPointChange = isWin ? Math.min(-10, opponentScoreDiff) : Math.max(10, opponentScoreDiff);
-    const newOpponentScore = Math.max(0, (arenaMatchData.opponentScore || 1000) + opponentPointChange);
-
-    // Save to Firebase
-    await updateArenaScore(player.username || 'guest', newScore);
-    if (arenaMatchData.opponentUid) {
-        await updateArenaScore(arenaMatchData.opponentUid, newOpponentScore);
+    let newRank = myRank;
+    if (isWin && opponentRank < myRank) {
+       newRank = opponentRank;
+       // Gọi hoán đổi trên server (Đã import swapArenaRanks từ firebaseService)
+       // LƯU Ý: vì App.tsx không import swapArenaRanks, tôi sẽ import nó ở đầu file
+       import('./firebaseService').then(({ swapArenaRanks }) => {
+           swapArenaRanks(player.username || 'guest', myRank, arenaMatchData.opponentUid, opponentRank);
+       });
     }
-    
+
     // Update local state and save to users collection
     const p = player.dailyQuestProgress || {};
     const newPlayer = {
         ...player,
-        arenaScore: newScore,
+        arenaRank: newRank,
         dailyQuestProgress: {
             ...p,
             'q_play_arena_1': (p['q_play_arena_1'] || 0) + 1,
@@ -2073,9 +2065,8 @@ const App: React.FC = () => {
     // Pass info to UI by storing the change in arenaMatchData
     setArenaMatchData(prev => ({
         ...prev,
-        pointChange,
-        newScore,
-        oldScore: player.arenaScore || 1000,
+        oldRank: myRank,
+        newRank: newRank,
         resultStr
     }));
   };
@@ -5390,12 +5381,12 @@ const CombatView = ({ units, setUnits, logs, setLogs, result, setResult, active,
                                     {result === 'win' ? 'CHIẾN THẮNG' : 'THẤT BẠI'}
                                 </div>
                                 <div className="text-xl sm:text-2xl font-bold text-white mb-6">
-                                    ĐIỂM ELO
+                                    XẾP HẠNG ĐẤU TRƯỜNG
                                     <div className="mt-2 text-3xl flex items-center justify-center gap-4">
-                                        <span className="text-slate-400">{arenaMatchData.oldScore}</span>
+                                        <span className="text-slate-400">Top {arenaMatchData.oldRank || 10000}</span>
                                         <span className="text-slate-500 text-xl">&gt;</span>
-                                        <span className={result === 'win' ? 'text-green-400 drop-shadow-[0_0_10px_rgba(74,222,128,0.5)]' : 'text-red-400 drop-shadow-[0_0_10px_rgba(248,113,113,0.5)]'}>
-                                            {result === 'win' ? '+' : ''}{arenaMatchData.pointChange}
+                                        <span className={result === 'win' && arenaMatchData.newRank < arenaMatchData.oldRank ? 'text-green-400 drop-shadow-[0_0_10px_rgba(74,222,128,0.5)]' : 'text-slate-400'}>
+                                            Top {arenaMatchData.newRank || 10000}
                                         </span>
                                     </div>
                                 </div>
