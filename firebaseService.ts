@@ -141,7 +141,8 @@ export const fetchOnlineLeaderboard = async (
         querySnapshot.forEach((docSnap) => {
           const data = docSnap.data() as LeaderboardEntry;
           const safeName = (data.playerName || data.uid || "").toLowerCase();
-          if (safeName !== 'admin' && safeName !== 'tmt') {
+          const isBot = data.uid && data.uid.startsWith('bot_');
+          if (safeName !== 'admin' && safeName !== 'tmt' && !isBot) {
              fetched.push(data);
           }
         });
