@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { PlayerState, LeaderboardEntry, Hero } from './types';
-import { ChevronLeft, Swords, Trophy, Shield, Star, Users, Zap, Skull, User } from 'lucide-react';
+import { ChevronLeft, Swords, Trophy, Shield, Star, Users, Zap, Skull, User, Search } from 'lucide-react';
 import { getArenaOpponents, swapArenaRanks, updateArenaDefenseFormation } from './firebaseService';
 
 interface ArenaViewProps {
@@ -19,6 +19,7 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
   const [loading, setLoading] = useState(false);
   const [selectedOpponent, setSelectedOpponent] = useState<LeaderboardEntry | null>(null);
   const [attackFormation, setAttackFormation] = useState<(string | null)[]>([]);
+  const [selectedHeroPreview, setSelectedHeroPreview] = useState<any>(null);
   
   // Mặc định người mới xếp hạng 10000
   const currentRank = playerData.arenaRank || 10000;
@@ -171,9 +172,16 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
                     {/* Defense preview */}
                     <div className="flex justify-center gap-1 mb-6 w-full flex-wrap">
                       {op.arenaDefenseFormation?.slice(0, 6).map((hero, i) => (
-                        <div key={i} className="w-10 h-10 bg-slate-800 rounded border border-slate-700 overflow-hidden flex-shrink-0">
+                        <div key={i} 
+                             className="w-10 h-10 bg-slate-800 rounded border border-slate-700 overflow-hidden flex-shrink-0 cursor-pointer hover:border-amber-500 hover:scale-110 transition-all z-10 relative group"
+                             onClick={() => { if (hero) setSelectedHeroPreview(hero); }}>
                           {hero ? (
-                            <img src={hero.image} alt="hero" className="w-full h-full object-cover" />
+                            <>
+                              <img src={hero.image} alt="hero" className="w-full h-full object-cover" />
+                              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                                <Search size={14} className="text-white" />
+                              </div>
+                            </>
                           ) : (
                             <div className="w-full h-full flex items-center justify-center opacity-30"><User size={20} className="text-slate-400" /></div>
                           )}
@@ -190,6 +198,43 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
                   </div>
                 );
               })}
+            </div>
+          )}
+
+          {/* Hero Preview Modal */}
+          {selectedHeroPreview && (
+            <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200" onClick={() => setSelectedHeroPreview(null)}>
+              <div className="bg-slate-900 border-2 border-slate-700 rounded-2xl max-w-sm w-full p-6 relative overflow-hidden animate-in zoom-in-95 duration-300" onClick={e => e.stopPropagation()}>
+                <div className="absolute top-0 right-0 p-4 z-10">
+                  <button onClick={() => setSelectedHeroPreview(null)} className="text-slate-400 hover:text-white transition-colors bg-slate-800 rounded-full w-8 h-8 flex items-center justify-center">✕</button>
+                </div>
+                <div className="w-24 h-24 mx-auto bg-slate-800 rounded-full border-2 border-amber-500 overflow-hidden mb-4 shadow-[0_0_15px_rgba(245,158,11,0.3)]">
+                  <img src={selectedHeroPreview.image} className="w-full h-full object-cover" />
+                </div>
+                <h3 className="text-2xl font-bold text-center text-amber-500 font-cinzel mb-1">{selectedHeroPreview.name}</h3>
+                <div className="flex justify-center mb-4">
+                  {[...Array(Math.min(5, Math.ceil((selectedHeroPreview.star || 1)/5)))].map((_, i) => <Star key={i} size={16} className="text-yellow-400 fill-yellow-400" />)}
+                </div>
+                
+                <div className="space-y-3 bg-slate-950/50 p-4 rounded-xl border border-slate-800/80">
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-400 text-sm flex items-center gap-1"><Shield size={14} className="text-green-400"/> Sinh lực</span>
+                    <span className="text-green-400 font-bold">{selectedHeroPreview.hp || selectedHeroPreview.maxHp || '???'}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-400 text-sm flex items-center gap-1"><Swords size={14} className="text-red-400"/> Tấn công</span>
+                    <span className="text-red-400 font-bold">{selectedHeroPreview.atk || '???'}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-400 text-sm flex items-center gap-1"><Shield size={14} className="text-blue-400"/> Phòng thủ</span>
+                    <span className="text-blue-400 font-bold">{selectedHeroPreview.def || '???'}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-400 text-sm flex items-center gap-1"><Zap size={14} className="text-purple-400"/> Tốc độ</span>
+                    <span className="text-purple-400 font-bold">{selectedHeroPreview.spd || '???'}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>
