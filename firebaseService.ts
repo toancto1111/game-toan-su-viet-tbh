@@ -518,34 +518,37 @@ export const fetchAllStudentAnalytics = async (
 export const getArenaOpponents = async (currentRank: number = 10000, excludeUid: string): Promise<LeaderboardEntry[]> => {
   if (!db) return [];
   try {
-    // Kéo 300 người chơi có đội hình phòng thủ (do số lượng chưa quá lớn)
-    const q = query(collection(db, "leaderboards"), limit(300));
-    const snapshot = await getDocs(q);
-    const allPlayers: LeaderboardEntry[] = [];
+    // 1. Tìm những người có rank TỐT HƠN (nhỏ hơn) currentRank, lấy 15 người gần nhất
+    let q = query(
+      collection(db, "leaderboards"),
+      where("arenaRank", "<", currentRank),
+      orderBy("arenaRank", "desc"),
+      limit(15)
+    );
+    let snapshot = await getDocs(q);
+    
+    // Nếu đang là Top 1 (không có ai rank < 1), thì lấy những người xếp ngay sau (rank > 1)
+    if (snapshot.empty) {
+       q = query(
+         collection(db, "leaderboards"),
+         where("arenaRank", ">", currentRank),
+         orderBy("arenaRank", "asc"),
+         limit(15)
+       );
+       snapshot = await getDocs(q);
+    }
+
+    let betterPlayers: LeaderboardEntry[] = [];
     snapshot.forEach(docSnap => {
       const data = docSnap.data() as LeaderboardEntry;
+      // Chỉ lấy những người có setup đội hình thủ và không phải chính mình
       if (data.uid !== excludeUid && data.arenaDefenseFormation && data.arenaDefenseFormation.length > 0) {
-        // Nếu người chơi cũ chưa có arenaRank, mặc định là 10000
-        if (!data.arenaRank) data.arenaRank = 10000;
-        allPlayers.push(data);
+        betterPlayers.push(data);
       }
     });
 
-    // Lọc những người có rank TỐT HƠN (số nhỏ hơn) hoặc BẰNG currentRank
-    // Để cho phép người hạng 10000 đánh người hạng 9999, 9998...
-    let betterPlayers = allPlayers.filter(p => p.arenaRank! <= currentRank && p.arenaRank! >= currentRank - 500);
-    
-    // Sắp xếp theo rank tăng dần (từ cao xuống thấp)
-    betterPlayers.sort((a, b) => a.arenaRank! - b.arenaRank!);
-
-    // Chọn ra 3 đối thủ ngẫu nhiên trong khoảng gần nhất
-    // Nếu là top 1, không có ai tốt hơn, lấy những người bám đuổi
-    if (betterPlayers.length === 0) {
-       betterPlayers = allPlayers.filter(p => p.arenaRank! >= currentRank);
-    }
-
     if (betterPlayers.length < 3) {
-      // Fake bot nếu không đủ người
+      // Fake bot nếu thực sự không có ai (chỉ xảy ra khi DB hoàn toàn trống)
       const fakeBots: LeaderboardEntry[] = [
         { uid: 'bot1', playerName: 'Vô Danh Tiền Bối', grade: 9, combatPower: 50000, knowledgeScore: 0, arenaRank: Math.max(1, currentRank - 10), trialStage: 1, questionsAnswered: 0, studyStreak: 0, topHeroStar: 5 },
         { uid: 'bot2', playerName: 'Ẩn Danh Cao Thủ', grade: 9, combatPower: 45000, knowledgeScore: 0, arenaRank: Math.max(1, currentRank - 50), trialStage: 1, questionsAnswered: 0, studyStreak: 0, topHeroStar: 4 },
@@ -554,8 +557,8 @@ export const getArenaOpponents = async (currentRank: number = 10000, excludeUid:
       return fakeBots.slice(0, 3);
     }
 
-    // Chọn ngẫu nhiên 3 người trong top những người rank tốt hơn
-    const shuffled = betterPlayers.slice(0, 10).sort(() => 0.5 - Math.random());
+    // Lấy 3 người ngẫu nhiên trong danh sách tìm được để tạo sự đa dạng
+    const shuffled = betterPlayers.sort(() => 0.5 - Math.random());
     return shuffled.slice(0, 3);
   } catch (error) {
     console.error("Lỗi lấy đối thủ Đấu Trường:", error);
