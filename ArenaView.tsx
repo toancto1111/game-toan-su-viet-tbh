@@ -367,7 +367,7 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
                           </div>
                         </div>
                         <div className="font-bold text-sm text-white text-center truncate w-full">{h.name}</div>
-                        <div className="text-xs text-amber-500 font-black mt-1">Lực Chiến: {((h.overall || 1) * (h.star || 1)).toLocaleString()}</div>
+                        <div className="text-xs text-amber-500 font-black mt-1">Lực Chiến: {(h.overall || 1).toLocaleString()}</div>
                       </div>
                     ))}
 
@@ -475,8 +475,8 @@ const ArenaTeamSelector: React.FC<{
       // Tự động sắp 6 tướng mạnh nhất (không trùng tên) nếu chưa lưu
       const uniqueTopHeroesMap = new Map();
       const sortedHeroes = [...permInventory].sort((a: any, b: any) => {
-        const powerA = (a.overall || 1) * (a.star || 1);
-        const powerB = (b.overall || 1) * (b.star || 1);
+        const powerA = (a.overall || 1);
+        const powerB = (b.overall || 1);
         return powerB - powerA;
       });
       sortedHeroes.forEach((h: any) => {
@@ -529,8 +529,8 @@ const ArenaTeamSelector: React.FC<{
     const permInventory = playerData.inventory.filter((h: any) => h.isPermanent);
     const uniqueTopHeroesMap = new Map();
     const sortedHeroes = [...permInventory].sort((a, b) => {
-      const powerA = (a.overall || 1) * (a.star || 1);
-      const powerB = (b.overall || 1) * (b.star || 1);
+      const powerA = (a.overall || 1);
+      const powerB = (b.overall || 1);
       return powerB - powerA;
     });
     sortedHeroes.forEach((h: any) => {
