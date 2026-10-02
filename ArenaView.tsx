@@ -20,6 +20,7 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
   const [selectedOpponent, setSelectedOpponent] = useState<LeaderboardEntry | null>(null);
   const [attackFormation, setAttackFormation] = useState<(string | null)[]>([]);
   const [selectedHeroPreview, setSelectedHeroPreview] = useState<any>(null);
+  const [inspectTarget, setInspectTarget] = useState<LeaderboardEntry | null>(null);
   
   // Mặc định người mới xếp hạng 10000
   const currentRank = playerData.arenaRank || 10000;
@@ -163,10 +164,14 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
                       Hạng {opRankNum}
                     </div>
                     
-                    <div className="w-16 h-16 rounded-full bg-slate-800 border-2 border-slate-600 overflow-hidden mb-3 mt-2">
+                    <div className="w-16 h-16 rounded-full bg-slate-800 border-2 border-slate-600 overflow-hidden mb-3 mt-2 cursor-pointer hover:border-amber-500 transition-colors shadow-md"
+                         onClick={() => setInspectTarget(op)}>
                       <img src={op.avatarUrl || "https://i.imgur.com/kS5lW6H.png"} alt="avatar" className="w-full h-full object-cover" />
                     </div>
-                    <div className="font-bold text-lg text-white text-center">{op.playerName || op.uid}</div>
+                    <div className="font-bold text-lg text-white text-center cursor-pointer hover:text-amber-400 transition-colors"
+                         onClick={() => setInspectTarget(op)}>
+                      {op.playerName || op.uid}
+                    </div>
                     <div className={`text-sm font-semibold ${opRank.color} mb-4`}>{opRank.name}</div>
                     
                     {/* Defense preview */}
@@ -189,12 +194,19 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
                       ))}
                     </div>
                     
-                    <button 
-                      onClick={() => { setSelectedOpponent(op); setScreen('SELECT_ATTACK'); }}
-                      className="w-full py-3 bg-red-600 hover:bg-red-500 text-white rounded-lg font-bold flex justify-center items-center gap-2 shadow-[0_0_15px_rgba(220,38,38,0.4)] transition-all"
-                    >
-                      <Swords size={18} /> THÁCH ĐẤU
-                    </button>
+                      <button 
+                        onClick={() => setInspectTarget(op)}
+                        className="w-full py-2 bg-slate-800 hover:bg-slate-700 text-stone-300 rounded-lg font-bold flex justify-center items-center gap-2 border border-slate-700 transition-all text-sm mb-2"
+                      >
+                        <Search size={16} /> SOI ĐỘI HÌNH
+                      </button>
+                      <button 
+                        onClick={() => { setSelectedOpponent(op); setScreen('SELECT_ATTACK'); }}
+                        className="w-full py-3 bg-red-600 hover:bg-red-500 text-white rounded-lg font-bold flex justify-center items-center gap-2 shadow-[0_0_15px_rgba(220,38,38,0.4)] transition-all"
+                      >
+                        <Swords size={18} /> THÁCH ĐẤU
+                      </button>
+                    </div>
                   </div>
                 );
               })}
@@ -232,6 +244,84 @@ export const ArenaView: React.FC<ArenaViewProps> = ({ playerData, setPlayerData,
                   <div className="flex justify-between items-center">
                     <span className="text-slate-400 text-sm flex items-center gap-1"><Zap size={14} className="text-purple-400"/> Tốc độ</span>
                     <span className="text-purple-400 font-bold">{selectedHeroPreview.spd || '???'}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          {/* Inspect Profile Modal */}
+          {inspectTarget && (
+            <div 
+              className="fixed inset-0 z-[90] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in"
+              onClick={() => setInspectTarget(null)}
+            >
+              <div 
+                className="bg-stone-900 border-2 border-amber-500/80 rounded-3xl p-6 md:p-8 max-w-3xl w-full shadow-2xl relative max-h-[90vh] flex flex-col"
+                onClick={e => e.stopPropagation()}
+              >
+                <button 
+                  onClick={() => setInspectTarget(null)}
+                  className="absolute top-4 right-4 text-stone-400 hover:text-white w-8 h-8 flex items-center justify-center rounded-full bg-stone-800 border border-stone-700"
+                >
+                  ✕
+                </button>
+
+                {/* Header thông tin người chơi */}
+                <div className="flex flex-col sm:flex-row items-center gap-4 border-b border-amber-900/50 pb-5 mb-5">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-2 border-amber-400 overflow-hidden bg-stone-950 shrink-0 shadow-[0_0_15px_rgba(251,191,36,0.3)]">
+                    <img src={inspectTarget.avatarUrl || "https://i.imgur.com/kS5lW6H.png"} alt="" className="w-full h-full object-cover" />
+                  </div>
+                  <div className="flex-1 text-center sm:text-left">
+                    <div className="flex flex-col sm:flex-row items-center sm:items-start gap-2 mb-1">
+                      <h3 className="text-2xl font-cinzel font-black text-amber-300 uppercase drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
+                        {inspectTarget.playerName}
+                      </h3>
+                      <span className="bg-amber-950 text-amber-300 text-xs px-2.5 py-0.5 rounded-full border border-amber-600/40">
+                        Khối {inspectTarget.grade || 6}
+                      </span>
+                    </div>
+                    <p className="text-stone-400 text-xs mt-0.5">Quân Đoàn: <span className="text-white font-bold">{inspectTarget.playerName}</span></p>
+                    <div className="flex flex-wrap justify-center sm:justify-start gap-3 mt-3 text-xs font-bold bg-stone-950/50 p-2 rounded-lg border border-stone-800">
+                      <span className="text-amber-400 flex items-center gap-1">⚔️ Chiến Lực: {(inspectTarget.combatPower || 0).toLocaleString()}</span>
+                      <span className="text-sky-400 flex items-center gap-1">📜 Điểm Khoa Cử: {inspectTarget.knowledgeScore}</span>
+                      <span className="text-purple-400 flex items-center gap-1">🏛️ Ải Thí Luyện: {inspectTarget.trialStage}</span>
+                      <span className="text-emerald-400 flex items-center gap-1">⚡ Đã làm: {inspectTarget.questionsAnswered} câu</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Danh sách 6 tướng trong Đội Hình */}
+                <div className="flex-1 overflow-y-auto pr-1">
+                  <h4 className="text-sm font-cinzel font-bold text-amber-500 uppercase tracking-wider mb-4 flex items-center justify-center gap-2">
+                    <Swords size={18} /> Trận Đồ Danh Tướng Xuất Chiến ({inspectTarget.arenaDefenseFormation?.length || 0} Tướng)
+                  </h4>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {(inspectTarget.arenaDefenseFormation || []).map((h: any, i: number) => (
+                      <div 
+                        key={i} 
+                        className="bg-stone-950 rounded-xl border border-amber-900/50 p-3 flex flex-col items-center relative overflow-hidden group hover:border-amber-500 transition-colors cursor-pointer"
+                        onClick={() => setSelectedHeroPreview(h)}
+                      >
+                        <div className="w-full aspect-[3/4] rounded-lg overflow-hidden bg-stone-900 mb-3 relative">
+                          <img src={h.image} alt={h.name} className="w-full h-full object-cover" />
+                          <span className="absolute top-1 right-1 bg-black/80 text-yellow-400 text-[10px] font-black px-1.5 py-0.5 rounded border border-yellow-500/50">
+                            {h.star}★
+                          </span>
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                            <Search size={24} className="text-white" />
+                          </div>
+                        </div>
+                        <div className="font-bold text-sm text-white text-center truncate w-full">{h.name}</div>
+                        <div className="text-xs text-amber-500 font-black mt-1">Lực Chiến: {((h.overall || 1) * (h.star || 1)).toLocaleString()}</div>
+                      </div>
+                    ))}
+
+                    {(!inspectTarget.arenaDefenseFormation || inspectTarget.arenaDefenseFormation.length === 0) && (
+                      <p className="col-span-full text-center text-stone-500 text-sm py-12">
+                        Người chơi này chưa thiết lập đầy đủ danh sách xuất chiến.
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>

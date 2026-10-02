@@ -548,19 +548,18 @@ export const getArenaOpponents = async (currentRank: number = 10000, excludeUid:
     });
 
     if (betterPlayers.length < 3) {
-      // Fake bot nếu thực sự không có ai (chỉ xảy ra khi DB hoàn toàn trống)
       const botFormation = [
-        { id: 'h1_10', name: 'An Dương Vương', image: './heroes/allies/h1_10.png', star: 15, overall: 350, hp: 15000, maxHp: 15000, atk: 1200, def: 800, spd: 120 },
-        { id: 'h4_1', name: 'Ngô Quyền', image: './heroes/allies/h4_1.png', star: 15, overall: 350, hp: 16000, maxHp: 16000, atk: 1300, def: 900, spd: 110 },
-        { id: 'h6_5', name: 'Trần Thái Tông', image: './heroes/allies/h6_5.png', star: 20, overall: 500, hp: 20000, maxHp: 20000, atk: 1800, def: 1000, spd: 130 },
-        { id: 'h1_2', name: 'Lạc Long Quân', image: './heroes/allies/h1_2.png', star: 20, overall: 600, hp: 22000, maxHp: 22000, atk: 2000, def: 1200, spd: 140 },
-        { id: 'h1_5', name: 'Thánh Gióng', image: './heroes/allies/h1_5.png', star: 20, overall: 550, hp: 25000, maxHp: 25000, atk: 2200, def: 1500, spd: 135 },
-        { id: 'h4_3', name: 'Lê Hoàn', image: './heroes/allies/h4_3.png', star: 18, overall: 450, hp: 18000, maxHp: 18000, atk: 1500, def: 1000, spd: 125 }
+        { id: 'h1_10', name: 'An Dương Vương', image: './heroes/allies/h1_10.png', star: 15, overall: 350, hp: 5000, maxHp: 5000, atk: 800, def: 400, spd: 120 },
+        { id: 'h4_1', name: 'Ngô Quyền', image: './heroes/allies/h4_1.png', star: 15, overall: 350, hp: 5500, maxHp: 5500, atk: 900, def: 500, spd: 110 },
+        { id: 'h6_5', name: 'Trần Thái Tông', image: './heroes/allies/h6_5.png', star: 20, overall: 500, hp: 7000, maxHp: 7000, atk: 1200, def: 600, spd: 130 },
+        { id: 'h1_2', name: 'Lạc Long Quân', image: './heroes/allies/h1_2.png', star: 20, overall: 600, hp: 8000, maxHp: 8000, atk: 1300, def: 700, spd: 140 },
+        { id: 'h1_5', name: 'Thánh Gióng', image: './heroes/allies/h1_5.png', star: 20, overall: 550, hp: 9000, maxHp: 9000, atk: 1400, def: 800, spd: 135 },
+        { id: 'h4_3', name: 'Lê Hoàn', image: './heroes/allies/h4_3.png', star: 18, overall: 450, hp: 6000, maxHp: 6000, atk: 1000, def: 550, spd: 125 }
       ];
       const fakeBots: LeaderboardEntry[] = [
-        { uid: 'bot1', playerName: 'Vô Danh Tiền Bối', grade: 9, combatPower: 50000, knowledgeScore: 0, arenaRank: Math.max(1, currentRank - 10), trialStage: 1, questionsAnswered: 0, studyStreak: 0, topHeroStar: 5, avatarUrl: './heroes/allies/h6_5.png', arenaDefenseFormation: botFormation },
-        { uid: 'bot2', playerName: 'Ẩn Danh Cao Thủ', grade: 9, combatPower: 45000, knowledgeScore: 0, arenaRank: Math.max(1, currentRank - 50), trialStage: 1, questionsAnswered: 0, studyStreak: 0, topHeroStar: 4, avatarUrl: './heroes/allies/h4_1.png', arenaDefenseFormation: botFormation },
-        { uid: 'bot3', playerName: 'Huyền Thoại Võ Lâm', grade: 9, combatPower: 60000, knowledgeScore: 0, arenaRank: Math.max(1, currentRank - 100), trialStage: 1, questionsAnswered: 0, studyStreak: 0, topHeroStar: 6, avatarUrl: './heroes/allies/h1_10.png', arenaDefenseFormation: botFormation },
+        { uid: 'bot1', playerName: 'Tuấn Kiệt', grade: 6, combatPower: 50000, knowledgeScore: 350, arenaRank: Math.max(1, currentRank - 10), trialStage: 2, questionsAnswered: 519, studyStreak: 0, topHeroStar: 5, avatarUrl: './heroes/allies/h6_5.png', arenaDefenseFormation: botFormation },
+        { uid: 'bot2', playerName: 'Minh Khang', grade: 7, combatPower: 45000, knowledgeScore: 280, arenaRank: Math.max(1, currentRank - 50), trialStage: 1, questionsAnswered: 420, studyStreak: 0, topHeroStar: 4, avatarUrl: './heroes/allies/h4_1.png', arenaDefenseFormation: botFormation },
+        { uid: 'bot3', playerName: 'Thành An', grade: 8, combatPower: 60000, knowledgeScore: 450, arenaRank: Math.max(1, currentRank - 100), trialStage: 3, questionsAnswered: 600, studyStreak: 0, topHeroStar: 6, avatarUrl: './heroes/allies/h1_10.png', arenaDefenseFormation: botFormation },
       ];
       return fakeBots.slice(0, 3);
     }
