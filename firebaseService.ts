@@ -549,10 +549,15 @@ export const getArenaOpponents = async (currentRank: number = 10000, excludeUid:
 
     if (betterPlayers.length < 3) {
       // Fake bot nếu thực sự không có ai (chỉ xảy ra khi DB hoàn toàn trống)
+      const botFormation = [
+        { id: 'h1_10', name: 'An Dương Vương', image: './heroes/allies/h1_10.png', star: 15, overall: 350 },
+        { id: 'h4_1', name: 'Ngô Quyền', image: './heroes/allies/h4_1.png', star: 15, overall: 350 },
+        { id: 'h6_5', name: 'Trần Thái Tông', image: './heroes/allies/h6_5.png', star: 20, overall: 500 }
+      ];
       const fakeBots: LeaderboardEntry[] = [
-        { uid: 'bot1', playerName: 'Vô Danh Tiền Bối', grade: 9, combatPower: 50000, knowledgeScore: 0, arenaRank: Math.max(1, currentRank - 10), trialStage: 1, questionsAnswered: 0, studyStreak: 0, topHeroStar: 5 },
-        { uid: 'bot2', playerName: 'Ẩn Danh Cao Thủ', grade: 9, combatPower: 45000, knowledgeScore: 0, arenaRank: Math.max(1, currentRank - 50), trialStage: 1, questionsAnswered: 0, studyStreak: 0, topHeroStar: 4 },
-        { uid: 'bot3', playerName: 'Huyền Thoại Võ Lâm', grade: 9, combatPower: 60000, knowledgeScore: 0, arenaRank: Math.max(1, currentRank - 100), trialStage: 1, questionsAnswered: 0, studyStreak: 0, topHeroStar: 6 },
+        { uid: 'bot1', playerName: 'Vô Danh Tiền Bối', grade: 9, combatPower: 50000, knowledgeScore: 0, arenaRank: Math.max(1, currentRank - 10), trialStage: 1, questionsAnswered: 0, studyStreak: 0, topHeroStar: 5, avatarUrl: './heroes/allies/h6_5.png', arenaDefenseFormation: botFormation },
+        { uid: 'bot2', playerName: 'Ẩn Danh Cao Thủ', grade: 9, combatPower: 45000, knowledgeScore: 0, arenaRank: Math.max(1, currentRank - 50), trialStage: 1, questionsAnswered: 0, studyStreak: 0, topHeroStar: 4, avatarUrl: './heroes/allies/h4_1.png', arenaDefenseFormation: botFormation },
+        { uid: 'bot3', playerName: 'Huyền Thoại Võ Lâm', grade: 9, combatPower: 60000, knowledgeScore: 0, arenaRank: Math.max(1, currentRank - 100), trialStage: 1, questionsAnswered: 0, studyStreak: 0, topHeroStar: 6, avatarUrl: './heroes/allies/h1_10.png', arenaDefenseFormation: botFormation },
       ];
       return fakeBots.slice(0, 3);
     }
