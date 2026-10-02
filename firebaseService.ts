@@ -550,9 +550,9 @@ export const getArenaOpponents = async (currentRank: number = 10000, excludeUid:
     if (betterPlayers.length < 3) {
       // Fake bot nếu thực sự không có ai (chỉ xảy ra khi DB hoàn toàn trống)
       const botFormation = [
-        { id: 'h1_10', name: 'An Dương Vương', image: './heroes/allies/h1_10.png', star: 15, overall: 350 },
-        { id: 'h4_1', name: 'Ngô Quyền', image: './heroes/allies/h4_1.png', star: 15, overall: 350 },
-        { id: 'h6_5', name: 'Trần Thái Tông', image: './heroes/allies/h6_5.png', star: 20, overall: 500 }
+        { id: 'h1_10', name: 'An Dương Vương', image: './heroes/allies/h1_10.png', star: 15, overall: 350, hp: 15000, maxHp: 15000, atk: 1200, def: 800, spd: 120 },
+        { id: 'h4_1', name: 'Ngô Quyền', image: './heroes/allies/h4_1.png', star: 15, overall: 350, hp: 16000, maxHp: 16000, atk: 1300, def: 900, spd: 110 },
+        { id: 'h6_5', name: 'Trần Thái Tông', image: './heroes/allies/h6_5.png', star: 20, overall: 500, hp: 20000, maxHp: 20000, atk: 1800, def: 1000, spd: 130 }
       ];
       const fakeBots: LeaderboardEntry[] = [
         { uid: 'bot1', playerName: 'Vô Danh Tiền Bối', grade: 9, combatPower: 50000, knowledgeScore: 0, arenaRank: Math.max(1, currentRank - 10), trialStage: 1, questionsAnswered: 0, studyStreak: 0, topHeroStar: 5, avatarUrl: './heroes/allies/h6_5.png', arenaDefenseFormation: botFormation },
