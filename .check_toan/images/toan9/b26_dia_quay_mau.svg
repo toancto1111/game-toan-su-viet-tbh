@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 270" width="100%" height="100%" style="max-width: 500px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- ĐĨA 1 (4 MÀU) -->
+  <g filter="url(#shadow)">
+    <!-- Trắng -->
+    <path d="M 130 110 L 186.57 53.43 A 80 80 0 0 0 73.43 53.43 Z" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
+    <!-- Đỏ -->
+    <path d="M 130 110 L 73.43 53.43 A 80 80 0 0 0 73.43 166.57 Z" fill="#dc2626" stroke="#ffffff" stroke-width="2"/>
+    <!-- Xanh -->
+    <path d="M 130 110 L 73.43 166.57 A 80 80 0 0 0 186.57 166.57 Z" fill="#2563eb" stroke="#ffffff" stroke-width="2"/>
+    <!-- Vàng -->
+    <path d="M 130 110 L 186.57 166.57 A 80 80 0 0 0 186.57 53.43 Z" fill="#d97706" stroke="#ffffff" stroke-width="2"/>
+
+    <!-- Đường viền ngoài -->
+    <circle cx="130" cy="110" r="80" fill="none" stroke="#1f2937" stroke-width="3"/>
+  </g>
+
+  <!-- Chữ trên Đĩa 1 -->
+  <text x="130.00" y="60.00" font-size="14" font-weight="bold" fill="#1f2937" text-anchor="middle" dominant-baseline="central">Trắng</text>
+  <text x="80.00" y="110.00" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle" dominant-baseline="central">Đỏ</text>
+  <text x="130.00" y="160.00" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle" dominant-baseline="central">Xanh</text>
+  <text x="180.00" y="110.00" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle" dominant-baseline="central">Vàng</text>
+
+  <!-- Mũi tên chỉ Đĩa 1 (chỉ thẳng lên trên) -->
+  <g>
+    <line x1="130" y1="110" x2="130" y2="55" stroke="#111827" stroke-width="3.5" stroke-linecap="round"/>
+    <polygon points="130,45 123,60 137,60" fill="#111827"/>
+    <circle cx="130" cy="110" r="5" fill="#111827"/>
+  </g>
+
+  <!-- Nhãn Đĩa 1 -->
+  <text x="130" y="215" font-size="15" font-weight="bold" fill="#111827" text-anchor="middle">Đĩa 1 (4 màu)</text>
+
+
+  <!-- ĐĨA 2 (3 MÀU) -->
+  <g filter="url(#shadow)">
+    <!-- Đỏ -->
+    <path d="M 370 110 L 370.00 30.00 A 80 80 0 0 0 300.72 150.00 Z" fill="#dc2626" stroke="#ffffff" stroke-width="2"/>
+    <!-- Xanh -->
+    <path d="M 370 110 L 300.72 150.00 A 80 80 0 0 0 439.28 150.00 Z" fill="#2563eb" stroke="#ffffff" stroke-width="2"/>
+    <!-- Vàng -->
+    <path d="M 370 110 L 439.28 150.00 A 80 80 0 0 0 370.00 30.00 Z" fill="#d97706" stroke="#ffffff" stroke-width="2"/>
+
+    <!-- Đường viền ngoài -->
+    <circle cx="370" cy="110" r="80" fill="none" stroke="#1f2937" stroke-width="3"/>
+  </g>
+
+  <!-- Chữ trên Đĩa 2 -->
+  <text x="326.70" y="85.00" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle" dominant-baseline="central">Đỏ</text>
+  <text x="370.00" y="160.00" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle" dominant-baseline="central">Xanh</text>
+  <text x="413.30" y="85.00" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle" dominant-baseline="central">Vàng</text>
+
+  <!-- Mũi tên chỉ Đĩa 2 (chỉ thẳng lên trên theo ranh giới Đỏ/Vàng) -->
+  <g>
+    <line x1="370" y1="110" x2="370" y2="55" stroke="#111827" stroke-width="3.5" stroke-linecap="round"/>
+    <polygon points="370,45 363,60 377,60" fill="#111827"/>
+    <circle cx="370" cy="110" r="5" fill="#111827"/>
+  </g>
+
+  <!-- Nhãn Đĩa 2 -->
+  <text x="370" y="215" font-size="15" font-weight="bold" fill="#111827" text-anchor="middle">Đĩa 2 (3 màu)</text>
+
+  <!-- Chú thích hình -->
+  <text x="250" y="255" font-size="13" font-style="italic" fill="#4b5563" text-anchor="middle">Hình: Mô phỏng trò chơi quay hai đĩa màu tại hội chợ xuân</text>
+</svg>

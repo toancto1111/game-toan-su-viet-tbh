@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 280" width="100%" height="100%" style="max-width: 520px; max-height: 280px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0050b4" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#c80000" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#009650" />
+    </marker>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#bae6fd" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Bầu trời -->
+  <rect x="5" y="5" width="510" height="190" fill="url(#skyGrad)" rx="10" />
+  
+  <!-- Mặt nước kênh -->
+  <rect x="5" y="195" width="510" height="80" fill="url(#waterGrad)" rx="6" />
+  <path d="M 5 195 Q 35 190 65 195 T 125 195 T 185 195 T 245 195 T 305 195 T 365 195 T 425 195 T 485 195 T 515 195" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.7" />
+
+  <!-- Bờ đá 2 bên -->
+  <rect x="5" y="160" width="80" height="115" fill="#78716c" stroke="#44403c" stroke-width="2" />
+  <rect x="435" y="160" width="80" height="115" fill="#78716c" stroke="#44403c" stroke-width="2" />
+
+  <!-- Vòm đá La Mã: Cung tròn bán kính R=160px, tâm O(260, 315) -->
+  <!-- Điểm mặt nước chân vòm A(100, 195) và B(420, 195). Chiều dài AB = 320px (đại diện 12m) -->
+  <!-- Độ vồng h: Đỉnh vòm C(260, 155), chiều cao 40px (đại diện 2m) -->
+  <path d="M 100 195 A 160 160 0 0 1 420 195 L 435 160 L 85 160 Z" fill="#d6d3d1" stroke="#57534e" stroke-width="3" />
+  
+  <!-- Vòm rỗng bên dưới mặt nước cho thuyền chui qua -->
+  <path d="M 100 195 A 160 160 0 0 1 420 195" fill="url(#skyGrad)" stroke="#78350f" stroke-width="3" />
+
+  <!-- Các đường toán học nét đứt -->
+  <!-- Dây AB -->
+  <line x1="100" y1="195" x2="420" y2="195" stroke="#0050b4" stroke-width="2.5" stroke-dasharray="6,4" />
+  <circle cx="100" cy="195" r="4" fill="#0050b4" />
+  <text x="90" y="215" font-size="14" font-weight="bold" fill="#0050b4">A</text>
+
+  <circle cx="420" cy="195" r="4" fill="#0050b4" />
+  <text x="430" y="215" font-size="14" font-weight="bold" fill="#0050b4">B</text>
+
+  <!-- Trung điểm H(260, 195) -->
+  <circle cx="260" cy="195" r="4" fill="#009650" />
+  <text x="268" y="215" font-size="14" font-weight="bold" fill="#009650">H</text>
+
+  <!-- Đỉnh vòm C(260, 155) -->
+  <circle cx="260" cy="155" r="4" fill="#ea580c" />
+  <text x="260" y="145" font-size="14" font-weight="bold" fill="#ea580c" text-anchor="middle">C (Đỉnh vòm)</text>
+
+  <!-- Mũi tên chiều cao h = 2m -->
+  <line x1="250" y1="195" x2="250" y2="155" stroke="#dc2626" stroke-width="2.5" marker-start="url(#arrow-red)" marker-end="url(#arrow-red)" />
+  <text x="238" y="180" font-size="14" font-weight="bold" fill="#dc2626" text-anchor="end">h = 2 m</text>
+
+  <!-- Kích thước dây AB = 12m -->
+  <line x1="100" y1="240" x2="420" y2="240" stroke="#ffffff" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+  <text x="260" y="258" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">Dây cung AB = 12 m (Mặt nước)</text>
+
+  <!-- Nhãn bán kính R = 10m -->
+  <text x="360" y="130" font-size="13" font-weight="bold" fill="#1e3a8a">Bán kính vòm R = 10 m</text>
+  <text x="360" y="148" font-size="12" fill="#0369a1">OH = √(10² - 6²) = 8 m</text>
+
+</svg>

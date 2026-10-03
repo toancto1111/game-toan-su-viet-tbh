@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+    <radialGradient id="ringGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="60%" stop-color="#38bdf8" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0.85"/>
+    </radialGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="2" dy="4" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="460" height="360" rx="16" fill="url(#bgGrad)"/>
+
+  <!-- Tâm O(230, 160), R = 110, r = 60 -->
+  <!-- Hình vành khuyên dùng fill-rule="evenodd" -->
+  <path d="M 230 50 A 110 110 0 1 0 230 270 A 110 110 0 1 0 230 50 Z M 230 100 A 60 60 0 1 1 230 220 A 60 60 0 1 1 230 100 Z" 
+        fill="url(#ringGrad)" fill-rule="evenodd" stroke="#0369a1" stroke-width="2" filter="url(#shadow)"/>
+
+  <!-- Đường tròn trong màu trắng với viền -->
+  <circle cx="230" cy="160" r="60" fill="#ffffff" stroke="#64748b" stroke-width="2" stroke-dasharray="4,4"/>
+
+  <!-- Bán kính r (mũi tên từ O đến đường tròn trong tại góc -30 deg) -->
+  <!-- cos(-30)=0.866, sin(-30)=-0.5 => dx = 60*0.866=52, dy=-30 => (282, 130) -->
+  <line x1="230" y1="160" x2="282" y2="130" stroke="#0369a1" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+  <text x="260" y="138" font-family="system-ui, sans-serif" font-size="14" font-style="italic" font-weight="bold" fill="#0369a1">r</text>
+
+  <!-- Bán kính R (mũi tên từ O đến đường tròn ngoài tại góc 210 deg) -->
+  <!-- cos(210)=-0.866, sin(210)=-0.5 (y tăng) => dx = -110*0.866=-95.3, dy=55 => (134.7, 215) -->
+  <line x1="230" y1="160" x2="134.7" y2="215" stroke="#dc2626" stroke-width="2.5"/>
+  <text x="175" y="200" font-family="system-ui, sans-serif" font-size="15" font-style="italic" font-weight="bold" fill="#dc2626">R</text>
+
+  <!-- Ký hiệu Sv trong vành khuyên -->
+  <text x="230" y="80" font-family="system-ui, sans-serif" font-size="22" font-weight="900" fill="#ffffff" text-anchor="middle" filter="url(#shadow)">
+    S<tspan font-size="14" dy="5">v</tspan>
+  </text>
+
+  <!-- Tâm O -->
+  <circle cx="230" cy="160" r="4.5" fill="#0f172a"/>
+  <text x="230" y="180" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#0f172a" text-anchor="middle">O</text>
+
+  <!-- Hộp công thức -->
+  <g transform="translate(230, 295)" filter="url(#shadow)">
+    <rect x="-130" y="-20" width="260" height="40" rx="10" fill="#ffffff" stroke="#0284c7" stroke-width="2"/>
+    <text x="0" y="6" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" fill="#0369a1" text-anchor="middle">
+      S<tspan font-size="12" dy="3">v</tspan><tspan font-size="16" dy="-3"> = π(</tspan><tspan font-style="italic">R</tspan>² − <tspan font-style="italic">r</tspan>²)
+    </text>
+  </g>
+
+  <text x="230" y="345" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#64748b" text-anchor="middle">
+    Hình 15.2(b) — Diện tích hình vành khuyên giữa hai đường tròn đồng tâm
+  </text>
+</svg>

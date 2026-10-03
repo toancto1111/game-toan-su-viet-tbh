@@ -19,6 +19,7 @@ import {
 } from './firebaseService';
 import * as XLSX from 'xlsx';
 import { GiftCode, GiftCodeReward } from './types';
+import { AdminUploadDoc } from './AdminUploadDoc';
 
 const PILLS = [
   { id: 'pill1', name: 'Nhất Tinh Tụ Khí Đan' },
@@ -41,7 +42,7 @@ const ITEM_OPTIONS = [
 export const AdminView: React.FC<{ setView: (v: string) => void }> = ({ setView }) => {
   const [loading, setLoading] = useState(false);
   const [records, setRecords] = useState<any[]>([]);
-  const [activeTab, setActiveTab] = useState<'thi_luyen' | 'giftcode' | 'analytics' | 'chat-logs' | 'chat-moderation'>('analytics');
+  const [activeTab, setActiveTab] = useState<'thi_luyen' | 'giftcode' | 'analytics' | 'chat-logs' | 'chat-moderation' | 'upload-doc'>('analytics');
   const [chatSessions, setChatSessions] = useState<ChatSession[]>([]);
   const [selectedChatSession, setSelectedChatSession] = useState<ChatSession | null>(null);
   const [giftCodes, setGiftCodes] = useState<GiftCode[]>([]);
@@ -309,9 +310,19 @@ export const AdminView: React.FC<{ setView: (v: string) => void }> = ({ setView 
         <button onClick={() => setActiveTab('chat-logs')} className={`flex-1 py-4 font-bold tracking-wider uppercase transition-colors ${activeTab === 'chat-logs' ? 'text-amber-500 border-b-2 border-amber-500 bg-amber-500/10' : 'text-stone-400 hover:text-stone-200'}`}>Giám sát AI Chat</button>
         <button onClick={() => setActiveTab('thi_luyen')} className={`flex-1 py-4 font-bold tracking-wider uppercase transition-colors ${activeTab === 'thi_luyen' ? 'text-amber-500 border-b-2 border-amber-500 bg-amber-500/10' : 'text-stone-400 hover:text-stone-200'}`}>Dữ Liệu Thí Luyện</button>
         <button onClick={() => setActiveTab('giftcode')} className={`flex-1 py-4 font-bold tracking-wider uppercase transition-colors ${activeTab === 'giftcode' ? 'text-amber-500 border-b-2 border-amber-500 bg-amber-500/10' : 'text-stone-400 hover:text-stone-200'}`}>Quản Lý Giftcode</button>
+        <button onClick={() => setActiveTab('upload-doc')} className={`flex-1 py-4 font-bold tracking-wider uppercase transition-colors flex items-center justify-center gap-1.5 ${activeTab === 'upload-doc' ? 'text-blue-400 border-b-2 border-blue-400 bg-blue-500/10' : 'text-stone-400 hover:text-stone-200'}`}>
+          <Download size={18} /> Nạp Tài Liệu AI
+        </button>
       </div>
 
       <div className="flex-1 p-6 overflow-auto">
+
+        {/* ===== TAB: NẠP TÀI LIỆU AI ===== */}
+        {activeTab === 'upload-doc' && (
+          <div className="max-w-5xl mx-auto">
+            <AdminUploadDoc />
+          </div>
+        )}
 
         {/* ===== TAB: ANALYTICS HỌC SINH ===== */}
         {/* Tab Chat Logs */}

@@ -4,6 +4,7 @@ import { TOAN_7_DATA } from './toan7_data';
 import { TOAN_8_DATA } from './toan8_data';
 import { TOAN_9_DATA } from './toan9_data';
 import { getLoadedQuestions } from './questionStore';
+import { SUBJECT } from './subject.config';
 
 export const CHAPTER_NAMES: Record<number, string> = {
   1: "Huyền thoại Hồng Bàng",
@@ -20,7 +21,7 @@ export const CHAPTER_NAMES: Record<number, string> = {
 
 const commonSummaryPrefix = "### Kiến thức cần nắm\nToán học là nền tảng của tư duy binh pháp. Chúa công cần nắm vững các định nghĩa và quy tắc sau đây:\n\n";
 
-export const MATH_DATA: Record<number, any> = {
+const MATH_DATA_BUILTIN: Record<number, any> = {
   7: TOAN_7_DATA,
   8: TOAN_8_DATA,
   9: TOAN_9_DATA,
@@ -1064,6 +1065,9 @@ $$ 11\\,500\\,000 + (-80\\,000) = 11\\,420\\,000 \\text{ (đồng)} $$
     }
   ]
 };
+
+// Web Toán (mặc định) dùng chương trình dựng sẵn; các web môn khác bắt đầu trống (giáo viên nạp qua Admin).
+export const MATH_DATA: Record<number, any> = SUBJECT.builtInCurriculum ? MATH_DATA_BUILTIN : {};
 
 // Câu hỏi không còn import tĩnh: được nạp theo khối lớp bởi `questionStore` (lazy-load).
 // Phải gọi `loadGradeQuestions(grade)` trước khi lấy câu hỏi của khối đó.

@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="2" dy="4" stdDeviation="3" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <rect width="820" height="320" rx="16" fill="url(#bgGrad)"/>
+
+  <!-- ==================== HÌNH 1: CẮT NHAU (d < R) ==================== -->
+  <g transform="translate(140, 130)">
+    <circle cx="0" cy="0" r="75" fill="#eff6ff" stroke="#0284c7" stroke-width="2.5"/>
+    <!-- Đường thẳng cát tuyến a: y = 40 (d = 40 < 75) -->
+    <line x1="-95" y1="40" x2="95" y2="40" stroke="#16a34a" stroke-width="3"/>
+    <text x="105" y="44" font-family="system-ui, sans-serif" font-size="14" font-style="italic" font-weight="bold" fill="#16a34a">a</text>
+    
+    <!-- Đoạn vuông góc OH -->
+    <line x1="0" y1="0" x2="0" y2="40" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,4"/>
+    <rect x="0" y="30" width="10" height="10" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="8" y="24" font-family="system-ui, sans-serif" font-size="12" font-style="italic" font-weight="bold" fill="#dc2626">d</text>
+
+    <!-- Bán kính R đến giao điểm -->
+    <!-- Giao điểm x = -sqrt(75^2 - 40^2) = -63.4, y = 40 -->
+    <line x1="0" y1="0" x2="-63.4" y2="40" stroke="#64748b" stroke-width="2" stroke-dasharray="3,3"/>
+    <text x="-38" y="16" font-family="system-ui, sans-serif" font-size="12" font-style="italic" font-weight="bold" fill="#64748b">R</text>
+
+    <!-- Điểm O, H, 2 giao điểm A, B -->
+    <circle cx="0" cy="0" r="4" fill="#0284c7"/>
+    <text x="0" y="-8" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#0f172a" text-anchor="middle">O</text>
+
+    <circle cx="0" cy="40" r="3.5" fill="#dc2626"/>
+    <text x="-8" y="55" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0f172a">H</text>
+
+    <circle cx="-63.4" cy="40" r="3.5" fill="#16a34a"/>
+    <circle cx="63.4" cy="40" r="3.5" fill="#16a34a"/>
+
+    <!-- Nhãn bên dưới -->
+    <rect x="-85" y="95" width="170" height="30" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="0" y="115" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#15803d" text-anchor="middle">
+      1. Cắt nhau (d &lt; R)
+    </text>
+    <text x="0" y="142" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748b" text-anchor="middle">
+      (2 điểm chung — Cát tuyến)
+    </text>
+  </g>
+
+  <!-- ==================== HÌNH 2: TIẾP XÚC NHAU (d = R) ==================== -->
+  <g transform="translate(410, 130)">
+    <circle cx="0" cy="0" r="75" fill="#eff6ff" stroke="#0284c7" stroke-width="2.5"/>
+    <!-- Đường thẳng tiếp tuyến a: y = 75 (d = R = 75) -->
+    <line x1="-95" y1="75" x2="95" y2="75" stroke="#ea580c" stroke-width="3"/>
+    <text x="105" y="79" font-family="system-ui, sans-serif" font-size="14" font-style="italic" font-weight="bold" fill="#ea580c">a</text>
+
+    <!-- Đoạn vuông góc OH = R -->
+    <line x1="0" y1="0" x2="0" y2="75" stroke="#dc2626" stroke-width="2.5"/>
+    <rect x="0" y="65" width="10" height="10" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="8" y="42" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#dc2626">d = R</text>
+
+    <!-- Điểm O, tiếp điểm H -->
+    <circle cx="0" cy="0" r="4" fill="#0284c7"/>
+    <text x="0" y="-8" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#0f172a" text-anchor="middle">O</text>
+
+    <circle cx="0" cy="75" r="4.5" fill="#ea580c"/>
+    <text x="0" y="94" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#ea580c" text-anchor="middle">H (Tiếp điểm)</text>
+
+    <!-- Nhãn bên dưới -->
+    <rect x="-85" y="95" width="170" height="30" rx="6" fill="#ffffff" stroke="#ea580c" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="0" y="115" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#c2410c" text-anchor="middle">
+      2. Tiếp xúc (d = R)
+    </text>
+    <text x="0" y="142" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748b" text-anchor="middle">
+      (1 điểm chung — Tiếp tuyến)
+    </text>
+  </g>
+
+  <!-- ==================== HÌNH 3: KHÔNG GIAO NHAU (d > R) ==================== -->
+  <g transform="translate(680, 130)">
+    <circle cx="0" cy="0" r="75" fill="#eff6ff" stroke="#0284c7" stroke-width="2.5"/>
+    <!-- Đường thẳng a: y = 100 (d = 100 > 75) -->
+    <line x1="-95" y1="100" x2="95" y2="100" stroke="#9333ea" stroke-width="3"/>
+    <text x="105" y="104" font-family="system-ui, sans-serif" font-size="14" font-style="italic" font-weight="bold" fill="#9333ea">a</text>
+
+    <!-- Đoạn vuông góc OH -->
+    <line x1="0" y1="0" x2="0" y2="100" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,4"/>
+    <rect x="0" y="90" width="10" height="10" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="8" y="55" font-family="system-ui, sans-serif" font-size="13" font-style="italic" font-weight="bold" fill="#dc2626">d &gt; R</text>
+
+    <!-- Bán kính R -->
+    <line x1="0" y1="0" x2="53" y2="53" stroke="#64748b" stroke-width="2" stroke-dasharray="3,3"/>
+    <text x="32" y="25" font-family="system-ui, sans-serif" font-size="12" font-style="italic" font-weight="bold" fill="#64748b">R</text>
+
+    <!-- Điểm O, H -->
+    <circle cx="0" cy="0" r="4" fill="#0284c7"/>
+    <text x="0" y="-8" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#0f172a" text-anchor="middle">O</text>
+
+    <circle cx="0" cy="100" r="3.5" fill="#9333ea"/>
+    <text x="0" y="118" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">H</text>
+
+    <!-- Nhãn bên dưới -->
+    <rect x="-85" y="95" width="170" height="30" rx="6" fill="#ffffff" stroke="#9333ea" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="0" y="115" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#7e22ce" text-anchor="middle">
+      3. Không giao (d &gt; R)
+    </text>
+    <text x="0" y="142" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748b" text-anchor="middle">
+      (0 điểm chung)
+    </text>
+  </g>
+
+  <!-- TIÊU ĐỀ HÌNH CHÍNH -->
+  <text x="410" y="25" font-family="system-ui, sans-serif" font-size="15" font-weight="bold" fill="#0f172a" text-anchor="middle">
+    Hình 16.1 — Ba vị trí tương đối giữa đường thẳng và đường tròn theo khoảng cách d và bán kính R
+  </text>
+</svg>

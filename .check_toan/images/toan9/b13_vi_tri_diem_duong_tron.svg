@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 260" width="100%" height="100%" style="max-width: 440px; max-height: 260px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0050b4" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#c80000" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#009650" />
+    </marker>
+  </defs>
+  
+  <rect x="5" y="5" width="430" height="250" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+  
+  <!-- Đường tròn tâm O(160, 130), bán kính R = 85 -->
+  <circle cx="160" cy="130" r="85" fill="rgba(0, 80, 180, 0.05)" stroke="#0050b4" stroke-width="2.5" />
+  
+  <!-- Tâm O -->
+  <circle cx="160" cy="130" r="4" fill="#c80000" />
+  <text x="148" y="145" font-size="15" font-weight="bold" fill="#c80000">O</text>
+
+  <!-- Điểm A nằm trên đường tròn (góc 60 độ: dx = 85*cos(60) = 42.5, dy = -85*sin(60) = -73.6) -> (202.5, 56.4) -->
+  <line x1="160" y1="130" x2="202.5" y2="56.4" stroke="#64748b" stroke-width="2" stroke-dasharray="4,3" />
+  <circle cx="202.5" cy="56.4" r="4.5" fill="#009650" />
+  <text x="210" y="52" font-size="15" font-weight="bold" fill="#009650">A</text>
+  <text x="172" y="90" font-size="13" font-weight="bold" fill="#c80000">R</text>
+
+  <!-- Điểm B nằm trong đường tròn (góc -30 độ, d = 50: dx = 50*cos(-30)=43.3, dy = 50*sin(30)=25) -> (203.3, 155) -->
+  <line x1="160" y1="130" x2="203.3" y2="155" stroke="#64748b" stroke-width="2" stroke-dasharray="4,3" />
+  <circle cx="203.3" cy="155" r="4.5" fill="#0050b4" />
+  <text x="212" y="168" font-size="15" font-weight="bold" fill="#0050b4">B</text>
+
+  <!-- Điểm C nằm ngoài đường tròn (góc 170 độ, d = 120: dx = -118, dy = -21) -> (42, 109) -->
+  <line x1="160" y1="130" x2="42" y2="109" stroke="#64748b" stroke-width="2" stroke-dasharray="4,3" />
+  <circle cx="42" cy="109" r="4.5" fill="#ea580c" />
+  <text x="26" y="105" font-size="15" font-weight="bold" fill="#ea580c">C</text>
+
+  <!-- Bảng diễn giải bên phải -->
+  <g transform="translate(260, 45)">
+    <rect x="0" y="0" width="165" height="170" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect x="0" y="0" width="165" height="32" rx="10" fill="#0050b4" />
+    <text x="82" y="21" font-size="12.5" font-weight="bold" fill="#ffffff" text-anchor="middle">VỊ TRÍ TƯƠNG ĐỐI</text>
+    
+    <circle cx="16" cy="55" r="4" fill="#009650" />
+    <text x="26" y="59" font-size="12" font-weight="bold" fill="#009650">OA = R</text>
+    <text x="26" y="75" font-size="11" fill="#475569">⇒ A nằm TRÊN (O)</text>
+
+    <line x1="12" y1="88" x2="153" y2="88" stroke="#f1f5f9" stroke-width="1.5" />
+
+    <circle cx="16" cy="105" r="4" fill="#0050b4" />
+    <text x="26" y="109" font-size="12" font-weight="bold" fill="#0050b4">OB &lt; R</text>
+    <text x="26" y="125" font-size="11" fill="#475569">⇒ B nằm TRONG (O)</text>
+
+    <line x1="12" y1="138" x2="153" y2="138" stroke="#f1f5f9" stroke-width="1.5" />
+
+    <circle cx="16" cy="155" r="4" fill="#ea580c" />
+    <text x="26" y="159" font-size="12" font-weight="bold" fill="#ea580c">OC &gt; R</text>
+    <text x="26" y="175" font-size="11" fill="#475569">⇒ C nằm NGOÀI (O)</text>
+  </g>
+
+</svg>

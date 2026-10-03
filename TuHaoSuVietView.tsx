@@ -701,7 +701,7 @@ export const TuHaoSuVietView: React.FC<TuHaoSuVietViewProps> = ({
     const currentTitle = getExamTitle(score);
 
     return (
-      <div className="min-h-screen viet-bg flex flex-col p-4 md:p-8 items-center text-amber-100 font-sans relative overflow-x-hidden">
+      <div className="h-screen w-full viet-bg flex flex-col p-4 md:p-8 items-center text-amber-100 font-sans relative overflow-y-auto overflow-x-hidden pb-32">
         {/* Nền hiệu ứng hoàng gia */}
         <div className="absolute inset-0 bg-radial from-red-950/30 via-stone-950/90 to-black pointer-events-none" />
 

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 230" width="100%" height="100%" style="max-width: 360px; max-height: 230px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1e3a8a" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+    <marker id="arrow-black" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1f2937" />
+    </marker>
+    <pattern id="hatch-blue" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#3b82f6" stroke-width="1.5" />
+    </pattern>
+  </defs>
+  
+  <!-- Hình chữ nhật 6x4: width = 240, height = 160. Gốc (60, 30) -->
+  <rect x="60" y="30" width="240" height="150" fill="rgba(59, 130, 246, 0.06)" stroke="#0284c7" stroke-width="2.5" />
+  
+  <!-- Cắt hình vuông 4x4: width = 150 -->
+  <rect x="60" y="30" width="150" height="150" fill="rgba(147, 51, 234, 0.12)" stroke="#9333ea" stroke-width="2.5" />
+  <!-- Đường cắt nét đứt -->
+  <line x1="210" y1="30" x2="210" y2="180" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6,4" />
+
+  <text x="135" y="105" font-size="15" font-weight="bold" fill="#9333ea" text-anchor="middle">Hình vuông lớn nhất</text>
+  <text x="135" y="125" font-size="13" font-weight="bold" fill="#9333ea" text-anchor="middle">(4 cm × 4 cm)</text>
+
+  <text x="255" y="110" font-size="13" font-weight="bold" fill="#64748b" text-anchor="middle">Phần thừa</text>
+  <text x="255" y="128" font-size="12" fill="#64748b" text-anchor="middle">(2 cm × 4 cm)</text>
+
+  <!-- Kích thước -->
+  <line x1="60" y1="18" x2="300" y2="18" stroke="#0284c7" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+  <text x="180" y="14" font-size="12" font-weight="bold" fill="#0284c7" text-anchor="middle">Chiều dài: 6 cm</text>
+
+  <line x1="42" y1="30" x2="42" y2="180" stroke="#0284c7" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+  <text x="36" y="110" font-size="12" font-weight="bold" fill="#0284c7" text-anchor="middle" transform="rotate(-90 36 110)">4 cm</text>
+
+  <text x="180" y="215" font-size="13" font-weight="bold" fill="#dc2626" text-anchor="middle">Chu vi hình vuông = 4 × 4 = 16 cm</text>
+
+</svg>

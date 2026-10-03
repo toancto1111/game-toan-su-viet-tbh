@@ -1,0 +1,38 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 380" style="max-width:100%;font-family:Arial,sans-serif;background:#fff;">
+  <defs>
+    <pattern id="water2" patternUnits="userSpaceOnUse" width="30" height="12">
+      <path d="M0 6 Q7.5 1 15 6 Q22.5 11 30 6" fill="none" stroke="#5ba5d4" stroke-width="1.5"/>
+    </pattern>
+  </defs>
+  <!-- Title -->
+  <text x="310" y="24" text-anchor="middle" font-size="14" font-weight="bold" fill="#003366">Bài toán thực tế: Quy hoạch bể bơi trường học</text>
+  <!-- Outer ground (28x16 m, scale ~14px/m) -->
+  <!-- Scale: 1m = 13px. 28m=364px, 16m=208px, centered at (310,200) -->
+  <!-- outer rect: 364x208, top-left at (128,96) -->
+  <rect x="128" y="96" width="364" height="208" rx="4" fill="#d4c5a0" stroke="#999" stroke-width="2"/>
+  <!-- Walk path color (concrete) shown by outer rect minus inner pool -->
+  <!-- Inner pool: 28-2*2=24m wide=312px, 16-2*2=12m tall=156px, TL at (154,122) -->
+  <rect x="154" y="122" width="312" height="156" rx="3" fill="url(#water2)" stroke="#1976d2" stroke-width="2.5"/>
+  <!-- Water shimmer lines -->
+  <text x="310" y="203" text-anchor="middle" font-size="13" font-weight="bold" fill="#0d47a1">MẶT NƯỚC BỂ BƠI</text>
+  <text x="310" y="222" text-anchor="middle" font-size="12" fill="#0d47a1">S = (28−2x)(16−2x) = 288 m²</text>
+  <!-- Dimension arrows: 28m -->
+  <line x1="128" y1="320" x2="492" y2="320" stroke="#c00" stroke-width="1.5" marker-start="url(#mar)" marker-end="url(#arr2)"/>
+  <defs>
+    <marker id="arr2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#c00"/></marker>
+    <marker id="mar" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto"><polygon points="8 0,0 3,8 6" fill="#c00"/></marker>
+  </defs>
+  <text x="310" y="336" text-anchor="middle" font-size="12" fill="#c00" font-weight="bold">28 m</text>
+  <!-- 16m -->
+  <line x1="100" y1="96" x2="100" y2="304" stroke="#c00" stroke-width="1.5" marker-start="url(#mar)" marker-end="url(#arr2)"/>
+  <text x="86" y="205" text-anchor="middle" font-size="12" fill="#c00" font-weight="bold" transform="rotate(-90,86,205)">16 m</text>
+  <!-- x labels on sides -->
+  <text x="141" y="200" text-anchor="middle" font-size="12" fill="#ff6600" font-weight="bold">x</text>
+  <text x="480" y="200" text-anchor="middle" font-size="12" fill="#ff6600" font-weight="bold">x</text>
+  <text x="310" y="113" text-anchor="middle" font-size="12" fill="#ff6600" font-weight="bold">x</text>
+  <text x="310" y="316" text-anchor="middle" font-size="12" fill="#ff6600" font-weight="bold">x</text>
+  <!-- Loi giai box -->
+  <rect x="30" y="348" width="560" height="28" rx="5" fill="#e8f5e9" stroke="#009060" stroke-width="1.5"/>
+  <text x="310" y="362" text-anchor="middle" font-size="12" fill="#00402a" font-weight="bold">Giải: x² − 22x + 40 = 0 ⟹ x = 2 m (nhận) ; x = 20 m (loại)</text>
+  <text x="310" y="375" text-anchor="middle" font-size="11" fill="#555">→ Bề rộng lối đi quanh bể bơi là 2 m</text>
+</svg>

@@ -37,6 +37,7 @@ import * as XLSX from 'xlsx';
 import { HeroTrialView } from './HeroTrialView';
 import { HERO_TRIAL_STAGES, generateTrialEnemies } from './heroTrialData';
 import { loadGradeQuestions } from './questionStore';
+import { SUBJECT } from './subject.config';
 const TuLuyenMenuView = React.lazy(() => import('./TuLuyenMenuView').then(m => ({ default: m.TuLuyenMenuView })));
 import { TuHaoSuVietView } from './TuHaoSuVietView';
 import { LeaderboardView } from './LeaderboardView';
@@ -654,7 +655,7 @@ const Header: React.FC<{ state: PlayerState, setView: any, onLogout?: () => void
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-2">
             <span className="lantern text-xl">🏮</span>
-            <h1 onClick={() => setView('chapter-hub')} className="text-xl font-cinzel text-amber-500 font-bold tracking-widest uppercase cursor-pointer hover:text-amber-400 transition-colors drop-shadow-[0_0_8px_rgba(201,148,26,0.35)]">Sử Việt Anh Hùng</h1>
+            <h1 onClick={() => setView('chapter-hub')} className="text-xl font-cinzel text-amber-500 font-bold tracking-widest uppercase cursor-pointer hover:text-amber-400 transition-colors drop-shadow-[0_0_8px_rgba(201,148,26,0.35)]">{SUBJECT.brandName}</h1>
             <span className="lantern text-xl" style={{animationDelay:'1.5s'}}>🏮</span>
           </div>
           <div className="flex gap-3 text-sm font-medium">
@@ -995,7 +996,7 @@ const AuthView: React.FC<{ onLogin: (username: string, playerData: PlayerState) 
           <ScrollText size={60} className="text-amber-900 float-up"/>
           <div className="h-px flex-1 bg-gradient-to-l from-transparent to-amber-900/40"/>
         </div>
-        <h2 className="text-3xl font-cinzel font-black uppercase tracking-widest text-amber-950 mb-1">Sử Việt Anh Hùng</h2>
+        <h2 className="text-3xl font-cinzel font-black uppercase tracking-widest text-amber-950 mb-1">{SUBJECT.brandName}</h2>
         <p className="text-[11px] text-amber-900/55 font-bold uppercase tracking-[0.3em] font-cinzel mb-7">⚔ Toán Học Kỳ Thư ⚔</p>
 
         {/* Tab Đăng Nhập / Đăng Ký */}
@@ -2588,7 +2589,7 @@ const App: React.FC = () => {
             >
               <div className="bg-blue-900/85 hover:bg-blue-800 backdrop-blur-md border-2 border-blue-400/60 px-6 py-3 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.6)] flex items-center gap-3 hover:shadow-[0_0_30px_rgba(59,130,246,0.8)] transition-shadow">
                 <BookOpen className="w-8 h-8 text-blue-300" />
-                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>Thí Luyện Đường</span>
+                <span className="font-cinzel font-black text-[#FFD700] uppercase tracking-widest text-[24px] whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,1)]" style={{ textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,1)' }}>{SUBJECT.trialHallName}</span>
               </div>
             </button>
 
@@ -6083,7 +6084,14 @@ const TopicView = ({ grade, setChapterIdx, setView, player }: any) => {
      <div className="max-w-3xl w-full scroll-bg p-10 rounded-[3rem] text-center shadow-2xl border-blue-900 my-auto shrink-0 relative z-10">
         <h2 className="text-2xl font-cinzel font-black text-blue-950 uppercase mb-8">LỚP {grade} - Chọn Chương</h2>
         <div className="grid grid-cols-1 gap-4 text-left">
-           {chapters.map((ch: any, idx: number) => {
+           {chapters.length === 0 && (
+              <div className="bg-white/80 border-2 border-dashed border-blue-900 rounded-2xl p-8 text-center text-blue-950">
+                <div className="text-4xl mb-3">📜</div>
+                <div className="font-bold text-lg">{SUBJECT.trialHallName} chưa có nội dung cho lớp {grade}</div>
+                <div className="text-sm text-slate-600 mt-1">Giáo viên chưa nạp tài liệu môn {SUBJECT.subjectName}. Vui lòng quay lại sau.</div>
+              </div>
+            )}
+            {chapters.map((ch: any, idx: number) => {
              const unlocked = isChapterUnlocked(idx);
              const progressKey = `g${grade}-c${idx}`;
              const lessonsUnlocked = mathProgress[progressKey] || 0;

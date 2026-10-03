@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:khtn": "vite --mode khtn --port 5200",
+    "build:khtn": "vite build --mode khtn"
   },
   "dependencies": {
     "@google/genai": "^2.23.0",

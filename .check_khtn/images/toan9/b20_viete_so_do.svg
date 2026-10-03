@@ -1,0 +1,38 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 340" style="max-width:100%;font-family:Arial,sans-serif;background:#fff;">
+  <defs>
+    <marker id="ar" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0054a6"/></marker>
+    <marker id="ar2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#c00"/></marker>
+    <filter id="sh"><feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.15"/></filter>
+  </defs>
+  <text x="350" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="#003366">Định lí Viète — Sơ đồ tư duy mối liên hệ hệ số và nghiệm</text>
+  <!-- PT box -->
+  <rect x="30" y="50" width="240" height="80" rx="10" fill="#dbeeff" stroke="#0054a6" stroke-width="2" filter="url(#sh)"/>
+  <text x="150" y="78" text-anchor="middle" font-size="13" font-weight="bold" fill="#0054a6">Phương trình</text>
+  <text x="150" y="98" text-anchor="middle" font-size="13" fill="#0054a6">ax² + bx + c = 0</text>
+  <text x="150" y="118" text-anchor="middle" font-size="12" fill="#666">(a ≠ 0, Δ ≥ 0)</text>
+  <!-- Nghiệm box -->
+  <rect x="240" y="130" width="220" height="60" rx="10" fill="#e8f5e9" stroke="#009060" stroke-width="2" filter="url(#sh)"/>
+  <text x="350" y="155" text-anchor="middle" font-size="13" font-weight="bold" fill="#009060">Hai nghiệm x₁, x₂</text>
+  <text x="350" y="175" text-anchor="middle" font-size="12" fill="#009060">(Giải phương trình)</text>
+  <!-- Arrow PT -> Nghiem -->
+  <line x1="270" y1="130" x2="350" y2="130" stroke="#0054a6" stroke-width="2" marker-end="url(#ar)"/>
+  <!-- TỔNG box -->
+  <rect x="470" y="50" width="210" height="70" rx="10" fill="#e8f5e9" stroke="#009060" stroke-width="2" filter="url(#sh)"/>
+  <text x="575" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#009060">TỔNG</text>
+  <text x="575" y="100" text-anchor="middle" font-size="13" fill="#009060">S = x₁ + x₂ = −b/a</text>
+  <!-- TÍCH box -->
+  <rect x="470" y="145" width="210" height="70" rx="10" fill="#fff3e0" stroke="#cc6600" stroke-width="2" filter="url(#sh)"/>
+  <text x="575" y="171" text-anchor="middle" font-size="13" font-weight="bold" fill="#cc6600">TÍCH</text>
+  <text x="575" y="195" text-anchor="middle" font-size="13" fill="#cc6600">P = x₁ · x₂ = c/a</text>
+  <!-- Nghiem -> Tong, Tich arrows -->
+  <line x1="460" y1="155" x2="470" y2="100" stroke="#0054a6" stroke-width="1.5" marker-end="url(#ar)"/>
+  <line x1="460" y1="165" x2="470" y2="185" stroke="#0054a6" stroke-width="1.5" marker-end="url(#ar)"/>
+  <!-- Direct dashed red arrows: PT -> Tong/Tich (Viete truc tiep) -->
+  <path d="M270 80 Q380 40 470 75" fill="none" stroke="#c00" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ar2)"/>
+  <text x="370" y="38" text-anchor="middle" font-size="11" fill="#c00" font-weight="bold">Định lí Viète (trực tiếp)</text>
+  <path d="M270 100 Q380 230 470 200" fill="none" stroke="#c00" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ar2)"/>
+  <!-- Condition note -->
+  <rect x="30" y="240" width="640" height="50" rx="8" fill="#fffde7" stroke="#f5a623" stroke-width="1.5"/>
+  <text x="350" y="262" text-anchor="middle" font-size="12" fill="#7a4f00" font-weight="bold">⚠ Điều kiện áp dụng Định lí Viète:</text>
+  <text x="350" y="282" text-anchor="middle" font-size="12" fill="#7a4f00">Phương trình phải CÓ NGHIỆM (Δ ≥ 0). Nếu phương trình vô nghiệm, KHÔNG áp dụng Viète trên ℝ!</text>
+</svg>

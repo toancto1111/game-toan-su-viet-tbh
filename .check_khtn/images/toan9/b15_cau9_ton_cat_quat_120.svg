@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 340" width="100%" height="100%">
+  <defs>
+    <linearGradient id="sheetGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#bae6fd"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="2" dy="4" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="420" height="340" rx="14" fill="#f8fafc"/>
+
+  <!-- Tâm O(210, 160), R = 110 -->
+  <!-- Phần tôn bị cắt bỏ (góc từ 30 độ đến 150 độ = 120 độ) nét đứt mờ -->
+  <!-- 30 deg: cos=0.866, sin=-0.5 => x=210+95.3=305.3, y=160-55=105 -->
+  <!-- 150 deg: cos=-0.866, sin=-0.5 => x=210-95.3=114.7, y=160-55=105 -->
+  <path d="M 210 160 L 305.3 105 A 110 110 0 0 0 114.7 105 Z" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,4"/>
+  <text x="210" y="95" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#94a3b8" text-anchor="middle">
+    Cắt bỏ (120°)
+  </text>
+
+  <!-- Phần tôn CÒN LẠI (góc 240 độ từ 150 deg vòng xuống đến 30 deg) -->
+  <path d="M 210 160 L 114.7 105 A 110 110 0 1 0 305.3 105 Z" fill="url(#sheetGrad)" stroke="#0284c7" stroke-width="2.5" filter="url(#shadow)"/>
+
+  <!-- Góc ở tâm phần còn lại: 240 độ -->
+  <path d="M 192.5 170.1 A 20 20 0 1 0 227.5 170.1" fill="none" stroke="#0369a1" stroke-width="2"/>
+  <text x="210" y="200" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="middle">240°</text>
+
+  <!-- Bán kính R = 30 cm -->
+  <line x1="210" y1="160" x2="305.3" y2="105" stroke="#0284c7" stroke-width="2.5"/>
+  <text x="270" y="145" font-family="system-ui, sans-serif" font-size="13" font-style="italic" font-weight="bold" fill="#0284c7">R = 30</text>
+
+  <!-- Tâm O -->
+  <circle cx="210" cy="160" r="4.5" fill="#0f172a"/>
+  <text x="210" y="150" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">O</text>
+
+  <!-- Hộp diện tích phần còn lại -->
+  <g transform="translate(210, 240)" filter="url(#shadow)">
+    <rect x="-105" y="-14" width="210" height="28" rx="6" fill="#ffffff" stroke="#0284c7" stroke-width="1.5"/>
+    <text x="0" y="5" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#0369a1" text-anchor="middle">
+      S<tspan font-size="10" dy="3">còn lại</tspan><tspan font-size="13" dy="-3"> = 600π cm²</tspan>
+    </text>
+  </g>
+
+  <text x="210" y="315" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#64748b" text-anchor="middle">
+    Tấm tôn bán kính 30 cm sau khi cắt bỏ quạt 120°
+  </text>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220" width="100%" height="100%" style="max-width: 400px; max-height: 220px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1e3a8a" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+    <marker id="arrow-black" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1f2937" />
+    </marker>
+  </defs>
+  
+  <rect x="20" y="30" width="360" height="170" fill="#cffafe" stroke="#0284c7" stroke-width="2" />
+  <text x="30" y="25" fill="#0369a1" font-size="14" font-weight="bold">Mặt nước biển</text>
+  <line x1="330" y1="30" x2="330" y2="180" stroke="#374151" stroke-width="2" stroke-dasharray="5,4" />
+  <path d="M 315 30 L 315 45 L 330 45" fill="none" stroke="#374151" stroke-width="2" />
+  <text x="340" y="110" fill="#1e3a8a" font-size="15" font-weight="bold">200 m</text>
+  <line x1="70" y1="180" x2="330" y2="30" stroke="#dc2626" stroke-width="2.5" marker-end="url(#arrow-red)" />
+  <circle cx="70" cy="180" r="7" fill="#1e293b" />
+  <text x="50" y="200" fill="#1e293b" font-size="14" font-weight="bold">Tàu ngầm</text>
+  <path d="M 280 30 A 60 60 0 0 1 295 55" fill="none" stroke="#dc2626" stroke-width="2" />
+  <text x="260" y="55" fill="#dc2626" font-size="14" font-weight="bold">15°</text>
+
+</svg>

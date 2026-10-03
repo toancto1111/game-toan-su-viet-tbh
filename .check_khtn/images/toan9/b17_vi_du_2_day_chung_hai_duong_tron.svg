@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 380" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="540" height="380" rx="14" fill="url(#bgGrad)"/>
+
+  <!-- Tọa độ chuẩn hình học:
+       Giao điểm H tại (200, 190)
+       Dây AB thẳng đứng: A(200, 190 - 120) = (200, 70), B(200, 190 + 120) = (200, 310) (AH = HB = 120px đại diện 12cm)
+       Tâm O nằm bên trái: OH = 50px (5cm) => O(200 - 50, 190) = (150, 190). Bán kính R = sqrt(50^2 + 120^2) = 130px (13cm)
+       Tâm O' nằm bên phải: O'H = 90px (9cm) => O'(200 + 90, 190) = (290, 190). Bán kính r = sqrt(90^2 + 120^2) = 150px (15cm)
+       Đoạn nối tâm OO' = 140px (14cm)
+  -->
+
+  <!-- Đường tròn (O; 13) tâm (150, 190), R = 130 -->
+  <circle cx="150" cy="190" r="130" fill="#eff6ff" fill-opacity="0.4" stroke="#0284c7" stroke-width="2.5"/>
+
+  <!-- Đường tròn (O'; 15) tâm (290, 190), r = 150 -->
+  <circle cx="290" cy="190" r="150" fill="#f0fdf4" fill-opacity="0.4" stroke="#16a34a" stroke-width="2.5"/>
+
+  <!-- Dây chung AB (thẳng đứng x = 200 từ y = 70 đến 310) -->
+  <line x1="200" y1="70" x2="200" y2="310" stroke="#dc2626" stroke-width="3.5" filter="url(#shadow)"/>
+  
+  <!-- Đoạn nối tâm OO' (nằm ngang y = 190 từ x = 150 đến 290) -->
+  <line x1="100" y1="190" x2="360" y2="190" stroke="#475569" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="150" y1="190" x2="290" y2="190" stroke="#ea580c" stroke-width="3"/>
+
+  <!-- Bán kính OA và O'A -->
+  <line x1="150" y1="190" x2="200" y2="70" stroke="#0284c7" stroke-width="2"/>
+  <text x="155" y="125" font-family="system-ui, sans-serif" font-size="12" font-style="italic" font-weight="bold" fill="#0284c7">R = 13</text>
+
+  <line x1="290" y1="190" x2="200" y2="70" stroke="#16a34a" stroke-width="2"/>
+  <text x="250" y="125" font-family="system-ui, sans-serif" font-size="12" font-style="italic" font-weight="bold" fill="#16a34a">R' = 15</text>
+
+  <!-- Góc vuông tại H -->
+  <rect x="188" y="178" width="12" height="12" fill="none" stroke="#ea580c" stroke-width="1.8"/>
+
+  <!-- Điểm O, O', H, A, B -->
+  <circle cx="150" cy="190" r="4.5" fill="#0284c7"/>
+  <text x="135" y="210" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#0284c7">O</text>
+
+  <circle cx="290" cy="190" r="4.5" fill="#16a34a"/>
+  <text x="295" y="210" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" fill="#16a34a">O'</text>
+
+  <circle cx="200" cy="190" r="4" fill="#ea580c"/>
+  <text x="205" y="210" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#ea580c">H</text>
+
+  <circle cx="200" cy="70" r="4.5" fill="#dc2626"/>
+  <text x="200" y="55" font-family="system-ui, sans-serif" font-size="14" font-weight="900" fill="#dc2626" text-anchor="middle">A</text>
+
+  <circle cx="200" cy="310" r="4.5" fill="#dc2626"/>
+  <text x="200" y="330" font-family="system-ui, sans-serif" font-size="14" font-weight="900" fill="#dc2626" text-anchor="middle">B</text>
+
+  <!-- Kích thước các đoạn thẳng -->
+  <text x="175" y="182" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#0284c7">OH=5</text>
+  <text x="235" y="182" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#16a34a">O'H=9</text>
+  <text x="210" y="130" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#dc2626">AH=12</text>
+
+  <!-- Hộp kết quả OO' -->
+  <g transform="translate(220, 350)" filter="url(#shadow)">
+    <rect x="-160" y="-14" width="320" height="28" rx="6" fill="#ffffff" stroke="#ea580c" stroke-width="1.5"/>
+    <text x="0" y="5" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#c2410c" text-anchor="middle">
+      Đoạn nối tâm: OO' = OH + O'H = 5 + 9 = 14 cm
+    </text>
+  </g>
+</svg>

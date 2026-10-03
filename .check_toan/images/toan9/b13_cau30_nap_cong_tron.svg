@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="100%" height="100%" style="max-width: 280px; max-height: 240px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1e3a8a" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+    <marker id="arrow-black" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1f2937" />
+    </marker>
+  </defs>
+  
+  <circle cx="140" cy="120" r="75" fill="#94a3b8" stroke="#334155" stroke-width="4" />
+  <circle cx="140" cy="120" r="65" fill="#cbd5e1" stroke="#64748b" stroke-width="1.5" stroke-dasharray="6,4" />
+  
+  <line x1="65" y1="120" x2="215" y2="120" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,4" />
+  <circle cx="140" cy="120" r="4" fill="#dc2626" />
+  <text x="140" y="112" font-size="12" font-weight="bold" fill="#dc2626" text-anchor="middle">Đường kính d không đổi</text>
+  <text x="140" y="145" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">Không thể lọt qua miệng cống</text>
+
+</svg>

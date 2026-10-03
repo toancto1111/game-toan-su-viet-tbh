@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 260" width="100%" height="100%" style="max-width: 440px; max-height: 260px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0050b4" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#c80000" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#009650" />
+    </marker>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#bae6fd" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+  
+  <rect x="5" y="5" width="430" height="250" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+  
+  <!-- Đường tròn O(160, 130), R = 85 -->
+  <circle cx="160" cy="130" r="85" fill="rgba(0, 80, 180, 0.05)" stroke="#0050b4" stroke-width="2.5" />
+  <circle cx="160" cy="130" r="4" fill="#c80000" />
+  <text x="165" y="146" font-size="14" font-weight="bold" fill="#c80000">O</text>
+
+  <!-- Dây cung CD: C(150 độ), D(50 độ) -->
+  <!-- C: (160 - 85*cos(30), 130 - 85*sin(30)) = (86.4, 87.5) -->
+  <!-- D: (160 + 85*cos(50), 130 - 85*sin(50)) = (214.6, 64.9) -->
+  <line x1="86.4" y1="87.5" x2="214.6" y2="64.9" stroke="#009650" stroke-width="3" />
+  <circle cx="86.4" cy="87.5" r="4" fill="#009650" />
+  <text x="68" y="92" font-size="14" font-weight="bold" fill="#009650">C</text>
+  <circle cx="214.6" cy="64.9" r="4" fill="#009650" />
+  <text x="222" y="66" font-size="14" font-weight="bold" fill="#009650">D</text>
+
+  <!-- Bán kính OC và OD nét đứt -->
+  <line x1="160" y1="130" x2="86.4" y2="87.5" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3" />
+  <line x1="160" y1="130" x2="214.6" y2="64.9" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3" />
+  <text x="110" y="120" font-size="12" font-weight="bold" fill="#64748b">R</text>
+
+  <!-- Đường kính AB đi qua tâm O: góc 190 độ (-170 độ) và 10 độ -->
+  <!-- A: (160 - 85*cos(10), 130 + 85*sin(10)) = (76.3, 144.8) -->
+  <!-- B: (160 + 85*cos(10), 130 - 85*sin(10)) = (243.7, 115.2) -->
+  <line x1="76.3" y1="144.8" x2="243.7" y2="115.2" stroke="#ea580c" stroke-width="3.5" />
+  <circle cx="76.3" cy="144.8" r="4" fill="#ea580c" />
+  <text x="58" y="152" font-size="14" font-weight="bold" fill="#ea580c">A</text>
+  <circle cx="243.7" cy="115.2" r="4" fill="#ea580c" />
+  <text x="252" y="120" font-size="14" font-weight="bold" fill="#ea580c">B</text>
+
+  <!-- Bảng tóm tắt bên phải -->
+  <g transform="translate(265, 40)">
+    <rect x="0" y="0" width="160" height="175" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect x="0" y="0" width="160" height="32" rx="10" fill="#0050b4" />
+    <text x="80" y="21" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">ĐỊNH LÝ QUAN TRỌNG</text>
+    
+    <text x="12" y="55" font-size="12" font-weight="bold" fill="#009650">• Dây cung CD:</text>
+    <text x="16" y="73" font-size="11.5" fill="#475569">Nối 2 điểm tùy ý</text>
+
+    <line x1="12" y1="86" x2="148" y2="86" stroke="#f1f5f9" stroke-width="1.5" />
+
+    <text x="12" y="105" font-size="12" font-weight="bold" fill="#ea580c">• Đường kính AB:</text>
+    <text x="16" y="123" font-size="11.5" fill="#475569">Dây đi qua tâm O</text>
+    <text x="16" y="140" font-size="12" font-weight="bold" fill="#ea580c">d = 2R (Lớn nhất)</text>
+
+    <line x1="12" y1="150" x2="148" y2="150" stroke="#f1f5f9" stroke-width="1.5" />
+
+    <text x="80" y="166" font-size="12" font-weight="bold" fill="#dc2626" text-anchor="middle">CD ≤ AB = 2R</text>
+  </g>
+
+</svg>

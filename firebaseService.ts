@@ -69,6 +69,33 @@ export const getAllTrialRecords = async () => {
   }
 };
 
+export const saveCustomQuestions = async (subjectId: string, grade: number, chapter: number, lesson: number, questions: any[]) => {
+  if (!db) {
+    throw new Error("Chưa cấu hình Firebase!");
+  }
+  
+  try {
+    const batchData = {
+      subjectId,
+      grade,
+      chapter,
+      lesson,
+      questions,
+      updatedAt: Date.now(),
+      createdAt: Date.now()
+    };
+    
+    // Lưu vào collection 'custom_questions' theo dạng document duy nhất cho mỗi bài
+    const docId = `${subjectId}_grade${grade}_ch${chapter}_lesson${lesson}`;
+    await setDoc(doc(db, "custom_questions", docId), batchData);
+    console.log("Đã lưu câu hỏi thành công:", docId);
+    return true;
+  } catch (error) {
+    console.error("Lỗi lưu câu hỏi:", error);
+    throw error;
+  }
+};
+
 // ==================== BẢNG XẾP HẠNG (LEADERBOARDS) ====================
 
 // Bộ nhớ đệm Client-side để mở BXH tức thì (0.05s) không bị chậm

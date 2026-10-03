@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 250" width="100%" height="100%" style="max-width: 420px; max-height: 250px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1e3a8a" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+    <marker id="arrow-black" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1f2937" />
+    </marker>
+    <pattern id="hatch-blue" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#3b82f6" stroke-width="1.5" />
+    </pattern>
+  </defs>
+  
+  <!-- Mảnh vườn hoa -->
+  <rect x="40" y="30" width="340" height="150" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5" />
+  
+  <!-- Họa tiết hoa trong vườn -->
+  <g fill="#f43f5e" opacity="0.8">
+    <circle cx="90" cy="70" r="5" /><circle cx="150" cy="110" r="6" /><circle cx="220" cy="65" r="5" /><circle cx="310" cy="95" r="6" /><circle cx="280" cy="130" r="5" />
+  </g>
+
+  <!-- Hàng rào lưới thép xung quanh -->
+  <rect x="36" y="26" width="348" height="158" rx="8" fill="none" stroke="#64748b" stroke-width="3" stroke-dasharray="6,4" />
+
+  <!-- Cổng mở 2m ở cạnh đáy -->
+  <rect x="170" y="180" width="80" height="8" fill="#ffffff" />
+  <rect x="166" y="174" width="6" height="18" fill="#78350f" rx="1" />
+  <rect x="248" y="174" width="6" height="18" fill="#78350f" rx="1" />
+  <line x1="172" y1="195" x2="248" y2="195" stroke="#dc2626" stroke-width="2" marker-start="url(#arrow-red)" marker-end="url(#arrow-red)" />
+  <text x="210" y="212" font-size="12" font-weight="bold" fill="#dc2626" text-anchor="middle">Cổng: 2 m</text>
+
+  <!-- Kích thước -->
+  <line x1="40" y1="16" x2="380" y2="16" stroke="#1e293b" stroke-width="2" marker-start="url(#arrow-black)" marker-end="url(#arrow-black)" />
+  <text x="210" y="12" font-size="13" font-weight="bold" fill="#1e293b" text-anchor="middle">Chiều dài: √48 m (= 4√3 m)</text>
+
+  <line x1="20" y1="30" x2="20" y2="180" stroke="#1e293b" stroke-width="2" marker-start="url(#arrow-black)" marker-end="url(#arrow-black)" />
+  <text x="14" y="110" font-size="13" font-weight="bold" fill="#1e293b" text-anchor="middle" transform="rotate(-90 14 110)">Rộng: √27 m (= 3√3 m)</text>
+
+  <!-- Chiều dài lưới thép -->
+  <text x="210" y="240" font-size="12" font-weight="bold" fill="#15803d" text-anchor="middle">Lưới thép cần mua: 2(4√3 + 3√3) - 2 = 14√3 - 2 (m)</text>
+
+</svg>

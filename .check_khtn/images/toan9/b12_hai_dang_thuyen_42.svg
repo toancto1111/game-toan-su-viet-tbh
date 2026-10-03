@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 310" width="100%" height="100%" style="max-width: 540px; max-height: 310px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0050b4" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#c80000" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#009650" />
+    </marker>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#bae6fd" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <linearGradient id="seaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Bầu trời -->
+  <rect x="5" y="5" width="530" height="240" fill="url(#skyGrad)" rx="10" />
+  
+  <!-- Biển -->
+  <rect x="5" y="235" width="530" height="70" fill="url(#seaGrad)" rx="6" />
+  <path d="M 5 235 Q 35 230 65 235 T 125 235 T 185 235 T 245 235 T 305 235 T 365 235 T 425 235 T 485 235 T 535 235" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.6" />
+
+  <!-- Vách đá -->
+  <polygon points="380,305 380,210 400,190 535,190 535,305" fill="#78716c" stroke="#57534e" stroke-width="2" />
+  <polygon points="380,210 410,195 440,210 420,240 380,240" fill="#a8a29e" opacity="0.5" />
+
+  <!-- Tháp hải đăng -->
+  <!-- Thân tháp: x=440 đến 480, y=50 đến 190 -->
+  <rect x="440" y="50" width="40" height="140" fill="#ffffff" stroke="#334155" stroke-width="1.5" />
+  <!-- Sọc đỏ 1 -->
+  <rect x="440" y="80" width="40" height="25" fill="#dc2626" />
+  <!-- Sọc đỏ 2 -->
+  <rect x="440" y="135" width="40" height="25" fill="#dc2626" />
+  
+  <!-- Ban công hải đăng -->
+  <rect x="435" y="46" width="50" height="6" rx="2" fill="#475569" />
+  <!-- Đèn lồng cyan -->
+  <rect x="445" y="24" width="30" height="22" rx="3" fill="#67e8f9" stroke="#0e7490" stroke-width="1.5" />
+  <!-- Mái chóp đỏ -->
+  <polygon points="440,24 460,5 480,24" fill="#b91c1c" stroke="#7f1d1d" stroke-width="1.5" />
+
+  <!-- Thuyền ở phía trái x=60 đến 140 -->
+  <!-- Mạn thuyền -->
+  <polygon points="60,245 140,245 155,225 45,225" fill="#b45309" stroke="#78350f" stroke-width="2" />
+  <rect x="95" y="200" width="10" height="25" fill="#fde047" />
+  <!-- Người quan sát -->
+  <circle cx="85" cy="195" r="7" fill="#fbcfe8" stroke="#db2777" stroke-width="1.5" />
+  <line x1="85" y1="202" x2="85" y2="225" stroke="#1e293b" stroke-width="3" />
+
+  <!-- Tọa độ toán học: Mắt M(85, 195), Điểm C(460, 195), Đỉnh D(460, 15), Chân H(460, 235) -->
+  <!-- Tia ngắm ngang MC nét đứt -->
+  <line x1="85" y1="195" x2="460" y2="195" stroke="#475569" stroke-width="2" stroke-dasharray="6,4" />
+  <!-- Tia ngắm đỉnh MD -->
+  <line x1="85" y1="195" x2="460" y2="15" stroke="#0050b4" stroke-width="2.5" />
+  
+  <!-- Cung góc nâng 42 độ tại M -->
+  <path d="M 140 195 A 55 55 0 0 0 132 165" fill="none" stroke="#ea580c" stroke-width="2.5" />
+  <text x="145" y="180" font-size="13" font-weight="bold" fill="#ea580c">42°</text>
+
+  <!-- Góc vuông tại C -->
+  <polyline points="442,195 442,175 460,175" fill="none" stroke="#0050b4" stroke-width="1.5" />
+
+  <!-- Đoạn h1 từ C đến D -->
+  <line x1="485" y1="195" x2="485" y2="15" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,4" />
+  <text x="495" y="105" font-size="13" font-weight="bold" fill="#dc2626">h₁ ≈ 108 m</text>
+
+  <!-- Đoạn từ C đến mặt nước (2m) -->
+  <line x1="485" y1="195" x2="485" y2="235" stroke="#16a34a" stroke-width="2" stroke-dasharray="3,3" />
+  <text x="495" y="218" font-size="12" font-weight="bold" fill="#16a34a">2 m</text>
+
+  <!-- Khoảng cách ngang 120m -->
+  <text x="270" y="185" font-size="13" font-weight="bold" fill="#334155" text-anchor="middle">Khoảng cách ngang = 120 m</text>
+
+  <!-- Điểm nhãn M, D, C -->
+  <circle cx="85" cy="195" r="3.5" fill="#0050b4" />
+  <text x="70" y="190" font-size="14" font-weight="bold" fill="#0050b4">M (Mắt)</text>
+
+  <circle cx="460" cy="15" r="3.5" fill="#0050b4" />
+  <text x="465" y="18" font-size="14" font-weight="bold" fill="#0050b4">D (Đỉnh tháp)</text>
+
+  <text x="270" y="295" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">Tổng chiều cao hải đăng: H = 108 + 2 = 110 m</text>
+
+</svg>

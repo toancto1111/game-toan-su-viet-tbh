@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 400" width="100%" height="100%">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="520" height="400" rx="14" fill="#f8fafc"/>
+
+  <!-- Tọa độ 3 đỉnh tam giác ABC có độ dài 3 cạnh: c = AB = 9, a = BC = 11, b = CA = 10
+       Đặt A tại (160, 130), B tại (160, 130 + 9*18) = (160, 292) -> AB thẳng đứng độ dài 162px
+       Tính tọa độ C: cos(A) = (9^2 + 10^2 - 11^2)/(2*9*10) = (81 + 100 - 121)/180 = 60/180 = 1/3
+       sin(A) = sqrt(1 - 1/9) = sqrt(8)/3 ~ 0.9428
+       Với b = 10*18 = 180px:
+         C_x = 160 + 180*0.9428 = 160 + 169.7 = 329.7
+         C_y = 130 + 180*(1/3) = 130 + 60 = 190
+       Bán kính:
+         R_A = 4*18 = 72px
+         R_B = 5*18 = 90px
+         R_C = 6*18 = 108px
+       Kiểm tra khoảng cách:
+         AB = 72 + 90 = 162px (9cm)
+         AC = 72 + 108 = 180px (10cm)
+         BC = sqrt((329.7-160)^2 + (190-292)^2) = sqrt(169.7^2 + (-102)^2) = sqrt(28798 + 10404) = sqrt(39202) = 198px (11cm)!
+       Tuyệt đối chuẩn xác!
+  -->
+
+  <!-- Đường tròn (A; 4cm) tâm A(160, 130), R = 72 -->
+  <circle cx="160" cy="130" r="72" fill="#eff6ff" stroke="#0284c7" stroke-width="2.5" filter="url(#shadow)"/>
+
+  <!-- Đường tròn (B; 5cm) tâm B(160, 292), R = 90 -->
+  <circle cx="160" cy="292" r="90" fill="#fef3c7" stroke="#ea580c" stroke-width="2.5" filter="url(#shadow)"/>
+
+  <!-- Đường tròn (C; 6cm) tâm C(329.7, 190), R = 108 -->
+  <circle cx="329.7" cy="190" r="108" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5" filter="url(#shadow)"/>
+
+  <!-- Tam giác ABC nối 3 tâm -->
+  <polygon points="160,130 160,292 329.7,190" fill="none" stroke="#334155" stroke-width="2.5" stroke-dasharray="5,4"/>
+
+  <!-- 3 tiếp điểm nằm trên 3 cạnh -->
+  <!-- Tiếp điểm giữa A và B: (160, 130 + 72) = (160, 202) -->
+  <circle cx="160" cy="202" r="4" fill="#dc2626"/>
+  
+  <!-- Tiếp điểm giữa A và C: (160 + 72*0.9428, 130 + 24) = (227.9, 154) -->
+  <circle cx="227.9" cy="154" r="4" fill="#dc2626"/>
+
+  <!-- Tiếp điểm giữa B và C: (160 + 90*0.857, 292 - 90*0.515) = (237.1, 245.6) -->
+  <circle cx="237.1" cy="245.6" r="4" fill="#dc2626"/>
+
+  <!-- Điểm tâm A, B, C -->
+  <circle cx="160" cy="130" r="5" fill="#0284c7"/>
+  <text x="140" y="125" font-family="system-ui, sans-serif" font-size="14" font-weight="900" fill="#0284c7">A (r=4)</text>
+
+  <circle cx="160" cy="292" r="5" fill="#ea580c"/>
+  <text x="140" y="315" font-family="system-ui, sans-serif" font-size="14" font-weight="900" fill="#ea580c">B (r=5)</text>
+
+  <circle cx="329.7" cy="190" r="5" fill="#16a34a"/>
+  <text x="345" y="195" font-family="system-ui, sans-serif" font-size="14" font-weight="900" fill="#16a34a">C (r=6)</text>
+
+  <!-- Độ dài các cạnh tam giác -->
+  <text x="135" y="225" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0f172a">c = 9</text>
+  <text x="255" y="145" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0f172a">b = 10</text>
+  <text x="260" y="270" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0f172a">a = 11</text>
+
+  <!-- Hộp chu vi tam giác ABC -->
+  <g transform="translate(260, 365)" filter="url(#shadow)">
+    <rect x="-170" y="-14" width="340" height="28" rx="6" fill="#ffffff" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="0" y="5" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#15803d" text-anchor="middle">
+      Chu vi △ABC = AB + BC + CA = 9 + 11 + 10 = 30 cm
+    </text>
+  </g>
+</svg>

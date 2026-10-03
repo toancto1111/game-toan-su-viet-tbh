@@ -6,6 +6,7 @@ import { chuong3ThucTeData } from './chuong3_thucte_data';
 import { chuong4ThucTeData } from './chuong4_thucte_data';
 import { demoTuLuyenData } from './demo_tu_luyen_data';
 import { questionsRaw } from './questions_data';
+import { SUBJECT } from './subject.config';
 
 interface TuLuyenMenuViewProps {
   setView: (view: any) => void;
@@ -18,7 +19,7 @@ interface TuLuyenMenuViewProps {
 const ALL_QUESTIONS_IN_LESSON: Record<string, any[]> = {};
 
 export const TuLuyenMenuView: React.FC<TuLuyenMenuViewProps> = ({ setView, startLesson, unlockedLessons, correctIds, isAdmin }) => {
-  const lessons = [
+  const lessonsBuiltIn = [
     { id: 'B1',     name: 'Bài 1: Tập hợp (Demo)',                                  questions: demoTuLuyenData },
     { id: 'B2',     name: 'Bài 2: Cách ghi số tự nhiên',                             questions: chuong1ThucTeData.filter(q => q.id.includes('THUC_TE_B2')) },
     { id: 'B3',     name: 'Bài 3: Thứ tự trong tập hợp',                             questions: chuong1ThucTeData.filter(q => q.id.includes('THUC_TE_B3')) },
@@ -46,6 +47,7 @@ export const TuLuyenMenuView: React.FC<TuLuyenMenuViewProps> = ({ setView, start
       ]
     },
   ];
+  const lessons = SUBJECT.builtInCurriculum ? lessonsBuiltIn : [];
 
   return (
     <div className="fixed inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 z-50 flex flex-col items-center p-6 overflow-y-auto">
@@ -59,7 +61,7 @@ export const TuLuyenMenuView: React.FC<TuLuyenMenuViewProps> = ({ setView, start
         </button>
         <div className="text-center">
           <h1 className="text-3xl md:text-4xl font-cinzel text-emerald-400 font-bold uppercase tracking-widest drop-shadow-[0_0_15px_rgba(16,185,129,0.5)]">
-            Thí Luyện Đường
+            {SUBJECT.trialHallName}
           </h1>
           <p className="text-slate-400 text-sm mt-1">Hoàn thành từng bài để mở khóa bài tiếp theo</p>
         </div>

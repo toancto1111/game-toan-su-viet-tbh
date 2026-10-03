@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 280" width="100%" height="100%" style="max-width: 520px; max-height: 280px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="wheelBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="wheelGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#15803d"/>
+    </linearGradient>
+    <linearGradient id="wheelOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#c2410c"/>
+    </linearGradient>
+    <linearGradient id="wheelRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+    <radialGradient id="coinGrad" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="60%" stop-color="#eab308"/>
+      <stop offset="100%" stop-color="#ca8a04"/>
+    </radialGradient>
+    <radialGradient id="coinInner" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#fef9c3"/>
+      <stop offset="100%" stop-color="#facc15"/>
+    </radialGradient>
+    <!-- Filters -->
+    <filter id="shadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Background subtle card -->
+  <rect x="10" y="10" width="500" height="260" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <!-- Title -->
+  <text x="260" y="38" font-size="15" font-weight="700" fill="#0050b3" text-anchor="middle">Mô hình phép thử kép: Kết quả ghép từ 2 thực nghiệm độc lập</text>
+
+  <!-- WHEEL (Phép thử 1) -->
+  <g transform="translate(130, 145)" filter="url(#shadow)">
+    <!-- 4 Sectors (radius = 70) -->
+    <!-- Sector 1: Top-Right (0 to 90 deg) -->
+    <path d="M 0 0 L 70 0 A 70 70 0 0 0 0 -70 Z" fill="url(#wheelBlue)" stroke="#ffffff" stroke-width="2"/>
+    <!-- Sector 2: Top-Left (90 to 180 deg) -->
+    <path d="M 0 0 L 0 -70 A 70 70 0 0 0 -70 0 Z" fill="url(#wheelGreen)" stroke="#ffffff" stroke-width="2"/>
+    <!-- Sector 3: Bottom-Left (180 to 270 deg) -->
+    <path d="M 0 0 L -70 0 A 70 70 0 0 0 0 70 Z" fill="url(#wheelOrange)" stroke="#ffffff" stroke-width="2"/>
+    <!-- Sector 4: Bottom-Right (270 to 360 deg) -->
+    <path d="M 0 0 L 0 70 A 70 70 0 0 0 70 0 Z" fill="url(#wheelRed)" stroke="#ffffff" stroke-width="2"/>
+
+    <!-- Outer rim -->
+    <circle cx="0" cy="0" r="70" fill="none" stroke="#475569" stroke-width="3"/>
+
+    <!-- Numbers -->
+    <text x="32" y="-32" font-size="26" font-weight="800" fill="#ffffff" text-anchor="middle" dominant-baseline="central">1</text>
+    <text x="-32" y="-32" font-size="26" font-weight="800" fill="#ffffff" text-anchor="middle" dominant-baseline="central">2</text>
+    <text x="-32" y="32" font-size="26" font-weight="800" fill="#ffffff" text-anchor="middle" dominant-baseline="central">3</text>
+    <text x="32" y="32" font-size="26" font-weight="800" fill="#ffffff" text-anchor="middle" dominant-baseline="central">4</text>
+
+    <!-- Pointer Arrow pointing up -->
+    <path d="M -7 10 L 0 -45 L 7 10 Z" fill="#1e293b"/>
+    <circle cx="0" cy="0" r="9" fill="#0f172a" stroke="#ffffff" stroke-width="2"/>
+  </g>
+  <text x="130" y="240" font-size="13" font-weight="600" fill="#1e293b" text-anchor="middle">Vòng quay 4 ô (1, 2, 3, 4)</text>
+
+  <!-- MULTIPLY SYMBOL -->
+  <g transform="translate(260, 145)">
+    <circle cx="0" cy="0" r="20" fill="#e2e8f0"/>
+    <text x="0" y="2" font-size="28" font-weight="900" fill="#64748b" text-anchor="middle" dominant-baseline="central">×</text>
+  </g>
+
+  <!-- COIN (Phép thử 2) -->
+  <g transform="translate(390, 145)" filter="url(#shadow)">
+    <!-- Outer ring -->
+    <circle cx="0" cy="0" r="60" fill="url(#coinGrad)" stroke="#a16207" stroke-width="3"/>
+    <!-- Inner dashed groove -->
+    <circle cx="0" cy="0" r="50" fill="url(#coinInner)" stroke="#ca8a04" stroke-width="2" stroke-dasharray="5 3"/>
+    <!-- Center text S / N -->
+    <text x="0" y="0" font-size="28" font-weight="900" fill="#b91c1c" text-anchor="middle" dominant-baseline="central">S / N</text>
+  </g>
+  <text x="390" y="240" font-size="13" font-weight="600" fill="#1e293b" text-anchor="middle">Đồng xu cân đối (Sấp / Ngửa)</text>
+</svg>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 270" width="100%" height="100%" style="max-width: 400px; max-height: 270px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1e3a8a" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+    <marker id="arrow-black" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1f2937" />
+    </marker>
+  </defs>
+  
+  <!-- Biển tròn lớn -->
+  <circle cx="190" cy="130" r="105" fill="#ffedd5" stroke="#ea580c" stroke-width="3" />
+  
+  <!-- Tam giác vuông ABC: A(105, 185), B(105, 75), C(275, 185) -->
+  <!-- AB = 110 (60cm), AC = 170 (80cm). BC = 202 (100cm). Tâm M(190, 130) -->
+  <polygon points="105,185 105,75 275,185" fill="rgba(180, 83, 9, 0.1)" stroke="#78350f" stroke-width="3" />
+  
+  <!-- Ký hiệu góc vuông tại A -->
+  <rect x="105" y="173" width="12" height="12" fill="none" stroke="#78350f" stroke-width="1.5" />
+
+  <!-- Trung tuyến AM -->
+  <line x1="105" y1="185" x2="190" y2="130" stroke="#0f172a" stroke-width="2" stroke-dasharray="4,4" />
+
+  <!-- Tâm M -->
+  <circle cx="190" cy="130" r="5" fill="#dc2626" />
+  <text x="200" y="125" font-size="14" font-weight="bold" fill="#dc2626">M (Tâm)</text>
+
+  <!-- Đỉnh tam giác -->
+  <text x="88" y="195" font-size="14" font-weight="bold" fill="#78350f">A</text>
+  <text x="88" y="72" font-size="14" font-weight="bold" fill="#78350f">B</text>
+  <text x="282" y="195" font-size="14" font-weight="bold" fill="#78350f">C</text>
+
+  <!-- Kích thước -->
+  <text x="75" y="135" font-size="13" font-weight="bold" fill="#78350f">60 cm</text>
+  <text x="180" y="202" font-size="13" font-weight="bold" fill="#78350f" text-anchor="middle">80 cm</text>
+
+  <!-- Logo Thầy Toàn -->
+  <rect x="135" y="40" width="130" height="30" rx="6" fill="#dc2626" />
+  <text x="200" y="60" font-size="14" font-weight="900" fill="#facc15" text-anchor="middle">THẦY TOÀN</text>
+
+  <text x="200" y="255" font-size="12" font-weight="bold" fill="#ea580c" text-anchor="middle">Đường kính d = BC = √(60² + 80²) = 100 cm | R = 50 cm</text>
+
+</svg>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="steelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#94a3b8"/>
+      <stop offset="50%" stop-color="#64748b"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="2" dy="4" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <rect width="420" height="320" rx="14" fill="#f8fafc"/>
+
+  <!-- Mặt cắt ngang ống thép Tâm O(210, 150), R = 100 (5cm), r = 80 (4cm) -->
+  <path d="M 210 50 A 100 100 0 1 0 210 250 A 100 100 0 1 0 210 50 Z M 210 70 A 80 80 0 1 1 210 230 A 80 80 0 1 1 210 70 Z" 
+        fill="url(#steelGrad)" fill-rule="evenodd" stroke="#334155" stroke-width="2.5" filter="url(#shadow)"/>
+
+  <!-- Lòng ống rỗng màu trắng -->
+  <circle cx="210" cy="150" r="80" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+  <!-- Đường kính trong: 8cm (nằm ngang) -->
+  <line x1="130" y1="150" x2="290" y2="150" stroke="#0284c7" stroke-width="2"/>
+  <circle cx="130" cy="150" r="3" fill="#0284c7"/>
+  <circle cx="290" cy="150" r="3" fill="#0284c7"/>
+  <rect x="175" y="136" width="70" height="20" rx="4" fill="#ffffff" fill-opacity="0.9"/>
+  <text x="210" y="151" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#0369a1" text-anchor="middle">
+    d = 8 cm
+  </text>
+
+  <!-- Đường kính ngoài: 10cm (thẳng đứng hoặc xiên) -->
+  <line x1="139.3" y1="79.3" x2="280.7" y2="220.7" stroke="#dc2626" stroke-width="2"/>
+  <circle cx="139.3" cy="79.3" r="3" fill="#dc2626"/>
+  <circle cx="280.7" cy="220.7" r="3" fill="#dc2626"/>
+  <rect x="235" y="180" width="80" height="20" rx="4" fill="#ffffff" stroke="#dc2626" stroke-width="1"/>
+  <text x="275" y="195" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#dc2626" text-anchor="middle">
+    D = 10 cm
+  </text>
+
+  <!-- Độ dày thành ống = 1 cm -->
+  <text x="210" y="62" font-family="system-ui, sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">
+    dày 1cm
+  </text>
+
+  <!-- Hộp diện tích tiết diện -->
+  <g transform="translate(210, 275)" filter="url(#shadow)">
+    <rect x="-105" y="-14" width="210" height="28" rx="6" fill="#ffffff" stroke="#334155" stroke-width="1.5"/>
+    <text x="0" y="5" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">
+      Tiết diện S = 9π cm²
+    </text>
+  </g>
+
+  <text x="210" y="305" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#64748b" text-anchor="middle">
+    Mặt cắt ngang ống thép rỗng (Hình vành khuyên)
+  </text>
+</svg>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 260" width="100%" height="100%" style="max-width: 360px; max-height: 260px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1e3a8a" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#dc2626" />
+    </marker>
+    <marker id="arrow-black" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#1f2937" />
+    </marker>
+  </defs>
+  
+  <circle cx="170" cy="120" r="85" fill="rgba(2, 132, 199, 0.05)" stroke="#0284c7" stroke-width="2.5" />
+  <circle cx="170" cy="120" r="4" fill="#0f172a" />
+  <text x="170" y="140" font-size="14" font-weight="bold" fill="#0f172a" text-anchor="middle">O</text>
+
+  <!-- Đường kính AB qua tâm -->
+  <line x1="85" y1="120" x2="255" y2="120" stroke="#dc2626" stroke-width="3" />
+  <circle cx="85" cy="120" r="4" fill="#dc2626" />
+  <circle cx="255" cy="120" r="4" fill="#dc2626" />
+  <text x="70" y="125" font-size="14" font-weight="bold" fill="#dc2626">A</text>
+  <text x="262" y="125" font-size="14" font-weight="bold" fill="#dc2626">B</text>
+  <text x="170" y="112" font-size="12" font-weight="bold" fill="#dc2626" text-anchor="middle">Đường kính d = 2R</text>
+
+  <!-- Dây cung CD không qua tâm -->
+  <!-- C at 125 deg: (121, 50), D at -35 deg: (240, 169) -->
+  <line x1="121" y1="50" x2="240" y2="169" stroke="#2563eb" stroke-width="2.5" />
+  <circle cx="121" cy="50" r="4" fill="#2563eb" />
+  <circle cx="240" cy="169" r="4" fill="#2563eb" />
+  <text x="115" y="42" font-size="14" font-weight="bold" fill="#2563eb">C</text>
+  <text x="248" y="180" font-size="14" font-weight="bold" fill="#2563eb">D</text>
+  <text x="160" y="80" font-size="12" font-weight="bold" fill="#2563eb">Dây cung CD</text>
+
+  <rect x="40" y="225" width="280" height="26" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" />
+  <text x="180" y="242" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">Định lý so sánh: Dây cung CD ≤ Đường kính AB</text>
+
+</svg>

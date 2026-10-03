@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 390" width="100%" height="100%" style="max-width: 600px; max-height: 390px; display: block; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0050b4" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#c80000" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#009650" />
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#ea580c" />
+    </marker>
+  </defs>
+  
+  <rect x="5" y="5" width="590" height="380" rx="14" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+
+  <text x="300" y="30" font-size="15" font-weight="bold" fill="#0f172a" text-anchor="middle">BÀI TOÁN THỰC TẾ: BẢNG HIỆU ĐÈN LED KHÔI NGUYÊN</text>
+
+  <!-- Tâm O(195, 205), r = 60, R = 110 -->
+  <!-- Vành khuyên màu xanh cyan hiện đại -->
+  <path d="M 195 95 A 110 110 0 1 0 195 315 A 110 110 0 1 0 195 95 M 195 145 A 60 60 0 1 1 195 265 A 60 60 0 1 1 195 145 Z" fill="#0284c7" stroke="#0369a1" stroke-width="3" />
+
+  <!-- Tâm tròn r = 60 màu vàng kem -->
+  <circle cx="195" cy="205" r="60" fill="#fef3c7" stroke="#d97706" stroke-width="3" />
+
+  <!-- Chữ Thầy Toàn ở tâm -->
+  <text x="195" y="195" font-size="18" font-weight="bold" fill="#dc2626" text-anchor="middle">Thầy</text>
+  <text x="195" y="222" font-size="20" font-weight="bold" fill="#dc2626" text-anchor="middle">Toàn</text>
+  <text x="195" y="244" font-size="10" font-weight="bold" fill="#b45309" text-anchor="middle">★ TOÁN KHÔI NGUYÊN ★</text>
+
+  <!-- 4 đường nét đứt chia 4 mảnh quạt -->
+  <line x1="152.6" y1="162.6" x2="117.2" y2="127.2" stroke="#ffffff" stroke-width="2.5" stroke-dasharray="5,3" />
+  <line x1="237.4" y1="162.6" x2="272.8" y2="127.2" stroke="#ffffff" stroke-width="2.5" stroke-dasharray="5,3" />
+  <line x1="152.6" y1="247.4" x2="117.2" y2="282.8" stroke="#ffffff" stroke-width="2.5" stroke-dasharray="5,3" />
+  <line x1="237.4" y1="247.4" x2="272.8" y2="282.8" stroke="#ffffff" stroke-width="2.5" stroke-dasharray="5,3" />
+
+  <!-- Đèn LED xung quanh bán kính R_led = 85 (24 bóng vàng rực) -->
+  <circle cx="280.0" cy="205.0" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="277.1" cy="227.0" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="268.6" cy="247.5" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="255.1" cy="265.1" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="237.5" cy="278.6" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="217.0" cy="287.1" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="195.0" cy="290.0" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="173.0" cy="287.1" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="152.5" cy="278.6" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="134.9" cy="265.1" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="121.4" cy="247.5" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="112.9" cy="227.0" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="110.0" cy="205.0" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="112.9" cy="183.0" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="121.4" cy="162.5" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="134.9" cy="144.9" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="152.5" cy="131.4" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="173.0" cy="122.9" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="195.0" cy="120.0" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="217.0" cy="122.9" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="237.5" cy="131.4" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="255.1" cy="144.9" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="268.6" cy="162.5" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+<circle cx="277.1" cy="183.0" r="4.5" fill="#fde047" stroke="#ca8a04" stroke-width="1.2" />
+
+  <!-- Kích thước r=30cm và bề rộng 20cm -->
+  <line x1="195" y1="205" x2="255" y2="205" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arrow-green)" />
+  <text x="218" y="198" font-size="12" font-weight="bold" fill="#16a34a">r=30</text>
+
+  <line x1="255" y1="205" x2="305" y2="205" stroke="#dc2626" stroke-width="2.5" marker-end="url(#arrow-red)" />
+  <text x="272" y="198" font-size="12" font-weight="bold" fill="#dc2626">20cm</text>
+
+  <!-- Tâm O -->
+  <circle cx="195" cy="205" r="3.5" fill="#0f172a" />
+  <text x="180" y="200" font-size="12" font-weight="bold" fill="#0f172a">O</text>
+
+  <!-- Nhãn các mảnh quạt -->
+  <text x="195" y="125" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Mảnh 1 (90°)</text>
+  <text x="275" y="210" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Mảnh 2</text>
+  <text x="195" y="295" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Mảnh 3</text>
+  <text x="115" y="210" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Mảnh 4</text>
+
+  <!-- Khung tính toán bên phải -->
+  <g transform="translate(365, 52)">
+    <rect x="0" y="0" width="215" height="305" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect x="0" y="0" width="215" height="34" rx="10" fill="#ea580c" />
+    <text x="107" y="22" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">TÍNH TOÁN VẬT LIỆU LED</text>
+
+    <text x="12" y="60" font-size="12" font-weight="bold" fill="#0f172a">1. Bán kính hình tròn:</text>
+    <text x="16" y="80" font-size="11.5" fill="#334155">• Bán kính trong: r = 30 cm</text>
+    <text x="16" y="98" font-size="11.5" fill="#334155">• Bề rộng vành khuyên: d = 20 cm</text>
+    <text x="16" y="118" font-size="11.5" font-weight="bold" fill="#0284c7">⇒ Bán kính ngoài R = 50 cm</text>
+
+    <line x1="12" y1="130" x2="203" y2="130" stroke="#e2e8f0" stroke-width="1" />
+
+    <text x="12" y="152" font-size="12" font-weight="bold" fill="#0f172a">2. Diện tích vành khuyên:</text>
+    <text x="16" y="172" font-size="11.5" fill="#334155">S = π(R² - r²)</text>
+    <text x="16" y="190" font-size="11.5" fill="#334155">   = π(50² - 30²) = 1600π</text>
+    <text x="16" y="210" font-size="13" font-weight="bold" fill="#dc2626">≈ 5024 cm²</text>
+
+    <line x1="12" y1="222" x2="203" y2="222" stroke="#e2e8f0" stroke-width="1" />
+
+    <text x="12" y="244" font-size="12" font-weight="bold" fill="#0f172a">3. Diện tích 1 mảnh cắt (1/4):</text>
+    <text x="16" y="266" font-size="11.5" fill="#334155">S_mảnh = 1600π / 4 = 400π</text>
+    <text x="16" y="288" font-size="13" font-weight="bold" fill="#16a34a">≈ 1256 cm²</text>
+  </g>
+
+</svg>

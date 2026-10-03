@@ -1,4 +1,5 @@
 import { Question } from './types';
+import { SUBJECT } from './subject.config';
 
 /**
  * Kho câu hỏi trung tâm (Question Store).
@@ -96,7 +97,7 @@ export const loadGradeQuestions = (grade: number): Promise<void> => {
   const existing = gradeLoads.get(grade);
   if (existing) return existing;
 
-  const loaders = GRADE_LOADERS[grade] || [];
+  const loaders = SUBJECT.builtInCurriculum ? (GRADE_LOADERS[grade] || []) : [];
   const p = Promise.all(loaders.map(load => load().catch(err => {
     console.error(`[questionStore] Lỗi nạp gói câu hỏi lớp ${grade}`, err);
     return [] as Question[];
