@@ -7571,7 +7571,7 @@ const ShopView = ({ player, setPlayer, setView }: any) => {
   };
 
   return (
-    <div className="h-screen w-full ancient-bg flex flex-col overflow-hidden">
+    <div className="h-screen w-full ancient-bg flex flex-col scrollable-view">
        <div className="p-4 md:p-6 flex justify-between items-center bg-stone-900/95 border-b border-amber-900/50 shadow-xl z-10 backdrop-blur-md">
          <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors bg-stone-800 px-4 py-2 rounded-xl border border-amber-900/30 font-sans"><ChevronLeft/> Trở về</button>
          <div className="text-amber-400 font-black font-cinzel text-xl md:text-2xl tracking-widest uppercase drop-shadow-[0_0_10px_rgba(251,191,36,0.3)]">✦ Kỳ Trân Các ✦</div>
