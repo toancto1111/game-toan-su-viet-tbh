@@ -967,11 +967,11 @@ export const TuHaoSuVietView: React.FC<TuHaoSuVietViewProps> = ({
       : { label: 'CHƯA ĐỖ', icon: '📝', color: 'text-stone-300', border: 'border-stone-500', bg: 'bg-stone-900/80', desc: `Bạn cần trả lời đúng tất cả ${pkg.size} câu để đạt danh hiệu ${pkg.titleVi}.` };
 
     return (
-      <div className="min-h-screen viet-bg flex flex-col p-4 md:p-8 items-center justify-center text-amber-100 font-viet relative overflow-x-hidden">
+      <div className="h-screen w-full viet-bg flex flex-col p-4 md:p-8 items-center text-amber-100 font-viet relative overflow-y-auto overflow-x-hidden pb-32">
         <div className="absolute inset-0 bg-radial from-red-950/40 via-stone-950/95 to-black pointer-events-none" />
 
         {/* Khung Sắc phong Hoàng Gia */}
-        <div className="relative z-10 w-full max-w-2xl rounded-3xl border-4 border-amber-500/80 bg-gradient-to-b from-red-950 via-stone-900 to-black p-6 md:p-10 shadow-[0_0_60px_rgba(245,158,11,0.3)] text-center">
+        <div className="my-auto relative z-10 w-full max-w-2xl rounded-3xl border-4 border-amber-500/80 bg-gradient-to-b from-red-950 via-stone-900 to-black p-6 md:p-10 shadow-[0_0_60px_rgba(245,158,11,0.3)] text-center">
           
           <Crown className="w-16 h-16 text-yellow-400 mx-auto mb-3 animate-bounce" style={{ animationDuration: '2s' }} />
           
