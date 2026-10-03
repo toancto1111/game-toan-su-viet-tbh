@@ -400,15 +400,6 @@
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #1c1917; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #78350f; border-radius: 10px; }
-
-        /* === SCROLLABLE VIEWS: override game engine cho các màn hình cần cuộn === */
-        #root.has-scrollable-view {
-            overflow: visible !important;
-        }
-        #root.has-scrollable-view .scrollable-view {
-            overflow-y: auto !important;
-            -webkit-overflow-scrolling: touch;
-        }
         /* Hide scrollbar but keep scroll functionality */
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
@@ -861,16 +852,7 @@
       root.style.left           = '0px';
       root.style.top            = '0px';
       root.style.position       = 'fixed';
-      
-      // Kiểm tra: nếu đang có màn hình cuộn thì KHÔNG khoá overflow
-      var hasScrollable = document.querySelector('.scrollable-view');
-      if (hasScrollable) {
-        root.style.overflow = 'visible';
-        root.classList.add('has-scrollable-view');
-      } else {
-        root.style.overflow = 'hidden';
-        root.classList.remove('has-scrollable-view');
-      }
+      root.style.overflow       = 'hidden';
     }
 
     // Debounced resize: tránh xử lý làm DOM quá nhiều lần khi resize
@@ -890,20 +872,6 @@
     window.addEventListener('resize', debouncedScale);
     window.addEventListener('orientationchange', function() {
       setTimeout(scaleGame, 100);
-    });
-
-    // Nhận tín hiệu từ React khi chuyển vào/ra màn hình có thể cuộn
-    // React component gọi: window.dispatchEvent(new CustomEvent('set-scrollable-view', { detail: true/false }))
-    window.addEventListener('set-scrollable-view', function(e) {
-      var root = document.getElementById('root');
-      if (!root) return;
-      if (e.detail) {
-        root.style.overflow = 'visible';
-        root.classList.add('has-scrollable-view');
-      } else {
-        root.style.overflow = 'hidden';
-        root.classList.remove('has-scrollable-view');
-      }
     });
 
     // Đăng ký Service Worker (PWA)

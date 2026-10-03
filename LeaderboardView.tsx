@@ -67,12 +67,6 @@ export const LeaderboardView: React.FC<{
   const [loading, setLoading] = useState(false);
   const [lastSyncTime, setLastSyncTime] = useState<string>('Vừa xong');
 
-  // Kích hoạt scroll cho game engine khi vào/rời màn hình này
-  useEffect(() => {
-    window.dispatchEvent(new CustomEvent('set-scrollable-view', { detail: true }));
-    return () => window.dispatchEvent(new CustomEvent('set-scrollable-view', { detail: false }));
-  }, []);
-
   // Tính toán dữ liệu của chính người chơi đang đăng nhập
   const myComputedData = useMemo(() => {
     // 1. Chiến lực: Top 6 tướng vĩnh viễn mạnh nhất
@@ -311,7 +305,7 @@ export const LeaderboardView: React.FC<{
   const courtTitles = getCourtTitles();
 
   return (
-    <div className="h-screen viet-bg flex flex-col text-stone-100 select-none scrollable-view">
+    <div className="h-full w-full viet-bg flex flex-col text-stone-100 select-none">
       {/* ─── HEADER HOÀNG GIA ────────────────────────────────────────────────────────── */}
       <header className="bg-gradient-to-r from-stone-950 via-stone-900 to-stone-950 border-b-2 border-amber-500/60 px-4 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.8)] z-40 shrink-0">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
@@ -581,7 +575,7 @@ export const LeaderboardView: React.FC<{
                 <div className="h-px flex-1 bg-gradient-to-l from-transparent to-amber-800/60"></div>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4">
+              <div className="grid grid-cols-5 gap-1 sm:gap-4">
                 {top4To8.map((item, idx) => {
                   const rank = idx + 4;
                   const courtRole = courtTitles.r4_8[idx] || `Hạng ${rank}`;

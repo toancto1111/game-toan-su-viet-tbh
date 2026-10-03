@@ -7546,11 +7546,6 @@ const ShopView = ({ player, setPlayer, setView }: any) => {
     pill1: 1, pill2: 1, pill3: 1, pill4: 1, pill5: 1
   });
 
-  useEffect(() => {
-    window.dispatchEvent(new CustomEvent('set-scrollable-view', { detail: true }));
-    return () => window.dispatchEvent(new CustomEvent('set-scrollable-view', { detail: false }));
-  }, []);
-
   const buyWithGold = (type: string, price: number, name: string) => {
     const qty = Math.max(1, quantities[type] || 1);
     const totalCost = price * qty;
@@ -7576,7 +7571,7 @@ const ShopView = ({ player, setPlayer, setView }: any) => {
   };
 
   return (
-    <div className="h-screen w-full ancient-bg flex flex-col scrollable-view">
+    <div className="h-full w-full ancient-bg flex flex-col">
        <div className="p-4 md:p-6 flex justify-between items-center bg-stone-900/95 border-b border-amber-900/50 shadow-xl z-10 backdrop-blur-md">
          <button onClick={() => setView('chapter-hub')} className="text-amber-500 font-bold flex items-center gap-2 hover:text-amber-400 transition-colors bg-stone-800 px-4 py-2 rounded-xl border border-amber-900/30 font-sans"><ChevronLeft/> Trở về</button>
          <div className="text-amber-400 font-black font-cinzel text-xl md:text-2xl tracking-widest uppercase drop-shadow-[0_0_10px_rgba(251,191,36,0.3)]">✦ Kỳ Trân Các ✦</div>
@@ -7593,7 +7588,7 @@ const ShopView = ({ player, setPlayer, setView }: any) => {
          {activeTab === 'gold' && (
            <div className="animate-in fade-in duration-300">
              <div className="text-center mb-8"><h2 className="text-amber-400 font-cinzel font-black text-2xl uppercase tracking-widest mb-1">Lệnh Bài Triệu Hồi</h2><p className="text-stone-500 text-sm font-bold">Dùng Vàng để mua Lệnh Bài triệu hồi anh hùng</p></div>
-             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
+             <div className="grid grid-cols-4 gap-2 md:gap-6">
                <ShopItem itemId="normal" player={player} title="Lệnh Bài Anh Hào" desc="Tỉ lệ: C → SR" price={2000} currency="gold" qty={quantities.normal} setQty={(q: number) => setQuantities(p => ({...p, normal: q}))} onBuy={() => buyWithGold('normal', 2000, 'Lệnh Bài Anh Hào')} img="./items/normal_ticket.png" color="blue" />
                <ShopItem itemId="premium" player={player} title="Lệnh Bài Danh Tướng" desc="Tỉ lệ cao SR → UR" price={10000} currency="gold" qty={quantities.premium} setQty={(q: number) => setQuantities(p => ({...p, premium: q}))} onBuy={() => buyWithGold('premium', 10000, 'Lệnh Bài Danh Tướng')} img="./items/premium_ticket.png" color="purple" />
                <ShopItem itemId="artifact" player={player} title="Thẻ Tầm Bảo Thần Khí" desc="Rơi Thần Khí Bản Mệnh" price={20000} currency="gold" qty={quantities.artifact} setQty={(q: number) => setQuantities(p => ({...p, artifact: q}))} onBuy={() => buyWithGold('artifact', 20000, 'Thẻ Tầm Bảo Thần Khí')} img="./items/artifact_ticket.png" color="amber" />
@@ -7609,7 +7604,7 @@ const ShopView = ({ player, setPlayer, setView }: any) => {
                <div className="inline-flex items-center gap-2 mt-2 bg-green-950/50 px-4 py-1.5 rounded-full border border-green-800/50"><span className="text-green-400">💚</span><span className="text-green-400 font-black text-sm">Ngọc Bích hiện có: {(player.jade || 0).toLocaleString()}</span></div>
              </div>
              <div className="flex items-center justify-between border-b border-rose-900/40 pb-2 mb-6"><h3 className="text-rose-400 font-cinzel font-black text-lg uppercase tracking-widest flex items-center gap-2">💊 5 Cấp Bậc Đan Dược</h3><span className="text-xs bg-rose-950 text-rose-300 px-3 py-1 rounded-full border border-rose-800/50 font-bold">Hàng Độc Quyền Quý Hiếm</span></div>
-             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6">
+             <div className="grid grid-cols-5 gap-1.5 md:gap-6">
                <ShopItem itemId="pill1" player={player} title="Sơ Cấp Đột Phá Đan" desc="Mốc 6-10★" price={20} currency="jade" qty={quantities.pill1} setQty={(q: number) => setQuantities(p => ({...p, pill1: q}))} onBuy={() => buyWithJade('pill1', 20, 'Sơ Cấp Đột Phá Đan')} img="./items/pill1.png" icon="💊" color="red" />
                <ShopItem itemId="pill2" player={player} title="Trung Cấp Phá Cảnh Đan" desc="Mốc 11-15★" price={60} currency="jade" qty={quantities.pill2} setQty={(q: number) => setQuantities(p => ({...p, pill2: q}))} onBuy={() => buyWithJade('pill2', 60, 'Trung Cấp Phá Cảnh Đan')} img="./items/pill2.png" icon="🔮" color="purple" />
                <ShopItem itemId="pill3" player={player} title="Cao Cấp Thông Thiên Đan" desc="Mốc 16-20★" price={150} currency="jade" qty={quantities.pill3} setQty={(q: number) => setQuantities(p => ({...p, pill3: q}))} onBuy={() => buyWithJade('pill3', 150, 'Cao Cấp Thông Thiên Đan')} img="./items/pill3.png" icon="⚡" color="sky" />
