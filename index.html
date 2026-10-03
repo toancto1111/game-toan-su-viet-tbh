@@ -889,28 +889,20 @@
     // Cập nhật khi resize hoặc xoay màn hình
     window.addEventListener('resize', debouncedScale);
     window.addEventListener('orientationchange', function() {
-      setTimeout(scaleGame, 100); // Delay nhỏ để browser cập nhật kích thước
+      setTimeout(scaleGame, 100);
     });
 
-    // MutationObserver: tự động cập nhật overflow khi React chuyển view
-    // (phát hiện khi .scrollable-view được thêm/xoá khỏi DOM)
-    var observer = new MutationObserver(function() {
+    // Nhận tín hiệu từ React khi chuyển vào/ra màn hình có thể cuộn
+    // React component gọi: window.dispatchEvent(new CustomEvent('set-scrollable-view', { detail: true/false }))
+    window.addEventListener('set-scrollable-view', function(e) {
       var root = document.getElementById('root');
       if (!root) return;
-      var hasScrollable = root.querySelector('.scrollable-view');
-      if (hasScrollable) {
+      if (e.detail) {
         root.style.overflow = 'visible';
         root.classList.add('has-scrollable-view');
       } else {
         root.style.overflow = 'hidden';
         root.classList.remove('has-scrollable-view');
-      }
-    });
-    // Theo dõi toàn bộ subtree của body
-    document.addEventListener('DOMContentLoaded', function() {
-      var rootEl = document.getElementById('root');
-      if (rootEl) {
-        observer.observe(rootEl, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
       }
     });
 

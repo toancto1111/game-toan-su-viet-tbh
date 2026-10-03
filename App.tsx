@@ -7546,6 +7546,11 @@ const ShopView = ({ player, setPlayer, setView }: any) => {
     pill1: 1, pill2: 1, pill3: 1, pill4: 1, pill5: 1
   });
 
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('set-scrollable-view', { detail: true }));
+    return () => window.dispatchEvent(new CustomEvent('set-scrollable-view', { detail: false }));
+  }, []);
+
   const buyWithGold = (type: string, price: number, name: string) => {
     const qty = Math.max(1, quantities[type] || 1);
     const totalCost = price * qty;

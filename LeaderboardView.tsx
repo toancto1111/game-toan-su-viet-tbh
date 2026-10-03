@@ -67,6 +67,12 @@ export const LeaderboardView: React.FC<{
   const [loading, setLoading] = useState(false);
   const [lastSyncTime, setLastSyncTime] = useState<string>('Vừa xong');
 
+  // Kích hoạt scroll cho game engine khi vào/rời màn hình này
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('set-scrollable-view', { detail: true }));
+    return () => window.dispatchEvent(new CustomEvent('set-scrollable-view', { detail: false }));
+  }, []);
+
   // Tính toán dữ liệu của chính người chơi đang đăng nhập
   const myComputedData = useMemo(() => {
     // 1. Chiến lực: Top 6 tướng vĩnh viễn mạnh nhất
