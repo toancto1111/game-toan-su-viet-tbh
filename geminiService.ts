@@ -1,22 +1,9 @@
 
 import { Question } from './types';
-import { questionsRaw } from './questions_data';
-import { chuong1ThucTeData } from './chuong1_thucte_data';
-import { chuong2ThucTeData } from './chuong2_thucte_data';
-import { chuong3ThucTeData } from './chuong3_thucte_data';
-import { chuong4ThucTeData } from './chuong4_thucte_data';
 import { TOAN_7_DATA } from './toan7_data';
 import { TOAN_8_DATA } from './toan8_data';
-import { TOAN_8_CHUONG1_QUESTIONS } from './toan8_chuong1_questions';
 import { TOAN_9_DATA } from './toan9_data';
-import { toan9Chuong1Questions } from './toan9_chuong1_questions';
-import { toan9Chuong2Questions } from './toan9_chuong2_questions';
-import { toan9Chuong3Questions } from './toan9_chuong3_questions';
-import { toan9Chuong4Questions } from './toan9_chuong4_questions';
-import { toan9Chuong5Questions } from './toan9_chuong5_questions';
-import { toan9Chuong6Questions } from './toan9_chuong6_questions';
-import { toan9Chuong7Questions } from './toan9_chuong7_questions';
-import { toan9Chuong8Questions } from './toan9_chuong8_questions';
+import { getLoadedQuestions } from './questionStore';
 
 export const CHAPTER_NAMES: Record<number, string> = {
   1: "Huyền thoại Hồng Bàng",
@@ -1078,47 +1065,8 @@ $$ 11\\,500\\,000 + (-80\\,000) = 11\\,420\\,000 \\text{ (đồng)} $$
   ]
 };
 
-const ALL_PRACTICAL = [
-  ...chuong1ThucTeData,
-  ...chuong2ThucTeData,
-  ...chuong3ThucTeData,
-  ...chuong4ThucTeData,
-  ...TOAN_8_CHUONG1_QUESTIONS,
-  ...toan9Chuong1Questions,
-  ...toan9Chuong2Questions,
-  ...toan9Chuong3Questions,
-  ...toan9Chuong4Questions,
-  ...toan9Chuong5Questions,
-  ...toan9Chuong6Questions,
-  ...toan9Chuong7Questions,
-  ...toan9Chuong8Questions
-] as Question[];
-
-const JSON_QUESTIONS: Question[] = [
-  ...ALL_PRACTICAL,
-  ...(questionsRaw as any[])
-    .filter(q => q.type !== 'multiple_choice_many')
-    .map(q => {
-      let type = q.type === 'short_answer_number' ? 'short_answer' : q.type;
-      let options = q.options || [];
-      let correctAnswer: any = q.answer;
-      if (type === 'true_false') {
-        options = ["Đúng", "Sai"];
-        correctAnswer = (q.answer === "Đúng" || q.answer === "đúng") ? 0 : 1;
-      } else if (type === 'multiple_choice_1') {
-        const letter = q.answer.toString().trim().charAt(0).toUpperCase();
-        correctAnswer = ["A", "B", "C", "D"].indexOf(letter);
-      } else {
-        correctAnswer = q.answer.toString().replace(/[{}]/g, '').trim();
-      }
-      return { 
-        id: q.id, grade: 6, chapter: 1, level: q.level, 
-        type: type as any, question: q.question, options, 
-        correctAnswer, explanation: q.explanation,
-        imageUrl: q.imageUrl, explanationImageUrl: q.explanationImageUrl
-      };
-    })
-];
+// Câu hỏi không còn import tĩnh: được nạp theo khối lớp bởi `questionStore` (lazy-load).
+// Phải gọi `loadGradeQuestions(grade)` trước khi lấy câu hỏi của khối đó.
 
 export const getQuestionsForLesson = (grade: number, chapterIdx: number, lessonIdx: number): Question[] => {
   const chapterLessons = MATH_DATA[grade]?.[chapterIdx]?.lessons || [];
@@ -1176,10 +1124,11 @@ export const getQuestionsForLesson = (grade: number, chapterIdx: number, lessonI
     }
   }
 
-  let pool = idPrefixes.length > 0 ? JSON_QUESTIONS.filter(q => idPrefixes.some(prefix => q.id.startsWith(prefix))) : [];
+  const allQuestions = getLoadedQuestions();
+  let pool = idPrefixes.length > 0 ? allQuestions.filter(q => idPrefixes.some(prefix => q.id.startsWith(prefix))) : [];
 
   if (pool.length === 0 && chapterPrefixes.length > 0) {
-      pool = JSON_QUESTIONS.filter(q => chapterPrefixes.some(prefix => q.id.startsWith(prefix)));
+      pool = allQuestions.filter(q => chapterPrefixes.some(prefix => q.id.startsWith(prefix)));
   }
 
   const seen = new Set<string>();
@@ -1198,7 +1147,7 @@ export const getMathQuestions = (grade: number, chapterIdx: number, lessonIdx: n
 
   // If still no questions (e.g. data missing), fallback to all questions
   if (pool.length === 0) {
-      pool = [...JSON_QUESTIONS];
+      pool = [...getLoadedQuestions()];
   }
   
   let unseenPool = pool.filter(q => !seenIds.includes(q.id));

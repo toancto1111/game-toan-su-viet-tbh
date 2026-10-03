@@ -36,7 +36,8 @@ import { demoTuLuyenData } from './demo_tu_luyen_data';
 import * as XLSX from 'xlsx';
 import { HeroTrialView } from './HeroTrialView';
 import { HERO_TRIAL_STAGES, generateTrialEnemies } from './heroTrialData';
-import { TuLuyenMenuView } from './TuLuyenMenuView';
+import { loadGradeQuestions } from './questionStore';
+const TuLuyenMenuView = React.lazy(() => import('./TuLuyenMenuView').then(m => ({ default: m.TuLuyenMenuView })));
 import { TuHaoSuVietView } from './TuHaoSuVietView';
 import { LeaderboardView } from './LeaderboardView';
 import { InstructionsModal } from './InstructionsModal';
@@ -1160,6 +1161,13 @@ const App: React.FC = () => {
     }
     return 6;
   });
+  const [, setQuestionsVersion] = useState<number>(0);
+  // Nạp ngân hàng câu hỏi theo khối lớp (lazy-load) và render lại khi nạp xong
+  useEffect(() => {
+    let alive = true;
+    loadGradeQuestions(selectedGrade).then(() => { if (alive) setQuestionsVersion(v => v + 1); });
+    return () => { alive = false; };
+  }, [selectedGrade]);
   const [selectedMathChapterIdx, setSelectedMathChapterIdx] = useState<number>(0);
   const [selectedMathLessonIdx, setSelectedMathLessonIdx] = useState<number>(0);
   const [combatMode, setCombatMode] = useState<'campaign' | 'hero-trial' | 'arena'>('campaign');
@@ -2718,7 +2726,7 @@ const App: React.FC = () => {
         </div>
       );
       case 'admin': return <AdminView setView={(v: any) => setView(v)} />;
-      case 'tu-luyen-menu': return <TuLuyenMenuView setView={(v: any) => setView(v)} startLesson={startLessonTuLuyen} unlockedLessons={player.tuLuyenUnlockedLessons || ['B1']} correctIds={player.tuLuyenCorrectIds || {}} isAdmin={player?.playerName?.toLowerCase() === 'admin'} />;
+      case 'tu-luyen-menu': return <React.Suspense fallback={<div className="fixed inset-0 bg-slate-950 flex items-center justify-center text-emerald-400 font-cinzel text-xl">Đang tải Thí Luyện Đường...</div>}><TuLuyenMenuView setView={(v: any) => setView(v)} startLesson={startLessonTuLuyen} unlockedLessons={player.tuLuyenUnlockedLessons || ['B1']} correctIds={player.tuLuyenCorrectIds || {}} isAdmin={player?.playerName?.toLowerCase() === 'admin'} /></React.Suspense>;
       case 'tu-luyen-play': return <QuizPlayView question={currentQuestions[currentIdx]} idx={currentIdx} total={currentQuestions.length} showFeedback={showFeedback} userAnswers={userAnswers} setUserAnswers={setUserAnswers} onAnswer={handleQuizAnswer} lastReward={lastReward} setView={setView} autoNext={autoNext} onAutoNextChange={setAutoNext} onNext={() => { setShowFeedback(false); if (currentIdx < currentQuestions.length - 1) setCurrentIdx(c => c + 1); else handleTuLuyenResult(correctTotal, currentQuestions.length); }} tuLuyenLessonId={activeLessonId} />;
       case 'kinh-luan-grade': return <GradeView player={player} setGrade={setSelectedGrade} setView={setView} />;
       case 'kinh-luan-topic': return <TopicView grade={selectedGrade} setChapterIdx={setSelectedMathChapterIdx} setView={setView} player={player} />;
