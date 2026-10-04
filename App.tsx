@@ -3579,12 +3579,13 @@ const DanhTraiView = ({ player, setPlayer, quickLineup, setView, onCombat, activ
                          ...(((player as any).artifacts as string[]) || [])
                        ])];
                        // Chỉ lấy thần khí BẢN MỆNH của đúng tướng này
+                       const baseHeroTemp = INITIAL_HEROES.find(h => h.name === selectedHero.name);
+                       const actualBaseIdTemp = baseHeroTemp ? baseHeroTemp.id : selectedHero.id.split('_')[0];
                        const matchingArts = allOwned
                          .map((artId: string) => ARTIFACTS.find(a => a.id === artId))
                          .filter((art): art is typeof ARTIFACTS[0] => !!art && (
-                           art.exclusiveTo?.includes(selectedHero.id) ||
-                           art.exclusiveTo?.some((id: string) => selectedHero.id.startsWith(id + '_')) ||
-                           art.exclusiveTo?.some((id: string) => id.startsWith(selectedHero.id.split('_').slice(0,2).join('_')))
+                           art.exclusiveTo?.includes(actualBaseIdTemp) ||
+                           art.exclusiveTo?.some((id: string) => actualBaseIdTemp.startsWith(id))
                          ));
                        if (matchingArts.length === 0) return (
                          <div className="col-span-2 text-stone-500 text-xs italic mt-10">
@@ -5520,8 +5521,11 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
   let equippedArtifact = hero.artifactId ? ARTIFACTS.find(a => a.id === hero.artifactId) : null;
   let isSignature = false;
 
+  const baseHero = INITIAL_HEROES.find(h => h.name === hero.name);
+  const actualBaseId = baseHero ? baseHero.id : hero.id.split('_')[0];
+
   if (!equippedArtifact) {
-    const signatureArt = ARTIFACTS.find(a => a.exclusiveTo?.includes(hero.id) || a.exclusiveTo?.some(id => hero.id.startsWith(id + '_')));
+    const signatureArt = ARTIFACTS.find(a => a.exclusiveTo?.includes(actualBaseId) || a.exclusiveTo?.some(id => actualBaseId.startsWith(id)));
     if (signatureArt) {
        equippedArtifact = signatureArt;
        isSignature = true;
@@ -5529,7 +5533,7 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
   }
 
   // Only apply bonus stats if the artifact is actually equipped (not just a signature preview) AND it belongs to this hero
-  const isCorrectHero = equippedArtifact && (equippedArtifact.exclusiveTo?.includes(hero.id) || equippedArtifact.exclusiveTo?.some(id => hero.id.startsWith(id + '_')));
+  const isCorrectHero = equippedArtifact && (equippedArtifact.exclusiveTo?.includes(actualBaseId) || equippedArtifact.exclusiveTo?.some(id => actualBaseId.startsWith(id)));
   const shouldApplyStats = equippedArtifact && (!isSignature) && isCorrectHero;
 
   const bonusAtk = shouldApplyStats ? (equippedArtifact.bonusAtk || 0) + Math.floor(hero.atk * ((equippedArtifact.bonusAtkPc || 0) / 100)) : 0;
@@ -8216,12 +8220,13 @@ const QuanDoanView = ({ player, setPlayer, quickLineup, setView, onCombat }: any
                          ...((player.permArtifacts as string[]) || []),
                          ...(((player as any).artifacts as string[]) || [])
                        ])];
+                       const baseHeroTemp2 = INITIAL_HEROES.find(h => h.name === selectedHero.name);
+                       const actualBaseIdTemp2 = baseHeroTemp2 ? baseHeroTemp2.id : selectedHero.id.split('_')[0];
                        const matchingArts = allOwned
                          .map((artId: string) => ARTIFACTS.find(a => a.id === artId))
                          .filter((art): art is typeof ARTIFACTS[0] => !!art && (
-                           art.exclusiveTo?.includes(selectedHero.id) ||
-                           art.exclusiveTo?.some((id: string) => selectedHero.id.startsWith(id + '_')) ||
-                           art.exclusiveTo?.some((id: string) => id.startsWith(selectedHero.id.split('_').slice(0,2).join('_')))
+                           art.exclusiveTo?.includes(actualBaseIdTemp2) ||
+                           art.exclusiveTo?.some((id: string) => actualBaseIdTemp2.startsWith(id))
                          ));
                        if (matchingArts.length === 0) return (
                          <div className="col-span-2 text-stone-500 text-xs italic mt-10">
