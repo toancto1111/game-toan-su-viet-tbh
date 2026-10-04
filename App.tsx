@@ -5580,10 +5580,11 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
              </button>
             {/* Gradient dưới ảnh (desktop) */}
             <div className="hidden md:block absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"/>
-            {/* Badge phẩm */}
-            <div className={`absolute top-2 left-2 text-[9px] font-black px-2 py-0.5 rounded-full bg-black/85 border border-white/10 ${textColor} tracking-widest uppercase`}>
-              {hero.rarity}
-            </div>
+            {!((hero as any).isArtifact) && (
+              <div className={`absolute top-2 left-2 text-[9px] font-black px-2 py-0.5 rounded-full bg-black/85 border border-white/10 ${textColor} tracking-widest uppercase`}>
+                {hero.rarity}
+              </div>
+            )}
           </div>
 
           {/* ===== CỘT THÔNG TIN ===== */}
@@ -5591,7 +5592,7 @@ const HeroDetailModal = ({ hero, onClose, actions }: { hero: Hero, onClose: () =
             {/* Tên & danh hiệu */}
             <div>
               <h2 className={`text-2xl font-cinzel font-black uppercase tracking-wide ${textColor} leading-tight`}>{hero.name}</h2>
-              <HeroStars starCount={hero.star} size={12} className="mt-1.5" />
+              {!((hero as any).isArtifact) && <HeroStars starCount={hero.star} size={12} className="mt-1.5" />}
               <div className="flex items-center gap-2 mt-1 flex-wrap">
                 <p className="text-stone-400 text-[11px] font-bold uppercase tracking-widest">✦ {hero.title} ✦</p>
                 {hero.subFaction && (
@@ -5899,7 +5900,7 @@ const HeroGalleryCard = ({ hero, isEnemy, onClick }: { key?: React.Key, hero: He
        <div className={`relative rounded-xl mb-3 ${getStarBorderClass(hero.star)}`}>
          <div className="relative overflow-hidden rounded-xl h-full w-full z-10 bg-[#1c1917]">
            <img src={hero.image} className="w-full aspect-[2/3] object-cover contrast-110 border border-white/5 relative z-10" onError={(e) => { (e.target as HTMLImageElement).src = hero.faction === 'enemy' ? DEFAULT_ENEMY_IMG : DEFAULT_ALLY_IMG; }} />
-           <div className={`absolute top-1 right-1 text-[8px] font-black px-1.5 py-0.5 rounded-full bg-black/75 z-20 ${rarityText[hero.rarity] || 'text-amber-500'}`}>{hero.rarity}</div>
+           {!((hero as any).isArtifact) && <div className={`absolute top-1 right-1 text-[8px] font-black px-1.5 py-0.5 rounded-full bg-black/75 z-20 ${rarityText[hero.rarity] || 'text-amber-500'}`}>{hero.rarity}</div>}
            {hero.subFaction && (
              <div className="absolute top-1 left-1 z-20">
                <span className={`text-[7px] font-black uppercase px-1.5 py-0.5 rounded-md border backdrop-blur-sm ${
@@ -5914,9 +5915,11 @@ const HeroGalleryCard = ({ hero, isEnemy, onClick }: { key?: React.Key, hero: He
                </span>
              </div>
            )}
-           <div className="absolute top-1 right-1 flex flex-col items-end gap-1 z-20">
-            <HeroStars starCount={hero.star} size={8} className="justify-center mt-1" />
-           </div>
+           {!((hero as any).isArtifact) && (
+             <div className="absolute top-1 right-1 flex flex-col items-end gap-1 z-20">
+               <HeroStars starCount={hero.star} size={8} className="justify-center mt-1" />
+             </div>
+           )}
            {equippedArtifact && (
              <div className="absolute bottom-1 right-1 bg-black/80 rounded border border-purple-500/50 p-0.5 flex flex-col items-center z-20">
                <img src={equippedArtifact.image} className="w-4 h-4 object-cover rounded-sm mb-0.5" alt={equippedArtifact.name} />
